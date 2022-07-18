@@ -4,6 +4,9 @@
 
     <color name="text_color">#5F604D</color>
 
+    <color name="green_50">#517866</color>
+    <color name="green_75">#2B503F</color>
+
     <color name="grey_50">#8C555555</color>
     <color name="grey_75">#73555555</color>
 
@@ -12,6 +15,14 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+
     <color name="black">#FF000000</color>
+    <color name="black_20">#17000000</color>
+
     <color name="white">#FFFFFFFF</color>
+    <color name="white_75">#9FFFFFFF</color>
+
+    <color name="yellow_light">#FFD600</color>
+    <color name="green_light">#64C568</color>
+    <color name="red_light">#FF6464</color>
 </resources>

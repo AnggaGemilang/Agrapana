@@ -15,29 +15,35 @@
         tools:targetApi="31">
         <activity
             android:name=".DetailActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".OnboardingActivity"
-            android:exported="true" >
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NialonicGC.OnboardingScreen"
+            android:exported="true" />
+        <activity
+            android:name=".SplashScreenActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NialonicGC.SplashScreen"
+            android:exported="true"
+            android:noHistory="false" >
 
         </activity>
         <activity
-            android:name=".SplashScreenActivity"
-            android:theme="@style/ProgressBarStyle"
-            android:exported="true"
-            android:noHistory="false" >
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NialonicGC.Main"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:exported="true" >
-
-        </activity>
-        <activity
             android:name=".SettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NialonicGC.Main"
             android:exported="false" />
     </application>
 
