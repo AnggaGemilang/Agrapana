@@ -14,8 +14,8 @@
 
     <style name="Theme.NialonicGC.Main" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/green_75</item>
+        <item name="colorPrimaryVariant">@color/green_50</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -33,6 +33,11 @@
     <style name="Theme.NialonicGC.SplashScreen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/grey_50</item>
         <item name="colorAccent">@color/grey_75</item>
+    </style>
+
+    <style name="SearView.Custom" parent="Widget.AppCompat.Light.SearchView">
+        <item name="android:textSize">17sp</item>
+        <item name="android:paddingBottom">0.5dp</item>
     </style>
 
 </resources>

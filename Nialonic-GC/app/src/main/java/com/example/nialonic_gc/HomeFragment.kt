@@ -2,10 +2,14 @@ package com.example.nialonic_gc
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.example.nialonic_gc.databinding.FragmentHomeBinding
+
 
 class HomeFragment : Fragment() {
 
@@ -26,11 +30,21 @@ class HomeFragment : Fragment() {
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId) {
                 R.id.power -> {
-
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setTitle("Are You Sure?")
+                    builder.setMessage("This can be perform the machine")
+                    builder.setPositiveButton("YES") { dialog, which ->
+                        Toast.makeText(requireContext(), "Nyobain", Toast.LENGTH_LONG).show()
+                    }
+                    builder.setNegativeButton("NO") { dialog, which ->
+                        dialog.dismiss()
+                    }
+                    val alert = builder.create()
+                    alert.show()
                 }
                 R.id.about -> {
                     AlertDialog.Builder(requireContext())
-                        .setTitle("Versi Aplikasi")
+                        .setTitle("App Version")
                         .setMessage("Beta 1.0.0")
                         .setCancelable(true)
                         .setPositiveButton("OK", null)

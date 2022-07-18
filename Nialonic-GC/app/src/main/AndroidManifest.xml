@@ -28,7 +28,6 @@
             android:theme="@style/Theme.NialonicGC.SplashScreen"
             android:exported="true"
             android:noHistory="false" >
-
         </activity>
         <activity
             android:name=".MainActivity"

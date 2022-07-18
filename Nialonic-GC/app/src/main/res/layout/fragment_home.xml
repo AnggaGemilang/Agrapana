@@ -50,7 +50,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Dashboard"
-                                android:textSize="17sp"
+                                android:textSize="19sp"
+                                android:textStyle="bold"
                                 android:gravity="center_vertical"
                                 android:textColor="@color/white"
                                 android:layout_marginStart="20dp" />
@@ -156,20 +157,20 @@
                                 android:textColor="@color/black"
                                 android:gravity="center"
                                 android:textSize="15sp"
-                                android:text="Kapasitas Baterai" />
+                                android:text="Temperatur" />
 
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="80dp"
                                 android:layout_marginTop="5dp"
-                                android:src="@drawable/ic_baseline_home_24" />
+                                android:src="@drawable/ic_baseline_whatshot_24" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:textSize="15sp"
-                                android:text="20%" />
+                                android:text="36°C" />
 
                         </LinearLayout>
 
@@ -199,10 +200,23 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/black"
                                 android:gravity="center"
                                 android:textSize="15sp"
-                                android:textColor="@color/white"
-                                android:text="Kapasitas Baterai" />
+                                android:text="Temperatur" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="80dp"
+                                android:layout_marginTop="5dp"
+                                android:src="@drawable/ic_baseline_whatshot_24" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textSize="15sp"
+                                android:text="36°C" />
 
                         </LinearLayout>
 
@@ -224,6 +238,34 @@
                         app:cardCornerRadius="10dp"
                         android:focusable="true"  >
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginVertical="10dp"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:gravity="center"
+                                android:textSize="15sp"
+                                android:text="Temperatur" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="80dp"
+                                android:layout_marginTop="5dp"
+                                android:src="@drawable/ic_baseline_whatshot_24" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textSize="15sp"
+                                android:text="36°C" />
+
+                        </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
 
@@ -242,6 +284,35 @@
                         android:outlineSpotShadowColor="@color/black_20"
                         app:cardCornerRadius="10dp"
                         android:focusable="true" >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginVertical="10dp"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:gravity="center"
+                                android:textSize="15sp"
+                                android:text="Temperatur" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="80dp"
+                                android:layout_marginTop="5dp"
+                                android:src="@drawable/ic_baseline_whatshot_24" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textSize="15sp"
+                                android:text="36°C" />
+
+                        </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
 
@@ -262,6 +333,35 @@
                         app:cardCornerRadius="10dp"
                         android:focusable="true" >
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginVertical="10dp"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:gravity="center"
+                                android:textSize="15sp"
+                                android:text="Temperatur" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="80dp"
+                                android:layout_marginTop="5dp"
+                                android:src="@drawable/ic_baseline_whatshot_24" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textSize="15sp"
+                                android:text="36°C" />
+
+                        </LinearLayout>
+
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -280,6 +380,35 @@
                         android:outlineSpotShadowColor="@color/black_20"
                         app:cardCornerRadius="10dp"
                         android:focusable="true" >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginVertical="10dp"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:gravity="center"
+                                android:textSize="15sp"
+                                android:text="Temperatur" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="80dp"
+                                android:layout_marginTop="5dp"
+                                android:src="@drawable/ic_baseline_whatshot_24" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textSize="15sp"
+                                android:text="36°C" />
+
+                        </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
 

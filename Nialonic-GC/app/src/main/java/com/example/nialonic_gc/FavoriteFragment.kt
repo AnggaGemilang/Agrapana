@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.nialonic_gc.databinding.FragmentFavoriteBinding
 import com.example.nialonic_gc.databinding.FragmentHomeBinding
@@ -29,7 +30,17 @@ class FavoriteFragment : Fragment() {
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId) {
                 R.id.power -> {
-
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setTitle("Are You Sure?")
+                    builder.setMessage("This can be perform the machine")
+                    builder.setPositiveButton("YES") { dialog, which ->
+                        Toast.makeText(requireContext(), "Nyobain", Toast.LENGTH_LONG).show()
+                    }
+                    builder.setNegativeButton("NO") { dialog, which ->
+                        dialog.dismiss()
+                    }
+                    val alert = builder.create()
+                    alert.show()
                 }
                 R.id.about -> {
                     AlertDialog.Builder(requireContext())
