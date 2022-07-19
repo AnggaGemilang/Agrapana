@@ -33,8 +33,8 @@ class FavoriteFragment : Fragment() {
                     val builder = AlertDialog.Builder(requireContext())
                     builder.setTitle("Are You Sure?")
                     builder.setMessage("This can be perform the machine")
-                    builder.setPositiveButton("YES") { dialog, which ->
-                        Toast.makeText(requireContext(), "Nyobain", Toast.LENGTH_LONG).show()
+                    builder.setPositiveButton("YES") { _, _ ->
+                        startActivity(Intent(context, TurnOnActivity::class.java))
                     }
                     builder.setNegativeButton("NO") { dialog, which ->
                         dialog.dismiss()
