@@ -28,7 +28,6 @@ class SettingActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
             )
         }
-
     }
 
     override fun onSupportNavigateUp(): Boolean {

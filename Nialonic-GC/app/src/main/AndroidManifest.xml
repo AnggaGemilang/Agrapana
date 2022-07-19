@@ -13,37 +13,46 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NialonicGC"
         tools:targetApi="31">
+
         <activity
-            android:name=".DetailActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
-        <activity
-            android:name=".OnboardingActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.NialonicGC.OnboardingScreen"
-            android:exported="true" />
-        <activity
-            android:name=".SplashScreenActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.NialonicGC.SplashScreen"
+            android:name=".TurnOnActivity"
             android:exported="true"
-            android:noHistory="false" >
-        </activity>
-        <activity
-            android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.NialonicGC.Main"
-            android:exported="true" >
+            android:theme="@style/Theme.NialonicGC.TurnOn">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+        <activity
+            android:name=".DetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OnboardingActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NialonicGC.OnboardingScreen" />
+        <activity
+            android:name=".SplashScreenActivity"
+            android:exported="true"
+            android:noHistory="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NialonicGC.SplashScreen"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NialonicGC.Main">
+
         </activity>
         <activity
             android:name=".SettingActivity"
+            android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.NialonicGC.Main"
-            android:exported="false" />
+            android:theme="@style/Theme.NialonicGC.Main" />
     </application>
 
 </manifest>
