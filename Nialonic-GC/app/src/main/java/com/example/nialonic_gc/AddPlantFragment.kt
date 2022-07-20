@@ -33,14 +33,34 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.designBottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+
         val listItem = arrayOf("Choose Plant Type", "Item 1", "Item 2", "Item 3")
         val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, listItem)
         binding.type.adapter = adapter
 
-        binding.newConfiguration.setOnCheckedChangeListener { _, isChecked ->
+        binding.automatic.setOnCheckedChangeListener { _, isChecked ->
             binding.type.isEnabled = !isChecked
         }
 
+        binding.newConfiguration.setOnCheckedChangeListener { _, isChecked ->
+            binding.type.isEnabled = !isChecked
+            if(isChecked){
+                binding.category.visibility = View.VISIBLE
+                binding.titleCategory.visibility = View.VISIBLE
+                binding.configurationName.visibility = View.VISIBLE
+                binding.titleConfigurationName.visibility = View.VISIBLE
+                binding.configurationItem1.visibility = View.VISIBLE
+                binding.configurationItem2.visibility = View.VISIBLE
+            } else {
+                binding.category.visibility = View.GONE
+                binding.titleCategory.visibility = View.GONE
+                binding.configurationName.visibility = View.GONE
+                binding.titleConfigurationName.visibility = View.GONE
+                binding.configurationItem1.visibility = View.GONE
+                binding.configurationItem2.visibility = View.GONE
+            }
+        }
     }
 
     private fun openGalleryForImage() {

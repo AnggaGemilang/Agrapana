@@ -284,12 +284,11 @@
             app:tabTextColor="@color/white"
             app:tabIndicatorColor="@color/white"
             app:tabBackground="@color/green_50"
-            app:tabMode="scrollable"
             app:tabIndicatorGravity="bottom"
             app:tabIndicatorHeight="5dp"
             app:tabPaddingEnd="0dp"
             app:tabPaddingStart="0dp"
-            app:tabIndicatorFullWidth="false" />
+            app:tabIndicatorFullWidth="true" />
 
         <FrameLayout
             android:id="@+id/frame_container"

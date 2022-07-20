@@ -2,14 +2,14 @@ package com.example.nialonic_gc
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.example.nialonic_gc.databinding.FragmentHomeBinding
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.example.nialonic_gc.databinding.FragmentPlantListBinding
+import com.google.android.material.tabs.TabLayout
 
 class PlantListFragment : Fragment() {
 
@@ -57,5 +57,21 @@ class PlantListFragment : Fragment() {
             }
             true
         }
+
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Microgreen"))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Fruits"))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Vegetables"))
+        binding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
+        replaceFragment(PlantListDataFragment())
+
     }
+
+    fun replaceFragment(fragment: Fragment?) {
+        val fm = requireActivity().supportFragmentManager
+        val ft = fm.beginTransaction()
+        ft.replace(R.id.frame_container, fragment!!)
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        ft.commit()
+    }
+
 }

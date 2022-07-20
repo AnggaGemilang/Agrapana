@@ -28,6 +28,9 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <!-- Customize your theme here. -->
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="Theme.NialonicGC.TurnOn" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -54,7 +57,7 @@
         <item name="colorPrimaryVariant">@color/green_50</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/green_20</item>
+        <item name="colorSecondary">@color/green_light_2</item>
         <item name="colorSecondaryVariant">@color/green_50</item>
         <item name="colorOnSecondary">@color/black</item>
         <item name="android:textColorSecondary">@color/black</item>

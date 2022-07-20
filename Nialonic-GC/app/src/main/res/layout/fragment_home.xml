@@ -128,7 +128,6 @@
                                 android:text="Plant Name"
                                 android:textSize="18sp"
                                 android:layout_marginTop="13dp"
-                                android:layout_alignParentStart="true"
                                 android:textColor="@color/white" />
 
                             <TextView
@@ -138,7 +137,6 @@
                                 android:textSize="23sp"
                                 android:layout_marginTop="2dp"
                                 android:textColor="@color/white"
-                                android:layout_alignParentStart="true"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -147,7 +145,6 @@
                                 android:text="Started Planting"
                                 android:textSize="18sp"
                                 android:layout_marginTop="12dp"
-                                android:layout_alignParentStart="true"
                                 android:textColor="@color/white" />
 
                             <TextView
@@ -157,7 +154,6 @@
                                 android:textSize="19sp"
                                 android:layout_marginTop="2dp"
                                 android:textColor="@color/white"
-                                android:layout_alignParentStart="true"
                                 android:textStyle="bold" />
 
                         </LinearLayout>
@@ -193,6 +189,7 @@
                     android:layout_height="match_parent" >
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/no1"
                         android:layout_width="wrap_content"
                         android:layout_height="188dp"
                         android:layout_row="0"

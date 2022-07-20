@@ -24,7 +24,7 @@
         android:elevation="6dp"
         app:area_margin="8dp"
         app:outer_color="@color/green_50"
-        app:inner_color="@color/green_20"
+        app:inner_color="@color/green_light_2"
         app:text_style="bold"
         app:border_radius="50dp"
         app:text="Swipe To Turn On"

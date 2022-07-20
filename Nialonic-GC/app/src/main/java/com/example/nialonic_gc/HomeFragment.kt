@@ -55,5 +55,9 @@ class HomeFragment : Fragment() {
             }
             true
         }
+        binding.no1.setOnLongClickListener {
+            activity?.let { it1 -> SeekPlantFragment().show(it1.supportFragmentManager, "BottomSheetDialog") }
+            false
+        }
     }
 }
