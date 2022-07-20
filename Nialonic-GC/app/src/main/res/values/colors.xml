@@ -3,8 +3,9 @@
     <color name="main_color">#E5E0B8</color>
     <color name="text_color">#5F604D</color>
 
-    <color name="green_50">#517866</color>
     <color name="green_75">#2B503F</color>
+    <color name="green_50">#517866</color>
+    <color name="green_40">#517866</color>
     <color name="green_20">#B7C498</color>
 
     <color name="grey_50">#8C555555</color>

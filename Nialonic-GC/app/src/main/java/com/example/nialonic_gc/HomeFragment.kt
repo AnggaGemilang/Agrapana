@@ -24,7 +24,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.toolbar.inflateMenu(R.menu.action_nav1)
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId) {

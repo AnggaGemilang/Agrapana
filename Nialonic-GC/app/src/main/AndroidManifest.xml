@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.nialonic_gc">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,15 +18,7 @@
         <activity
             android:name=".SettingActivity"
             android:exported="true"
-            android:label="@string/title_activity_settings"
-            android:theme="@style/Theme.NialonicGC.Setting" >
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
+            android:theme="@style/Theme.NialonicGC.Setting" />
         <activity
             android:name=".TurnOnActivity"
             android:exported="true"
@@ -44,12 +38,21 @@
             android:exported="true"
             android:noHistory="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.NialonicGC.SplashScreen" />
+            android:theme="@style/Theme.NialonicGC.SplashScreen" >
+
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.NialonicGC.Main" />
+            android:theme="@style/Theme.NialonicGC.Main" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
     </application>
 
 </manifest>

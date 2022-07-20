@@ -39,7 +39,7 @@ class PresetFragment : Fragment() {
                     builder.setPositiveButton("YES") { _, _ ->
                         startActivity(Intent(context, TurnOnActivity::class.java))
                     }
-                    builder.setNegativeButton("NO") { dialog, which ->
+                    builder.setNegativeButton("NO") { dialog, _ ->
                         dialog.dismiss()
                     }
                     val alert = builder.create()
