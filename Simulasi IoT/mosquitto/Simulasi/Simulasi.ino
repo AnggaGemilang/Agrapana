@@ -1,12 +1,12 @@
-#include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
+#include <ESP8266WiFi.h>
 
 #define MSG_BUFFER_SIZE (50)
 #define LEDPin D1
 #define LightSensorPin A0
-#define WIFI_SSID "angga"
-#define WIFI_PASSWORD "anggaganteng"
+#define WIFI_SSID "JTK Dosen"
+#define WIFI_PASSWORD "jaringan"
 #define MQTT_SERVER "test.mosquitto.org"
 
 WiFiClient espClient;
@@ -15,10 +15,11 @@ PubSubClient client(espClient);
 unsigned long lastMsg = 0;
 char msg[MSG_BUFFER_SIZE];
 int value = 0;
+char led[25] = "";
+char output[200];
 
 void setup_wifi() {
-  delay(10);
-  Serial.println();
+  delay(10);  
   Serial.print("Connecting to ");
   Serial.println(WIFI_SSID);
 
@@ -42,15 +43,17 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
-  for (int i = 0; i < length; i++) {
-    Serial.print((char)payload[i]);
-  }
-  Serial.println((char)payload[0]);
-  if ((char)payload[0] == '0') {
-    digitalWrite(LEDPin, LOW);
-  } 
-  if ((char)payload[0] == '1') {
+  
+  StaticJsonDocument<128> doc;
+  deserializeJson(doc, payload, length);
+  strlcpy(led, doc["configuration"]["led"] | "default", sizeof(led));
+  Serial.print(led);  
+  Serial.println();
+  if (!strcmp(led, "on")) {
     digitalWrite(LEDPin, HIGH);
+  } 
+  if (!strcmp(led, "off")) {
+    digitalWrite(LEDPin, LOW);
   }
 }
 
@@ -76,6 +79,8 @@ void reconnect() {
 void setup() {
   Serial.begin(9600);
 
+  StaticJsonDocument<128> doc;
+
   pinMode(LEDPin, OUTPUT);
   pinMode(LightSensorPin, INPUT);
   
@@ -97,9 +102,17 @@ void loop() {
     
     lastMsg = now;
     ++value;
-    snprintf (msg, MSG_BUFFER_SIZE, "value #%ld", lightData);
+    snprintf (msg, MSG_BUFFER_SIZE, "%ld", lightData);
+
+    StaticJsonDocument<96> doc;
+
+    doc["configuration"]["led"] = led;
+    doc["monitoring"]["light"] = msg;
+    
+    serializeJson(doc, output); 
+       
     Serial.print("Publish message: ");
-    Serial.println(msg);
-    client.publish("arceniter", msg);
+    Serial.println(output);
+    client.publish("arceniter", output);
   }
 }
