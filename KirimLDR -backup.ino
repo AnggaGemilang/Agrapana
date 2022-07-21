@@ -5,8 +5,8 @@
 #define MSG_BUFFER_SIZE (50)
 #define LEDPin D1
 #define LightSensorPin A0
-#define WIFI_SSID "JTK Dosen"
-#define WIFI_PASSWORD "jaringan"
+#define WIFI_SSID "angga"
+#define WIFI_PASSWORD "anggaganteng"
 #define MQTT_SERVER "test.mosquitto.org"
 
 WiFiClient espClient;
@@ -15,7 +15,6 @@ PubSubClient client(espClient);
 unsigned long lastMsg = 0;
 char msg[MSG_BUFFER_SIZE];
 int value = 0;
-char led[25] = "";
 
 void setup_wifi() {
   delay(10);  
@@ -42,17 +41,15 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
-  
-  StaticJsonDocument<128> doc;
-  deserializeJson(doc, payload, length);
-  strlcpy(led, doc["configuration"]["led"] | "default", sizeof(led));
-  Serial.print(led);  
+  for (int i = 0; i < length; i++) {
+    Serial.print((char)payload[i]);
+  }
   Serial.println();
-  if (!strcmp(led, "on")) {
-    digitalWrite(LEDPin, HIGH);
-  } 
-  if (!strcmp(led, "off")) {
+  if ((char)payload[0] == '0') {
     digitalWrite(LEDPin, LOW);
+  } 
+  if ((char)payload[0] == '1') {
+    digitalWrite(LEDPin, HIGH);
   }
 }
 
@@ -78,7 +75,7 @@ void reconnect() {
 void setup() {
   Serial.begin(9600);
 
-  StaticJsonDocument<128> doc;
+  Serial.println("Hello World");
 
   pinMode(LEDPin, OUTPUT);
   pinMode(LightSensorPin, INPUT);
@@ -95,15 +92,15 @@ void loop() {
   }
   client.loop();
 
-//  unsigned long now = millis();
-//  if (now - lastMsg > 2000) {
-//    int lightData = analogRead(LightSensorPin);
-//    
-//    lastMsg = now;
-//    ++value;
-//    snprintf (msg, MSG_BUFFER_SIZE, "value #%ld", lightData);
-//    Serial.print("Publish message: ");
-//    Serial.println(msg);
-//    client.publish("arceniter", msg);
-//  }
+  unsigned long now = millis();
+  if (now - lastMsg > 2000) {
+    int lightData = analogRead(LightSensorPin);
+    
+    lastMsg = now;
+    ++value;
+    snprintf (msg, MSG_BUFFER_SIZE, "value #%ld", lightData);
+    Serial.print("Publish message: ");
+    Serial.println(msg);
+    client.publish("arceniter", msg);
+  }
 }
