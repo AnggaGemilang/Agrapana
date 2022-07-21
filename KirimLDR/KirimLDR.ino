@@ -5,8 +5,8 @@
 #define MSG_BUFFER_SIZE (50)
 #define LEDPin D1
 #define LightSensorPin A0
-#define WIFI_SSID "SPEEDY"
-#define WIFI_PASSWORD "suherman"
+#define WIFI_SSID "angga"
+#define WIFI_PASSWORD "anggaganteng"
 #define MQTT_SERVER "test.mosquitto.org"
 
 WiFiClient espClient;
@@ -45,7 +45,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   for (int i = 0; i < length; i++) {
     Serial.print((char)payload[i]);
   }
-  Serial.println();
+  Serial.println((char)payload[0]);
   if ((char)payload[0] == '0') {
     digitalWrite(LEDPin, LOW);
   } 
