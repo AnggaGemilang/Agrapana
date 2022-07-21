@@ -16,6 +16,7 @@ unsigned long lastMsg = 0;
 char msg[MSG_BUFFER_SIZE];
 int value = 0;
 char led[25] = "";
+char output[200];
 
 void setup_wifi() {
   delay(10);  
@@ -95,15 +96,23 @@ void loop() {
   }
   client.loop();
 
-//  unsigned long now = millis();
-//  if (now - lastMsg > 2000) {
-//    int lightData = analogRead(LightSensorPin);
-//    
-//    lastMsg = now;
-//    ++value;
-//    snprintf (msg, MSG_BUFFER_SIZE, "value #%ld", lightData);
-//    Serial.print("Publish message: ");
-//    Serial.println(msg);
-//    client.publish("arceniter", msg);
-//  }
+  unsigned long now = millis();
+  if (now - lastMsg > 2000) {
+    int lightData = analogRead(LightSensorPin);
+    
+    lastMsg = now;
+    ++value;
+    snprintf (msg, MSG_BUFFER_SIZE, "%ld", lightData);
+
+    StaticJsonDocument<96> doc;
+
+    doc["configuration"]["led"] = led;
+    doc["monitoring"]["light"] = msg;
+    
+    serializeJson(doc, output); 
+       
+    Serial.print("Publish message: ");
+    Serial.println(output);
+    client.publish("arceniter", output);
+  }
 }
