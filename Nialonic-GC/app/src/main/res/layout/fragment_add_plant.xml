@@ -67,7 +67,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="Create Nwe Configuration" />
+                android:text="Create New Configuration" />
 
             <TextView
                 android:id="@+id/title_configuration_name"

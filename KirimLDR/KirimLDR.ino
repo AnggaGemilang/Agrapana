@@ -61,9 +61,9 @@ void reconnect() {
     clientId += String(random(0xffff), HEX);
     if (client.connect(clientId.c_str())) {
       Serial.println("connected");
-      client.publish("plantsgrowthchamber/lightsensor", "started light sensor");
-      client.publish("plantsgrowthchamber/led", "started LED");
-      client.subscribe("plantsgrowthchamber/led");
+      client.publish("arceniter", "started light sensor");
+      client.publish("arceniter", "started LED");
+      client.subscribe("arceniter");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -100,6 +100,6 @@ void loop() {
     snprintf (msg, MSG_BUFFER_SIZE, "value #%ld", lightData);
     Serial.print("Publish message: ");
     Serial.println(msg);
-    client.publish("plantsgrowthchamber/lightsensor", msg);
+    client.publish("arceniter", msg);
   }
 }

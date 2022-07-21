@@ -23,6 +23,7 @@
         <entry key="app/src/main/res/drawable/edge_border_bottom_blue.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/edge_border_bottom_green.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/edittext_style.xml" value="0.164" />
+        <entry key="app/src/main/res/drawable/gradient_chart.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/gradient_yellow.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_drop_down_24.xml" value="0.164" />
@@ -35,6 +36,7 @@
         <entry key="app/src/main/res/drawable/white_button_template.xml" value="0.155" />
         <entry key="app/src/main/res/layout-v23/activity_onboarding.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/acctivity_onboarding.xml" value="0.20208333333333334" />
+        <entry key="app/src/main/res/layout/activity_detail.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_onboarding.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/activity_setting.xml" value="0.35733695652173914" />
@@ -50,6 +52,7 @@
         <entry key="app/src/main/res/layout/settings_activity.xml" value="0.2477355072463768" />
         <entry key="app/src/main/res/layout/style_spinner.xml" value="0.1" />
         <entry key="app/src/main/res/layout/textview_spinner_padding.xml" value="0.20208333333333334" />
+        <entry key="app/src/main/res/menu/action_detail.xml" value="0.203125" />
         <entry key="app/src/main/res/menu/action_nav1.xml" value="0.20208333333333334" />
         <entry key="app/src/main/res/menu/action_nav2.xml" value="0.20208333333333334" />
         <entry key="app/src/main/res/xml/preferences.xml" value="0.4263990267639903" />

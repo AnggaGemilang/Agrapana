@@ -59,5 +59,8 @@ class HomeFragment : Fragment() {
             activity?.let { it1 -> SeekPlantFragment().show(it1.supportFragmentManager, "BottomSheetDialog") }
             false
         }
+        binding.no1.setOnClickListener {
+            startActivity(Intent(context, DetailActivity::class.java))
+        }
     }
 }
