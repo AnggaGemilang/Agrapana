@@ -5,8 +5,8 @@
 #define MSG_BUFFER_SIZE (50)
 #define LEDPin D1
 #define LightSensorPin A0
-#define WIFI_SSID "JTK Dosen"
-#define WIFI_PASSWORD "jaringan"
+#define WIFI_SSID "SPEEDY"
+#define WIFI_PASSWORD "suherman"
 #define MQTT_SERVER "test.mosquitto.org"
 
 WiFiClient espClient;
