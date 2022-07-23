@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         binding.bottomNavigationBar.background = null
-        binding.bottomNavigationBar.menu.getItem(2).isEnabled = false
+        binding.bottomNavigationBar.menu.getItem(3).isEnabled = false
 
         binding.fab.setOnClickListener {
             AddPlantFragment().show(supportFragmentManager, "BottomSheetDialog")
@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
 
         val plantListFragment = PlantListFragment()
         val presetFragment = PresetFragment()
-        val favoriteFragment = FavoriteFragment()
 
         binding.bottomNavigationBar.setOnNavigationItemSelectedListener() {
             when(it.itemId){
@@ -47,9 +46,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.presets -> {
                     makeCurrentFragment(presetFragment)
-                }
-                R.id.favorite -> {
-                    makeCurrentFragment(favoriteFragment)
                 }
             }
             true

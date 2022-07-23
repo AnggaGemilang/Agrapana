@@ -6,17 +6,17 @@
 #define LEDPin D1
 #define LightSensorPin A0
 #define ssid "angga"
-#define password "anggaganteng"
+#define password "4ngg4Gem!l4ng"
 
-#define mqtt_broker "broker.emqx.io"
-#define mqtt_username "emqx"
-#define mqtt_password "public"
-#define mqtt_port 1883
+//#define mqtt_broker "broker.emqx.io"
+//#define mqtt_username "emqx"
+//#define mqtt_password "public"
+//#define mqtt_port 1883
 
-//#define mqtt_broker "e18cd11e.us-east-1.emqx.cloud"
-//#define mqtt_username "AnggaGemilang"
-//#define mqtt_password "4ngg4Gem!l4ng"
-//#define mqtt_port 15089
+#define mqtt_broker "e18cd11e.us-east-1.emqx.cloud"
+#define mqtt_username "AnggaGemilang"
+#define mqtt_password "4ngg4Gem!l4ng"
+#define mqtt_port 15089
 
 WiFiClient wifiClient;
 PubSubClient mqttClient(wifiClient);
@@ -113,6 +113,7 @@ void loop() {
     Serial.print("Publish message: ");
     Serial.println(output);
     mqttClient.publish("arceniter", output);
+    delay(6000);
   }
 
 }

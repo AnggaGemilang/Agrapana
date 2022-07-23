@@ -15,7 +15,7 @@
             android:orientation="vertical"
             android:background="@color/green_50"
             android:paddingTop="10dp"
-            android:paddingBottom="25dp" >
+            android:paddingBottom="15dp" >
 
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"

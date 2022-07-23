@@ -61,9 +61,10 @@ class PresetFragment : Fragment() {
             true
         }
 
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Fruit"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Microgreen"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Fruits"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Vegetables"))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Ornamental"))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Vegetable"))
         binding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
         replaceFragment(PresetDataFragment())
 

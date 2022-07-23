@@ -1,13 +1,17 @@
 package com.example.nialonic_gc
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.example.nialonic_gc.databinding.FragmentHomeBinding
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 class HomeFragment : Fragment() {
@@ -22,9 +26,10 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.toolbar.inflateMenu(R.menu.action_nav1)
+        binding.toolbar.inflateMenu(R.menu.action_nav3)
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId) {
                 R.id.power -> {
@@ -39,6 +44,9 @@ class HomeFragment : Fragment() {
                     }
                     val alert = builder.create()
                     alert.show()
+                }
+                R.id.detail -> {
+                    startActivity(Intent(requireContext(), DetailActivity::class.java))
                 }
                 R.id.about -> {
                     AlertDialog.Builder(requireContext())
@@ -62,5 +70,10 @@ class HomeFragment : Fragment() {
         binding.no1.setOnClickListener {
             startActivity(Intent(context, DetailActivity::class.java))
         }
+
+        val dtf = DateTimeFormatter.ofPattern("dd MMM")
+        val localDate = LocalDate.now()
+        binding.txtTanggalHome.text = dtf.format(localDate)
+
     }
 }

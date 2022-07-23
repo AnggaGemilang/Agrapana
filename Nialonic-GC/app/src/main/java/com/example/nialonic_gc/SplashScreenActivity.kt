@@ -43,7 +43,7 @@ class SplashScreenActivity : AppCompatActivity() {
                 Log.d("Progress bar", progressStatus.toString())
                 binding!!.progressBar.progress = progressStatus
                 try {
-                    Thread.sleep(50)
+                    Thread.sleep(30)
                 } catch (e: InterruptedException) {
                     e.printStackTrace()
                 }

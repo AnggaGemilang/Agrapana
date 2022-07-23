@@ -2,18 +2,21 @@ package com.example.nialonic_gc
 
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
-import androidx.appcompat.app.AlertDialog
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.nialonic_gc.databinding.ActivityDetailBinding
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
+
 
 class DetailActivity : AppCompatActivity() {
 
@@ -22,6 +25,7 @@ class DetailActivity : AppCompatActivity() {
     lateinit var lineDataSet: LineDataSet
     lateinit var lineData: LineData
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
@@ -37,7 +41,6 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
         supportActionBar?.setDisplayShowHomeEnabled(true);
         supportActionBar?.title = ""
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         lineList = ArrayList()
         lineList.add(Entry(10f, 1f))
@@ -54,6 +57,11 @@ class DetailActivity : AppCompatActivity() {
         lineDataSet.setDrawFilled(true)
         lineDataSet.fillDrawable = ContextCompat.getDrawable(this, R.drawable.gradient_chart)
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val decor = window.decorView
+            decor.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -68,8 +76,8 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.favorite -> {
-
+            R.id.camera -> {
+                startActivity(Intent(this, CameraWebview::class.java))
             }
             R.id.done -> {
 

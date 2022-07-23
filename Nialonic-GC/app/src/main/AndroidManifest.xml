@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.nialonic_gc">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
@@ -20,6 +20,11 @@
         android:theme="@style/Theme.NialonicGC"
         tools:targetApi="31">
         <activity
+            android:name=".CameraWebview"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NialonicGC.Webview" />
+        <activity
             android:name=".SettingActivity"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -27,14 +32,19 @@
         <activity
             android:name=".TurnOnActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
             android:noHistory="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.NialonicGC.TurnOn" />
         <activity
             android:name=".DetailActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.NialonicGC.Detail">
+            android:theme="@style/Theme.NialonicGC.Detail" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 
@@ -47,26 +57,21 @@
         <activity
             android:name=".SplashScreenActivity"
             android:exported="true"
-            android:noHistory="false"
+            android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.NialonicGC.SplashScreen" >
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:theme="@style/Theme.NialonicGC.SplashScreen">
 
         </activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.NialonicGC.Main" >
+            android:theme="@style/Theme.NialonicGC.Main">
 
         </activity>
 
         <service android:name="org.eclipse.paho.android.service.MqttService" />
-
     </application>
 
 </manifest>

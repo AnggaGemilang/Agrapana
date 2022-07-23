@@ -27,6 +27,11 @@
         <entry key="app/src/main/res/drawable/gradient_yellow.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_drop_down_24.xml" value="0.164" />
+        <entry key="app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.164" />
+        <entry key="app/src/main/res/drawable/ic_baseline_gas_meter_24.xml" value="0.164" />
+        <entry key="app/src/main/res/drawable/ic_baseline_monitor_24.xml" value="0.164" />
+        <entry key="app/src/main/res/drawable/ic_baseline_opacity_24.xml" value="0.164" />
+        <entry key="app/src/main/res/drawable/ic_baseline_whatshot_24.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/indicator_selector.xml" value="0.155" />
         <entry key="app/src/main/res/drawable/navbar_selector.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/selected.xml" value="0.155" />
@@ -36,6 +41,7 @@
         <entry key="app/src/main/res/drawable/white_button_template.xml" value="0.155" />
         <entry key="app/src/main/res/layout-v23/activity_onboarding.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/acctivity_onboarding.xml" value="0.20208333333333334" />
+        <entry key="app/src/main/res/layout/activity_camera_webview.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/activity_detail.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_onboarding.xml" value="0.203125" />
@@ -55,6 +61,8 @@
         <entry key="app/src/main/res/menu/action_detail.xml" value="0.203125" />
         <entry key="app/src/main/res/menu/action_nav1.xml" value="0.20208333333333334" />
         <entry key="app/src/main/res/menu/action_nav2.xml" value="0.20208333333333334" />
+        <entry key="app/src/main/res/menu/action_nav3.xml" value="0.203125" />
+        <entry key="app/src/main/res/menu/action_webview.xml" value="0.203125" />
         <entry key="app/src/main/res/xml/preferences.xml" value="0.4263990267639903" />
         <entry key="app/src/main/res/xml/root_preferences.xml" value="0.12552083333333333" />
       </map>

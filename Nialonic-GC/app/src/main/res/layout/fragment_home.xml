@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     tools:context=".HomeFragment">
 
     <androidx.core.widget.NestedScrollView
@@ -215,20 +214,21 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/black"
                                 android:gravity="center"
-                                android:textSize="15sp"
-                                android:text="Temperatur" />
+                                android:textSize="16sp"
+                                android:text="Temperature" />
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="80dp"
-                                android:layout_marginTop="5dp"
-                                android:src="@drawable/ic_baseline_whatshot_24" />
+                                android:layout_height="75dp"
+                                android:layout_marginTop="6dp"
+                                android:src="@drawable/ic_baseline_local_fire_department_24" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:textSize="15sp"
+                                android:textSize="18sp"
+                                android:layout_marginTop="2dp"
                                 android:text="36°C" />
 
                         </LinearLayout>
@@ -261,21 +261,22 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/black"
                                 android:gravity="center"
-                                android:textSize="15sp"
-                                android:text="Temperatur" />
+                                android:textSize="16sp"
+                                android:text="Ph Meter" />
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="80dp"
-                                android:layout_marginTop="5dp"
-                                android:src="@drawable/ic_baseline_whatshot_24" />
+                                android:layout_height="75dp"
+                                android:layout_marginTop="6dp"
+                                android:src="@drawable/ic_baseline_contactless_24" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:textSize="15sp"
-                                android:text="36°C" />
+                                android:layout_marginTop="2dp"
+                                android:textSize="18sp"
+                                android:text="7 Ph" />
 
                         </LinearLayout>
 
@@ -308,21 +309,22 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/black"
                                 android:gravity="center"
-                                android:textSize="15sp"
-                                android:text="Temperatur" />
+                                android:textSize="16sp"
+                                android:text="Gas CO2" />
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="80dp"
-                                android:layout_marginTop="5dp"
-                                android:src="@drawable/ic_baseline_whatshot_24" />
+                                android:layout_height="75dp"
+                                android:layout_marginTop="6dp"
+                                android:src="@drawable/ic_baseline_gas_meter_24" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:textSize="15sp"
-                                android:text="36°C" />
+                                android:layout_marginTop="2dp"
+                                android:textSize="18sp"
+                                android:text="420.99 ppm" />
 
                         </LinearLayout>
 
@@ -355,20 +357,21 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/black"
                                 android:gravity="center"
-                                android:textSize="15sp"
-                                android:text="Temperatur" />
+                                android:textSize="16sp"
+                                android:text="Nutrition" />
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="80dp"
-                                android:layout_marginTop="5dp"
-                                android:src="@drawable/ic_baseline_whatshot_24" />
+                                android:layout_height="75dp"
+                                android:layout_marginTop="6dp"
+                                android:src="@drawable/ic_baseline_energy_savings_leaf_24" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:textSize="15sp"
+                                android:layout_marginTop="2dp"
+                                android:textSize="18sp"
                                 android:text="36°C" />
 
                         </LinearLayout>
@@ -403,21 +406,22 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/black"
                                 android:gravity="center"
-                                android:textSize="15sp"
-                                android:text="Temperatur" />
+                                android:textSize="16sp"
+                                android:text="Nutrition Volume" />
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="80dp"
-                                android:layout_marginTop="5dp"
-                                android:src="@drawable/ic_baseline_whatshot_24" />
+                                android:layout_height="75dp"
+                                android:layout_marginTop="6dp"
+                                android:src="@drawable/ic_baseline_opacity_24" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:textSize="15sp"
-                                android:text="36°C" />
+                                android:layout_marginTop="2dp"
+                                android:textSize="18sp"
+                                android:text="5 ml" />
 
                         </LinearLayout>
 
@@ -451,21 +455,22 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/black"
                                 android:gravity="center"
-                                android:textSize="15sp"
-                                android:text="Temperatur" />
+                                android:textSize="16sp"
+                                android:text="Growth Lamp" />
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="80dp"
-                                android:layout_marginTop="5dp"
-                                android:src="@drawable/ic_baseline_whatshot_24" />
+                                android:layout_height="75dp"
+                                android:layout_marginTop="6dp"
+                                android:src="@drawable/ic_baseline_lightbulb_24" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:textSize="15sp"
-                                android:text="36°C" />
+                                android:layout_marginTop="2dp"
+                                android:textSize="18sp"
+                                android:text="On" />
 
                         </LinearLayout>
 

@@ -1,0 +1,33 @@
+Parameter yang dimonitor
+
+Suhu (37 derajat) ======
+Gas (angka ppm) 
+Ph (0 - 14) ======
+Nutrisi (?) 
+Volume tangki nutrisi (mili liter) ======
+Lampu ======
++ camera (foto / video kondisi terkini)
++ Countdown panen
+
+======================
+
+Parameter yang dikontrol
+
+Suhu (37 derajat) 
+Lampu (on/off) 
+Katup co2 (buka tutup) 
+Nutrisi (naik turun ph / - / + / masukkin angka)
++Pump (on/of manual atau otomati setiap 30 mnt sekali)
++mode semai (lampu off, penyiraman 2 kali sehari, 
++mode tumbuh (parameter yg atas)
+
+AI 
++periksa jenis tanaman
++jumlah daun
++mode save data tanaman
+
+======================
+
+Dashboard & detail ngakses mqtt
+halaman2 lain ngakses firebase
+seek fragment hanya untuk ngakses firebase
