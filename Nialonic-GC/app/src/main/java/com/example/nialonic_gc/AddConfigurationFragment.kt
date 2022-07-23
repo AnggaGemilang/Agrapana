@@ -23,8 +23,21 @@ class AddConfigurationFragment : RoundedBottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.designBottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
-
+        
+        binding.nutritionManuallyChk.setOnCheckedChangeListener { _, isChecked ->
+            binding.nutrition.isEnabled = !isChecked
+            if(isChecked){
+                binding.nutritionManually.visibility = View.VISIBLE
+            } else {
+                binding.nutritionManually.visibility = View.GONE
+            }
+        }
     }
+
+    override fun onStart() {
+        super.onStart()
+        val behavior = BottomSheetBehavior.from(requireView().parent as View)
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+    }
+
 }

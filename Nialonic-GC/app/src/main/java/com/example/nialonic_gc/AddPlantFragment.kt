@@ -43,22 +43,43 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
             binding.type.isEnabled = !isChecked
         }
 
+        binding.nutritionManuallyChk.setOnCheckedChangeListener { _, isChecked ->
+            binding.nutrition.isEnabled = !isChecked
+            if(isChecked){
+                binding.nutritionManually.visibility = View.VISIBLE
+            } else {
+                binding.nutritionManually.visibility = View.GONE
+            }
+        }
+
         binding.newConfiguration.setOnCheckedChangeListener { _, isChecked ->
             binding.type.isEnabled = !isChecked
             if(isChecked){
-                binding.category.visibility = View.VISIBLE
                 binding.titleCategory.visibility = View.VISIBLE
-                binding.configurationName.visibility = View.VISIBLE
-                binding.titleConfigurationName.visibility = View.VISIBLE
+                binding.category.visibility = View.VISIBLE
+                binding.titlePlantName.visibility = View.VISIBLE
+                binding.plantName.visibility = View.VISIBLE
+                binding.titleNutrition.visibility = View.VISIBLE
+                binding.nutrition.visibility = View.VISIBLE
+                binding.nutritionManuallyChk.visibility = View.VISIBLE
+                binding.titleDefaultImage.visibility = View.VISIBLE
+                binding.defaultImage.visibility = View.VISIBLE
                 binding.configurationItem1.visibility = View.VISIBLE
                 binding.configurationItem2.visibility = View.VISIBLE
+                binding.configurationItem3.visibility = View.VISIBLE
             } else {
-                binding.category.visibility = View.GONE
                 binding.titleCategory.visibility = View.GONE
-                binding.configurationName.visibility = View.GONE
-                binding.titleConfigurationName.visibility = View.GONE
+                binding.category.visibility = View.GONE
+                binding.titlePlantName.visibility = View.GONE
+                binding.plantName.visibility = View.GONE
+                binding.titleNutrition.visibility = View.GONE
+                binding.nutrition.visibility = View.GONE
+                binding.nutritionManuallyChk.visibility = View.GONE
+                binding.titleDefaultImage.visibility = View.GONE
+                binding.defaultImage.visibility = View.GONE
                 binding.configurationItem1.visibility = View.GONE
                 binding.configurationItem2.visibility = View.GONE
+                binding.configurationItem3.visibility = View.GONE
             }
         }
     }

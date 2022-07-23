@@ -372,7 +372,7 @@
                                 android:gravity="center"
                                 android:layout_marginTop="2dp"
                                 android:textSize="18sp"
-                                android:text="36°C" />
+                                android:text="200.99 ppm" />
 
                         </LinearLayout>
 

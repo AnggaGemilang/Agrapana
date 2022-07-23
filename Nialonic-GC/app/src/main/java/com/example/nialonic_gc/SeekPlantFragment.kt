@@ -24,9 +24,5 @@ class SeekPlantFragment : RoundedBottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnDetails.setOnClickListener {
-            startActivity(Intent(requireContext(), DetailActivity::class.java))
-        }
-
     }
 }
