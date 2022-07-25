@@ -4,10 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialogFragment
@@ -37,7 +39,46 @@ class AddConfigurationFragment : RoundedBottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+        if(arguments?.getString("status") == "update"){
+            binding.title.text = "Edit Configuration"
+            binding.btnSubmit.text = "Edit Configuration"
+            binding.plantName.text = Editable.Factory.getInstance().newEditable(arguments?.getString("plantName"))
+            binding.temperature.text = Editable.Factory.getInstance().newEditable(arguments?.getString("temperature"))
+            binding.seedling.text = Editable.Factory.getInstance().newEditable(arguments?.getString("seedlingTime"))
+            binding.grow.text = Editable.Factory.getInstance().newEditable(arguments?.getString("growTime"))
+            binding.category.setSelection(
+                (binding.category.adapter as ArrayAdapter<String>).getPosition(
+                    arguments?.getString("category")
+                )
+            )
+            binding.growthLamp.setSelection(
+                (binding.growthLamp.adapter as ArrayAdapter<String>).getPosition(
+                    arguments?.getString("growthLamp")
+                )
+            )
+            binding.gasValve.setSelection(
+                (binding.gasValve.adapter as ArrayAdapter<String>).getPosition(
+                    arguments?.getString("gasValve")
+                )
+            )
+            binding.pump.setSelection(
+                (binding.pump.adapter as ArrayAdapter<String>).getPosition(
+                    arguments?.getString("pump")
+                )
+            )
+            if(arguments?.getString("nutrition") == "+" || arguments?.getString("nutrition") == "-"){
+                binding.nutrition.setSelection(
+                    (binding.nutrition.adapter as ArrayAdapter<String>).getPosition(
+                        arguments?.getString("nutrition")
+                    )
+                )
+            } else {
+                binding.nutrition.isEnabled = false
+                binding.nutritionManuallyChk.isChecked = true
+                binding.nutritionManually.visibility = View.VISIBLE
+                binding.nutritionManually.text = Editable.Factory.getInstance().newEditable(arguments?.getString("nutrition"))
+            }
+        }
         binding.nutritionManuallyChk.setOnCheckedChangeListener { _, isChecked ->
             binding.nutrition.isEnabled = !isChecked
             if(isChecked){
@@ -52,51 +93,78 @@ class AddConfigurationFragment : RoundedBottomSheetDialogFragment() {
         }
 
         binding.btnSubmit.setOnClickListener {
+            if(arguments?.getString("status") == "update") {
+                val name = binding.plantName.text.toString().trim()
+                val category = binding.category.selectedItem.toString()
+                val nutrition = if(binding.nutritionManuallyChk.isChecked){
+                    binding.nutritionManually.text.toString().trim()
+                } else {
+                    binding.nutrition.selectedItem.toString()
+                }
+                val growthLamp = binding.growthLamp.selectedItem.toString()
+                val gasValve = binding.gasValve.selectedItem.toString()
+                val temperature = binding.temperature.text.toString().trim()
+                val pump = binding.pump.selectedItem.toString()
+                val seedlingTime = binding.seedling.text.toString().trim()
+                val growTime = binding.grow.text.toString().trim()
+                val preset = Preset()
+                preset.id = arguments?.getString("id")!!
+                preset.plantName = name
+                preset.category = category
+                preset.nutrition = nutrition
+                preset.growthLamp = growthLamp
+                preset.gasValve = gasValve
+                preset.temperature = temperature
+                preset.pump = pump
+                preset.seedlingTime = seedlingTime
+                preset.growTime = growTime
+                viewModel.updatePreset(preset)
+            } else {
+                val fileName = UUID.randomUUID().toString() +".png"
+                val refStorage = FirebaseStorage.getInstance().reference.child("thumbnail_preset/$fileName")
+                refStorage.putFile(linkImage)
+                    .addOnSuccessListener { taskSnapshot ->
+                        taskSnapshot.storage.downloadUrl.addOnSuccessListener {
+                            val imageUrl = it.toString()
+                            val name = binding.plantName.text.toString().trim()
+                            val category = binding.category.selectedItem.toString()
+                            val nutrition = if(binding.nutritionManuallyChk.isChecked){
+                                binding.nutritionManually.text.toString().trim()
+                            } else {
+                                binding.nutrition.selectedItem.toString()
+                            }
+                            val growthLamp = binding.growthLamp.selectedItem.toString()
+                            val gasValve = binding.gasValve.selectedItem.toString()
+                            val temperature = binding.temperature.text.toString().trim()
+                            val pump = binding.pump.selectedItem.toString()
+                            val seedlingTime = binding.seedling.text.toString().trim()
+                            val growTime = binding.grow.text.toString().trim()
+                            val preset = Preset()
+                            preset.plantName = name
+                            preset.category = category
+                            preset.nutrition = nutrition
+                            preset.growthLamp = growthLamp
+                            preset.gasValve = gasValve
+                            preset.temperature = temperature
+                            preset.pump = pump
+                            preset.seedlingTime = seedlingTime
+                            preset.growTime = growTime
+                            preset.imageUrl = imageUrl
 
-            val fileName = UUID.randomUUID().toString() +".png"
-            val refStorage = FirebaseStorage.getInstance().reference.child("thumbnail_preset/$fileName")
-
-            refStorage.putFile(linkImage)
-                .addOnSuccessListener { taskSnapshot ->
-                    taskSnapshot.storage.downloadUrl.addOnSuccessListener {
-                        val imageUrl = it.toString()
-                        val name = binding.plantName.text.toString().trim()
-                        val category = binding.category.selectedItem.toString()
-                        val nutrition = if(binding.nutritionManuallyChk.isChecked){
-                            binding.nutritionManually.text.toString().trim()
-                        } else {
-                            binding.nutrition.selectedItem.toString()
+                            viewModel.addPreset(preset)
                         }
-                        val growthLamp = binding.growthLamp.selectedItem.toString()
-                        val gasValve = binding.gasValve.selectedItem.toString()
-                        val temperature = binding.temperature.text.toString().trim()
-                        val pump = binding.pump.selectedItem.toString()
-                        val seedlingTime = binding.seedling.text.toString().trim()
-                        val growTime = binding.grow.text.toString().trim()
-
-                        val preset = Preset()
-                        preset.plantName = name
-                        preset.category = category
-                        preset.nutrition = nutrition
-                        preset.growthLamp = growthLamp
-                        preset.gasValve = gasValve
-                        preset.temperature = temperature
-                        preset.pump = pump
-                        preset.seedlingTime = seedlingTime
-                        preset.growTime = growTime
-                        preset.imageUrl = imageUrl
-
-                        viewModel.addPreset(preset)
                     }
-                }
-                .addOnFailureListener { e ->
-                    Log.d("gagal", e.message.toString())
-                }
-
+                    .addOnFailureListener { e ->
+                        Log.d("gagal", e.message.toString())
+                    }
+            }
             dismiss()
-            Toast.makeText(requireContext(), "Preset has added successfully", Toast.LENGTH_SHORT).show()
+            if(arguments?.getString("status") == "update"){
+                Toast.makeText(requireContext(), "Preset has updated successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Preset has added successfully", Toast.LENGTH_SHORT).show()
+            }
         }
-
     }
 
     override fun onActivityResult(
@@ -114,10 +182,10 @@ class AddConfigurationFragment : RoundedBottomSheetDialogFragment() {
             && data != null
             && data.data != null
         ) {
-            val file_uri = data.data
-            Log.d("gambar1", file_uri!!.toString())
-            binding.txtFilename.text = file_uri.toString().substring(0, 18) + "..."
-            linkImage = file_uri
+            val fileURL = data.data
+            val urlFile = data.data!!.path.toString()
+            binding.txtFilename.text = if(urlFile.length > 21) urlFile.substring(0, 20) + "..." else urlFile
+            linkImage = fileURL!!
         }
     }
 

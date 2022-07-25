@@ -1,5 +1,6 @@
 package com.example.nialonic_gc.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,25 +9,18 @@ import com.google.firebase.database.*
 
 class PresetViewModel : ViewModel() {
 
-    // make database
     private val dbPresets = FirebaseDatabase.getInstance().getReference("presets")
 
-    // create list of author
     private val _presets = MutableLiveData<List<Preset>?>()
     val presets: MutableLiveData<List<Preset>?>
         get() = _presets
 
-    // create single author
     private val _preset = MutableLiveData<Preset>()
     val preset: LiveData<Preset>
         get() = _preset
 
-    // create result
     private val _result = MutableLiveData<Exception?>()
-    val result: LiveData<Exception?>
-        get() = _result
 
-    // fungsi untuk menambahkan data ke firebase realtime database
     fun addPreset(preset: Preset) {
         preset.id = dbPresets.push().key.toString()
         dbPresets.child(preset.id).setValue(preset).addOnCompleteListener {
@@ -38,13 +32,11 @@ class PresetViewModel : ViewModel() {
         }
     }
 
-    // buat event untuk perubahan data untuk realtime update
     private val childEventListener = object : ChildEventListener {
         override fun onCancelled(error: DatabaseError) { }
 
         override fun onChildMoved(snapshot: DataSnapshot, p1: String?) { }
 
-        // update data otomatis ketika data di edit
         override fun onChildChanged(snapshot: DataSnapshot, p1: String?) {
             val preset = snapshot.getValue(Preset::class.java)
             preset?.id = snapshot.key.toString()
@@ -57,7 +49,6 @@ class PresetViewModel : ViewModel() {
             _preset.value = preset!!
         }
 
-        // update data otomatis ketika data ditambahkan
         override fun onChildAdded(snapshot: DataSnapshot, p1: String?) {
             val preset = snapshot.getValue(Preset::class.java)
             preset?.id = snapshot.key.toString()
@@ -65,12 +56,10 @@ class PresetViewModel : ViewModel() {
         }
     }
 
-    // buat fungsi get realtimeupdate
     fun getRealtimeUpdates(type: String) {
         dbPresets.orderByChild("category").equalTo(type).addChildEventListener(childEventListener)
     }
 
-    // buat event untuk menampilkan data di firebase dengan metode fetching
     private val valueEventListener = object : ValueEventListener {
         override fun onCancelled(error: DatabaseError) { }
 
@@ -89,12 +78,10 @@ class PresetViewModel : ViewModel() {
         }
     }
 
-    // fetch author untuk menampilkan data di firebase
     fun fetchPresets(type: String) {
         dbPresets.orderByChild("category").equalTo(type).addListenerForSingleValueEvent(valueEventListener)
     }
 
-    // fungsi update
     fun updatePreset(author: Preset) {
         dbPresets.child(author.id).setValue(author).addOnCompleteListener {
             if(it.isSuccessful) {
@@ -105,7 +92,6 @@ class PresetViewModel : ViewModel() {
         }
     }
 
-    // fungsi delete
     fun deletePreset(preset: Preset) {
         dbPresets.child(preset.id).setValue(null).addOnCompleteListener {
             if(it.isSuccessful) {

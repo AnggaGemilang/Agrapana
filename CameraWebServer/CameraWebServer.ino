@@ -19,11 +19,11 @@
 
 #include "camera_pins.h"
 
-//#define ssid "angga"
-//#define password "4ngg4Gem!l4ng"
+//char* ssid = "angga";
+//char* password = "4ngg4Gem!l4ng";
 
-char* ssid = "angga";
-char* password = "4ngg4Gem!l4ng";
+char* ssid = "Student_Polban";
+char* password = "20polban21";
 
 void startCameraServer();
 

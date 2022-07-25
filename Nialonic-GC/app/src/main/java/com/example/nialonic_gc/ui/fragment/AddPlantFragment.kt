@@ -3,19 +3,12 @@ package com.example.nialonic_gc.ui.fragment
 import android.R
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
-import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialog
 import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialogFragment
 import com.example.nialonic_gc.databinding.FragmentAddPlantBinding
-import com.example.nialonic_gc.databinding.FragmentHomeBinding
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.firebase.database.core.Context
-import java.util.Arrays.asList
 
 class AddPlantFragment : RoundedBottomSheetDialogFragment() {
 

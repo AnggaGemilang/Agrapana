@@ -34,7 +34,11 @@ class PresetFragment : Fragment() {
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId) {
                 R.id.add -> {
-                    activity?.let { it1 -> AddConfigurationFragment().show(it1.supportFragmentManager, "BottomSheetDialog") }
+                    val dialog = AddConfigurationFragment()
+                    val bundle = Bundle()
+                    bundle.putString("status", "tambah")
+                    dialog.arguments = bundle
+                    activity?.let { it1 -> dialog.show(it1.supportFragmentManager, "BottomSheetDialog") }
                 }
                 R.id.power -> {
                     val builder = AlertDialog.Builder(requireContext())

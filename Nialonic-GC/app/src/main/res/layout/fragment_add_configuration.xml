@@ -28,6 +28,7 @@
                 app:cardCornerRadius="50dp" />
 
             <TextView
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -344,7 +345,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
                 android:paddingHorizontal="75dp"
-                android:layout_marginBottom="50dp"
+                android:layout_marginBottom="25dp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_submit"
                 android:drawableLeft="@drawable/ic_baseline_library_add_24"

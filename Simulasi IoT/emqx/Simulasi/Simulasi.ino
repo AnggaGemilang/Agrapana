@@ -5,8 +5,8 @@
 #define MSG_BUFFER_SIZE (50)
 #define LEDPin D1
 #define LightSensorPin A0
-#define ssid "SPEEDY"
-#define password "suherman"
+#define ssid "Student_Polban"
+#define password "20polban21"
 
 //#define mqtt_broker "broker.emqx.io"
 //#define mqtt_username "emqx"
@@ -23,7 +23,6 @@ PubSubClient mqttClient(wifiClient);
 
 unsigned long lastMsg = 0;
 char msg[MSG_BUFFER_SIZE];
-int value = 0;
 char led[25] = "";
 char output[200];
 
@@ -95,12 +94,13 @@ void loop() {
   }
   mqttClient.loop();
 
+
   unsigned long now = millis();
-  if (now - lastMsg > 2000) {
+  if (now - lastMsg > 10000) {
     int lightData = analogRead(LightSensorPin);
 
     lastMsg = now;
-    ++value;
+
     snprintf (msg, MSG_BUFFER_SIZE, "%ld", lightData);
 
     StaticJsonDocument<96> doc;
@@ -113,7 +113,6 @@ void loop() {
     Serial.print("Publish message: ");
     Serial.println(output);
     mqttClient.publish("arceniter", output);
-    delay(6000);
   }
 
 }

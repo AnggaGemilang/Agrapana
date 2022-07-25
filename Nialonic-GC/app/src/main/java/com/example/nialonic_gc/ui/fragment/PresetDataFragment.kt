@@ -1,8 +1,6 @@
 package com.example.nialonic_gc.ui.fragment
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.PopupMenu
 import androidx.appcompat.app.AlertDialog
@@ -71,7 +69,22 @@ class PresetDataFragment(type: String) : Fragment(), PresetsAdapter.TaskListener
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.act_edit -> {
-                    activity?.let { it1 -> AddConfigurationFragment().show(it1.supportFragmentManager, "BottomSheetDialog") }
+                    val dialog = AddConfigurationFragment()
+                    val bundle = Bundle()
+                    bundle.putString("status", "update")
+                    bundle.putString("id", preset.id)
+                    bundle.putString("plantName", preset.plantName)
+                    bundle.putString("category", preset.category)
+                    bundle.putString("imageUrl", preset.imageUrl)
+                    bundle.putString("nutrition", preset.nutrition)
+                    bundle.putString("growthLamp", preset.growthLamp)
+                    bundle.putString("gasValve", preset.gasValve)
+                    bundle.putString("temperature", preset.temperature)
+                    bundle.putString("pump", preset.pump)
+                    bundle.putString("seedlingTime", preset.seedlingTime)
+                    bundle.putString("growTime", preset.growTime)
+                    dialog.arguments = bundle
+                    activity?.let { it1 -> dialog.show(it1.supportFragmentManager, "BottomSheetDialog") }
                 }
                 R.id.act_delete -> {
                     val builder = AlertDialog.Builder(requireContext())
