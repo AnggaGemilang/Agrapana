@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:background="#E5E0B8"
-    tools:context=".OnboardingActivity">
+    tools:context=".ui.activity.OnboardingActivity">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/slider"

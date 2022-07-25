@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "828196369157",
-    "project_id": "nialonic-gc",
-    "storage_bucket": "nialonic-gc.appspot.com"
+    "project_number": "199567644180",
+    "firebase_url": "https://arceniter-app-default-rtdb.firebaseio.com",
+    "project_id": "arceniter-app",
+    "storage_bucket": "arceniter-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:828196369157:android:18ccc7acde2faa6dad7d6c",
+        "mobilesdk_app_id": "1:199567644180:android:9b29dd60bb857abe023901",
         "android_client_info": {
           "package_name": "com.example.nialonic_gc"
         }
       },
       "oauth_client": [
         {
-          "client_id": "828196369157-usq5jg043075qeavgq47bkjedrqpucfs.apps.googleusercontent.com",
+          "client_id": "199567644180-tocogshm7hm82c03ktvn0vgg16rlosad.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDgd7YkMMrmhtDtgk0ZW3dPQ1goz-xV8UY"
+          "current_key": "AIzaSyDqRcSn9jgRxchDZSP28TfKe1HzsgW8Gqo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "828196369157-usq5jg043075qeavgq47bkjedrqpucfs.apps.googleusercontent.com",
+              "client_id": "199567644180-tocogshm7hm82c03ktvn0vgg16rlosad.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

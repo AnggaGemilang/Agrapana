@@ -5,8 +5,8 @@
 #define MSG_BUFFER_SIZE (50)
 #define LEDPin D1
 #define LightSensorPin A0
-#define ssid "angga"
-#define password "4ngg4Gem!l4ng"
+#define ssid "SPEEDY"
+#define password "suherman"
 
 //#define mqtt_broker "broker.emqx.io"
 //#define mqtt_username "emqx"

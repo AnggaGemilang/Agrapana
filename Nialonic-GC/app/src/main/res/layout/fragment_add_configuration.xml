@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".AddPlantFragment">
+    tools:context=".ui.fragment.AddPlantFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -189,7 +189,7 @@
                         android:textSize="14sp" />
 
                     <Spinner
-                        android:id="@+id/cooler_system"
+                        android:id="@+id/gas_valve"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
@@ -322,6 +322,7 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
