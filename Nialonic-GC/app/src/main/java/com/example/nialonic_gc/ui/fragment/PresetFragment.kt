@@ -13,6 +13,7 @@ import com.example.nialonic_gc.databinding.FragmentPresetBinding
 import com.example.nialonic_gc.ui.activity.SettingActivity
 import com.example.nialonic_gc.ui.activity.TurnOnActivity
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
 class PresetFragment : Fragment() {
 
@@ -69,7 +70,21 @@ class PresetFragment : Fragment() {
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Ornamental"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Vegetable"))
         binding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
-        replaceFragment(PresetDataFragment())
+        replaceFragment(PresetDataFragment("Fruit"))
+
+        binding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                when (tab.position) {
+                    0 -> replaceFragment(PresetDataFragment("Fruit"))
+                    1 -> replaceFragment(PresetDataFragment("Microgreen"))
+                    2 -> replaceFragment(PresetDataFragment("Ornamental"))
+                    3 -> replaceFragment(PresetDataFragment("Vegetable"))
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
 
     }
 

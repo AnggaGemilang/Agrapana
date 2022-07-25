@@ -16,7 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="22dp"
-            android:paddingBottom="25dp"
             android:orientation="vertical" >
 
             <androidx.cardview.widget.CardView
@@ -91,16 +90,34 @@
                 app:cardCornerRadius="8dp"
                 android:backgroundTint="#32C4C4C4">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_marginVertical="15dp"
-                    android:layout_marginStart="15dp"
-                    android:paddingHorizontal="20dp"
-                    android:paddingTop="3dp"
-                    android:textColor="@color/black"
-                    android:background="@color/grey_20"
-                    android:text="Choose File"  />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/open"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_marginVertical="15dp"
+                        android:layout_marginStart="15dp"
+                        android:paddingHorizontal="20dp"
+                        android:paddingTop="3dp"
+                        android:textColor="@color/black"
+                        android:background="@color/grey_20"
+                        android:text="Choose File"  />
+
+                    <TextView
+                        android:id="@+id/txt_filename"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="10dp"
+                        android:text="Choose Image" />
+
+                </LinearLayout>
+
 
             </androidx.cardview.widget.CardView>
 
@@ -327,6 +344,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
                 android:paddingHorizontal="75dp"
+                android:layout_marginBottom="50dp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_submit"
                 android:drawableLeft="@drawable/ic_baseline_library_add_24"

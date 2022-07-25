@@ -12,8 +12,8 @@ class PresetViewModel : ViewModel() {
     private val dbPresets = FirebaseDatabase.getInstance().getReference("presets")
 
     // create list of author
-    private val _presets = MutableLiveData<List<Preset>>()
-    val presets: LiveData<List<Preset>>
+    private val _presets = MutableLiveData<List<Preset>?>()
+    val presets: MutableLiveData<List<Preset>?>
         get() = _presets
 
     // create single author
@@ -66,8 +66,8 @@ class PresetViewModel : ViewModel() {
     }
 
     // buat fungsi get realtimeupdate
-    fun getRealtimeUpdates() {
-        dbPresets.addChildEventListener(childEventListener)
+    fun getRealtimeUpdates(type: String) {
+        dbPresets.orderByChild("category").equalTo(type).addChildEventListener(childEventListener)
     }
 
     // buat event untuk menampilkan data di firebase dengan metode fetching
@@ -75,21 +75,23 @@ class PresetViewModel : ViewModel() {
         override fun onCancelled(error: DatabaseError) { }
 
         override fun onDataChange(snapshot: DataSnapshot) {
+            val presets = mutableListOf<Preset>()
             if (snapshot.exists()) {
-                val presets = mutableListOf<Preset>()
-                for (authorSnapshot in snapshot.children) {
-                    val preset = authorSnapshot.getValue(Preset::class.java)
-                    preset?.id = authorSnapshot.key.toString()
+                for (dataSnapshot in snapshot.children) {
+                    val preset = dataSnapshot.getValue(Preset::class.java)
+                    preset?.id = dataSnapshot.key.toString()
                     preset?.let { presets.add(it) }
                 }
+                _presets.value = presets
+            } else {
                 _presets.value = presets
             }
         }
     }
 
     // fetch author untuk menampilkan data di firebase
-    fun fetchPresets() {
-        dbPresets.addListenerForSingleValueEvent(valueEventListener)
+    fun fetchPresets(type: String) {
+        dbPresets.orderByChild("category").equalTo(type).addListenerForSingleValueEvent(valueEventListener)
     }
 
     // fungsi update

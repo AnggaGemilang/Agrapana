@@ -16,4 +16,5 @@ data class Preset(
     var pump: String = "",
     var seedlingTime: String = "",
     var growTime: String = "",
+    var imageUrl: String = "",
 ) : Parcelable

@@ -66,7 +66,21 @@ class PlantListFragment : Fragment() {
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Ornamental"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Vegetable"))
         binding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
-        replaceFragment(PlantListDataFragment())
+        replaceFragment(PlantListDataFragment("Fruit"))
+
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                when (tab.position) {
+                    0 -> replaceFragment(PlantListDataFragment("Fruit"))
+                    1 -> replaceFragment(PlantListDataFragment("Microgreen"))
+                    2 -> replaceFragment(PlantListDataFragment("Ornamental"))
+                    3 -> replaceFragment(PlantListDataFragment("Vegetable"))
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
 
     }
 

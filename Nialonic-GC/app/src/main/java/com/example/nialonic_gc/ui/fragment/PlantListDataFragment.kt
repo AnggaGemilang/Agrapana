@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.nialonic_gc.R
 
-class PlantListDataFragment : Fragment() {
+class PlantListDataFragment(type: String) : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

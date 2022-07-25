@@ -42,8 +42,8 @@ class PresetsAdapter(taskListener: TaskListener) : RecyclerView.Adapter<PresetsA
         }
     }
 
-    fun setPresets(authors: List<Preset>) {
-        this.presets = authors as MutableList<Preset>
+    fun setPresets(presets: List<Preset>) {
+        this.presets = presets as MutableList<Preset>
         notifyDataSetChanged()
     }
 

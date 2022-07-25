@@ -40,10 +40,10 @@
 
     <string-array name="val_plant_category">
         <item>Choose Plant Category</item>
-        <item>Fruits</item>
+        <item>Fruit</item>
         <item>Microgreen</item>
         <item>Ornamental</item>
-        <item>Vegetables</item>
+        <item>Vegetable</item>
     </string-array>
 
 </resources>

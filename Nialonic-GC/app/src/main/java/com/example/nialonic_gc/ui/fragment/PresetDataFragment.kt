@@ -1,6 +1,6 @@
 package com.example.nialonic_gc.ui.fragment
 
-import android.content.Intent
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -15,34 +15,37 @@ import com.example.nialonic_gc.databinding.FragmentPresetDataBinding
 import com.example.nialonic_gc.model.Preset
 import com.example.nialonic_gc.viewmodel.PresetViewModel
 
-
-class PresetDataFragment : Fragment(), PresetsAdapter.TaskListener {
+class PresetDataFragment(type: String) : Fragment(), PresetsAdapter.TaskListener {
 
     private lateinit var binding: FragmentPresetDataBinding
     private lateinit var viewModel: PresetViewModel
     private val adapter = PresetsAdapter(this)
+    private val type = type
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProviders.of(this)[PresetViewModel::class.java]
         binding = FragmentPresetDataBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        initViewModel()
+        viewModel.fetchPresets(type)
+        viewModel.getRealtimeUpdates(type)
         binding.recyclerView.adapter = adapter
-        viewModel.fetchPresets()
-        viewModel.getRealtimeUpdates()
+    }
 
+    private fun initViewModel() {
+        var total: Int = 0
+        viewModel = ViewModelProviders.of(this)[PresetViewModel::class.java]
         viewModel.presets.observe(viewLifecycleOwner, Observer {
-            Log.d("dadang", it.size.toString())
-            if(it.isNotEmpty()){
+            if(it!!.isNotEmpty()){
                 binding.progressBar.visibility = View.GONE
                 binding.mainContent.visibility = View.VISIBLE
+                total = it.size
                 binding.size.text = "Data ditampilkan - " + it.size.toString()
                 adapter.setPresets(it)
             } else {
@@ -52,7 +55,11 @@ class PresetDataFragment : Fragment(), PresetsAdapter.TaskListener {
         })
 
         viewModel.preset.observe(viewLifecycleOwner, Observer {
-            adapter.addPreset(it)
+            if(it != null){
+                total++
+                adapter.addPreset(it)
+                binding.size.text = "Data ditampilkan - " + total++.toString()
+            }
         })
     }
 
@@ -72,6 +79,9 @@ class PresetDataFragment : Fragment(), PresetsAdapter.TaskListener {
                     builder.setMessage("This can be deleted permamently")
                     builder.setPositiveButton("YES") { _, _ ->
                         viewModel.deletePreset(preset)
+                        initViewModel()
+                        viewModel.fetchPresets(type)
+                        viewModel.getRealtimeUpdates(type)
                     }
                     builder.setNegativeButton("NO") { dialog, _ ->
                         dialog.dismiss()
