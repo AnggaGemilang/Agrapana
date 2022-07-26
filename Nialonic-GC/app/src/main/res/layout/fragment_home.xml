@@ -148,6 +148,7 @@
                                 android:textColor="@color/white" />
 
                             <TextView
+                                android:id="@+id/started_planting"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="20-07-2022, 10:00"
@@ -225,6 +226,7 @@
                                 android:src="@drawable/ic_baseline_local_fire_department_24" />
 
                             <TextView
+                                android:id="@+id/val_temperature"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -272,6 +274,7 @@
                                 android:src="@drawable/ic_baseline_contactless_24" />
 
                             <TextView
+                                android:id="@+id/val_ph"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -320,6 +323,7 @@
                                 android:src="@drawable/ic_baseline_gas_meter_24" />
 
                             <TextView
+                                android:id="@+id/val_gas"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -368,6 +372,7 @@
                                 android:src="@drawable/ic_baseline_energy_savings_leaf_24" />
 
                             <TextView
+                                android:id="@+id/val_nutrition"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -417,6 +422,7 @@
                                 android:src="@drawable/ic_baseline_opacity_24" />
 
                             <TextView
+                                android:id="@+id/val_nutrition_volume"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -466,6 +472,7 @@
                                 android:src="@drawable/ic_baseline_lightbulb_24" />
 
                             <TextView
+                                android:id="@+id/val_growth_lamp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"

@@ -57,6 +57,7 @@
             android:orientation="vertical" >
 
             <TextView
+                android:id="@+id/plant_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
@@ -65,6 +66,7 @@
                 android:text="Spinach" />
 
             <TextView
+                android:id="@+id/started_planting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
@@ -105,6 +107,7 @@
                         android:text="Harvest Prediction" />
 
                     <TextView
+                        android:id="@+id/prediction"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="19sp"
@@ -143,6 +146,7 @@
                         android:text="Temperature" />
 
                     <TextView
+                        android:id="@+id/val_temperature"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="22sp"
@@ -181,6 +185,7 @@
                         android:text="Ph Meter" />
 
                     <TextView
+                        android:id="@+id/val_ph"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="22sp"
@@ -219,6 +224,7 @@
                         android:text="Gas CO2" />
 
                     <TextView
+                        android:id="@+id/val_gas"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="22sp"
@@ -257,6 +263,7 @@
                         android:text="Nutrition" />
 
                     <TextView
+                        android:id="@+id/val_nutrition"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="22sp"
@@ -295,6 +302,7 @@
                         android:text="Nutrition Volume" />
 
                     <TextView
+                        android:id="@+id/val_nutrition_volume"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="22sp"
@@ -333,6 +341,7 @@
                         android:text="Growth Lamp" />
 
                     <TextView
+                        android:id="@+id/val_growth_lamp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="22sp"

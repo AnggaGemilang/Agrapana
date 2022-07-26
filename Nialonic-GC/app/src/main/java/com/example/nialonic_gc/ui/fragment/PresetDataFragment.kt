@@ -37,14 +37,14 @@ class PresetDataFragment(type: String) : Fragment(), PresetsAdapter.TaskListener
     }
 
     private fun initViewModel() {
-        var total: Int = 0
+        var total = 0
         viewModel = ViewModelProviders.of(this)[PresetViewModel::class.java]
         viewModel.presets.observe(viewLifecycleOwner, Observer {
             if(it!!.isNotEmpty()){
                 binding.progressBar.visibility = View.GONE
                 binding.mainContent.visibility = View.VISIBLE
                 total = it.size
-                binding.size.text = "Data ditampilkan - " + it.size.toString()
+                binding.size.text = "Showing " + it.size.toString() + " data"
                 adapter.setPresets(it)
             } else {
                 binding.progressBar.visibility = View.GONE
@@ -56,7 +56,7 @@ class PresetDataFragment(type: String) : Fragment(), PresetsAdapter.TaskListener
             if(it != null){
                 total++
                 adapter.addPreset(it)
-                binding.size.text = "Data ditampilkan - " + total++.toString()
+                binding.size.text = "Showing " + total++.toString() + " data"
             }
         })
     }

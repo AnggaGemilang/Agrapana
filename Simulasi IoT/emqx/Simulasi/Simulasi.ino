@@ -5,8 +5,8 @@
 #define MSG_BUFFER_SIZE (50)
 #define LEDPin D1
 #define LightSensorPin A0
-#define ssid "polban_staff"
-#define password "12polban34"
+#define ssid "JTK Dosen"
+#define password "jaringan"
 
 //#define mqtt_broker "broker.emqx.io"
 //#define mqtt_username "emqx"
@@ -37,8 +37,9 @@ char pump[8] = "";
 char modes[10] = "";
 char nutritionConfiguration[10] = "";
 
-char output1[379];
-char output2[567];
+char output1[207];
+char output2[374];
+char output3[213];
 
 void callback(char *topic, byte *payload, unsigned int length) {
   Serial.print("Message arrived [");
@@ -46,24 +47,21 @@ void callback(char *topic, byte *payload, unsigned int length) {
   Serial.print("] ");  
 
   if(strcmp(topic, "arceniter/controlling") == 0){
-    StaticJsonDocument<484> doc;
+    StaticJsonDocument<292> doc;
     deserializeJson(doc, payload, length);
-
-    strlcpy(power, doc["common"]["power"] | "", sizeof(power));
-    strlcpy(is_planting, doc["common"]["is_planting"] | "", sizeof(is_planting));
-    strlcpy(plant_name, doc["common"]["plant_name"] | "", sizeof(plant_name));
-    strlcpy(started_planting, doc["common"]["started_planting"] | "", sizeof(started_planting));
-
-    strlcpy(temperatureConfiguration, doc["configuration"]["temperature"] | "", sizeof(temperatureConfiguration));
-    strlcpy(pump, doc["configuration"]["pump"] | "", sizeof(pump));
-    strlcpy(gas, doc["configuration"]["gas"] | "", sizeof(gas));
-    strlcpy(nutritionConfiguration, doc["configuration"]["nutrition"] | "", sizeof(nutritionConfiguration));
-    strlcpy(modes, doc["configuration"]["mode"] | "", sizeof(modes));
+    strlcpy(temperatureConfiguration, doc["temperature"] | "", sizeof(temperatureConfiguration));
+    strlcpy(pump, doc["pump"] | "", sizeof(pump));
+    strlcpy(gas, doc["gas"] | "", sizeof(gas));
+    strlcpy(nutritionConfiguration, doc["nutrition"] | "", sizeof(nutritionConfiguration));
+    strlcpy(modes, doc["mode"] | "", sizeof(modes));
     
-  } else if(strcmp(topic, "arceniter/monitoring") == 0) {
-    StaticJsonDocument<256> doc;
+  } else if(strcmp(topic, "arceniter/common") == 0){
+    StaticJsonDocument<292> doc;
     deserializeJson(doc, payload, length);
-
+    strlcpy(power, doc["power"] | "", sizeof(power));
+    strlcpy(is_planting, doc["is_planting"] | "", sizeof(is_planting));
+    strlcpy(plant_name, doc["plant_name"] | "", sizeof(plant_name));
+    strlcpy(started_planting, doc["started_planting"] | "", sizeof(started_planting));
   }
 
   Serial.print(power);
@@ -102,8 +100,9 @@ void setup() {
       delay(2000);
     }
   }
-  mqttClient.subscribe("arceniter/controlling");
+  mqttClient.subscribe("arceniter/common");
   mqttClient.subscribe("arceniter/monitoring");  
+  mqttClient.subscribe("arceniter/controlling");
 }
 
 void reconnect() {
@@ -118,6 +117,7 @@ void reconnect() {
       delay(2000);
     }
   }
+  mqttClient.subscribe("arceniter/common");
   mqttClient.subscribe("arceniter/controlling");
   mqttClient.subscribe("arceniter/monitoring");
 }
@@ -137,18 +137,15 @@ void loop() {
 
     snprintf (msg, MSG_BUFFER_SIZE, "%ld", lightData);
 
-    StaticJsonDocument<292> doc1;
+    // =======================================================
 
-    doc1["common"]["power"] = power;
-    doc1["common"]["is_planting"] = is_planting;
-    doc1["common"]["plant_name"] = plant_name;
-    doc1["common"]["started_planting"] = started_planting;
+    StaticJsonDocument<228> doc1;
 
-    doc1["configuration"]["temperature"] = temperatureConfiguration;
-    doc1["configuration"]["pump"] = pump;
-    doc1["configuration"]["gas"] = gas;
-    doc1["configuration"]["nutrition"] = nutritionConfiguration;
-    doc1["configuration"]["mode"] = modes;
+    doc1["temperature"] = temperatureConfiguration;
+    doc1["pump"] = pump;
+    doc1["gas"] = gas;
+    doc1["nutrition"] = nutritionConfiguration;
+    doc1["mode"] = modes;
     
     serializeJson(doc1, output1); 
        
@@ -156,25 +153,37 @@ void loop() {
     Serial.println(output1);
     mqttClient.publish("arceniter/controlling", output1);
 
+    // =======================================================
+
     StaticJsonDocument<356> doc2;
 
-    doc2["common"]["power"] = power;
-    doc2["common"]["is_planting"] = is_planting;
-    doc2["common"]["plant_name"] = plant_name;
-    doc2["common"]["started_planting"] = started_planting;    
-
-    doc2["monitoring"]["temperature"] = msg;
-    doc2["monitoring"]["ph"] = msg;
-    doc2["monitoring"]["gas"] = msg;
-    doc2["monitoring"]["nutrition"] = msg;
-    doc2["monitoring"]["nutritionVolume"] = msg;
-    doc2["monitoring"]["growth_lamp"] = "on";
+    doc2["temperature"] = msg;
+    doc2["ph"] = msg;
+    doc2["gas"] = msg;
+    doc2["nutrition"] = msg;
+    doc2["nutrition_volume"] = msg;
+    doc2["growth_lamp"] = "on";
         
     serializeJson(doc2, output2); 
        
     Serial.print("Publish message: ");
     Serial.println(output2);
     mqttClient.publish("arceniter/monitoring", output2);
+
+    // ======================================================
+
+    StaticJsonDocument<128> doc3;
+
+    doc3["power"] = power;
+    doc3["is_planting"] = is_planting;
+    doc3["plant_name"] = plant_name;
+    doc3["started_planting"] = started_planting;
+
+    serializeJson(doc3, output3); 
+       
+    Serial.print("Publish message: ");
+    Serial.println(output3);
+    mqttClient.publish("arceniter/common", output3);    
     
   }
 

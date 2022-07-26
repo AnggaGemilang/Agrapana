@@ -14,9 +14,12 @@ import com.example.nialonic_gc.*
 import com.example.nialonic_gc.config.MQTT_HOST
 import com.example.nialonic_gc.helper.MqttClientHelper
 import com.example.nialonic_gc.databinding.FragmentHomeBinding
+import com.example.nialonic_gc.model.Common
+import com.example.nialonic_gc.model.Monitoring
 import com.example.nialonic_gc.ui.activity.DetailActivity
 import com.example.nialonic_gc.ui.activity.SettingActivity
 import com.example.nialonic_gc.ui.activity.TurnOnActivity
+import com.google.gson.Gson
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
 import org.eclipse.paho.client.mqttv3.MqttMessage
@@ -93,7 +96,8 @@ class HomeFragment : Fragment() {
         mqttClient.setCallback(object : MqttCallbackExtended {
             override fun connectComplete(b: Boolean, s: String) {
                 Log.w("Debug", "Connection to host connected:\n'$MQTT_HOST'")
-                mqttClient.subscribe("arceniter")
+                mqttClient.subscribe("arceniter/common")
+                mqttClient.subscribe("arceniter/monitoring")
             }
             override fun connectionLost(throwable: Throwable) {
                 Log.w("Debug", "Connection to host lost:\n'$MQTT_HOST'")
@@ -101,9 +105,19 @@ class HomeFragment : Fragment() {
             @Throws(Exception::class)
             override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
                 Log.w("Debug", "Message received from host '$MQTT_HOST': $mqttMessage")
-//                textViewNumMsgs.text = ("${textViewNumMsgs.text.toString().toInt() + 1}")
-//                val str: String = "------------"+ Calendar.getInstance().time +"-------------\n$mqttMessage\n${textViewMsgPayload.text}"
-//                textViewMsgPayload.text = str
+                if(topic == "arceniter/common"){
+                    val common = Gson().fromJson(mqttMessage.toString(), Common::class.java)
+                    binding.plantName.text = common.plant_name
+                    binding.startedPlanting.text = common.started_planting
+                } else if (topic == "arceniter/monitoring"){
+                    val monitoring = Gson().fromJson(mqttMessage.toString(), Monitoring::class.java)
+                    binding.valTemperature.text = monitoring.temperature
+                    binding.valPh.text = monitoring.ph
+                    binding.valGas.text = monitoring.gas
+                    binding.valNutrition.text = monitoring.nutrition
+                    binding.valNutritionVolume.text = monitoring.nutrition_volume
+                    binding.valGrowthLamp.text = monitoring.growth_lamp
+                }
             }
 
             override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
