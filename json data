@@ -35,11 +35,12 @@ controlling
 {
   "common": {
     "power": "on",
-    "is_planting": "yes"
+    "is_planting": "yes",
+    "plant_name": "spinach",
+    "started_planting": "20-07-2022, 10:00"
   },
   "configuration": {
     "temperature": "27",
-    "growth_lamp": "off",
     "co2_valve": "open",
     "pump": "on",
     "nutrition": "27",
