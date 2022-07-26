@@ -37,26 +37,17 @@ class PresetDataFragment(type: String) : Fragment(), PresetsAdapter.TaskListener
     }
 
     private fun initViewModel() {
-        var total = 0
         viewModel = ViewModelProviders.of(this)[PresetViewModel::class.java]
         viewModel.presets.observe(viewLifecycleOwner, Observer {
             if(it!!.isNotEmpty()){
                 binding.progressBar.visibility = View.GONE
                 binding.mainContent.visibility = View.VISIBLE
-                total = it.size
                 binding.size.text = "Showing " + it.size.toString() + " data"
                 adapter.setPresets(it)
             } else {
+                binding.mainContent.visibility = View.GONE
                 binding.progressBar.visibility = View.GONE
                 binding.notFound.visibility = View.VISIBLE
-            }
-        })
-
-        viewModel.preset.observe(viewLifecycleOwner, Observer {
-            if(it != null){
-                total++
-                adapter.addPreset(it)
-                binding.size.text = "Showing " + total++.toString() + " data"
             }
         })
     }
@@ -74,6 +65,7 @@ class PresetDataFragment(type: String) : Fragment(), PresetsAdapter.TaskListener
                     bundle.putString("status", "update")
                     bundle.putString("id", preset.id)
                     bundle.putString("plantName", preset.plantName)
+                    bundle.putString("imageURL", preset.imageUrl)
                     bundle.putString("category", preset.category)
                     bundle.putString("imageUrl", preset.imageUrl)
                     bundle.putString("nutrition", preset.nutrition)
@@ -94,7 +86,6 @@ class PresetDataFragment(type: String) : Fragment(), PresetsAdapter.TaskListener
                         viewModel.deletePreset(preset)
                         initViewModel()
                         viewModel.fetchPresets(type)
-                        viewModel.getRealtimeUpdates(type)
                     }
                     builder.setNegativeButton("NO") { dialog, _ ->
                         dialog.dismiss()

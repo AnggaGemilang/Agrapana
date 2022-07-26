@@ -1,6 +1,7 @@
 package com.example.nialonic_gc.ui.fragment
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.nialonic_gc.*
 import com.example.nialonic_gc.config.MQTT_HOST
@@ -88,7 +90,6 @@ class HomeFragment : Fragment() {
         val dtf = DateTimeFormatter.ofPattern("dd MMM")
         val localDate = LocalDate.now()
         binding.txtTanggalHome.text = dtf.format(localDate)
-
         setMqttCallBack()
     }
 
@@ -107,19 +108,18 @@ class HomeFragment : Fragment() {
                 Log.w("Debug", "Message received from host '$MQTT_HOST': $mqttMessage")
                 if(topic == "arceniter/common"){
                     val common = Gson().fromJson(mqttMessage.toString(), Common::class.java)
-                    binding.plantName.text = common.plant_name
+                    binding.plantName.text = common.plant_name.capitalize()
                     binding.startedPlanting.text = common.started_planting
                 } else if (topic == "arceniter/monitoring"){
                     val monitoring = Gson().fromJson(mqttMessage.toString(), Monitoring::class.java)
-                    binding.valTemperature.text = monitoring.temperature
-                    binding.valPh.text = monitoring.ph
-                    binding.valGas.text = monitoring.gas
-                    binding.valNutrition.text = monitoring.nutrition
-                    binding.valNutritionVolume.text = monitoring.nutrition_volume
-                    binding.valGrowthLamp.text = monitoring.growth_lamp
+                    binding.valTemperature.text = monitoring.temperature + "°C"
+                    binding.valPh.text = monitoring.ph + " Ph"
+                    binding.valGas.text = monitoring.gas + " ppm`"
+                    binding.valNutrition.text = monitoring.nutrition + " ppm"
+                    binding.valNutritionVolume.text = monitoring.nutrition_volume + " ml"
+                    binding.valGrowthLamp.text = monitoring.growth_lamp.capitalize()
                 }
             }
-
             override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
                 Log.w("Debug", "Message published to host '$MQTT_HOST'")
             }
@@ -127,7 +127,7 @@ class HomeFragment : Fragment() {
     }
 
     override fun onDestroy() {
-//        if (mqttClient.isConnecteds()) {
+//        if (mqttClient.isConnected()) {
 //            mqttClient.destroy()
 //        }
         super.onDestroy()

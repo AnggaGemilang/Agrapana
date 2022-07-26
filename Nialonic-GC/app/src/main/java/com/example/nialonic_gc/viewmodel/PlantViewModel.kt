@@ -3,28 +3,29 @@ package com.example.nialonic_gc.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.nialonic_gc.model.Plant
 import com.example.nialonic_gc.model.Preset
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 
 
-class PresetViewModel : ViewModel() {
+class PlantViewModel : ViewModel() {
 
-    private val dbPresets = FirebaseDatabase.getInstance().getReference("presets")
+    private val dbPlants = FirebaseDatabase.getInstance().getReference("plants")
 
-    private val _presets = MutableLiveData<List<Preset>?>()
+    private val _plants = MutableLiveData<List<Preset>?>()
     val presets: MutableLiveData<List<Preset>?>
-        get() = _presets
+        get() = _plants
 
-    private val _preset = MutableLiveData<Preset>()
+    private val _plant = MutableLiveData<Preset>()
     val preset: LiveData<Preset>
-        get() = _preset
+        get() = _plant
 
     private val _result = MutableLiveData<Exception?>()
 
-    fun addPreset(preset: Preset) {
-        preset.id = dbPresets.push().key.toString()
-        dbPresets.child(preset.id).setValue(preset).addOnCompleteListener {
+    fun addPlant(preset: Preset) {
+        preset.id = dbPlants.push().key.toString()
+        dbPlants.child(preset.id).setValue(preset).addOnCompleteListener {
             if(it.isSuccessful) {
                 _result.value = null
             } else {
@@ -39,71 +40,65 @@ class PresetViewModel : ViewModel() {
         override fun onChildMoved(snapshot: DataSnapshot, p1: String?) { }
 
         override fun onChildChanged(snapshot: DataSnapshot, p1: String?) {
-            val preset = snapshot.getValue(Preset::class.java)
-            preset?.id = snapshot.key.toString()
-            _preset.value = preset!!
+            val plant = snapshot.getValue(Preset::class.java)
+            plant?.id = snapshot.key.toString()
+            _plant.value = plant!!
         }
 
         override fun onChildRemoved(snapshot: DataSnapshot) {
-            val preset = snapshot.getValue(Preset::class.java)
-            preset?.id = snapshot.key.toString()
-            _preset.value = preset!!
+            val plant = snapshot.getValue(Preset::class.java)
+            plant?.id = snapshot.key.toString()
+            _plant.value = plant!!
         }
 
         override fun onChildAdded(snapshot: DataSnapshot, p1: String?) {
-            val preset = snapshot.getValue(Preset::class.java)
-            preset?.id = snapshot.key.toString()
-            _preset.value = preset!!
+            val plant = snapshot.getValue(Preset::class.java)
+            plant?.id = snapshot.key.toString()
+            _plant.value = plant!!
         }
     }
 
     fun getRealtimeUpdates(type: String) {
-        dbPresets.orderByChild("category").equalTo(type).addChildEventListener(childEventListener)
+        dbPlants.orderByChild("category").equalTo(type).addChildEventListener(childEventListener)
     }
 
     private val valueEventListener = object : ValueEventListener {
         override fun onCancelled(error: DatabaseError) { }
 
         override fun onDataChange(snapshot: DataSnapshot) {
-            val presets = mutableListOf<Preset>()
+            val plants = mutableListOf<Preset>()
             if (snapshot.exists()) {
                 for (dataSnapshot in snapshot.children) {
                     val preset = dataSnapshot.getValue(Preset::class.java)
                     preset?.id = dataSnapshot.key.toString()
-                    preset?.let { presets.add(it) }
+                    preset?.let { plants.add(it) }
                 }
-                _presets.value = presets
+                _plants.value = plants
             } else {
-                _presets.value = presets
+                _plants.value = plants
             }
         }
     }
 
     fun fetchPresets(type: String) {
-        dbPresets.orderByChild("category").equalTo(type).addListenerForSingleValueEvent(valueEventListener)
+        dbPlants.orderByChild("category").equalTo(type).addListenerForSingleValueEvent(valueEventListener)
     }
 
-    fun updatePreset(preset: Preset) {
-        dbPresets.child(preset.id).setValue(preset).addOnCompleteListener {
+    fun updatePlant(plant: Plant) {
+        dbPlants.child(plant.id).setValue(plant).addOnCompleteListener {
             if(it.isSuccessful) {
                 _result.value = null
-                fetchPresets(preset.category)
+                fetchPresets(plant.category)
             } else {
                 _result.value = it.exception
             }
         }
     }
 
-    fun deletePreset(preset: Preset) {
-        dbPresets.child(preset.id).setValue(null).addOnCompleteListener { it ->
+    fun deletePlant(plant: Plant) {
+        dbPlants.child(plant.id).setValue(null).addOnCompleteListener { it ->
             if(it.isSuccessful) {
-                val storageReference = FirebaseStorage.getInstance()
-                    .getReferenceFromUrl(preset.imageUrl)
-                storageReference.delete().addOnSuccessListener {
-                    _result.value = null
-                }.addOnFailureListener {
-                    _result.value = it
-                }
+
             } else {
                 _result.value = it.exception
             }
@@ -112,7 +107,7 @@ class PresetViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        dbPresets.removeEventListener(childEventListener)
+        dbPlants.removeEventListener(childEventListener)
     }
 
 }

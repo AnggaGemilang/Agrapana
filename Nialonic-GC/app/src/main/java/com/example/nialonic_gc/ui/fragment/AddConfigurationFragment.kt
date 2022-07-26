@@ -25,7 +25,7 @@ class AddConfigurationFragment : RoundedBottomSheetDialogFragment() {
 
     private lateinit var viewModel: PresetViewModel
     private lateinit var binding: FragmentAddConfigurationBinding
-    private lateinit var linkImage: Uri
+    private var linkImage: Uri? = null
     private val GALLERY_REQUEST_CODE = 999
 
     override fun onCreateView(
@@ -118,11 +118,35 @@ class AddConfigurationFragment : RoundedBottomSheetDialogFragment() {
                 preset.pump = pump
                 preset.seedlingTime = seedlingTime
                 preset.growTime = growTime
-                viewModel.updatePreset(preset)
+
+                if(linkImage == null){
+                    preset.imageUrl = arguments?.getString("imageURL")!!
+                    viewModel.updatePreset(preset)
+                } else {
+                    val storageReference = FirebaseStorage.getInstance()
+                        .getReferenceFromUrl(arguments?.getString("imageURL")!!)
+                    storageReference.delete().addOnSuccessListener {
+                        val fileName = UUID.randomUUID().toString() +".png"
+                        val refStorage = FirebaseStorage.getInstance().reference.child("thumbnail_preset/$fileName")
+                        refStorage.putFile(linkImage!!)
+                            .addOnSuccessListener { taskSnapshot ->
+                                taskSnapshot.storage.downloadUrl.addOnSuccessListener {
+                                    val imageUrl = it.toString()
+                                    preset.imageUrl = imageUrl
+                                    viewModel.updatePreset(preset)
+                                }
+                            }
+                            .addOnFailureListener { e ->
+                                Log.d("gagal", e.message.toString())
+                            }
+                    }.addOnFailureListener {
+                        Log.d("gagal", it.message.toString())
+                    }
+                }
             } else {
                 val fileName = UUID.randomUUID().toString() +".png"
                 val refStorage = FirebaseStorage.getInstance().reference.child("thumbnail_preset/$fileName")
-                refStorage.putFile(linkImage)
+                refStorage.putFile(linkImage!!)
                     .addOnSuccessListener { taskSnapshot ->
                         taskSnapshot.storage.downloadUrl.addOnSuccessListener {
                             val imageUrl = it.toString()

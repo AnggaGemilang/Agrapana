@@ -12,17 +12,20 @@
         <entry key="..\:/Folder Angga/PlantsGrowthChamberApp/Nialonic-GC/app/src/main/res/layout/activity_detail.xml" value="0.14722222222222223" />
         <entry key="..\:/Folder Angga/PlantsGrowthChamberApp/Nialonic-GC/app/src/main/res/layout/activity_setting.xml" value="0.19814814814814816" />
         <entry key="..\:/Folder Angga/PlantsGrowthChamberApp/Nialonic-GC/app/src/main/res/layout/fragment_add_configuration.xml" value="0.13148148148148148" />
+        <entry key="..\:/Folder Angga/PlantsGrowthChamberApp/Nialonic-GC/app/src/main/res/layout/fragment_add_plant.xml" value="0.14722222222222223" />
         <entry key="..\:/Folder Angga/PlantsGrowthChamberApp/Nialonic-GC/app/src/main/res/layout/fragment_favorite.xml" value="0.36666666666666664" />
         <entry key="..\:/Folder Angga/PlantsGrowthChamberApp/Nialonic-GC/app/src/main/res/layout/fragment_home.xml" value="0.14722222222222223" />
         <entry key="..\:/Folder Angga/PlantsGrowthChamberApp/Nialonic-GC/app/src/main/res/layout/fragment_plant_list.xml" value="0.14722222222222223" />
         <entry key="..\:/Folder Angga/PlantsGrowthChamberApp/Nialonic-GC/app/src/main/res/layout/fragment_plant_list_data.xml" value="0.14722222222222223" />
         <entry key="..\:/Folder Angga/PlantsGrowthChamberApp/Nialonic-GC/app/src/main/res/layout/fragment_preset.xml" value="0.13148148148148148" />
         <entry key="..\:/Folder Angga/PlantsGrowthChamberApp/Nialonic-GC/app/src/main/res/layout/fragment_preset_data.xml" value="0.36666666666666664" />
+        <entry key="..\:/Folder Angga/PlantsGrowthChamberApp/Nialonic-GC/app/src/main/res/layout/item_plants.xml" value="0.275" />
         <entry key="..\:/Folder Angga/PlantsGrowthChamberApp/Nialonic-GC/app/src/main/res/layout/item_plants_history.xml" value="0.14722222222222223" />
         <entry key="..\:/Folder Angga/PlantsGrowthChamberApp/Nialonic-GC/app/src/main/res/layout/item_presets.xml" value="0.36666666666666664" />
         <entry key="..\:/Folder Angga/PlantsGrowthChamberApp/Nialonic-GC/app/src/main/res/menu/action_detail.xml" value="0.14722222222222223" />
         <entry key="..\:/Folder Angga/PlantsGrowthChamberApp/Nialonic-GC/app/src/main/res/menu/action_nav1.xml" value="0.19814814814814816" />
         <entry key="..\:/Folder Angga/PlantsGrowthChamberApp/Nialonic-GC/app/src/main/res/menu/action_nav2.xml" value="0.13148148148148148" />
+        <entry key="..\:/Folder Angga/PlantsGrowthChamberApp/Nialonic-GC/app/src/main/res/xml/root_preferences.xml" value="0.14722222222222223" />
         <entry key="app/src/main/res/drawable-v24/rounded_all.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/button_radius.xml" value="0.155" />
         <entry key="app/src/main/res/drawable/button_submit.xml" value="0.164" />

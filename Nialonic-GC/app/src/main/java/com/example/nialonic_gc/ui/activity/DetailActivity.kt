@@ -27,7 +27,6 @@ import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
 import org.eclipse.paho.client.mqttv3.MqttMessage
 
-
 class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
@@ -95,16 +94,16 @@ class DetailActivity : AppCompatActivity() {
                 Log.w("Debug", "Message received from host '$MQTT_HOST': $mqttMessage")
                 if(topic == "arceniter/common"){
                     val common = Gson().fromJson(mqttMessage.toString(), Common::class.java)
-                    binding.plantName.text = common.plant_name
-                    binding.startedPlanting.text = "Started Planting : " + common.started_planting
+                    binding.plantName.text = common.plant_name.capitalize()
+                    binding.startedPlanting.text = common.started_planting
                 } else if (topic == "arceniter/monitoring"){
                     val monitoring = Gson().fromJson(mqttMessage.toString(), Monitoring::class.java)
-                    binding.valTemperature.text = monitoring.temperature
-                    binding.valPh.text = monitoring.ph
-                    binding.valGas.text = monitoring.gas
-                    binding.valNutrition.text = monitoring.nutrition
-                    binding.valNutritionVolume.text = monitoring.nutrition_volume
-                    binding.valGrowthLamp.text = monitoring.growth_lamp
+                    binding.valTemperature.text = monitoring.temperature + "°C"
+                    binding.valPh.text = monitoring.ph + " Ph"
+                    binding.valGas.text = monitoring.gas + " ppm`"
+                    binding.valNutrition.text = monitoring.nutrition + " ppm"
+                    binding.valNutritionVolume.text = monitoring.nutrition_volume + " ml"
+                    binding.valGrowthLamp.text = monitoring.growth_lamp.capitalize()
                 }
             }
 

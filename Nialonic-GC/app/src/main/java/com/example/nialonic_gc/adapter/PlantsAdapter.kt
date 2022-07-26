@@ -13,12 +13,11 @@ import com.example.nialonic_gc.R
 import com.example.nialonic_gc.model.Preset
 
 @SuppressLint("NotifyDataSetChanged")
-class PresetsAdapter(taskListener: TaskListener) : RecyclerView.Adapter<PresetsAdapter.MyViewHolder>() {
+class PlantsAdapter(private var taskListener: TaskListener) : RecyclerView.Adapter<PlantsAdapter.MyViewHolder>() {
 
     private var presets = mutableListOf<Preset>()
-    private var taskListener: TaskListener = taskListener
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PresetsAdapter.MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlantsAdapter.MyViewHolder {
         val inflater = LayoutInflater.from(parent.context).inflate(R.layout.item_presets, parent, false)
         return MyViewHolder(inflater)
     }
