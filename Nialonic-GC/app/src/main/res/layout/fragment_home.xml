@@ -413,7 +413,7 @@
                                 android:textColor="@color/black"
                                 android:gravity="center"
                                 android:textSize="16sp"
-                                android:text="Nutrition Volume" />
+                                android:text="Volume" />
 
                             <ImageView
                                 android:layout_width="match_parent"

@@ -174,7 +174,6 @@ class AddConfigurationFragment : RoundedBottomSheetDialogFragment() {
                             preset.seedlingTime = seedlingTime
                             preset.growTime = growTime
                             preset.imageUrl = imageUrl
-
                             viewModel.addPreset(preset)
                         }
                     }

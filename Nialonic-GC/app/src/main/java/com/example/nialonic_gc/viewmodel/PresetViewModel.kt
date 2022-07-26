@@ -22,7 +22,7 @@ class PresetViewModel : ViewModel() {
 
     private val _result = MutableLiveData<Exception?>()
 
-    fun addPreset(preset: Preset) {
+    fun addPreset(preset: Preset): String {
         preset.id = dbPresets.push().key.toString()
         dbPresets.child(preset.id).setValue(preset).addOnCompleteListener {
             if(it.isSuccessful) {
@@ -31,6 +31,7 @@ class PresetViewModel : ViewModel() {
                 _result.value = it.exception
             }
         }
+        return preset.id
     }
 
     private val childEventListener = object : ChildEventListener {
@@ -77,6 +78,10 @@ class PresetViewModel : ViewModel() {
                 _presets.value = presets
             }
         }
+    }
+
+    fun fetchOnePreset(name: String) {
+        dbPresets.orderByChild("plantName").equalTo(name).addListenerForSingleValueEvent(valueEventListener)
     }
 
     fun fetchPresets(type: String) {

@@ -18,6 +18,7 @@ import com.example.nialonic_gc.helper.MqttClientHelper
 import com.example.nialonic_gc.databinding.FragmentHomeBinding
 import com.example.nialonic_gc.model.Common
 import com.example.nialonic_gc.model.Monitoring
+import com.example.nialonic_gc.model.Preset
 import com.example.nialonic_gc.ui.activity.DetailActivity
 import com.example.nialonic_gc.ui.activity.SettingActivity
 import com.example.nialonic_gc.ui.activity.TurnOnActivity
@@ -31,6 +32,7 @@ import java.time.format.DateTimeFormatter
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
+    private var commonMsg = Common()
 
     private val mqttClient by lazy {
         MqttClientHelper(requireContext())
@@ -56,6 +58,8 @@ class HomeFragment : Fragment() {
                     builder.setTitle("Are You Sure?")
                     builder.setMessage("This can be perform the machine")
                     builder.setPositiveButton("YES") { _, _ ->
+                        commonMsg.power = "off"
+                        mqttClient.publish("arceniter/common", Gson().toJson(commonMsg))
                         startActivity(Intent(context, TurnOnActivity::class.java))
                     }
                     builder.setNegativeButton("NO") { dialog, _ ->
@@ -108,6 +112,7 @@ class HomeFragment : Fragment() {
                 Log.w("Debug", "Message received from host '$MQTT_HOST': $mqttMessage")
                 if(topic == "arceniter/common"){
                     val common = Gson().fromJson(mqttMessage.toString(), Common::class.java)
+                    commonMsg = Gson().fromJson(mqttMessage.toString(), Common::class.java)
                     binding.plantName.text = common.plant_name.capitalize()
                     binding.startedPlanting.text = common.started_planting
                 } else if (topic == "arceniter/monitoring"){
