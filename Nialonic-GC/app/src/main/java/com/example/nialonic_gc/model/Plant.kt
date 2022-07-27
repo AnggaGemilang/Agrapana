@@ -7,7 +7,10 @@ import java.util.*
 @Parcelize
 data class Plant(
     var id: String = "",
+    var plantStarted: String = "",
+    var plantEnded: String = "",
     var category: String = "",
     var mode: String = "",
-    var plantType: String = ""
+    var plantType: String = "",
+    var status: String = ""
 ) : Parcelable

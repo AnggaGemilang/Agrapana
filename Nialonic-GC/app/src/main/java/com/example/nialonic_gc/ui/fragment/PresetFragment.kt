@@ -98,7 +98,6 @@ class PresetFragment : Fragment() {
                     3 -> replaceFragment(PresetDataFragment("Vegetable"))
                 }
             }
-
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })

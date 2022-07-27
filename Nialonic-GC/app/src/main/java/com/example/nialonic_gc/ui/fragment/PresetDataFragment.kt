@@ -13,12 +13,11 @@ import com.example.nialonic_gc.databinding.FragmentPresetDataBinding
 import com.example.nialonic_gc.model.Preset
 import com.example.nialonic_gc.viewmodel.PresetViewModel
 
-class PresetDataFragment(type: String) : Fragment(), PresetsAdapter.TaskListener {
+class PresetDataFragment(private val type: String) : Fragment(), PresetsAdapter.TaskListener {
 
     private lateinit var binding: FragmentPresetDataBinding
     private lateinit var viewModel: PresetViewModel
     private val adapter = PresetsAdapter(this)
-    private val type = type
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,8 +37,8 @@ class PresetDataFragment(type: String) : Fragment(), PresetsAdapter.TaskListener
 
     private fun initViewModel() {
         viewModel = ViewModelProviders.of(this)[PresetViewModel::class.java]
-        viewModel.presets.observe(viewLifecycleOwner, Observer {
-            if(it!!.isNotEmpty()){
+        viewModel.presets.observe(viewLifecycleOwner) {
+            if (it!!.isNotEmpty()) {
                 binding.progressBar.visibility = View.GONE
                 binding.mainContent.visibility = View.VISIBLE
                 binding.size.text = "Showing " + it.size.toString() + " data"
@@ -49,7 +48,7 @@ class PresetDataFragment(type: String) : Fragment(), PresetsAdapter.TaskListener
                 binding.progressBar.visibility = View.GONE
                 binding.notFound.visibility = View.VISIBLE
             }
-        })
+        }
     }
 
     override fun onOptionClick(view: View, preset: Preset) {

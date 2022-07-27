@@ -28,6 +28,7 @@ char msg[MSG_BUFFER_SIZE];
 char power[25] = "";
 char is_planting[4] = "";
 char plant_name[25] = "";
+char category[25] = "";
 char started_planting[25] = "";
 
 // configuration
@@ -61,6 +62,7 @@ void callback(char *topic, byte *payload, unsigned int length) {
     strlcpy(power, doc["power"] | "", sizeof(power));
     strlcpy(is_planting, doc["is_planting"] | "", sizeof(is_planting));
     strlcpy(plant_name, doc["plant_name"] | "", sizeof(plant_name));
+    strlcpy(category, doc["category"] | "", sizeof(category));    
     strlcpy(started_planting, doc["started_planting"] | "", sizeof(started_planting));
   }
 
@@ -177,6 +179,7 @@ void loop() {
     doc3["power"] = power;
     doc3["is_planting"] = is_planting;
     doc3["plant_name"] = plant_name;
+    doc3["category"] = category;
     doc3["started_planting"] = started_planting;
 
     serializeJson(doc3, output3); 

@@ -61,7 +61,6 @@ class PresetViewModel : ViewModel() {
     fun getRealtimeUpdates(type: String) {
         dbPresets.orderByChild("category").equalTo(type).addChildEventListener(childEventListener)
     }
-
     private val valueEventListener = object : ValueEventListener {
         override fun onCancelled(error: DatabaseError) { }
 
@@ -82,6 +81,10 @@ class PresetViewModel : ViewModel() {
 
     fun fetchOnePreset(name: String) {
         dbPresets.orderByChild("plantName").equalTo(name).addListenerForSingleValueEvent(valueEventListener)
+    }
+
+    fun getAllDataPreset() {
+        dbPresets.addListenerForSingleValueEvent(valueEventListener)
     }
 
     fun fetchPresets(type: String) {

@@ -1,7 +1,6 @@
 package com.example.nialonic_gc.ui.fragment
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -10,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.nialonic_gc.*
 import com.example.nialonic_gc.config.MQTT_HOST
@@ -18,7 +16,6 @@ import com.example.nialonic_gc.helper.MqttClientHelper
 import com.example.nialonic_gc.databinding.FragmentHomeBinding
 import com.example.nialonic_gc.model.Common
 import com.example.nialonic_gc.model.Monitoring
-import com.example.nialonic_gc.model.Preset
 import com.example.nialonic_gc.ui.activity.DetailActivity
 import com.example.nialonic_gc.ui.activity.SettingActivity
 import com.example.nialonic_gc.ui.activity.TurnOnActivity
@@ -49,7 +46,6 @@ class HomeFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.toolbar.inflateMenu(R.menu.action_nav3)
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId) {

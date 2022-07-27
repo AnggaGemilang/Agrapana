@@ -23,7 +23,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.Gson
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
-import org.eclipse.paho.client.mqttv3.MqttException
 import org.eclipse.paho.client.mqttv3.MqttMessage
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,6 +31,8 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
 
     private lateinit var viewModelPreset: PresetViewModel
     private lateinit var viewModelPlant: PlantViewModel
+    private var presets: List<Preset> = emptyList()
+    private var presetsName = mutableListOf<String>()
 
     private lateinit var binding: FragmentAddPlantBinding
     private var linkImage: Uri? = null
@@ -54,11 +55,21 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.designBottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
-        val listItem = arrayOf("Choose Plant Type", "Item 1", "Item 2", "Item 3")
-        val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, listItem)
-        binding.type.adapter = adapter
 
         setMqttCallBack()
+
+        viewModelPreset.getAllDataPreset()
+        viewModelPreset.presets.observe(viewLifecycleOwner) {
+            if (it!!.isNotEmpty()) {
+                presetsName.add("Choose Plant Type")
+                for (preset in it) {
+                    presetsName.add(preset.plantName)
+                }
+                val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, presetsName)
+                binding.type.adapter = adapter
+                presets = it
+            }
+        }
 
         binding.automatic.setOnCheckedChangeListener { _, isChecked ->
             binding.type.isEnabled = !isChecked
@@ -157,12 +168,6 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
                             controlling.mode = binding.mode.selectedItem.toString()
                             controlling.temperatur = preset.temperature
                             mqttClient.publish("arceniter/controlling", Gson().toJson(controlling))
-
-//                            val plant = Plant()
-//                            plant.category = binding.category.selectedItem.toString()
-//                            plant.plantType = categoryId
-//                            plant.mode = binding.mode.selectedItem.toString()
-//                            viewModelPlant.addPlant(plant)
                         }
                     }
                     .addOnFailureListener { e ->
@@ -171,7 +176,7 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
             } else {
                 val common = Common()
                 common.power = "on"
-                common.plant_name = "Nanang"
+                common.plant_name = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].plantName
                 common.is_planting = "yes"
 
                 val sdf = SimpleDateFormat("dd-M-yyyy, hh:mm")
@@ -179,11 +184,11 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
                 mqttClient.publish("arceniter/common", Gson().toJson(common))
 
                 val controlling = Controlling()
-                controlling.gas = "Nanang"
-                controlling.nutrition = "Nanang"
-                controlling.pump = "Nanang"
+                controlling.gas = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].gasValve
+                controlling.nutrition = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].nutrition
+                controlling.pump = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].pump
                 controlling.mode = binding.mode.selectedItem.toString()
-                controlling.temperatur = "Nanang"
+                controlling.temperatur = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].temperature
                 mqttClient.publish("arceniter/controlling", Gson().toJson(controlling))
             }
             dismiss()

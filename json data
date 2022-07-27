@@ -1,9 +1,17 @@
+power on/off
+tambah tanaman
+plantlist
+preset
+
+===================================================
+
 common
 
 {
   "power": "on",
   "is_planting": "yes",
   "plant_name": "spinach",
+  "category": "microgreen",
   "started_planting": "20-07-2022, 10:00"
 } 
 

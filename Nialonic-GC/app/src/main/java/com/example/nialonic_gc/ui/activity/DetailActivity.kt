@@ -12,12 +12,16 @@ import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProviders
 import com.example.nialonic_gc.R
 import com.example.nialonic_gc.config.MQTT_HOST
 import com.example.nialonic_gc.helper.MqttClientHelper
 import com.example.nialonic_gc.databinding.ActivityDetailBinding
 import com.example.nialonic_gc.model.Common
+import com.example.nialonic_gc.model.Controlling
 import com.example.nialonic_gc.model.Monitoring
+import com.example.nialonic_gc.model.Plant
+import com.example.nialonic_gc.viewmodel.PlantViewModel
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -26,10 +30,16 @@ import com.google.gson.Gson
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
 import org.eclipse.paho.client.mqttv3.MqttMessage
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
+    private lateinit var viewModel: PlantViewModel
+    private var commonMsg =  Common()
+    private var controllingMsg =  Controlling()
     lateinit var lineList: ArrayList<Entry>
     lateinit var lineDataSet: LineDataSet
     lateinit var lineData: LineData
@@ -43,6 +53,8 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel = ViewModelProviders.of(this)[PlantViewModel::class.java]
 
         val w = window
         w.setFlags(
@@ -76,7 +88,6 @@ class DetailActivity : AppCompatActivity() {
         }
 
         setMqttCallBack()
-
     }
 
     private fun setMqttCallBack() {
@@ -85,6 +96,7 @@ class DetailActivity : AppCompatActivity() {
                 Log.w("Debug", "Connection to host connected:\n'$MQTT_HOST'")
                 mqttClient.subscribe("arceniter/common")
                 mqttClient.subscribe("arceniter/monitoring")
+                mqttClient.subscribe("arceniter/controlling")
             }
             override fun connectionLost(throwable: Throwable) {
                 Log.w("Debug", "Connection to host lost:\n'$MQTT_HOST'")
@@ -96,6 +108,7 @@ class DetailActivity : AppCompatActivity() {
                     val common = Gson().fromJson(mqttMessage.toString(), Common::class.java)
                     binding.plantName.text = common.plant_name.capitalize()
                     binding.startedPlanting.text = common.started_planting
+                    commonMsg = common
                 } else if (topic == "arceniter/monitoring"){
                     val monitoring = Gson().fromJson(mqttMessage.toString(), Monitoring::class.java)
                     binding.valTemperature.text = monitoring.temperature + "°C"
@@ -104,6 +117,9 @@ class DetailActivity : AppCompatActivity() {
                     binding.valNutrition.text = monitoring.nutrition + " ppm"
                     binding.valNutritionVolume.text = monitoring.nutrition_volume + " ml"
                     binding.valGrowthLamp.text = monitoring.growth_lamp.capitalize()
+                } else if (topic == "arceniter/controlling"){
+                    val controlling = Gson().fromJson(mqttMessage.toString(), Controlling::class.java)
+                    controllingMsg = controlling
                 }
             }
 
@@ -129,10 +145,36 @@ class DetailActivity : AppCompatActivity() {
                 startActivity(Intent(this, CameraWebviewActivity::class.java))
             }
             R.id.done -> {
+                val plant = Plant()
+                plant.category = "BELUM DIAMBIL"
+                plant.plantType = commonMsg.plant_name
+                plant.mode = controllingMsg.mode
+                plant.plantStarted = commonMsg.started_planting
+                val sdf = SimpleDateFormat("dd-M-yyyy, hh:mm")
+                plant.plantEnded = sdf.format(Date())
+                plant.status = "Done"
+                viewModel.addPlant(plant)
 
+                commonMsg.is_planting = "no"
+                commonMsg.started_planting = ""
+                commonMsg.plant_name = ""
+                mqttClient.publish("arceniter/common", Gson().toJson(commonMsg))
             }
             R.id.cancel -> {
+                val plant = Plant()
+                plant.category = "BELUM DIAMBIL"
+                plant.plantType = commonMsg.plant_name
+                plant.mode = controllingMsg.mode
+                plant.plantStarted = commonMsg.started_planting
+                val sdf = SimpleDateFormat("dd-M-yyyy, hh:mm")
+                plant.plantEnded = sdf.format(Date())
+                plant.status = "Cancelled"
+                viewModel.addPlant(plant)
 
+                commonMsg.is_planting = "no"
+                commonMsg.started_planting = ""
+                commonMsg.plant_name = ""
+                mqttClient.publish("arceniter/common", Gson().toJson(commonMsg))
             }
         }
         return super.onOptionsItemSelected(item)
