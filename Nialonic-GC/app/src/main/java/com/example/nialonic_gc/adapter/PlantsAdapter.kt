@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -36,6 +37,9 @@ class PlantsAdapter(taskListener: TaskListener) : RecyclerView.Adapter<PlantsAda
         holder.wrapper.setOnClickListener {
             taskListener.onDetailClick(it, plants[position])
         }
+        holder.optionMenu.setOnClickListener {
+            taskListener.onOptionClick(it, plants[position])
+        }
     }
 
     fun setPlants(plants: List<Plant>) {
@@ -59,6 +63,7 @@ class PlantsAdapter(taskListener: TaskListener) : RecyclerView.Adapter<PlantsAda
         var tvMode: TextView
         var imageView: ImageView
         var wrapper: LinearLayout
+        var optionMenu: ImageButton
 
         init {
             tvName = view.findViewById(R.id.tv_name)
@@ -67,11 +72,13 @@ class PlantsAdapter(taskListener: TaskListener) : RecyclerView.Adapter<PlantsAda
             tvMode = view.findViewById(R.id.tv_mode)
             imageView = view.findViewById(R.id.thumbnail)
             wrapper = view.findViewById(R.id.wrapper)
+            optionMenu = view.findViewById(R.id.option_menu)
         }
     }
 
     interface TaskListener {
         fun onDetailClick(view: View, plant: Plant)
+        fun onOptionClick(view: View, plant: Plant)
     }
 
 }

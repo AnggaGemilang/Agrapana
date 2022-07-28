@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProviders
 import com.example.nialonic_gc.R
 import com.example.nialonic_gc.config.MQTT_HOST
 import com.example.nialonic_gc.databinding.FragmentPlantListBinding
@@ -17,6 +18,8 @@ import com.example.nialonic_gc.helper.MqttClientHelper.Companion.TAG
 import com.example.nialonic_gc.model.Common
 import com.example.nialonic_gc.ui.activity.SettingActivity
 import com.example.nialonic_gc.ui.activity.TurnOnActivity
+import com.example.nialonic_gc.viewmodel.PlantViewModel
+import com.example.nialonic_gc.viewmodel.PresetViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
@@ -26,6 +29,12 @@ import org.eclipse.paho.client.mqttv3.MqttMessage
 class PlantListFragment : Fragment() {
 
     private lateinit var binding: FragmentPlantListBinding
+    private lateinit var viewModelPlant: PlantViewModel
+    private lateinit var viewModelPreset: PresetViewModel
+    private lateinit var countOfHasBeenPlanted: String
+    private lateinit var countOfNumberPreset: String
+    private lateinit var countOfPlantsHarvested: String
+    private lateinit var countOfPlantsCancelled: String
 
     private var commonMsg = Common()
 
@@ -43,6 +52,10 @@ class PlantListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setMqttCallBack()
+        initViewModel()
+
         binding.toolbar.inflateMenu(R.menu.action_nav1)
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId) {
@@ -52,7 +65,7 @@ class PlantListFragment : Fragment() {
                     builder.setMessage("This can be perform the machine")
                     builder.setPositiveButton("YES") { _, _ ->
                         Log.d(TAG, commonMsg.toString())
-                        setMqttCallBack()
+                        setMqttCallBackPower()
                     }
                     builder.setNegativeButton("NO") { dialog, _ ->
                         dialog.dismiss()
@@ -92,9 +105,61 @@ class PlantListFragment : Fragment() {
                     3 -> replaceFragment(PlantListDataFragment("Vegetable"))
                 }
             }
-
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
+
+
+
+    }
+
+    private fun initViewModel() {
+        viewModelPlant = ViewModelProviders.of(this)[PlantViewModel::class.java]
+        viewModelPlant.plants.observe(viewLifecycleOwner) {
+//            countOfHasBeenPlanted = it.size.toString()
+//            if (it!!.isNotEmpty()) {
+//                for(plant in it){
+//                    if(plant){
+//
+//                    }
+//                }
+//            } else {
+//
+//            }
+        }
+
+        viewModelPreset = ViewModelProviders.of(this)[PresetViewModel::class.java]
+        viewModelPreset.presets.observe(viewLifecycleOwner) {
+            if (it!!.isNotEmpty()) {
+
+            } else {
+
+            }
+        }
+    }
+
+    private fun setMqttCallBackPower() {
+        mqttClient.setCallback(object : MqttCallbackExtended {
+            override fun connectComplete(b: Boolean, s: String) {
+                Log.w("Debug", "Connection to host connected:\n'$MQTT_HOST'")
+                mqttClient.subscribe("arceniter/common")
+            }
+            override fun connectionLost(throwable: Throwable) {
+                Log.w("Debug", "Connection to host lost:\n'$MQTT_HOST'")
+            }
+            @Throws(Exception::class)
+            override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
+                if(topic == "arceniter/common"){
+                    commonMsg = Gson().fromJson(mqttMessage.toString(), Common::class.java)
+                    commonMsg.power = "off"
+                    mqttClient.publish("arceniter/common", Gson().toJson(commonMsg))
+                    mqttClient.destroy()
+                    startActivity(Intent(context, TurnOnActivity::class.java))
+                }
+            }
+            override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
+                Log.w("Debug", "Message published to host '$MQTT_HOST'")
+            }
         })
     }
 
@@ -103,20 +168,15 @@ class PlantListFragment : Fragment() {
             override fun connectComplete(b: Boolean, s: String) {
                 Log.w("Debug", "Connection to host connected:\n'$MQTT_HOST'")
                 mqttClient.subscribe("arceniter/common")
-
             }
             override fun connectionLost(throwable: Throwable) {
                 Log.w("Debug", "Connection to host lost:\n'$MQTT_HOST'")
             }
             @Throws(Exception::class)
             override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
-//                Log.w("Debug", "Message received from host '$MQTT_HOST': $mqttMessage")
                 if(topic == "arceniter/common"){
                     commonMsg = Gson().fromJson(mqttMessage.toString(), Common::class.java)
-                    commonMsg.power = "off"
-                    mqttClient.publish("arceniter/common", Gson().toJson(commonMsg))
-                    mqttClient.destroy()
-                    startActivity(Intent(context, TurnOnActivity::class.java))
+                    binding.tvBeingPlated.text = commonMsg.is_planting.capitalize()
                 }
             }
             override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
@@ -132,5 +192,4 @@ class PlantListFragment : Fragment() {
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
         ft.commit()
     }
-
 }

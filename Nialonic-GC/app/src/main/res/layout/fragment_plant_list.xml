@@ -88,6 +88,7 @@
                                 android:text="Has Been Planted" />
 
                             <TextView
+                                android:id="@+id/tv_been_planted"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textAlignment="center"
@@ -134,7 +135,7 @@
                                 android:text="Number of \nPresets" />
 
                             <TextView
-                                android:id="@+id/txt_task_count"
+                                android:id="@+id/tv_number_preset"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textAlignment="center"
@@ -183,7 +184,7 @@
                             android:text="Being \nPlated?" />
 
                         <TextView
-                            android:id="@+id/txt_on_progress_count"
+                            android:id="@+id/tv_being_plated"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textAlignment="center"
@@ -223,7 +224,7 @@
                             android:text="Plants \nHarvested" />
 
                         <TextView
-                            android:id="@+id/txt_task_submitted_count"
+                            android:id="@+id/tv_plant_harvested"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textAlignment="center"
@@ -262,7 +263,7 @@
                             android:text="Plants \nCanceled" />
 
                         <TextView
-                            android:id="@+id/txt_submitted_late_count"
+                            android:id="@+id/tv_plant_cancelled"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textAlignment="center"

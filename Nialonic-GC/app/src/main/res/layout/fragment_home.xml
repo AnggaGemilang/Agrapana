@@ -15,506 +15,521 @@
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:gravity="center_horizontal|center_vertical" />
 
-                <ImageView
+            <LinearLayout
+                android:id="@+id/main_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="343dp"
-                    android:layout_marginStart="-5dp"
-                    android:layout_marginEnd="-5dp"
-                    android:src="@drawable/header_dashboard" />
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="343dp"
+                        android:layout_marginStart="-5dp"
+                        android:layout_marginEnd="-5dp"
+                        android:src="@drawable/header_dashboard" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical" >
+
+                        <com.google.android.material.appbar.AppBarLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:elevation="0dp"
+                            android:layout_marginTop="25dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@android:color/transparent" >
+
+                            <androidx.appcompat.widget.Toolbar
+                                android:id="@+id/toolbar"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:elevation="0dp"
+                                android:background="@android:color/transparent"
+                                android:minHeight="?attr/actionBarSize">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Dashboard"
+                                    android:textSize="19sp"
+                                    android:textStyle="bold"
+                                    android:gravity="center_vertical"
+                                    android:textColor="@color/white"
+                                    android:layout_marginStart="20dp" />
+
+                            </androidx.appcompat.widget.Toolbar>
+
+                        </com.google.android.material.appbar.AppBarLayout>
+
+                        <TextView
+                            android:id="@+id/hello"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Arceniter App"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:layout_marginStart="25dp"
+                            android:textSize="30sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                android:textFontWeight="500"
+                                android:textSize="18sp"
+                                android:text="On Planting" />
+
+                            <TextView
+                                android:id="@+id/txt_tanggal_home"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:background="@color/white"
+                                android:backgroundTint="@color/white"
+                                android:textColor="@color/black"
+                                android:paddingHorizontal="10dp"
+                                android:paddingTop="3dp"
+                                android:paddingBottom="4dp"
+                                android:textStyle="bold"
+                                android:text="28 Nov" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/keterangan_tidak_ada"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_marginTop="15dp"
+                                android:src="@drawable/ic_baseline_data_exploration_24"
+                                app:tint="@color/green_light_20" />
+
+                            <TextView
+                                android:id="@+id/txt_notfound"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="There is no plant"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white" />
+
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/keterangan_ada"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginEnd="20dp" >
+
+                            <ImageView
+                                android:id="@+id/image"
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:src="@drawable/spinach"
+                                android:layout_marginTop="-20dp"
+                                android:layout_alignParentEnd="true" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Plant Name"
+                                    android:textSize="18sp"
+                                    android:layout_marginTop="13dp"
+                                    android:textColor="@color/white" />
+
+                                <TextView
+                                    android:id="@+id/plant_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Spinach"
+                                    android:textSize="23sp"
+                                    android:layout_marginTop="2dp"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Started Planting"
+                                    android:textSize="18sp"
+                                    android:layout_marginTop="12dp"
+                                    android:textColor="@color/white" />
+
+                                <TextView
+                                    android:id="@+id/started_planting"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="20-07-2022, 10:00"
+                                    android:textSize="19sp"
+                                    android:layout_marginTop="2dp"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </FrameLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="-24dp"
+                    android:paddingTop="20dp"
+                    android:paddingHorizontal="20dp"
+                    android:background="@drawable/rounded_bottom_left_right"
                     android:orientation="vertical" >
 
-                    <com.google.android.material.appbar.AppBarLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:elevation="0dp"
-                        android:layout_marginTop="25dp"
-                        android:layout_marginHorizontal="5dp"
-                        android:background="@android:color/transparent" >
-
-                        <androidx.appcompat.widget.Toolbar
-                            android:id="@+id/toolbar"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:elevation="0dp"
-                            android:background="@android:color/transparent"
-                            android:minHeight="?attr/actionBarSize">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Dashboard"
-                                android:textSize="19sp"
-                                android:textStyle="bold"
-                                android:gravity="center_vertical"
-                                android:textColor="@color/white"
-                                android:layout_marginStart="20dp" />
-
-                        </androidx.appcompat.widget.Toolbar>
-
-                    </com.google.android.material.appbar.AppBarLayout>
-
                     <TextView
-                        android:id="@+id/hello"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Arceniter App"
                         android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:layout_marginStart="25dp"
-                        android:textSize="30sp" />
+                        android:textSize="20sp"
+                        android:layout_marginStart="12dp"
+                        android:text="Real-time Monitoring" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="25dp"
-                        android:layout_marginTop="5dp"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"
-                            android:textFontWeight="500"
-                            android:textSize="18sp"
-                            android:text="On Planting" />
-
-                        <TextView
-                            android:id="@+id/txt_tanggal_home"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:background="@color/white"
-                            android:backgroundTint="@color/white"
-                            android:textColor="@color/black"
-                            android:paddingHorizontal="10dp"
-                            android:paddingTop="3dp"
-                            android:paddingBottom="4dp"
-                            android:textStyle="bold"
-                            android:text="28 Nov" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/keterangan_tidak_ada"
+                    <GridLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:layout_gravity="center_horizontal"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
+                        android:columnCount="2"
+                        android:rowCount="3"
+                        android:layout_marginTop="3dp"
+                        android:layout_height="match_parent" >
 
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginTop="15dp"
-                            android:src="@drawable/ic_baseline_data_exploration_24"
-                            app:tint="@color/green_light_20" />
-
-                        <TextView
-                            android:id="@+id/txt_notfound"
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/no1"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="There is no plant"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/white" />
+                            android:layout_height="188dp"
+                            android:layout_row="0"
+                            android:layout_column="0"
+                            android:layout_columnWeight="1"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardUseCompatPadding="true"
+                            app:cardElevation="10dp"
+                            android:outlineSpotShadowColor="@color/black_20"
+                            app:cardCornerRadius="10dp"
+                            android:focusable="true" >
 
-                    </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:orientation="vertical" >
 
-                    <RelativeLayout
-                        android:id="@+id/keterangan_ada"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:layout_marginStart="25dp"
-                        android:layout_marginEnd="20dp" >
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/black"
+                                    android:gravity="center"
+                                    android:textSize="16sp"
+                                    android:text="Temperature" />
 
-                        <ImageView
-                            android:id="@+id/image"
-                            android:layout_width="200dp"
-                            android:layout_height="200dp"
-                            android:src="@drawable/spinach"
-                            android:layout_marginTop="-20dp"
-                            android:layout_alignParentEnd="true" />
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="75dp"
+                                    android:layout_marginTop="6dp"
+                                    android:src="@drawable/ic_baseline_local_fire_department_24" />
 
-                        <LinearLayout
+                                <TextView
+                                    android:id="@+id/val_temperature"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:textSize="18sp"
+                                    android:layout_marginTop="2dp"
+                                    android:text="36°C" />
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical" >
+                            android:layout_height="188dp"
+                            android:layout_row="0"
+                            android:layout_column="1"
+                            android:layout_columnWeight="1"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardUseCompatPadding="true"
+                            app:cardElevation="10dp"
+                            android:outlineSpotShadowColor="@color/black_20"
+                            app:cardCornerRadius="10dp"
+                            android:focusable="true" >
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Plant Name"
-                                android:textSize="18sp"
-                                android:layout_marginTop="13dp"
-                                android:textColor="@color/white" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:orientation="vertical" >
 
-                            <TextView
-                                android:id="@+id/plant_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Spinach"
-                                android:textSize="23sp"
-                                android:layout_marginTop="2dp"
-                                android:textColor="@color/white"
-                                android:textStyle="bold" />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/black"
+                                    android:gravity="center"
+                                    android:textSize="16sp"
+                                    android:text="Ph Meter" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Started Planting"
-                                android:textSize="18sp"
-                                android:layout_marginTop="12dp"
-                                android:textColor="@color/white" />
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="75dp"
+                                    android:layout_marginTop="6dp"
+                                    android:src="@drawable/ic_baseline_contactless_24" />
 
-                            <TextView
-                                android:id="@+id/started_planting"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="20-07-2022, 10:00"
-                                android:textSize="19sp"
-                                android:layout_marginTop="2dp"
-                                android:textColor="@color/white"
-                                android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/val_ph"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:layout_marginTop="2dp"
+                                    android:textSize="18sp"
+                                    android:text="7 Ph" />
 
-                        </LinearLayout>
+                            </LinearLayout>
 
-                    </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="188dp"
+                            android:layout_row="1"
+                            android:layout_column="0"
+                            android:layout_columnWeight="1"
+                            android:clickable="true"
+                            android:layout_marginTop="-10dp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardUseCompatPadding="true"
+                            app:cardElevation="10dp"
+                            android:outlineSpotShadowColor="@color/black_20"
+                            app:cardCornerRadius="10dp"
+                            android:focusable="true"  >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:orientation="vertical" >
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/black"
+                                    android:gravity="center"
+                                    android:textSize="16sp"
+                                    android:text="Gas CO2" />
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="75dp"
+                                    android:layout_marginTop="6dp"
+                                    android:src="@drawable/ic_baseline_gas_meter_24" />
+
+                                <TextView
+                                    android:id="@+id/val_gas"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:layout_marginTop="2dp"
+                                    android:textSize="18sp"
+                                    android:text="420.99 ppm" />
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="188dp"
+                            android:layout_row="1"
+                            android:layout_column="1"
+                            android:layout_marginTop="-10dp"
+                            android:layout_columnWeight="1"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardUseCompatPadding="true"
+                            app:cardElevation="10dp"
+                            android:outlineSpotShadowColor="@color/black_20"
+                            app:cardCornerRadius="10dp"
+                            android:focusable="true" >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:orientation="vertical" >
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/black"
+                                    android:gravity="center"
+                                    android:textSize="16sp"
+                                    android:text="Nutrition" />
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="75dp"
+                                    android:layout_marginTop="6dp"
+                                    android:src="@drawable/ic_baseline_energy_savings_leaf_24" />
+
+                                <TextView
+                                    android:id="@+id/val_nutrition"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:layout_marginTop="2dp"
+                                    android:textSize="18sp"
+                                    android:text="200.99 ppm" />
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="188dp"
+                            android:layout_row="2"
+                            android:layout_column="0"
+                            android:layout_columnWeight="1"
+                            android:layout_marginTop="-10dp"
+                            android:clickable="true"
+                            android:layout_marginBottom="120dp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardUseCompatPadding="true"
+                            app:cardElevation="10dp"
+                            android:outlineSpotShadowColor="@color/black_20"
+                            app:cardCornerRadius="10dp"
+                            android:focusable="true" >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:orientation="vertical" >
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/black"
+                                    android:gravity="center"
+                                    android:textSize="16sp"
+                                    android:text="Volume" />
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="75dp"
+                                    android:layout_marginTop="6dp"
+                                    android:src="@drawable/ic_baseline_opacity_24" />
+
+                                <TextView
+                                    android:id="@+id/val_nutrition_volume"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:layout_marginTop="2dp"
+                                    android:textSize="18sp"
+                                    android:text="5 ml" />
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="188dp"
+                            android:layout_row="2"
+                            android:layout_column="1"
+                            android:layout_marginTop="-10dp"
+                            android:layout_columnWeight="1"
+                            android:clickable="true"
+                            android:layout_marginBottom="120dp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardUseCompatPadding="true"
+                            app:cardElevation="10dp"
+                            android:outlineSpotShadowColor="@color/black_20"
+                            app:cardCornerRadius="10dp"
+                            android:focusable="true" >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:orientation="vertical" >
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/black"
+                                    android:gravity="center"
+                                    android:textSize="16sp"
+                                    android:text="Growth Lamp" />
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="75dp"
+                                    android:layout_marginTop="6dp"
+                                    android:src="@drawable/ic_baseline_lightbulb_24" />
+
+                                <TextView
+                                    android:id="@+id/val_growth_lamp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:layout_marginTop="2dp"
+                                    android:textSize="18sp"
+                                    android:text="On" />
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </GridLayout>
 
                 </LinearLayout>
-
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="-24dp"
-                android:paddingTop="20dp"
-                android:paddingHorizontal="20dp"
-                android:background="@drawable/rounded_bottom_left_right"
-                android:orientation="vertical" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:layout_marginStart="12dp"
-                    android:text="Real-time Monitoring" />
-
-                <GridLayout
-                    android:layout_width="match_parent"
-                    android:columnCount="2"
-                    android:rowCount="3"
-                    android:layout_marginTop="3dp"
-                    android:layout_height="match_parent" >
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/no1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="188dp"
-                        android:layout_row="0"
-                        android:layout_column="0"
-                        android:layout_columnWeight="1"
-                        android:clickable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardUseCompatPadding="true"
-                        app:cardElevation="10dp"
-                        android:outlineSpotShadowColor="@color/black_20"
-                        app:cardCornerRadius="10dp"
-                        android:focusable="true" >
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginVertical="10dp"
-                            android:orientation="vertical" >
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/black"
-                                android:gravity="center"
-                                android:textSize="16sp"
-                                android:text="Temperature" />
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="75dp"
-                                android:layout_marginTop="6dp"
-                                android:src="@drawable/ic_baseline_local_fire_department_24" />
-
-                            <TextView
-                                android:id="@+id/val_temperature"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:textSize="18sp"
-                                android:layout_marginTop="2dp"
-                                android:text="36°C" />
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="188dp"
-                        android:layout_row="0"
-                        android:layout_column="1"
-                        android:layout_columnWeight="1"
-                        android:clickable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardUseCompatPadding="true"
-                        app:cardElevation="10dp"
-                        android:outlineSpotShadowColor="@color/black_20"
-                        app:cardCornerRadius="10dp"
-                        android:focusable="true" >
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginVertical="10dp"
-                            android:orientation="vertical" >
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/black"
-                                android:gravity="center"
-                                android:textSize="16sp"
-                                android:text="Ph Meter" />
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="75dp"
-                                android:layout_marginTop="6dp"
-                                android:src="@drawable/ic_baseline_contactless_24" />
-
-                            <TextView
-                                android:id="@+id/val_ph"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:layout_marginTop="2dp"
-                                android:textSize="18sp"
-                                android:text="7 Ph" />
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="188dp"
-                        android:layout_row="1"
-                        android:layout_column="0"
-                        android:layout_columnWeight="1"
-                        android:clickable="true"
-                        android:layout_marginTop="-10dp"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardUseCompatPadding="true"
-                        app:cardElevation="10dp"
-                        android:outlineSpotShadowColor="@color/black_20"
-                        app:cardCornerRadius="10dp"
-                        android:focusable="true"  >
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginVertical="10dp"
-                            android:orientation="vertical" >
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/black"
-                                android:gravity="center"
-                                android:textSize="16sp"
-                                android:text="Gas CO2" />
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="75dp"
-                                android:layout_marginTop="6dp"
-                                android:src="@drawable/ic_baseline_gas_meter_24" />
-
-                            <TextView
-                                android:id="@+id/val_gas"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:layout_marginTop="2dp"
-                                android:textSize="18sp"
-                                android:text="420.99 ppm" />
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="188dp"
-                        android:layout_row="1"
-                        android:layout_column="1"
-                        android:layout_marginTop="-10dp"
-                        android:layout_columnWeight="1"
-                        android:clickable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardUseCompatPadding="true"
-                        app:cardElevation="10dp"
-                        android:outlineSpotShadowColor="@color/black_20"
-                        app:cardCornerRadius="10dp"
-                        android:focusable="true" >
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginVertical="10dp"
-                            android:orientation="vertical" >
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/black"
-                                android:gravity="center"
-                                android:textSize="16sp"
-                                android:text="Nutrition" />
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="75dp"
-                                android:layout_marginTop="6dp"
-                                android:src="@drawable/ic_baseline_energy_savings_leaf_24" />
-
-                            <TextView
-                                android:id="@+id/val_nutrition"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:layout_marginTop="2dp"
-                                android:textSize="18sp"
-                                android:text="200.99 ppm" />
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="188dp"
-                        android:layout_row="2"
-                        android:layout_column="0"
-                        android:layout_columnWeight="1"
-                        android:layout_marginTop="-10dp"
-                        android:clickable="true"
-                        android:layout_marginBottom="120dp"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardUseCompatPadding="true"
-                        app:cardElevation="10dp"
-                        android:outlineSpotShadowColor="@color/black_20"
-                        app:cardCornerRadius="10dp"
-                        android:focusable="true" >
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginVertical="10dp"
-                            android:orientation="vertical" >
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/black"
-                                android:gravity="center"
-                                android:textSize="16sp"
-                                android:text="Volume" />
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="75dp"
-                                android:layout_marginTop="6dp"
-                                android:src="@drawable/ic_baseline_opacity_24" />
-
-                            <TextView
-                                android:id="@+id/val_nutrition_volume"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:layout_marginTop="2dp"
-                                android:textSize="18sp"
-                                android:text="5 ml" />
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="188dp"
-                        android:layout_row="2"
-                        android:layout_column="1"
-                        android:layout_marginTop="-10dp"
-                        android:layout_columnWeight="1"
-                        android:clickable="true"
-                        android:layout_marginBottom="120dp"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardUseCompatPadding="true"
-                        app:cardElevation="10dp"
-                        android:outlineSpotShadowColor="@color/black_20"
-                        app:cardCornerRadius="10dp"
-                        android:focusable="true" >
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginVertical="10dp"
-                            android:orientation="vertical" >
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/black"
-                                android:gravity="center"
-                                android:textSize="16sp"
-                                android:text="Growth Lamp" />
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="75dp"
-                                android:layout_marginTop="6dp"
-                                android:src="@drawable/ic_baseline_lightbulb_24" />
-
-                            <TextView
-                                android:id="@+id/val_growth_lamp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:layout_marginTop="2dp"
-                                android:textSize="18sp"
-                                android:text="On" />
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                </GridLayout>
 
             </LinearLayout>
 
