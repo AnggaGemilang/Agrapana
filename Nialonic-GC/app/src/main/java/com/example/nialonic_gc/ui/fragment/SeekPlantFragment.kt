@@ -1,10 +1,13 @@
 package com.example.nialonic_gc.ui.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialogFragment
+import com.example.nialonic_gc.R
 import com.example.nialonic_gc.databinding.FragmentSeekPlantBinding
 
 class SeekPlantFragment : RoundedBottomSheetDialogFragment() {
@@ -22,5 +25,20 @@ class SeekPlantFragment : RoundedBottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val plantName = arguments?.getString("plantName")!!
+//        val imgURL = arguments?.getString("imageURL")!!
+        val status = arguments?.getString("status")!!
+        val plantStarted = arguments?.getString("plantingStarted")!!
+        val plantEnded = arguments?.getString("plantingEnded")!!
+
+        binding.tvName.text = plantName
+        if(status == "Done"){
+            binding.tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.green_50))
+        } else {
+            binding.tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.red_50))
+        }
+        binding.tvStatus.text = status.toUpperCase()
+        binding.tvPlantingStarted.text = plantStarted
+        binding.tvPlantingEnded.text = plantEnded
     }
 }

@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
@@ -111,11 +112,11 @@ class DetailActivity : AppCompatActivity() {
                     commonMsg = common
                 } else if (topic == "arceniter/monitoring"){
                     val monitoring = Gson().fromJson(mqttMessage.toString(), Monitoring::class.java)
-                    binding.valTemperature.text = monitoring.temperature + "°C"
+                    binding.valTemperature.text = monitoring.temperature.toString() + "°C"
                     binding.valPh.text = monitoring.ph + " Ph"
-                    binding.valGas.text = monitoring.gas + " ppm`"
-                    binding.valNutrition.text = monitoring.nutrition + " ppm"
-                    binding.valNutritionVolume.text = monitoring.nutrition_volume + " ml"
+                    binding.valGas.text = monitoring.gas.toString() + " ppm`"
+                    binding.valNutrition.text = monitoring.nutrition.toString() + " ppm"
+                    binding.valNutritionVolume.text = monitoring.nutrition_volume.toString() + " ml"
                     binding.valGrowthLamp.text = monitoring.growth_lamp.capitalize()
                 } else if (topic == "arceniter/controlling"){
                     val controlling = Gson().fromJson(mqttMessage.toString(), Controlling::class.java)
@@ -145,36 +146,61 @@ class DetailActivity : AppCompatActivity() {
                 startActivity(Intent(this, CameraWebviewActivity::class.java))
             }
             R.id.done -> {
-                val plant = Plant()
-                plant.category = "BELUM DIAMBIL"
-                plant.plantType = commonMsg.plant_name
-                plant.mode = controllingMsg.mode
-                plant.plantStarted = commonMsg.started_planting
-                val sdf = SimpleDateFormat("dd-M-yyyy, hh:mm")
-                plant.plantEnded = sdf.format(Date())
-                plant.status = "Done"
-                viewModel.addPlant(plant)
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Are You Sure?")
+                builder.setMessage("This can be perform the machine")
+                builder.setPositiveButton("YES") { _, _ ->
+                    val plant = Plant()
+                    plant.name = commonMsg.plant_name
+                    plant.category = commonMsg.category
+                    plant.plantType = commonMsg.plant_name
+                    plant.mode = controllingMsg.mode
+                    plant.plantStarted = commonMsg.started_planting
+                    val sdf = SimpleDateFormat("dd-M-yyyy, hh:mm")
+                    plant.plantEnded = sdf.format(Date())
+                    plant.status = "Done"
+                    viewModel.addPlant(plant)
 
-                commonMsg.is_planting = "no"
-                commonMsg.started_planting = ""
-                commonMsg.plant_name = ""
-                mqttClient.publish("arceniter/common", Gson().toJson(commonMsg))
+                    commonMsg.is_planting = "no"
+                    commonMsg.started_planting = ""
+                    commonMsg.plant_name = ""
+                    commonMsg.category = ""
+                    mqttClient.publish("arceniter/common", Gson().toJson(commonMsg))
+                    startActivity(Intent(this, MainActivity::class.java))
+                }
+                builder.setNegativeButton("NO") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                val alert = builder.create()
+                alert.show()
             }
             R.id.cancel -> {
-                val plant = Plant()
-                plant.category = "BELUM DIAMBIL"
-                plant.plantType = commonMsg.plant_name
-                plant.mode = controllingMsg.mode
-                plant.plantStarted = commonMsg.started_planting
-                val sdf = SimpleDateFormat("dd-M-yyyy, hh:mm")
-                plant.plantEnded = sdf.format(Date())
-                plant.status = "Cancelled"
-                viewModel.addPlant(plant)
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Are You Sure?")
+                builder.setMessage("This can be perform the machine")
+                builder.setPositiveButton("YES") { _, _ ->
+                    val plant = Plant()
+                    plant.name = commonMsg.plant_name
+                    plant.category = commonMsg.category
+                    plant.plantType = commonMsg.plant_name
+                    plant.mode = controllingMsg.mode
+                    plant.plantStarted = commonMsg.started_planting
+                    val sdf = SimpleDateFormat("dd-M-yyyy, hh:mm")
+                    plant.plantEnded = sdf.format(Date())
+                    plant.status = "Cancelled"
+                    viewModel.addPlant(plant)
 
-                commonMsg.is_planting = "no"
-                commonMsg.started_planting = ""
-                commonMsg.plant_name = ""
-                mqttClient.publish("arceniter/common", Gson().toJson(commonMsg))
+                    commonMsg.is_planting = "no"
+                    commonMsg.started_planting = ""
+                    commonMsg.plant_name = ""
+                    mqttClient.publish("arceniter/common", Gson().toJson(commonMsg))
+                    startActivity(Intent(this, MainActivity::class.java))
+                }
+                builder.setNegativeButton("NO") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                val alert = builder.create()
+                alert.show()
             }
         }
         return super.onOptionsItemSelected(item)

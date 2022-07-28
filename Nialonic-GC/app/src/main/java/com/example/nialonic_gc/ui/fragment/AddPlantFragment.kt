@@ -166,7 +166,7 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
                             controlling.nutrition = preset.nutrition
                             controlling.pump = preset.pump
                             controlling.mode = binding.mode.selectedItem.toString()
-                            controlling.temperatur = preset.temperature
+                            controlling.temperature = preset.temperature
                             mqttClient.publish("arceniter/controlling", Gson().toJson(controlling))
                         }
                     }
@@ -177,6 +177,7 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
                 val common = Common()
                 common.power = "on"
                 common.plant_name = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].plantName
+                common.category = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].category
                 common.is_planting = "yes"
 
                 val sdf = SimpleDateFormat("dd-M-yyyy, hh:mm")
@@ -188,7 +189,7 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
                 controlling.nutrition = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].nutrition
                 controlling.pump = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].pump
                 controlling.mode = binding.mode.selectedItem.toString()
-                controlling.temperatur = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].temperature
+                controlling.temperature = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].temperature
                 mqttClient.publish("arceniter/controlling", Gson().toJson(controlling))
             }
             dismiss()

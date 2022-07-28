@@ -66,10 +66,12 @@
         <entry key="app/src/main/res/layout/activity_turn_on.xml" value="0.12681159420289856" />
         <entry key="app/src/main/res/layout/fragment_add_configuration.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/fragment_add_plant.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_plant_list_data.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_preset.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/fragment_preset_data.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/fragment_seek_plant.xml" value="0.203125" />
+        <entry key="app/src/main/res/layout/item_plants.xml" value="0.20260416666666667" />
         <entry key="app/src/main/res/layout/onboarding_screen_layout.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/settings_activity.xml" value="0.2477355072463768" />
         <entry key="app/src/main/res/layout/style_spinner.xml" value="0.1" />
