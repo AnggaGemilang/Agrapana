@@ -168,6 +168,10 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
                             controlling.mode = binding.mode.selectedItem.toString()
                             controlling.temperature = preset.temperature
                             mqttClient.publish("arceniter/controlling", Gson().toJson(controlling))
+
+                            val thumbnail = Thumbnail()
+                            thumbnail.imgURL = imageUrl
+                            mqttClient.publish("arceniter/thumbnail", Gson().toJson(thumbnail))
                         }
                     }
                     .addOnFailureListener { e ->
@@ -191,6 +195,11 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
                 controlling.mode = binding.mode.selectedItem.toString()
                 controlling.temperature = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].temperature
                 mqttClient.publish("arceniter/controlling", Gson().toJson(controlling))
+
+                val thumbnail = Thumbnail()
+                thumbnail.imgURL = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].imageUrl
+
+                mqttClient.publish("arceniter/thumbnail", Gson().toJson(thumbnail))
             }
             dismiss()
             Toast.makeText(requireContext(), "Plant has added successfully", Toast.LENGTH_SHORT).show()

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -12,16 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.nialonic_gc.R
 import com.example.nialonic_gc.model.Plant
-import com.example.nialonic_gc.model.Preset
-import com.example.nialonic_gc.ui.fragment.SeekPlantFragment
 
 @SuppressLint("NotifyDataSetChanged")
-class PlantsAdapter(taskListener: PlantsAdapter.TaskListener) : RecyclerView.Adapter<PlantsAdapter.MyViewHolder>() {
+class PlantsAdapter(taskListener: TaskListener) : RecyclerView.Adapter<PlantsAdapter.MyViewHolder>() {
 
     private var plants = mutableListOf<Plant>()
-    private var taskListener: PlantsAdapter.TaskListener = taskListener
+    private var taskListener: TaskListener = taskListener
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlantsAdapter.MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val inflater = LayoutInflater.from(parent.context).inflate(R.layout.item_plants, parent, false)
         return MyViewHolder(inflater)
     }
@@ -29,13 +26,13 @@ class PlantsAdapter(taskListener: PlantsAdapter.TaskListener) : RecyclerView.Ada
     override fun getItemCount() = plants.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.tvName.text = plants[position].name
+        holder.tvName.text = plants[position].plantType
         holder.tvStatus.text = plants[position].status
         holder.tvMode.text = plants[position].mode + " mode"
         holder.tvEndPlant.text = plants[position].plantEnded
         Glide.with(holder.imageView.context)
             .load(plants[position].imgUrl)
-            .into(holder.imageView);
+            .into(holder.imageView)
         holder.wrapper.setOnClickListener {
             taskListener.onDetailClick(it, plants[position])
         }

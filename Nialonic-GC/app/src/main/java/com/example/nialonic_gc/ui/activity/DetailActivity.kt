@@ -14,14 +14,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
 import com.example.nialonic_gc.R
 import com.example.nialonic_gc.config.MQTT_HOST
 import com.example.nialonic_gc.helper.MqttClientHelper
 import com.example.nialonic_gc.databinding.ActivityDetailBinding
-import com.example.nialonic_gc.model.Common
-import com.example.nialonic_gc.model.Controlling
-import com.example.nialonic_gc.model.Monitoring
-import com.example.nialonic_gc.model.Plant
+import com.example.nialonic_gc.model.*
 import com.example.nialonic_gc.viewmodel.PlantViewModel
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -41,6 +39,7 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var viewModel: PlantViewModel
     private var commonMsg =  Common()
     private var controllingMsg =  Controlling()
+    private var imageFromMQTT: String = ""
     lateinit var lineList: ArrayList<Entry>
     lateinit var lineDataSet: LineDataSet
     lateinit var lineData: LineData
@@ -98,6 +97,7 @@ class DetailActivity : AppCompatActivity() {
                 mqttClient.subscribe("arceniter/common")
                 mqttClient.subscribe("arceniter/monitoring")
                 mqttClient.subscribe("arceniter/controlling")
+                mqttClient.subscribe("arceniter/thumbnail")
             }
             override fun connectionLost(throwable: Throwable) {
                 Log.w("Debug", "Connection to host lost:\n'$MQTT_HOST'")
@@ -105,22 +105,34 @@ class DetailActivity : AppCompatActivity() {
             @Throws(Exception::class)
             override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
                 Log.w("Debug", "Message received from host '$MQTT_HOST': $mqttMessage")
-                if(topic == "arceniter/common"){
-                    val common = Gson().fromJson(mqttMessage.toString(), Common::class.java)
-                    binding.plantName.text = common.plant_name.capitalize()
-                    binding.startedPlanting.text = common.started_planting
-                    commonMsg = common
-                } else if (topic == "arceniter/monitoring"){
-                    val monitoring = Gson().fromJson(mqttMessage.toString(), Monitoring::class.java)
-                    binding.valTemperature.text = monitoring.temperature.toString() + "°C"
-                    binding.valPh.text = monitoring.ph + " Ph"
-                    binding.valGas.text = monitoring.gas.toString() + " ppm`"
-                    binding.valNutrition.text = monitoring.nutrition.toString() + " ppm"
-                    binding.valNutritionVolume.text = monitoring.nutrition_volume.toString() + " ml"
-                    binding.valGrowthLamp.text = monitoring.growth_lamp.capitalize()
-                } else if (topic == "arceniter/controlling"){
-                    val controlling = Gson().fromJson(mqttMessage.toString(), Controlling::class.java)
-                    controllingMsg = controlling
+                when (topic) {
+                    "arceniter/common" -> {
+                        val common = Gson().fromJson(mqttMessage.toString(), Common::class.java)
+                        binding.plantName.text = common.plant_name.capitalize()
+                        binding.startedPlanting.text = common.started_planting
+                        commonMsg = common
+                    }
+                    "arceniter/monitoring" -> {
+                        val monitoring = Gson().fromJson(mqttMessage.toString(), Monitoring::class.java)
+                        binding.valTemperature.text = monitoring.temperature.toString() + "°C"
+                        binding.valPh.text = monitoring.ph + " Ph"
+                        binding.valGas.text = monitoring.gas.toString() + " ppm`"
+                        binding.valNutrition.text = monitoring.nutrition.toString() + " ppm"
+                        binding.valNutritionVolume.text = monitoring.nutrition_volume.toString() + " ml"
+                        binding.valGrowthLamp.text = monitoring.growth_lamp.capitalize()
+                    }
+                    "arceniter/controlling" -> {
+                        val controlling = Gson().fromJson(mqttMessage.toString(), Controlling::class.java)
+                        controllingMsg = controlling
+                    }
+                    "arceniter/thumbnail" -> {
+                        val thumbnail = Gson().fromJson(mqttMessage.toString(), Thumbnail::class.java)
+                        Log.d("ayo dongg", thumbnail.imgURL)
+                        Glide.with(this@DetailActivity)
+                            .load(thumbnail.imgURL)
+                            .into(binding.image)
+                        imageFromMQTT = thumbnail.imgURL
+                    }
                 }
             }
 
@@ -151,7 +163,7 @@ class DetailActivity : AppCompatActivity() {
                 builder.setMessage("This can be perform the machine")
                 builder.setPositiveButton("YES") { _, _ ->
                     val plant = Plant()
-                    plant.name = commonMsg.plant_name
+                    plant.imgUrl = imageFromMQTT
                     plant.category = commonMsg.category
                     plant.plantType = commonMsg.plant_name
                     plant.mode = controllingMsg.mode
@@ -166,6 +178,11 @@ class DetailActivity : AppCompatActivity() {
                     commonMsg.plant_name = ""
                     commonMsg.category = ""
                     mqttClient.publish("arceniter/common", Gson().toJson(commonMsg))
+
+                    val thumbnail = Thumbnail()
+                    thumbnail.imgURL = ""
+                    mqttClient.publish("arceniter/thumbnail", Gson().toJson(thumbnail))
+
                     startActivity(Intent(this, MainActivity::class.java))
                 }
                 builder.setNegativeButton("NO") { dialog, _ ->
@@ -180,7 +197,7 @@ class DetailActivity : AppCompatActivity() {
                 builder.setMessage("This can be perform the machine")
                 builder.setPositiveButton("YES") { _, _ ->
                     val plant = Plant()
-                    plant.name = commonMsg.plant_name
+                    plant.imgUrl = imageFromMQTT
                     plant.category = commonMsg.category
                     plant.plantType = commonMsg.plant_name
                     plant.mode = controllingMsg.mode
@@ -194,6 +211,11 @@ class DetailActivity : AppCompatActivity() {
                     commonMsg.started_planting = ""
                     commonMsg.plant_name = ""
                     mqttClient.publish("arceniter/common", Gson().toJson(commonMsg))
+
+                    val thumbnail = Thumbnail()
+                    thumbnail.imgURL = ""
+                    mqttClient.publish("arceniter/thumbnail", Gson().toJson(thumbnail))
+
                     startActivity(Intent(this, MainActivity::class.java))
                 }
                 builder.setNegativeButton("NO") { dialog, _ ->

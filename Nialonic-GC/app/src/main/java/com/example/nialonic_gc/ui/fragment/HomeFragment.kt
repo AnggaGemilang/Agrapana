@@ -10,12 +10,14 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.nialonic_gc.*
 import com.example.nialonic_gc.config.MQTT_HOST
 import com.example.nialonic_gc.helper.MqttClientHelper
 import com.example.nialonic_gc.databinding.FragmentHomeBinding
 import com.example.nialonic_gc.model.Common
 import com.example.nialonic_gc.model.Monitoring
+import com.example.nialonic_gc.model.Thumbnail
 import com.example.nialonic_gc.ui.activity.DetailActivity
 import com.example.nialonic_gc.ui.activity.SettingActivity
 import com.example.nialonic_gc.ui.activity.TurnOnActivity
@@ -98,6 +100,7 @@ class HomeFragment : Fragment() {
                 Log.w("Debug", "Connection to host connected:\n'$MQTT_HOST'")
                 mqttClient.subscribe("arceniter/common")
                 mqttClient.subscribe("arceniter/monitoring")
+                mqttClient.subscribe("arceniter/thumbnail")
             }
             override fun connectionLost(throwable: Throwable) {
                 Log.w("Debug", "Connection to host lost:\n'$MQTT_HOST'")
@@ -127,6 +130,12 @@ class HomeFragment : Fragment() {
                     binding.valNutrition.text = monitoring.nutrition.toString() + " ppm"
                     binding.valNutritionVolume.text = monitoring.nutrition_volume.toString() + " ml"
                     binding.valGrowthLamp.text = monitoring.growth_lamp.capitalize()
+                } else if (topic == "arceniter/thumbnail"){
+                    val thumbnail = Gson().fromJson(mqttMessage.toString(), Thumbnail::class.java)
+                    Log.d("ayo dongg", thumbnail.imgURL)
+                    Glide.with(this@HomeFragment)
+                        .load(thumbnail.imgURL)
+                        .into(binding.image)
                 }
             }
             override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {

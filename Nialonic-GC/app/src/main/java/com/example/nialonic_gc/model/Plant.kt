@@ -7,7 +7,6 @@ import java.util.*
 @Parcelize
 data class Plant(
     var id: String = "",
-    var name: String = "",
     var plantStarted: String = "",
     var plantEnded: String = "",
     var category: String = "",

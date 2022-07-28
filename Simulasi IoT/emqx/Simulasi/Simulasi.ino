@@ -5,8 +5,11 @@
 #define MSG_BUFFER_SIZE (50)
 #define LEDPin D1
 #define LightSensorPin A0
-#define ssid "polban_staff"
-#define password "12polban34"
+//#define ssid "polban_staff"
+//#define password "12polban34"
+
+#define ssid "JTK Dosen"
+#define password "jaringan"
 
 //#define mqtt_broker "broker.emqx.io"
 //#define mqtt_username "emqx"
@@ -38,14 +41,18 @@ char pump[8] = "";
 char modes[10] = "";
 char nutritionConfiguration[10] = "";
 
+// image
+char imgURL[200] = "";
+
 char output1[207];
 char output2[374];
 char output3[213];
+char output4[250];
 
 void callback(char *topic, byte *payload, unsigned int length) {
   Serial.print("Message arrived [");
   Serial.print(topic);
-  Serial.print("] ");  
+  Serial.print("] ");
 
   if(strcmp(topic, "arceniter/controlling") == 0){
     StaticJsonDocument<292> doc;
@@ -64,6 +71,11 @@ void callback(char *topic, byte *payload, unsigned int length) {
     strlcpy(plant_name, doc["plant_name"] | "", sizeof(plant_name));
     strlcpy(category, doc["category"] | "", sizeof(category));    
     strlcpy(started_planting, doc["started_planting"] | "", sizeof(started_planting));
+    
+  } else if(strcmp(topic, "arceniter/thumbnail") == 0){
+    StaticJsonDocument<292> doc;
+    deserializeJson(doc, payload, length);
+    strlcpy(imgURL, doc["imgURL"] | "", sizeof(imgURL));
   }
 
   Serial.print(power);
@@ -105,6 +117,7 @@ void setup() {
   mqttClient.subscribe("arceniter/common");
   mqttClient.subscribe("arceniter/monitoring");  
   mqttClient.subscribe("arceniter/controlling");
+  mqttClient.subscribe("arceniter/thumbnail");  
 }
 
 void reconnect() {
@@ -122,6 +135,7 @@ void reconnect() {
   mqttClient.subscribe("arceniter/common");
   mqttClient.subscribe("arceniter/controlling");
   mqttClient.subscribe("arceniter/monitoring");
+  mqttClient.subscribe("arceniter/thumbnail");  
 }
 
 void loop() {
@@ -187,6 +201,17 @@ void loop() {
     Serial.print("Publish message: ");
     Serial.println(output3);
     mqttClient.publish("arceniter/common", output3);    
+
+    // ======================================================
+
+    StaticJsonDocument<256> doc4;
+
+    doc4["imgURL"] = imgURL;
+
+    serializeJson(doc4, output4); 
+    Serial.print("Publish message: ");
+    Serial.println(output4);    
+    mqttClient.publish("arceniter/thumbnail", output4);
     
   }
 
