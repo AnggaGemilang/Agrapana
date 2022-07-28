@@ -86,7 +86,6 @@ class HomeFragment : Fragment() {
             activity?.let { it1 -> SeekPlantFragment().show(it1.supportFragmentManager, "BottomSheetDialog") }
             false
         }
-
         val dtf = DateTimeFormatter.ofPattern("dd MMM")
         val localDate = LocalDate.now()
         binding.txtTanggalHome.text = dtf.format(localDate)
@@ -111,13 +110,22 @@ class HomeFragment : Fragment() {
                     commonMsg = Gson().fromJson(mqttMessage.toString(), Common::class.java)
                     binding.plantName.text = common.plant_name.capitalize()
                     binding.startedPlanting.text = common.started_planting
+                    if(common.is_planting == "no"){
+                        binding.toolbar.menu.getItem(1).isVisible = false
+                        binding.keteranganTidakAda.visibility = View.VISIBLE
+                        binding.keteranganAda.visibility = View.GONE
+                    } else {
+                        binding.toolbar.menu.getItem(1).isVisible = true
+                        binding.keteranganTidakAda.visibility = View.GONE
+                        binding.keteranganAda.visibility = View.VISIBLE
+                    }
                 } else if (topic == "arceniter/monitoring"){
                     val monitoring = Gson().fromJson(mqttMessage.toString(), Monitoring::class.java)
-                    binding.valTemperature.text = monitoring.temperature + "°C"
+                    binding.valTemperature.text = monitoring.temperature.toString() + "°C"
                     binding.valPh.text = monitoring.ph + " Ph"
-                    binding.valGas.text = monitoring.gas + " ppm`"
-                    binding.valNutrition.text = monitoring.nutrition + " ppm"
-                    binding.valNutritionVolume.text = monitoring.nutrition_volume + " ml"
+                    binding.valGas.text = monitoring.gas.toString() + " ppm`"
+                    binding.valNutrition.text = monitoring.nutrition.toString() + " ppm"
+                    binding.valNutritionVolume.text = monitoring.nutrition_volume.toString() + " ml"
                     binding.valGrowthLamp.text = monitoring.growth_lamp.capitalize()
                 }
             }

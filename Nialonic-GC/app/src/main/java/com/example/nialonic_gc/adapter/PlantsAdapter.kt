@@ -6,83 +6,75 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.nialonic_gc.R
+import com.example.nialonic_gc.model.Plant
 import com.example.nialonic_gc.model.Preset
+import com.example.nialonic_gc.ui.fragment.SeekPlantFragment
 
 @SuppressLint("NotifyDataSetChanged")
-class PlantsAdapter(private var taskListener: TaskListener) : RecyclerView.Adapter<PlantsAdapter.MyViewHolder>() {
+class PlantsAdapter(taskListener: PlantsAdapter.TaskListener) : RecyclerView.Adapter<PlantsAdapter.MyViewHolder>() {
 
-    private var presets = mutableListOf<Preset>()
+    private var plants = mutableListOf<Plant>()
+    private var taskListener: PlantsAdapter.TaskListener = taskListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlantsAdapter.MyViewHolder {
-        val inflater = LayoutInflater.from(parent.context).inflate(R.layout.item_presets, parent, false)
+        val inflater = LayoutInflater.from(parent.context).inflate(R.layout.item_plants, parent, false)
         return MyViewHolder(inflater)
     }
 
-    override fun getItemCount() = presets.size
+    override fun getItemCount() = plants.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.tvName.text = presets[position].plantName
-        holder.tvgasValve.text = "CO2 Valve : " + presets[position].gasValve
-        holder.tvNutrition.text = "Nutrition : " + presets[position].nutrition
-        holder.tvGrowthLamp.text = "Growth Lamp : " + presets[position].growthLamp
-        holder.tvSeedlingTime.text = "Seedling Time : " + presets[position].seedlingTime
-        holder.tvGrowTime.text = "Grow Time : " + presets[position].growTime
-        holder.tvTemperature.text = "Temperature : " + presets[position].temperature
-        holder.tvPump.text = "Pump : " + presets[position].pump
+        holder.tvName.text = plants[position].name
+        holder.tvStatus.text = plants[position].status
+        holder.tvMode.text = plants[position].mode + " mode"
+        holder.tvEndPlant.text = plants[position].plantEnded
         Glide.with(holder.imageView.context)
-            .load(presets[position].imageUrl)
+            .load(plants[position].imgUrl)
             .into(holder.imageView);
-
-        holder.optionMenu.setOnClickListener {
-            taskListener.onOptionClick(it, presets[position])
+        holder.wrapper.setOnClickListener {
+            taskListener.onDetailClick(it, plants[position])
         }
     }
 
-    fun setPresets(presets: List<Preset>) {
-        this.presets = presets as MutableList<Preset>
+    fun setPlants(plants: List<Plant>) {
+        this.plants = plants as MutableList<Plant>
         notifyDataSetChanged()
     }
 
-    fun addPreset(author: Preset) {
-        if (!presets.contains(author)){
-            presets.add(author)
+    fun addPlants(plant: Plant) {
+        if (!plants.contains(plant)){
+            plants.add(plant)
         } else {
-            val index = presets.indexOf(author)
+            val index = plants.indexOf(plant)
         }
         notifyDataSetChanged()
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var tvName: TextView
-        var tvgasValve: TextView
-        var tvNutrition: TextView
-        var tvGrowthLamp: TextView
-        var tvSeedlingTime: TextView
-        var tvGrowTime: TextView
-        var tvTemperature: TextView
-        var tvPump: TextView
-        var optionMenu: ImageButton
+        var tvStatus: TextView
+        var tvEndPlant: TextView
+        var tvMode: TextView
         var imageView: ImageView
+        var wrapper: LinearLayout
 
         init {
             tvName = view.findViewById(R.id.tv_name)
-            tvgasValve = view.findViewById(R.id.tv_gas_valve)
-            tvNutrition = view.findViewById(R.id.tv_nutrition)
-            tvGrowthLamp = view.findViewById(R.id.tv_growth_lamp)
-            tvSeedlingTime = view.findViewById(R.id.tv_seedling_time)
-            tvGrowTime = view.findViewById(R.id.tv_grow_time)
-            tvTemperature = view.findViewById(R.id.tv_temperature)
-            tvPump = view.findViewById(R.id.tv_pump)
+            tvStatus = view.findViewById(R.id.tv_status)
+            tvEndPlant = view.findViewById(R.id.tv_end)
+            tvMode = view.findViewById(R.id.tv_mode)
             imageView = view.findViewById(R.id.thumbnail)
-            optionMenu = view.findViewById(R.id.option_menu)
+            wrapper = view.findViewById(R.id.wrapper)
         }
     }
 
     interface TaskListener {
-        fun onOptionClick(view: View, preset: Preset)
+        fun onDetailClick(view: View, plant: Plant)
     }
+
 }

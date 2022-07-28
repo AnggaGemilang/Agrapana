@@ -59,6 +59,7 @@
                     android:orientation="vertical" >
 
                     <TextView
+                        android:id="@+id/tv_name"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="Spinach"
@@ -66,9 +67,11 @@
                         android:textSize="22sp" />
 
                     <TextView
+                        android:id="@+id/tv_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="SELESAI"
+                        android:textAllCaps="true"
                         android:textColor="@color/green_50"
                         android:textStyle="bold"
                         android:textSize="17sp" />
@@ -105,6 +108,7 @@
                         android:text="Planting Started" />
 
                     <TextView
+                        android:id="@+id/tv_planting_started"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="19sp"
@@ -143,6 +147,7 @@
                         android:text="Planting Ended" />
 
                     <TextView
+                        android:id="@+id/tv_planting_ended"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="19sp"
@@ -181,6 +186,7 @@
                         android:text="Number of Leaves" />
 
                     <TextView
+                        android:id="@+id/tv_number_leaves"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="19sp"
