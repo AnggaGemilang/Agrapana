@@ -9,11 +9,13 @@ import com.example.nialonic_gc.adapter.OnboardingAdapter
 import com.example.nialonic_gc.data.OnboardingData
 import com.example.nialonic_gc.databinding.ActivityOnboardingBinding
 import com.google.android.material.tabs.TabLayout
+import org.imaginativeworld.oopsnointernet.NoInternetDialog
 
 class OnboardingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityOnboardingBinding
     private lateinit var onBoardingAdapter: OnboardingAdapter
+    private var noInternetDialog: NoInternetDialog? = null
     var position = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,4 +82,30 @@ class OnboardingActivity : AppCompatActivity() {
         binding.slider.adapter = onBoardingAdapter
         binding.tabLayout.setupWithViewPager(binding.slider)
     }
+
+    override fun onPause() {
+        super.onPause()
+        if (noInternetDialog != null) {
+            noInternetDialog!!.destroy();
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val builder1 = NoInternetDialog.Builder(this)
+        builder1.cancelable = false // Optional
+        builder1.noInternetConnectionTitle = "No Internet" // Optional
+        builder1.noInternetConnectionMessage = "Check your Internet connection and try again" // Optional
+        builder1.showInternetOnButtons = true // Optional
+        builder1.pleaseTurnOnText = "Please turn on" // Optional
+        builder1.wifiOnButtonText = "Wifi" // Optional
+        builder1.mobileDataOnButtonText = "Mobile data" // Optional
+        builder1.onAirplaneModeTitle = "No Internet" // Optional
+        builder1.onAirplaneModeMessage = "You have turned on the airplane mode." // Optional
+        builder1.pleaseTurnOffText = "Please turn off" // Optional
+        builder1.airplaneModeOffButtonText = "Airplane mode" // Optional
+        builder1.showAirplaneModeOffButtons = true // Optional
+        noInternetDialog = builder1.build()
+    }
+
 }

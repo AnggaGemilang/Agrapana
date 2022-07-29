@@ -15,11 +15,13 @@ import com.ncorti.slidetoact.SlideToActView
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
 import org.eclipse.paho.client.mqttv3.MqttMessage
+import org.imaginativeworld.oopsnointernet.NoInternetDialog
 
 class TurnOnActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTurnOnBinding
     private var commonMsg = Common()
+    private var noInternetDialog: NoInternetDialog? = null
 
     private val mqttClient by lazy {
         MqttClientHelper(this)
@@ -63,6 +65,31 @@ class TurnOnActivity : AppCompatActivity() {
                 Log.w("Debug", "Message published to host '$MQTT_HOST'")
             }
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (noInternetDialog != null) {
+            noInternetDialog!!.destroy();
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val builder1 = NoInternetDialog.Builder(this)
+        builder1.cancelable = false // Optional
+        builder1.noInternetConnectionTitle = "No Internet" // Optional
+        builder1.noInternetConnectionMessage = "Check your Internet connection and try again" // Optional
+        builder1.showInternetOnButtons = true // Optional
+        builder1.pleaseTurnOnText = "Please turn on" // Optional
+        builder1.wifiOnButtonText = "Wifi" // Optional
+        builder1.mobileDataOnButtonText = "Mobile data" // Optional
+        builder1.onAirplaneModeTitle = "No Internet" // Optional
+        builder1.onAirplaneModeMessage = "You have turned on the airplane mode." // Optional
+        builder1.pleaseTurnOffText = "Please turn off" // Optional
+        builder1.airplaneModeOffButtonText = "Airplane mode" // Optional
+        builder1.showAirplaneModeOffButtons = true // Optional
+        noInternetDialog = builder1.build()
     }
 
 }
