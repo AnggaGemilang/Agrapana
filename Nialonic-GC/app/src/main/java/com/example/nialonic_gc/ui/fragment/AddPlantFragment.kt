@@ -2,6 +2,7 @@ package com.example.nialonic_gc.ui.fragment
 
 import android.R
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -32,6 +33,7 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
     private lateinit var viewModelPreset: PresetViewModel
     private lateinit var viewModelPlant: PlantViewModel
     private var presets: List<Preset> = emptyList()
+    private var commonMsg = Common()
     private var presetsName = mutableListOf<String>()
 
     private lateinit var binding: FragmentAddPlantBinding
@@ -120,6 +122,11 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
 
         binding.btnSubmit.setOnClickListener {
             if(binding.newConfiguration.isChecked){
+                val progressDialog = ProgressDialog(requireContext())
+                progressDialog.setTitle("Please Wait")
+                progressDialog.setMessage("System is working . . .")
+                progressDialog.show()
+
                 val fileName = UUID.randomUUID().toString() +".png"
                 val refStorage = FirebaseStorage.getInstance().reference.child("thumbnail_preset/$fileName")
                 refStorage.putFile(linkImage!!)
@@ -150,12 +157,12 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
                             preset.seedlingTime = seedlingTime
                             preset.growTime = growTime
                             preset.imageUrl = imageUrl
-                            viewModelPreset.addPreset(preset)
 
                             val common = Common()
-                            common.power = "on"
+//                            common.power = "on"
                             common.plant_name = preset.plantName
                             common.is_planting = "yes"
+//                            common.refresh = commonMsg.refresh
                             val sdf = SimpleDateFormat("dd-M-yyyy, hh:mm")
                             common.started_planting = sdf.format(Date())
 
@@ -172,6 +179,16 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
                             val thumbnail = Thumbnail()
                             thumbnail.imgURL = imageUrl
                             mqttClient.publish("arceniter/thumbnail", Gson().toJson(thumbnail))
+
+                            val dbPresets = viewModelPreset.getDBReference()
+                            preset.id = dbPresets.push().key.toString()
+                            dbPresets.child(preset.id).setValue(preset).addOnCompleteListener { it1 ->
+                                if(it1.isSuccessful) {
+                                    progressDialog.dismiss()
+                                    this.dismiss()
+                                    Toast.makeText(context, "Preset has added successfully", Toast.LENGTH_SHORT).show()
+                                }
+                            }
                         }
                     }
                     .addOnFailureListener { e ->
@@ -183,6 +200,7 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
                 common.plant_name = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].plantName
                 common.category = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].category
                 common.is_planting = "yes"
+//                common.refresh = commonMsg.refresh
 
                 val sdf = SimpleDateFormat("dd-M-yyyy, hh:mm")
                 common.started_planting = sdf.format(Date())
@@ -200,10 +218,9 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
                 thumbnail.imgURL = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].imageUrl
 
                 mqttClient.publish("arceniter/thumbnail", Gson().toJson(thumbnail))
+
+                dismiss()
             }
-            dismiss()
-            Toast.makeText(requireContext(), "Plant has added successfully", Toast.LENGTH_SHORT).show()
-            mqttClient.destroy()
         }
     }
 
@@ -219,7 +236,9 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
             }
             @Throws(Exception::class)
             override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
-                Log.w("Debug", "Message received from host '$MQTT_HOST': $mqttMessage")
+                if(topic == "arceniter/common") {
+                    commonMsg = Gson().fromJson(mqttMessage.toString(), Common::class.java)
+                }
             }
             override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
                 Log.w("Debug", "Message published to host '$MQTT_HOST'")

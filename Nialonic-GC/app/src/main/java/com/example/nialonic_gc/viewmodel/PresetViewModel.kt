@@ -1,8 +1,14 @@
 package com.example.nialonic_gc.viewmodel
 
+import android.app.ProgressDialog
+import android.content.Context
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialog
+import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialogFragment
 import com.example.nialonic_gc.model.Preset
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -22,16 +28,8 @@ class PresetViewModel : ViewModel() {
 
     private val _result = MutableLiveData<Exception?>()
 
-    fun addPreset(preset: Preset): String {
-        preset.id = dbPresets.push().key.toString()
-        dbPresets.child(preset.id).setValue(preset).addOnCompleteListener {
-            if(it.isSuccessful) {
-                _result.value = null
-            } else {
-                _result.value = it.exception
-            }
-        }
-        return preset.id
+    fun getDBReference(): DatabaseReference {
+        return dbPresets
     }
 
     private val childEventListener = object : ChildEventListener {
@@ -89,17 +87,6 @@ class PresetViewModel : ViewModel() {
 
     fun fetchPresets(type: String) {
         dbPresets.orderByChild("category").equalTo(type).addListenerForSingleValueEvent(valueEventListener)
-    }
-
-    fun updatePreset(preset: Preset) {
-        dbPresets.child(preset.id).setValue(preset).addOnCompleteListener {
-            if(it.isSuccessful) {
-                _result.value = null
-                fetchPresets(preset.category)
-            } else {
-                _result.value = it.exception
-            }
-        }
     }
 
     fun deletePreset(preset: Preset) {

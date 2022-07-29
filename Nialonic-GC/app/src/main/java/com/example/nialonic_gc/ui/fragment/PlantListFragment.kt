@@ -31,10 +31,6 @@ class PlantListFragment : Fragment() {
     private lateinit var binding: FragmentPlantListBinding
     private lateinit var viewModelPlant: PlantViewModel
     private lateinit var viewModelPreset: PresetViewModel
-    private lateinit var countOfHasBeenPlanted: String
-    private lateinit var countOfNumberPreset: String
-    private lateinit var countOfPlantsHarvested: String
-    private lateinit var countOfPlantsCancelled: String
 
     private var commonMsg = Common()
 
@@ -55,6 +51,8 @@ class PlantListFragment : Fragment() {
 
         setMqttCallBack()
         initViewModel()
+        viewModelPlant.getAllDataPlants()
+        viewModelPreset.getAllDataPreset()
 
         binding.toolbar.inflateMenu(R.menu.action_nav1)
         binding.toolbar.setOnMenuItemClickListener {
@@ -65,6 +63,7 @@ class PlantListFragment : Fragment() {
                     builder.setMessage("This can be perform the machine")
                     builder.setPositiveButton("YES") { _, _ ->
                         Log.d(TAG, commonMsg.toString())
+                        binding.loadingPanel.visibility = View.VISIBLE
                         setMqttCallBackPower()
                     }
                     builder.setNegativeButton("NO") { dialog, _ ->
@@ -108,33 +107,35 @@ class PlantListFragment : Fragment() {
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
-
-
-
     }
 
     private fun initViewModel() {
         viewModelPlant = ViewModelProviders.of(this)[PlantViewModel::class.java]
         viewModelPlant.plants.observe(viewLifecycleOwner) {
-//            countOfHasBeenPlanted = it.size.toString()
-//            if (it!!.isNotEmpty()) {
-//                for(plant in it){
-//                    if(plant){
-//
-//                    }
-//                }
-//            } else {
-//
-//            }
+            Log.d("asyiapp", it!!.size.toString())
+            binding.tvBeenPlanted.text = it.size.toString()
+            if (it.isNotEmpty()) {
+                var i = 0
+                for(plant in it){
+                    if(plant.status == "Done"){
+                        i++
+                    }
+                }
+                binding.tvPlantHarvested.text = i.toString()
+
+                i = 0
+                for(plant in it){
+                    if(plant.status == "Cancelled"){
+                        i++
+                    }
+                }
+                binding.tvPlantCancelled.text = i.toString()
+            }
         }
 
         viewModelPreset = ViewModelProviders.of(this)[PresetViewModel::class.java]
         viewModelPreset.presets.observe(viewLifecycleOwner) {
-            if (it!!.isNotEmpty()) {
-
-            } else {
-
-            }
+            binding.tvNumberPreset.text = it!!.size.toString()
         }
     }
 

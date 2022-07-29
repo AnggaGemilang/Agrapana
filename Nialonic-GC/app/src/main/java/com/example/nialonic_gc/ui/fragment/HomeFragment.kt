@@ -1,14 +1,17 @@
 package com.example.nialonic_gc.ui.fragment
 
 import android.content.Intent
+import android.graphics.Canvas
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.ViewCompat.setLayerType
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.nialonic_gc.*
@@ -32,6 +35,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private var commonMsg = Common()
+    private var monitoringMsg = Monitoring()
 
     private val mqttClient by lazy {
         MqttClientHelper(requireContext())
@@ -56,6 +60,7 @@ class HomeFragment : Fragment() {
                     builder.setTitle("Are You Sure?")
                     builder.setMessage("This can be perform the machine")
                     builder.setPositiveButton("YES") { _, _ ->
+                        binding.loadingPanel.visibility = View.VISIBLE
                         commonMsg.power = "off"
                         mqttClient.publish("arceniter/common", Gson().toJson(commonMsg))
                         startActivity(Intent(context, TurnOnActivity::class.java))
@@ -84,10 +89,6 @@ class HomeFragment : Fragment() {
             }
             true
         }
-        binding.no1.setOnLongClickListener {
-            activity?.let { it1 -> SeekPlantFragment().show(it1.supportFragmentManager, "BottomSheetDialog") }
-            false
-        }
         val dtf = DateTimeFormatter.ofPattern("dd MMM")
         val localDate = LocalDate.now()
         binding.txtTanggalHome.text = dtf.format(localDate)
@@ -99,40 +100,47 @@ class HomeFragment : Fragment() {
             override fun connectComplete(b: Boolean, s: String) {
                 Log.w("Debug", "Connection to host connected:\n'$MQTT_HOST'")
                 mqttClient.subscribe("arceniter/common")
-                mqttClient.subscribe("arceniter/monitoring")
                 mqttClient.subscribe("arceniter/thumbnail")
+                mqttClient.subscribe("arceniter/monitoring")
             }
             override fun connectionLost(throwable: Throwable) {
                 Log.w("Debug", "Connection to host lost:\n'$MQTT_HOST'")
             }
             @Throws(Exception::class)
             override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
+                binding.shimmering.visibility = View.GONE
+                binding.mainContentWrapper.visibility = View.VISIBLE
                 Log.w("Debug", "Message received from host '$MQTT_HOST': $mqttMessage")
                 if(topic == "arceniter/common"){
-                    val common = Gson().fromJson(mqttMessage.toString(), Common::class.java)
                     commonMsg = Gson().fromJson(mqttMessage.toString(), Common::class.java)
-                    binding.plantName.text = common.plant_name.capitalize()
-                    binding.startedPlanting.text = common.started_planting
-                    if(common.is_planting == "no"){
+                    binding.plantName.text = commonMsg.plant_name.capitalize()
+                    binding.startedPlanting.text = commonMsg.started_planting
+                    if(commonMsg.is_planting == "no"){
                         binding.toolbar.menu.getItem(1).isVisible = false
                         binding.keteranganTidakAda.visibility = View.VISIBLE
                         binding.keteranganAda.visibility = View.GONE
+                        binding.valTemperature.text = "N/A"
+                        binding.valPh.text = "N/A"
+                        binding.valGas.text = "N/A"
+                        binding.valNutrition.text = "N/A"
+                        binding.valNutritionVolume.text = "N/A"
+                        binding.valGrowthLamp.text = "N/A"
                     } else {
                         binding.toolbar.menu.getItem(1).isVisible = true
                         binding.keteranganTidakAda.visibility = View.GONE
                         binding.keteranganAda.visibility = View.VISIBLE
+                        binding.valTemperature.text = monitoringMsg.temperature.toString() + "°C"
+                        binding.valPh.text = monitoringMsg.ph + " Ph"
+                        binding.valGas.text = monitoringMsg.gas.toString() + " ppm`"
+                        binding.valNutrition.text = monitoringMsg.nutrition.toString() + " ppm"
+                        binding.valNutritionVolume.text = monitoringMsg.nutrition_volume.toString() + " %"
+                        binding.valGrowthLamp.text = monitoringMsg.growth_lamp.capitalize()
                     }
                 } else if (topic == "arceniter/monitoring"){
-                    val monitoring = Gson().fromJson(mqttMessage.toString(), Monitoring::class.java)
-                    binding.valTemperature.text = monitoring.temperature.toString() + "°C"
-                    binding.valPh.text = monitoring.ph + " Ph"
-                    binding.valGas.text = monitoring.gas.toString() + " ppm`"
-                    binding.valNutrition.text = monitoring.nutrition.toString() + " ppm"
-                    binding.valNutritionVolume.text = monitoring.nutrition_volume.toString() + " ml"
-                    binding.valGrowthLamp.text = monitoring.growth_lamp.capitalize()
+                    monitoringMsg = Gson().fromJson(mqttMessage.toString(), Monitoring::class.java)
+
                 } else if (topic == "arceniter/thumbnail"){
                     val thumbnail = Gson().fromJson(mqttMessage.toString(), Thumbnail::class.java)
-                    Log.d("ayo dongg", thumbnail.imgURL)
                     Glide.with(this@HomeFragment)
                         .load(thumbnail.imgURL)
                         .into(binding.image)

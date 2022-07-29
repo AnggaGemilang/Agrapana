@@ -20,15 +20,12 @@ class PlantViewModel : ViewModel() {
 
     private val _result = MutableLiveData<Exception?>()
 
-    fun addPlant(plant: Plant) {
-        plant.id = dbPlants.push().key.toString()
-        dbPlants.child(plant.id).setValue(plant).addOnCompleteListener {
-            if(it.isSuccessful) {
-                _result.value = null
-            } else {
-                _result.value = it.exception
-            }
-        }
+    fun getDBReference(): DatabaseReference {
+        return dbPlants
+    }
+
+    fun getAllDataPlants() {
+        dbPlants.addListenerForSingleValueEvent(valueEventListener)
     }
 
     private val childEventListener = object : ChildEventListener {

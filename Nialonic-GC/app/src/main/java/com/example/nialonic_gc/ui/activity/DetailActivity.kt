@@ -1,5 +1,6 @@
 package com.example.nialonic_gc.ui.activity
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -9,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -99,18 +101,20 @@ class DetailActivity : AppCompatActivity() {
                 mqttClient.subscribe("arceniter/controlling")
                 mqttClient.subscribe("arceniter/thumbnail")
             }
+
             override fun connectionLost(throwable: Throwable) {
                 Log.w("Debug", "Connection to host lost:\n'$MQTT_HOST'")
             }
+
             @Throws(Exception::class)
             override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
                 Log.w("Debug", "Message received from host '$MQTT_HOST': $mqttMessage")
                 when (topic) {
                     "arceniter/common" -> {
-                        val common = Gson().fromJson(mqttMessage.toString(), Common::class.java)
-                        binding.plantName.text = common.plant_name.capitalize()
-                        binding.startedPlanting.text = common.started_planting
-                        commonMsg = common
+                        commonMsg = Gson().fromJson(mqttMessage.toString(), Common::class.java)
+                        Log.d("dadang", mqttMessage.toString())
+                        binding.plantName.text = commonMsg.plant_name.capitalize()
+                        binding.startedPlanting.text = commonMsg.started_planting
                     }
                     "arceniter/monitoring" -> {
                         val monitoring = Gson().fromJson(mqttMessage.toString(), Monitoring::class.java)
@@ -118,7 +122,7 @@ class DetailActivity : AppCompatActivity() {
                         binding.valPh.text = monitoring.ph + " Ph"
                         binding.valGas.text = monitoring.gas.toString() + " ppm`"
                         binding.valNutrition.text = monitoring.nutrition.toString() + " ppm"
-                        binding.valNutritionVolume.text = monitoring.nutrition_volume.toString() + " ml"
+                        binding.valNutritionVolume.text = monitoring.nutrition_volume.toString() + " %"
                         binding.valGrowthLamp.text = monitoring.growth_lamp.capitalize()
                     }
                     "arceniter/controlling" -> {
@@ -134,8 +138,9 @@ class DetailActivity : AppCompatActivity() {
                         imageFromMQTT = thumbnail.imgURL
                     }
                 }
+                binding.mainContent.visibility = View.VISIBLE
+                binding.loadingPanel.visibility = View.GONE
             }
-
             override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
                 Log.w("Debug", "Message published to host '$MQTT_HOST'")
             }
@@ -162,6 +167,11 @@ class DetailActivity : AppCompatActivity() {
                 builder.setTitle("Are You Sure?")
                 builder.setMessage("This can be perform the machine")
                 builder.setPositiveButton("YES") { _, _ ->
+                    val progressDialog = ProgressDialog(this)
+                    progressDialog.setTitle("Please Wait")
+                    progressDialog.setMessage("System is working . . .")
+                    progressDialog.show()
+
                     val plant = Plant()
                     plant.imgUrl = imageFromMQTT
                     plant.category = commonMsg.category
@@ -171,12 +181,23 @@ class DetailActivity : AppCompatActivity() {
                     val sdf = SimpleDateFormat("dd-M-yyyy, hh:mm")
                     plant.plantEnded = sdf.format(Date())
                     plant.status = "Done"
-                    viewModel.addPlant(plant)
+
+                    val dbPlants = viewModel.getDBReference()
+                    plant.id = dbPlants.push().key.toString()
+                    dbPlants.child(plant.id).setValue(plant).addOnCompleteListener {
+                        if(it.isSuccessful) {
+                            progressDialog.dismiss()
+                            Toast.makeText(this, "Preset has done", Toast.LENGTH_SHORT).show()
+                        }
+                    }
 
                     commonMsg.is_planting = "no"
                     commonMsg.started_planting = ""
                     commonMsg.plant_name = ""
                     commonMsg.category = ""
+
+                    Log.d("dadang dong", commonMsg.toString())
+
                     mqttClient.publish("arceniter/common", Gson().toJson(commonMsg))
 
                     val thumbnail = Thumbnail()
@@ -196,6 +217,11 @@ class DetailActivity : AppCompatActivity() {
                 builder.setTitle("Are You Sure?")
                 builder.setMessage("This can be perform the machine")
                 builder.setPositiveButton("YES") { _, _ ->
+                    val progressDialog = ProgressDialog(this)
+                    progressDialog.setTitle("Please Wait")
+                    progressDialog.setMessage("System is working . . .")
+                    progressDialog.show()
+
                     val plant = Plant()
                     plant.imgUrl = imageFromMQTT
                     plant.category = commonMsg.category
@@ -205,8 +231,15 @@ class DetailActivity : AppCompatActivity() {
                     val sdf = SimpleDateFormat("dd-M-yyyy, hh:mm")
                     plant.plantEnded = sdf.format(Date())
                     plant.status = "Cancelled"
-                    viewModel.addPlant(plant)
 
+                    val dbPlants = viewModel.getDBReference()
+                    plant.id = dbPlants.push().key.toString()
+                    dbPlants.child(plant.id).setValue(plant).addOnCompleteListener {
+                        if(it.isSuccessful) {
+                            progressDialog.dismiss()
+                            Toast.makeText(this, "Preset has cancelled", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                     commonMsg.is_planting = "no"
                     commonMsg.started_planting = ""
                     commonMsg.plant_name = ""

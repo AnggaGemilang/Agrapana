@@ -5,11 +5,12 @@
 #define MSG_BUFFER_SIZE (50)
 #define LEDPin D1
 #define LightSensorPin A0
-//#define ssid "polban_staff"
-//#define password "12polban34"
 
-#define ssid "JTK Dosen"
-#define password "jaringan"
+#define ssid "polban_staff"
+#define password "12polban34"
+
+//#define ssid "JTK Dosen"
+//#define password "jaringan"
 
 //#define mqtt_broker "broker.emqx.io"
 //#define mqtt_username "emqx"

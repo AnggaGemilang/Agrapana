@@ -1,6 +1,7 @@
 package com.example.nialonic_gc.ui.fragment
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -93,6 +94,11 @@ class AddConfigurationFragment : RoundedBottomSheetDialogFragment() {
         }
 
         binding.btnSubmit.setOnClickListener {
+            val progressDialog = ProgressDialog(requireContext())
+            progressDialog.setTitle("Please Wait")
+            progressDialog.setMessage("System is working . . .")
+            progressDialog.show()
+
             if(arguments?.getString("status") == "update") {
                 val name = binding.plantName.text.toString().trim()
                 val category = binding.category.selectedItem.toString()
@@ -118,10 +124,8 @@ class AddConfigurationFragment : RoundedBottomSheetDialogFragment() {
                 preset.pump = pump
                 preset.seedlingTime = seedlingTime
                 preset.growTime = growTime
-
                 if(linkImage == null){
                     preset.imageUrl = arguments?.getString("imageURL")!!
-                    viewModel.updatePreset(preset)
                 } else {
                     val storageReference = FirebaseStorage.getInstance()
                         .getReferenceFromUrl(arguments?.getString("imageURL")!!)
@@ -133,7 +137,6 @@ class AddConfigurationFragment : RoundedBottomSheetDialogFragment() {
                                 taskSnapshot.storage.downloadUrl.addOnSuccessListener {
                                     val imageUrl = it.toString()
                                     preset.imageUrl = imageUrl
-                                    viewModel.updatePreset(preset)
                                 }
                             }
                             .addOnFailureListener { e ->
@@ -141,6 +144,14 @@ class AddConfigurationFragment : RoundedBottomSheetDialogFragment() {
                             }
                     }.addOnFailureListener {
                         Log.d("gagal", it.message.toString())
+                    }
+                }
+                val dbPresets = viewModel.getDBReference()
+                dbPresets.child(preset.id).setValue(preset).addOnCompleteListener {
+                    if(it.isSuccessful) {
+                        progressDialog.dismiss()
+                        this.dismiss()
+                        Toast.makeText(context, "Preset has updated successfully", Toast.LENGTH_SHORT).show()
                     }
                 }
             } else {
@@ -174,18 +185,21 @@ class AddConfigurationFragment : RoundedBottomSheetDialogFragment() {
                             preset.seedlingTime = seedlingTime
                             preset.growTime = growTime
                             preset.imageUrl = imageUrl
-                            viewModel.addPreset(preset)
+
+                            val dbPresets = viewModel.getDBReference()
+                            preset.id = dbPresets.push().key.toString()
+                            dbPresets.child(preset.id).setValue(preset).addOnCompleteListener { it1 ->
+                                if(it1.isSuccessful) {
+                                    progressDialog.dismiss()
+                                    this.dismiss()
+                                    Toast.makeText(context, "Preset has added successfully", Toast.LENGTH_SHORT).show()
+                                }
+                            }
                         }
                     }
                     .addOnFailureListener { e ->
                         Log.d("gagal", e.message.toString())
                     }
-            }
-            dismiss()
-            if(arguments?.getString("status") == "update"){
-                Toast.makeText(requireContext(), "Preset has updated successfully", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(requireContext(), "Preset has added successfully", Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -4,13 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.example.nialonic_gc.config.MQTT_HOST
 import com.example.nialonic_gc.databinding.ActivityTurnOnBinding
 import com.example.nialonic_gc.helper.MqttClientHelper
 import com.example.nialonic_gc.helper.MqttClientHelper.Companion.TAG
 import com.example.nialonic_gc.model.Common
-import com.example.nialonic_gc.model.Monitoring
-import com.google.firebase.database.core.Tag
 import com.google.gson.Gson
 import com.ncorti.slidetoact.SlideToActView
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
@@ -34,6 +33,7 @@ class TurnOnActivity : AppCompatActivity() {
         binding.slider.onSlideCompleteListener = object : SlideToActView.OnSlideCompleteListener{
             override fun onSlideComplete(view: SlideToActView) {
                 Log.d(TAG, commonMsg.toString())
+                binding.loadingPanel.visibility = View.VISIBLE
                 setMqttCallBack()
             }
         }
