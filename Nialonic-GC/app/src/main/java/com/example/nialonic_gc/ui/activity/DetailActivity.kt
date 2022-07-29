@@ -108,6 +108,8 @@ class DetailActivity : AppCompatActivity() {
 
             @Throws(Exception::class)
             override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
+                binding.mainContent.visibility = View.VISIBLE
+                binding.loadingPanel.visibility = View.GONE
                 Log.w("Debug", "Message received from host '$MQTT_HOST': $mqttMessage")
                 when (topic) {
                     "arceniter/common" -> {
@@ -138,8 +140,6 @@ class DetailActivity : AppCompatActivity() {
                         imageFromMQTT = thumbnail.imgURL
                     }
                 }
-                binding.mainContent.visibility = View.VISIBLE
-                binding.loadingPanel.visibility = View.GONE
             }
             override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
                 Log.w("Debug", "Message published to host '$MQTT_HOST'")

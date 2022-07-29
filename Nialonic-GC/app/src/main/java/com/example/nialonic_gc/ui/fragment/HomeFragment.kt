@@ -1,17 +1,14 @@
 package com.example.nialonic_gc.ui.fragment
 
 import android.content.Intent
-import android.graphics.Canvas
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.ViewCompat.setLayerType
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.nialonic_gc.*
@@ -108,8 +105,28 @@ class HomeFragment : Fragment() {
             }
             @Throws(Exception::class)
             override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
-                binding.shimmering.visibility = View.GONE
-                binding.mainContentWrapper.visibility = View.VISIBLE
+                binding.plantNamePlaceholder.visibility = View.GONE
+                binding.imagePlaceholder.visibility = View.GONE
+                binding.startedPlantingPlaceholder.visibility = View.GONE
+                binding.valTemperaturePlaceholder.visibility = View.GONE
+                binding.valGasPlaceholder.visibility = View.GONE
+                binding.valPhPlaceholder.visibility = View.GONE
+                binding.valVolumePlaceholder.visibility = View.GONE
+                binding.valNutritionPlaceholder.visibility = View.GONE
+                binding.valGasPlaceholder.visibility = View.GONE
+                binding.valGrowthLampPlaceholder.visibility = View.GONE
+
+                binding.plantName.visibility = View.VISIBLE
+                binding.image.visibility = View.VISIBLE
+                binding.startedPlanting.visibility = View.VISIBLE
+                binding.valTemperature.visibility = View.VISIBLE
+                binding.valGas.visibility = View.VISIBLE
+                binding.valPh.visibility = View.VISIBLE
+                binding.valGas.visibility = View.VISIBLE
+                binding.valGrowthLamp.visibility = View.VISIBLE
+                binding.valNutritionVolume.visibility = View.VISIBLE
+                binding.valNutrition.visibility = View.VISIBLE
+
                 Log.w("Debug", "Message received from host '$MQTT_HOST': $mqttMessage")
                 if(topic == "arceniter/common"){
                     commonMsg = Gson().fromJson(mqttMessage.toString(), Common::class.java)

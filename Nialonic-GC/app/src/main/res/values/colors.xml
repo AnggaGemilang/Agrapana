@@ -33,12 +33,15 @@
     <color name="yellow_20">#FBDFA4</color>
 
     <color name="black">#FF000000</color>
-    <color name="black_20">#17000000</color>
+    <color name="black_20">#17414141</color>
 
     <color name="white">#FFFFFFFF</color>
     <color name="white_75">#9FFFFFFF</color>
 
     <color name="red_50">#FF6464</color>
     <color name="red_20">#FFA4A4</color>
+
+    <color name="shimmer_placeholder">#dddddd</color>
+    <color name="shimmer_placeholder2">#858585</color>
 
 </resources>

@@ -30,9 +30,9 @@ class PresetsAdapter(taskListener: TaskListener) : RecyclerView.Adapter<PresetsA
         holder.tvgasValve.text = "CO2 Valve : " + presets[position].gasValve
         holder.tvNutrition.text = "Nutrition : " + presets[position].nutrition
         holder.tvGrowthLamp.text = "Growth Lamp : " + presets[position].growthLamp
-        holder.tvSeedlingTime.text = "Seedling Time : " + presets[position].seedlingTime
-        holder.tvGrowTime.text = "Grow Time : " + presets[position].growTime
-        holder.tvTemperature.text = "Temperature : " + presets[position].temperature
+        holder.tvSeedlingTime.text = "Seedling Time : " + presets[position].seedlingTime + " days"
+        holder.tvGrowTime.text = "Grow Time : " + presets[position].growTime + " days"
+        holder.tvTemperature.text = "Temperature : " + presets[position].temperature + "°C"
         holder.tvPump.text = "Pump : " + presets[position].pump
         Glide.with(holder.imageView.context)
             .load(presets[position].imageUrl)

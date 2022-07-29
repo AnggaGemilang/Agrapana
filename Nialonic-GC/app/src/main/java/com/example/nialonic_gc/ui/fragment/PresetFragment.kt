@@ -65,6 +65,7 @@ class PresetFragment : Fragment() {
                     }
                     val alert = builder.create()
                     alert.show()
+                    binding.loadingPanel.visibility = View.VISIBLE
                 }
                 R.id.about -> {
                     AlertDialog.Builder(requireContext())

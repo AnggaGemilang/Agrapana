@@ -59,11 +59,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.NialonicGC.SplashScreen">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
         </activity>
 
         <activity
@@ -71,6 +66,11 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.NialonicGC.Main">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 
