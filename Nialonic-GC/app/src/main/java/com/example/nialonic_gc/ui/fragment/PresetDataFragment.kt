@@ -23,24 +23,26 @@ class PresetDataFragment(private val type: String) : Fragment(), PresetsAdapter.
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel = ViewModelProviders.of(this)[PresetViewModel::class.java]
         binding = FragmentPresetDataBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initViewModel()
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         viewModel.fetchPresets(type)
         viewModel.getRealtimeUpdates(type)
+        initViewModel()
         binding.recyclerView.adapter = adapter
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProviders.of(this)[PresetViewModel::class.java]
+        var i = 0
         viewModel.presets.observe(viewLifecycleOwner) {
             if (it!!.isNotEmpty()) {
                 binding.progressBar.visibility = View.GONE
                 binding.mainContent.visibility = View.VISIBLE
+                i = it.size
                 binding.size.text = "Showing " + it.size.toString() + " data"
                 adapter.setPresets(it)
             } else {
@@ -49,6 +51,14 @@ class PresetDataFragment(private val type: String) : Fragment(), PresetsAdapter.
                 binding.notFound.visibility = View.VISIBLE
             }
         }
+        viewModel.preset.observe(viewLifecycleOwner) {
+            if(!it.isDeleted){
+                i++
+            }
+            binding.size.text = "Showing $i data"
+            adapter.addPreset(it)
+        }
+
     }
 
     override fun onOptionClick(view: View, preset: Preset) {

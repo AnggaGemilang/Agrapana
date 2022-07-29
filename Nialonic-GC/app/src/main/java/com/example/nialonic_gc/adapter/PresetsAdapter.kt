@@ -1,6 +1,7 @@
 package com.example.nialonic_gc.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.example.nialonic_gc.model.Preset
 class PresetsAdapter(taskListener: TaskListener) : RecyclerView.Adapter<PresetsAdapter.MyViewHolder>() {
 
     private var presets = mutableListOf<Preset>()
+    private var presetId = mutableListOf<String>()
     private var taskListener: TaskListener = taskListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PresetsAdapter.MyViewHolder {
@@ -48,11 +50,27 @@ class PresetsAdapter(taskListener: TaskListener) : RecyclerView.Adapter<PresetsA
         notifyDataSetChanged()
     }
 
-    fun addPreset(author: Preset) {
-        if (!presets.contains(author)){
-            presets.add(author)
+    private fun isContain(preset: Preset): Boolean {
+        presetId.clear()
+        for(p in presets){
+            presetId.add(p.id)
+        }
+        for(p in presets){
+            if(p.id == preset.id){
+                return true
+            }
+        }
+        return false
+    }
+
+    fun addPreset(preset: Preset) {
+        if (!isContain(preset)){
+            presets.add(preset)
         } else {
-            val index = presets.indexOf(author)
+            Log.d("preset", preset.toString())
+            val index = presetId.indexOf(preset.id)
+            Log.d("index 1", index.toString())
+            presets[index] = preset
         }
         notifyDataSetChanged()
     }

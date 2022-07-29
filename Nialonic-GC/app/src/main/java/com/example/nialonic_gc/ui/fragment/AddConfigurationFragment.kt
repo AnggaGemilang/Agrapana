@@ -124,6 +124,7 @@ class AddConfigurationFragment : RoundedBottomSheetDialogFragment() {
                 preset.pump = pump
                 preset.seedlingTime = seedlingTime
                 preset.growTime = growTime
+                preset.isDeleted = true
                 if(linkImage == null){
                     preset.imageUrl = arguments?.getString("imageURL")!!
                 } else {
@@ -185,7 +186,7 @@ class AddConfigurationFragment : RoundedBottomSheetDialogFragment() {
                             preset.seedlingTime = seedlingTime
                             preset.growTime = growTime
                             preset.imageUrl = imageUrl
-
+                            preset.isDeleted = false
                             val dbPresets = viewModel.getDBReference()
                             preset.id = dbPresets.push().key.toString()
                             dbPresets.child(preset.id).setValue(preset).addOnCompleteListener { it1 ->
