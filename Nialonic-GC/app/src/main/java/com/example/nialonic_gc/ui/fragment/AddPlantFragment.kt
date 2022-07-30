@@ -34,6 +34,7 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
     private lateinit var viewModelPlant: PlantViewModel
     private var presets: List<Preset> = emptyList()
     private var commonMsg = Common()
+    private var thumbnailMsg = Thumbnail()
     private var presetsName = mutableListOf<String>()
 
     private lateinit var binding: FragmentAddPlantBinding
@@ -159,10 +160,9 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
                             preset.imageUrl = imageUrl
 
                             val common = Common()
-//                            common.power = "on"
+                            common.power = "on"
                             common.plant_name = preset.plantName
                             common.is_planting = "yes"
-//                            common.refresh = commonMsg.refresh
                             val sdf = SimpleDateFormat("dd-M-yyyy, hh:mm")
                             common.started_planting = sdf.format(Date())
 
@@ -178,6 +178,7 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
 
                             val thumbnail = Thumbnail()
                             thumbnail.imgURL = imageUrl
+                            thumbnail.ref = thumbnailMsg.ref
                             mqttClient.publish("arceniter/thumbnail", Gson().toJson(thumbnail))
 
                             val dbPresets = viewModelPreset.getDBReference()
@@ -200,7 +201,6 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
                 common.plant_name = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].plantName
                 common.category = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].category
                 common.is_planting = "yes"
-//                common.refresh = commonMsg.refresh
 
                 val sdf = SimpleDateFormat("dd-M-yyyy, hh:mm")
                 common.started_planting = sdf.format(Date())
@@ -216,6 +216,7 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
 
                 val thumbnail = Thumbnail()
                 thumbnail.imgURL = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].imageUrl
+                thumbnail.ref = thumbnailMsg.ref
 
                 mqttClient.publish("arceniter/thumbnail", Gson().toJson(thumbnail))
 
@@ -228,8 +229,8 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
         mqttClient.setCallback(object : MqttCallbackExtended {
             override fun connectComplete(b: Boolean, s: String) {
                 Log.w("Debug", "Connection to host connected:\n'$MQTT_HOST'")
+                mqttClient.subscribe("arceniter/thumbnail")
                 mqttClient.subscribe("arceniter/common")
-                mqttClient.subscribe("arceniter/monitoring")
             }
             override fun connectionLost(throwable: Throwable) {
                 Log.w("Debug", "Connection to host lost:\n'$MQTT_HOST'")
@@ -238,6 +239,8 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
             override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
                 if(topic == "arceniter/common") {
                     commonMsg = Gson().fromJson(mqttMessage.toString(), Common::class.java)
+                } else {
+                    thumbnailMsg = Gson().fromJson(mqttMessage.toString(), Thumbnail::class.java)
                 }
             }
             override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {

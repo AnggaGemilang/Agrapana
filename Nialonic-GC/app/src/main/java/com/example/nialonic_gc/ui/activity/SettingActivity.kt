@@ -1,16 +1,23 @@
 package com.example.nialonic_gc.ui.activity
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
 import com.example.nialonic_gc.R
+import com.example.nialonic_gc.config.MQTT_HOST
 import com.example.nialonic_gc.databinding.ActivitySettingBinding
+import com.example.nialonic_gc.helper.MqttClientHelper
+import com.example.nialonic_gc.model.Thumbnail
+import com.google.gson.Gson
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
+import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
+import org.eclipse.paho.client.mqttv3.MqttMessage
 import org.imaginativeworld.oopsnointernet.NoInternetDialog
 
 
@@ -18,6 +25,10 @@ class SettingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingBinding
     private var noInternetDialog: NoInternetDialog? = null
+
+    private val mqttClient by lazy {
+        MqttClientHelper(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +53,8 @@ class SettingActivity : AppCompatActivity() {
                 .commit()
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        setMqttCallBack()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -74,18 +87,50 @@ class SettingActivity : AppCompatActivity() {
         noInternetDialog = builder1.build()
     }
 
+    private fun setMqttCallBack() {
+        mqttClient.setCallback(object : MqttCallbackExtended {
+            override fun connectComplete(b: Boolean, s: String) {
+                Log.w("Debug", "Connection to host connected:\n'$MQTT_HOST'")
+                binding.loadingPanel.visibility = View.GONE
+                binding.mainContent.visibility = View.VISIBLE
+            }
+            override fun connectionLost(throwable: Throwable) {
+                Log.w("Debug", "Connection to host lost:\n'$MQTT_HOST'")
+            }
+            @Throws(Exception::class)
+            override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
+
+            }
+            override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
+                Log.w("Debug", "Message published to host '$MQTT_HOST'")
+            }
+        })
+    }
+
     class SettingsFragment : PreferenceFragmentCompat() {
+
+        private val mqttClient by lazy {
+            MqttClientHelper(requireContext())
+        }
+
+        var thumbnailMSG = Thumbnail()
+
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
             val refreshTime: Preference = findPreference("refresh")!!
             val notification: Preference = findPreference("notification")!!
 
+            setMqttCallBack()
+
             refreshTime.setOnPreferenceChangeListener { _, newValue ->
                 val prefs: SharedPreferences = activity!!.getSharedPreferences("prefs", MODE_PRIVATE)
                 val editor: SharedPreferences.Editor? = prefs.edit()
                 editor?.putString("refreshData", newValue.toString())
                 editor?.apply()
+                val thumbnail = Thumbnail()
+                thumbnail.ref = newValue.toString()
+                mqttClient.publish("arceniter/thumbnail", Gson().toJson(thumbnail))
                 true
             }
 
@@ -97,5 +142,31 @@ class SettingActivity : AppCompatActivity() {
                 true
             }
         }
+
+        private fun setMqttCallBack() {
+            mqttClient.setCallback(object : MqttCallbackExtended {
+                override fun connectComplete(b: Boolean, s: String) {
+                    Log.w("Debug", "Connection to host connected:\n'$MQTT_HOST'")
+                    mqttClient.subscribe("arceniter/thumbnail")
+                }
+                override fun connectionLost(throwable: Throwable) {
+                    Log.w("Debug", "Connection to host lost:\n'$MQTT_HOST'")
+                }
+                @Throws(Exception::class)
+                override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
+                    if(topic == "arceniter/thumbnail"){
+                        thumbnailMSG = Gson().fromJson(mqttMessage.toString(), Thumbnail::class.java)
+                        val prefs: SharedPreferences = activity!!.getSharedPreferences("prefs", MODE_PRIVATE)
+                        val editor: SharedPreferences.Editor? = prefs.edit()
+                        editor?.putString("refreshData", thumbnailMSG.ref)
+                        editor?.apply()
+                    }
+                }
+                override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
+                    Log.w("Debug", "Message published to host '$MQTT_HOST'")
+                }
+            })
+        }
+
     }
 }

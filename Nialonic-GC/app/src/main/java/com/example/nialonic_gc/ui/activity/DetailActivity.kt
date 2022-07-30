@@ -42,6 +42,7 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var viewModel: PlantViewModel
     private var noInternetDialog: NoInternetDialog? = null
     private var commonMsg =  Common()
+    private var thumbnailMsg =  Thumbnail()
     private var controllingMsg =  Controlling()
     private var imageFromMQTT: String = ""
     lateinit var lineList: ArrayList<Entry>
@@ -134,12 +135,12 @@ class DetailActivity : AppCompatActivity() {
                         controllingMsg = controlling
                     }
                     "arceniter/thumbnail" -> {
-                        val thumbnail = Gson().fromJson(mqttMessage.toString(), Thumbnail::class.java)
-                        Log.d("ayo dongg", thumbnail.imgURL)
+                        thumbnailMsg = Gson().fromJson(mqttMessage.toString(), Thumbnail::class.java)
+                        Log.d("ayo dongg", thumbnailMsg.imgURL)
                         Glide.with(this@DetailActivity)
-                            .load(thumbnail.imgURL)
+                            .load(thumbnailMsg.imgURL)
                             .into(binding.image)
-                        imageFromMQTT = thumbnail.imgURL
+                        imageFromMQTT = thumbnailMsg.imgURL
                     }
                 }
             }
@@ -204,6 +205,7 @@ class DetailActivity : AppCompatActivity() {
 
                     val thumbnail = Thumbnail()
                     thumbnail.imgURL = ""
+                    thumbnail.ref = thumbnailMsg.ref
                     mqttClient.publish("arceniter/thumbnail", Gson().toJson(thumbnail))
 
                     startActivity(Intent(this, MainActivity::class.java))
@@ -249,6 +251,7 @@ class DetailActivity : AppCompatActivity() {
 
                     val thumbnail = Thumbnail()
                     thumbnail.imgURL = ""
+                    thumbnail.ref = thumbnailMsg.ref
                     mqttClient.publish("arceniter/thumbnail", Gson().toJson(thumbnail))
 
                     startActivity(Intent(this, MainActivity::class.java))

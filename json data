@@ -8,7 +8,8 @@ preset
 image
 
 {
-  "imgURL": "https://firebasestorage.googleapis.com/v0/b/arceniter-app.appspot.com/o/thumbnail_preset%2F71007f24-a43c-4f13-9d63-262a6a09e055.png?alt=media&token=381099f5-1ecf-41c9-a863-f95540a4981d"
+  "imgURL": "https://firebasestorage.googleapis.com/v0/b/arceniter-app.appspot.com/o/thumbnail_preset%2F71007f24-a43c-4f13-9d63-262a6a09e055.png?alt=media&token=381099f5-1ecf-41c9-a863-f95540a4981d",
+  "refresh": "20"
 }
 
 ===================================================
@@ -60,6 +61,14 @@ controlling
   "nutrition": "27",
   "mode": "seedling"
 }
+
+
+    doc2["temperature"] = (strcmp(is_planting, "no") == 0) ? "N/A" : msg;
+    doc2["ph"] = (strcmp(is_planting, "no") == 0) ? "N/A" : msg;
+    doc2["gas"] = (strcmp(is_planting, "no") == 0) ? "N/A" : msg;
+    doc2["nutrition"] = (strcmp(is_planting, "no") == 0) ? "N/A" : msg;
+    doc2["nutrition_volume"] = (strcmp(is_planting, "no") == 0) ? "N/A" : msg;
+    doc2["growth_lamp"] = "on";
 
 ====================================================
 

@@ -6,6 +6,7 @@
             app:key="refresh"
             app:icon="@drawable/ic_baseline_refresh_24"
             app:title="Refresh Data"
+            app:defaultValue="10"
             app:useSimpleSummaryProvider="true" />
 
         <SwitchPreferenceCompat

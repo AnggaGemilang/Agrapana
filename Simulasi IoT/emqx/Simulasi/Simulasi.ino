@@ -29,8 +29,8 @@ unsigned long lastMsg = 0;
 char msg[MSG_BUFFER_SIZE];
 
 // common
-char power[25] = "";
-char is_planting[4] = "";
+char power[25] = "off";
+char is_planting[4] = "no";
 char plant_name[25] = "";
 char category[25] = "";
 char started_planting[25] = "";
@@ -44,6 +44,7 @@ char nutritionConfiguration[10] = "";
 
 // image
 char imgURL[200] = "";
+char refresh[5] = "10";
 
 char output1[207];
 char output2[374];
@@ -67,16 +68,17 @@ void callback(char *topic, byte *payload, unsigned int length) {
   } else if(strcmp(topic, "arceniter/common") == 0){
     StaticJsonDocument<292> doc;
     deserializeJson(doc, payload, length);
-    strlcpy(power, doc["power"] | "", sizeof(power));
-    strlcpy(is_planting, doc["is_planting"] | "", sizeof(is_planting));
+    strlcpy(power, doc["power"] | "off", sizeof(power));
+    strlcpy(is_planting, doc["is_planting"] | "no", sizeof(is_planting));
     strlcpy(plant_name, doc["plant_name"] | "", sizeof(plant_name));
-    strlcpy(category, doc["category"] | "", sizeof(category));    
+    strlcpy(category, doc["category"] | "", sizeof(category));
     strlcpy(started_planting, doc["started_planting"] | "", sizeof(started_planting));
     
   } else if(strcmp(topic, "arceniter/thumbnail") == 0){
-    StaticJsonDocument<292> doc;
+    StaticJsonDocument<392> doc;
     deserializeJson(doc, payload, length);
     strlcpy(imgURL, doc["imgURL"] | "", sizeof(imgURL));
+    strlcpy(refresh, doc["ref"] | "10", sizeof(refresh));
   }
 
   Serial.print(power);
@@ -145,9 +147,8 @@ void loop() {
   }
   mqttClient.loop();
 
-
   unsigned long now = millis();
-  if (now - lastMsg > 10000) {
+  if (now - lastMsg > atoi(refresh)*1000) {
     int lightData = analogRead(LightSensorPin);
 
     lastMsg = now;
@@ -165,7 +166,7 @@ void loop() {
     doc1["mode"] = modes;
     
     serializeJson(doc1, output1); 
-       
+    
     Serial.print("Publish message: ");
     Serial.println(output1);
     mqttClient.publish("arceniter/controlling", output1);
@@ -180,7 +181,7 @@ void loop() {
     doc2["nutrition"] = msg;
     doc2["nutrition_volume"] = msg;
     doc2["growth_lamp"] = "on";
-        
+    
     serializeJson(doc2, output2); 
        
     Serial.print("Publish message: ");
@@ -205,15 +206,15 @@ void loop() {
 
     // ======================================================
 
-    StaticJsonDocument<256> doc4;
+    StaticJsonDocument<356> doc4;
 
     doc4["imgURL"] = imgURL;
+    doc4["ref"] = refresh;
 
     serializeJson(doc4, output4); 
     Serial.print("Publish message: ");
     Serial.println(output4);    
     mqttClient.publish("arceniter/thumbnail", output4);
-    
   }
 
 }
