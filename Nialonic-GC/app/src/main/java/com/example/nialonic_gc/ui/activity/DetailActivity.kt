@@ -19,8 +19,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.nialonic_gc.R
 import com.example.nialonic_gc.config.MQTT_HOST
-import com.example.nialonic_gc.helper.MqttClientHelper
 import com.example.nialonic_gc.databinding.ActivityDetailBinding
+import com.example.nialonic_gc.helper.MqttClientHelper
 import com.example.nialonic_gc.model.*
 import com.example.nialonic_gc.viewmodel.PlantViewModel
 import com.github.mikephil.charting.data.Entry
@@ -33,8 +33,10 @@ import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
 import org.eclipse.paho.client.mqttv3.MqttMessage
 import org.imaginativeworld.oopsnointernet.NoInternetDialog
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.*
-import kotlin.collections.ArrayList
 
 class DetailActivity : AppCompatActivity() {
 
@@ -117,9 +119,14 @@ class DetailActivity : AppCompatActivity() {
                 when (topic) {
                     "arceniter/common" -> {
                         commonMsg = Gson().fromJson(mqttMessage.toString(), Common::class.java)
-                        Log.d("dadang", mqttMessage.toString())
-                        binding.plantName.text = commonMsg.plant_name.capitalize()
+                        val data = commonMsg.plant_name.split("#").toTypedArray()
+                        binding.plantName.text = data[0].capitalize()
                         binding.startedPlanting.text = commonMsg.started_planting
+
+                        val cal = Calendar.getInstance()
+                        val s = SimpleDateFormat("dd MMM yyyy")
+                        cal.add(Calendar.DAY_OF_YEAR, Integer.parseInt(data[1]))
+                        binding.prediction.text = "(" + s.format(Date(cal.timeInMillis)) + ")"
                     }
                     "arceniter/monitoring" -> {
                         val monitoring = Gson().fromJson(mqttMessage.toString(), Monitoring::class.java)
@@ -127,7 +134,7 @@ class DetailActivity : AppCompatActivity() {
                         binding.valPh.text = monitoring.ph + " Ph"
                         binding.valGas.text = monitoring.gas.toString() + " ppm`"
                         binding.valNutrition.text = monitoring.nutrition.toString() + " ppm"
-                        binding.valNutritionVolume.text = monitoring.nutrition_volume.toString() + " %"
+                        binding.valNutritionVolume.text = monitoring.nutrition_volume.toString() + "%"
                         binding.valGrowthLamp.text = monitoring.growth_lamp.capitalize()
                     }
                     "arceniter/controlling" -> {
@@ -136,7 +143,7 @@ class DetailActivity : AppCompatActivity() {
                     }
                     "arceniter/thumbnail" -> {
                         thumbnailMsg = Gson().fromJson(mqttMessage.toString(), Thumbnail::class.java)
-                        Log.d("ayo dongg", thumbnailMsg.imgURL)
+                        binding.image.visibility = View.VISIBLE
                         Glide.with(this@DetailActivity)
                             .load(thumbnailMsg.imgURL)
                             .into(binding.image)
@@ -207,7 +214,6 @@ class DetailActivity : AppCompatActivity() {
                     thumbnail.imgURL = ""
                     thumbnail.ref = thumbnailMsg.ref
                     mqttClient.publish("arceniter/thumbnail", Gson().toJson(thumbnail))
-
                     startActivity(Intent(this, MainActivity::class.java))
                 }
                 builder.setNegativeButton("NO") { dialog, _ ->

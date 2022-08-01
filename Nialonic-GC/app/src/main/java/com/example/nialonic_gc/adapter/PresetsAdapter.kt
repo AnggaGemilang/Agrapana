@@ -20,7 +20,7 @@ class PresetsAdapter(taskListener: TaskListener) : RecyclerView.Adapter<PresetsA
     private var presetId = mutableListOf<String>()
     private var taskListener: TaskListener = taskListener
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PresetsAdapter.MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val inflater = LayoutInflater.from(parent.context).inflate(R.layout.item_presets, parent, false)
         return MyViewHolder(inflater)
     }
@@ -29,7 +29,8 @@ class PresetsAdapter(taskListener: TaskListener) : RecyclerView.Adapter<PresetsA
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.tvName.text = presets[position].plantName
-        holder.tvgasValve.text = "CO2 Valve : " + presets[position].gasValve
+        holder.tvgasValve.text = "CO2 Value : " + presets[position].gasValve
+        holder.tvPh.text = "Ph : " + presets[position].ph
         holder.tvNutrition.text = "Nutrition : " + presets[position].nutrition
         holder.tvGrowthLamp.text = "Growth Lamp : " + presets[position].growthLamp
         holder.tvSeedlingTime.text = "Seedling Time : " + presets[position].seedlingTime + " days"
@@ -65,11 +66,11 @@ class PresetsAdapter(taskListener: TaskListener) : RecyclerView.Adapter<PresetsA
 
     fun addPreset(preset: Preset) {
         if (!isContain(preset)){
+            Log.d("preset 2", preset.toString())
             presets.add(preset)
         } else {
             Log.d("preset", preset.toString())
             val index = presetId.indexOf(preset.id)
-            Log.d("index 1", index.toString())
             presets[index] = preset
         }
         notifyDataSetChanged()
@@ -84,6 +85,7 @@ class PresetsAdapter(taskListener: TaskListener) : RecyclerView.Adapter<PresetsA
         var tvGrowTime: TextView
         var tvTemperature: TextView
         var tvPump: TextView
+        var tvPh: TextView
         var optionMenu: ImageButton
         var imageView: ImageView
 
@@ -97,6 +99,7 @@ class PresetsAdapter(taskListener: TaskListener) : RecyclerView.Adapter<PresetsA
             tvTemperature = view.findViewById(R.id.tv_temperature)
             tvPump = view.findViewById(R.id.tv_pump)
             imageView = view.findViewById(R.id.thumbnail)
+            tvPh = view.findViewById(R.id.tv_ph)
             optionMenu = view.findViewById(R.id.option_menu)
         }
     }

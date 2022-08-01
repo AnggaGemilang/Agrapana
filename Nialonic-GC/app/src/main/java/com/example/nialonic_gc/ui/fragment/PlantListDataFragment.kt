@@ -54,7 +54,7 @@ class PlantListDataFragment(private val type: String) : Fragment(), PlantsAdapte
         val dialog = SeekPlantFragment()
         val bundle = Bundle()
 
-        bundle.putString("plantName", plant.plantType)
+        bundle.putString("plantName", plant.plantType.split("#").toTypedArray()[0])
         bundle.putString("status", plant.status)
         bundle.putString("plantingStarted", plant.plantStarted)
         bundle.putString("plantingEnded", plant.plantEnded)

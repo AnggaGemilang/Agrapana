@@ -1,5 +1,6 @@
 package com.example.nialonic_gc.ui.fragment
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -7,31 +8,37 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.nialonic_gc.*
 import com.example.nialonic_gc.config.MQTT_HOST
-import com.example.nialonic_gc.helper.MqttClientHelper
 import com.example.nialonic_gc.databinding.FragmentHomeBinding
-import com.example.nialonic_gc.model.Common
-import com.example.nialonic_gc.model.Monitoring
-import com.example.nialonic_gc.model.Thumbnail
+import com.example.nialonic_gc.helper.MqttClientHelper
+import com.example.nialonic_gc.model.*
 import com.example.nialonic_gc.ui.activity.DetailActivity
 import com.example.nialonic_gc.ui.activity.SettingActivity
 import com.example.nialonic_gc.ui.activity.TurnOnActivity
+import com.example.nialonic_gc.viewmodel.PlantViewModel
 import com.google.gson.Gson
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
 import org.eclipse.paho.client.mqttv3.MqttMessage
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var viewModel: PlantViewModel
     private var commonMsg = Common()
+    private var controllingMsg = Controlling()
+    private var thumbnailMsg = Thumbnail()
     private var monitoringMsg = Monitoring()
 
     private val mqttClient by lazy {
@@ -42,6 +49,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel = ViewModelProviders.of(this)[PlantViewModel::class.java]
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -50,6 +58,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.toolbar.inflateMenu(R.menu.action_nav3)
+        binding.toolbar.menu.getItem(1).isVisible = false
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId) {
                 R.id.power -> {
@@ -105,35 +114,13 @@ class HomeFragment : Fragment() {
             }
             @Throws(Exception::class)
             override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
-                binding.plantNamePlaceholder.visibility = View.GONE
-                binding.imagePlaceholder.visibility = View.GONE
-                binding.startedPlantingPlaceholder.visibility = View.GONE
-                binding.valTemperaturePlaceholder.visibility = View.GONE
-                binding.valGasPlaceholder.visibility = View.GONE
-                binding.valPhPlaceholder.visibility = View.GONE
-                binding.valVolumePlaceholder.visibility = View.GONE
-                binding.valNutritionPlaceholder.visibility = View.GONE
-                binding.valGasPlaceholder.visibility = View.GONE
-                binding.valGrowthLampPlaceholder.visibility = View.GONE
-
-                binding.plantName.visibility = View.VISIBLE
-                binding.image.visibility = View.VISIBLE
-                binding.startedPlanting.visibility = View.VISIBLE
-                binding.valTemperature.visibility = View.VISIBLE
-                binding.valGas.visibility = View.VISIBLE
-                binding.valPh.visibility = View.VISIBLE
-                binding.valGas.visibility = View.VISIBLE
-                binding.valGrowthLamp.visibility = View.VISIBLE
-                binding.valNutritionVolume.visibility = View.VISIBLE
-                binding.valNutrition.visibility = View.VISIBLE
-
                 Log.w("Debug", "Message received from host '$MQTT_HOST': $mqttMessage")
                 if(topic == "arceniter/common"){
                     commonMsg = Gson().fromJson(mqttMessage.toString(), Common::class.java)
-                    binding.plantName.text = commonMsg.plant_name.capitalize()
+                    val data = commonMsg.plant_name.split("#").toTypedArray()
+                    binding.plantName.text = data[0].capitalize()
                     binding.startedPlanting.text = commonMsg.started_planting
                     if(commonMsg.is_planting == "no"){
-                        binding.toolbar.menu.getItem(1).isVisible = false
                         binding.keteranganTidakAda.visibility = View.VISIBLE
                         binding.keteranganAda.visibility = View.GONE
                         binding.valTemperature.text = "N/A"
@@ -152,16 +139,79 @@ class HomeFragment : Fragment() {
                         binding.valNutrition.text = monitoringMsg.nutrition.toString() + " ppm"
                         binding.valNutritionVolume.text = monitoringMsg.nutrition_volume.toString() + " %"
                         binding.valGrowthLamp.text = monitoringMsg.growth_lamp.capitalize()
+
+                        val cal = Calendar.getInstance()
+                        val s = SimpleDateFormat("dd-M-yyyy, hh:mm")
+                        cal.add(Calendar.DAY_OF_YEAR, Integer.parseInt(data[1]))
+
+                        if(s.format(Date(cal.timeInMillis)) == commonMsg.started_planting){
+                            val progressDialog = ProgressDialog(requireContext())
+                            progressDialog.setTitle("Please Wait")
+                            progressDialog.setMessage("System is working . . .")
+                            progressDialog.show()
+
+                            val plant = Plant()
+                            plant.imgUrl = thumbnailMsg.imgURL
+                            plant.category = commonMsg.category
+                            plant.plantType = commonMsg.plant_name
+                            plant.mode = controllingMsg.mode
+                            plant.plantStarted = commonMsg.started_planting
+                            val sdf = SimpleDateFormat("dd-M-yyyy, hh:mm")
+                            plant.plantEnded = sdf.format(Date())
+                            plant.status = "Done"
+
+                            val dbPlants = viewModel.getDBReference()
+                            plant.id = dbPlants.push().key.toString()
+                            dbPlants.child(plant.id).setValue(plant).addOnCompleteListener {
+                                if(it.isSuccessful) {
+                                    progressDialog.dismiss()
+                                    Toast.makeText(requireContext(), "Preset has done", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+
+                            commonMsg.is_planting = "no"
+                            commonMsg.started_planting = ""
+                            commonMsg.plant_name = ""
+                            commonMsg.category = ""
+
+                            Log.d("dadang dong", commonMsg.toString())
+
+                            mqttClient.publish("arceniter/common", Gson().toJson(commonMsg))
+
+                            val thumbnail = Thumbnail()
+                            thumbnail.imgURL = ""
+                            thumbnail.ref = thumbnailMsg.ref
+                            mqttClient.publish("arceniter/thumbnail", Gson().toJson(thumbnail))
+                        }
                     }
                 } else if (topic == "arceniter/monitoring"){
                     monitoringMsg = Gson().fromJson(mqttMessage.toString(), Monitoring::class.java)
-
                 } else if (topic == "arceniter/thumbnail"){
-                    val thumbnail = Gson().fromJson(mqttMessage.toString(), Thumbnail::class.java)
+                    thumbnailMsg = Gson().fromJson(mqttMessage.toString(), Thumbnail::class.java)
                     Glide.with(this@HomeFragment)
-                        .load(thumbnail.imgURL)
+                        .load(thumbnailMsg.imgURL)
                         .into(binding.image)
                 }
+                binding.plantNamePlaceholder.visibility = View.GONE
+                binding.imagePlaceholder.visibility = View.GONE
+                binding.startedPlantingPlaceholder.visibility = View.GONE
+                binding.valTemperaturePlaceholder.visibility = View.GONE
+                binding.valGasPlaceholder.visibility = View.GONE
+                binding.valPhPlaceholder.visibility = View.GONE
+                binding.valVolumePlaceholder.visibility = View.GONE
+                binding.valNutritionPlaceholder.visibility = View.GONE
+                binding.valGasPlaceholder.visibility = View.GONE
+                binding.valGrowthLampPlaceholder.visibility = View.GONE
+                binding.plantName.visibility = View.VISIBLE
+                binding.image.visibility = View.VISIBLE
+                binding.startedPlanting.visibility = View.VISIBLE
+                binding.valTemperature.visibility = View.VISIBLE
+                binding.valGas.visibility = View.VISIBLE
+                binding.valPh.visibility = View.VISIBLE
+                binding.valGas.visibility = View.VISIBLE
+                binding.valGrowthLamp.visibility = View.VISIBLE
+                binding.valNutritionVolume.visibility = View.VISIBLE
+                binding.valNutrition.visibility = View.VISIBLE
             }
             override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
                 Log.w("Debug", "Message published to host '$MQTT_HOST'")

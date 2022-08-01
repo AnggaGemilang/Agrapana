@@ -27,7 +27,7 @@ class PlantsAdapter(taskListener: TaskListener) : RecyclerView.Adapter<PlantsAda
     override fun getItemCount() = plants.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.tvName.text = plants[position].plantType
+        holder.tvName.text = plants[position].plantType.split("#").toTypedArray()[0]
         holder.tvStatus.text = plants[position].status
         holder.tvMode.text = plants[position].mode + " mode"
         holder.tvEndPlant.text = plants[position].plantEnded
@@ -44,15 +44,6 @@ class PlantsAdapter(taskListener: TaskListener) : RecyclerView.Adapter<PlantsAda
 
     fun setPlants(plants: List<Plant>) {
         this.plants = plants as MutableList<Plant>
-        notifyDataSetChanged()
-    }
-
-    fun addPlants(plant: Plant) {
-        if (!plants.contains(plant)){
-            plants.add(plant)
-        } else {
-            val index = plants.indexOf(plant)
-        }
         notifyDataSetChanged()
     }
 

@@ -73,19 +73,6 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
                 presets = it
             }
         }
-
-        binding.automatic.setOnCheckedChangeListener { _, isChecked ->
-            binding.type.isEnabled = !isChecked
-        }
-
-        binding.nutritionManuallyChk.setOnCheckedChangeListener { _, isChecked ->
-            binding.nutrition.isEnabled = !isChecked
-            if(isChecked){
-                binding.nutritionManually.visibility = View.VISIBLE
-            } else {
-                binding.nutritionManually.visibility = View.GONE
-            }
-        }
         binding.newConfiguration.setOnCheckedChangeListener { _, isChecked ->
             binding.type.isEnabled = !isChecked
             if(isChecked){
@@ -95,12 +82,12 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
                 binding.plantName.visibility = View.VISIBLE
                 binding.titleNutrition.visibility = View.VISIBLE
                 binding.nutrition.visibility = View.VISIBLE
-                binding.nutritionManuallyChk.visibility = View.VISIBLE
                 binding.titleDefaultImage.visibility = View.VISIBLE
                 binding.defaultImage.visibility = View.VISIBLE
                 binding.configurationItem1.visibility = View.VISIBLE
                 binding.configurationItem2.visibility = View.VISIBLE
                 binding.configurationItem3.visibility = View.VISIBLE
+                binding.configurationItem4.visibility = View.VISIBLE
             } else {
                 binding.titleCategory.visibility = View.GONE
                 binding.category.visibility = View.GONE
@@ -108,12 +95,12 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
                 binding.plantName.visibility = View.GONE
                 binding.titleNutrition.visibility = View.GONE
                 binding.nutrition.visibility = View.GONE
-                binding.nutritionManuallyChk.visibility = View.GONE
                 binding.titleDefaultImage.visibility = View.GONE
                 binding.defaultImage.visibility = View.GONE
                 binding.configurationItem1.visibility = View.GONE
                 binding.configurationItem2.visibility = View.GONE
                 binding.configurationItem3.visibility = View.GONE
+                binding.configurationItem4.visibility = View.GONE
             }
         }
 
@@ -136,13 +123,9 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
                             val imageUrl = it.toString()
                             val name = binding.plantName.text.toString().trim()
                             val category = binding.category.selectedItem.toString()
-                            val nutrition = if (binding.nutritionManuallyChk.isChecked) {
-                                binding.nutritionManually.text.toString().trim()
-                            } else {
-                                binding.nutrition.selectedItem.toString()
-                            }
+                            val nutrition = binding.nutrition.text.toString().trim()
                             val growthLamp = binding.growthLamp.selectedItem.toString()
-                            val gasValve = binding.gasValve.selectedItem.toString()
+                            val gasValve = binding.gasValve.text.toString().trim()
                             val temperature = binding.temperature.text.toString().trim()
                             val pump = binding.pump.selectedItem.toString()
                             val seedlingTime = binding.seedling.text.toString().trim()
@@ -198,15 +181,22 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
             } else {
                 val common = Common()
                 common.power = "on"
-                common.plant_name = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].plantName
                 common.category = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].category
                 common.is_planting = "yes"
 
                 val sdf = SimpleDateFormat("dd-M-yyyy, hh:mm")
                 common.started_planting = sdf.format(Date())
-                mqttClient.publish("arceniter/common", Gson().toJson(common))
 
                 val controlling = Controlling()
+                if(controlling.mode == "seedling"){
+                    common.plant_name =
+                        presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].plantName + "#" + presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].seedlingTime
+                } else {
+                    common.plant_name =
+                        presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].plantName + "#" + presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].growTime
+                }
+
+                mqttClient.publish("arceniter/common", Gson().toJson(common))
                 controlling.gas = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].gasValve
                 controlling.nutrition = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].nutrition
                 controlling.pump = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].pump

@@ -57,36 +57,14 @@ class AddConfigurationFragment : RoundedBottomSheetDialogFragment() {
                     arguments?.getString("growthLamp")
                 )
             )
-            binding.gasValve.setSelection(
-                (binding.gasValve.adapter as ArrayAdapter<String>).getPosition(
-                    arguments?.getString("gasValve")
-                )
-            )
+            binding.ph.text = Editable.Factory.getInstance().newEditable(arguments?.getString("ph"))
+            binding.gasValve.text = Editable.Factory.getInstance().newEditable(arguments?.getString("gasValve"))
             binding.pump.setSelection(
                 (binding.pump.adapter as ArrayAdapter<String>).getPosition(
                     arguments?.getString("pump")
                 )
             )
-            if(arguments?.getString("nutrition") == "+" || arguments?.getString("nutrition") == "-"){
-                binding.nutrition.setSelection(
-                    (binding.nutrition.adapter as ArrayAdapter<String>).getPosition(
-                        arguments?.getString("nutrition")
-                    )
-                )
-            } else {
-                binding.nutrition.isEnabled = false
-                binding.nutritionManuallyChk.isChecked = true
-                binding.nutritionManually.visibility = View.VISIBLE
-                binding.nutritionManually.text = Editable.Factory.getInstance().newEditable(arguments?.getString("nutrition"))
-            }
-        }
-        binding.nutritionManuallyChk.setOnCheckedChangeListener { _, isChecked ->
-            binding.nutrition.isEnabled = !isChecked
-            if(isChecked){
-                binding.nutritionManually.visibility = View.VISIBLE
-            } else {
-                binding.nutritionManually.visibility = View.GONE
-            }
+            binding.nutrition.text = Editable.Factory.getInstance().newEditable(arguments?.getString("nutrition"))
         }
 
         binding.open.setOnClickListener {
@@ -102,15 +80,12 @@ class AddConfigurationFragment : RoundedBottomSheetDialogFragment() {
             if(arguments?.getString("status") == "update") {
                 val name = binding.plantName.text.toString().trim()
                 val category = binding.category.selectedItem.toString()
-                val nutrition = if(binding.nutritionManuallyChk.isChecked){
-                    binding.nutritionManually.text.toString().trim()
-                } else {
-                    binding.nutrition.selectedItem.toString()
-                }
+                val nutrition = binding.nutrition.text.toString().trim()
                 val growthLamp = binding.growthLamp.selectedItem.toString()
-                val gasValve = binding.gasValve.selectedItem.toString()
+                val gasValve = binding.gasValve.text.toString().trim()
                 val temperature = binding.temperature.text.toString().trim()
                 val pump = binding.pump.selectedItem.toString()
+                val ph = binding.ph.text.toString().trim()
                 val seedlingTime = binding.seedling.text.toString().trim()
                 val growTime = binding.grow.text.toString().trim()
                 val preset = Preset()
@@ -122,6 +97,7 @@ class AddConfigurationFragment : RoundedBottomSheetDialogFragment() {
                 preset.gasValve = gasValve
                 preset.temperature = temperature
                 preset.pump = pump
+                preset.ph = ph
                 preset.seedlingTime = seedlingTime
                 preset.growTime = growTime
                 preset.isDeleted = true
@@ -164,17 +140,14 @@ class AddConfigurationFragment : RoundedBottomSheetDialogFragment() {
                             val imageUrl = it.toString()
                             val name = binding.plantName.text.toString().trim()
                             val category = binding.category.selectedItem.toString()
-                            val nutrition = if(binding.nutritionManuallyChk.isChecked){
-                                binding.nutritionManually.text.toString().trim()
-                            } else {
-                                binding.nutrition.selectedItem.toString()
-                            }
+                            val nutrition = binding.nutrition.text.toString().trim()
                             val growthLamp = binding.growthLamp.selectedItem.toString()
-                            val gasValve = binding.gasValve.selectedItem.toString()
+                            val gasValve = binding.gasValve.text.toString().trim()
                             val temperature = binding.temperature.text.toString().trim()
                             val pump = binding.pump.selectedItem.toString()
                             val seedlingTime = binding.seedling.text.toString().trim()
                             val growTime = binding.grow.text.toString().trim()
+                            val ph = binding.ph.text.toString().trim()
                             val preset = Preset()
                             preset.plantName = name
                             preset.category = category
@@ -183,6 +156,7 @@ class AddConfigurationFragment : RoundedBottomSheetDialogFragment() {
                             preset.gasValve = gasValve
                             preset.temperature = temperature
                             preset.pump = pump
+                            preset.ph = ph
                             preset.seedlingTime = seedlingTime
                             preset.growTime = growTime
                             preset.imageUrl = imageUrl

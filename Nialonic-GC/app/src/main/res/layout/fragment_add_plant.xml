@@ -53,15 +53,6 @@
                 app:popupTheme="@style/Spinner.Custom"
                 android:background="@drawable/spinner_style" />
 
-            <CheckBox
-                android:id="@+id/automatic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:layout_marginStart="-5dp"
-                android:layout_gravity="left"
-                android:text="Automatic Detection" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -93,8 +84,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Plant Name"
-                android:visibility="gone"
                 android:textStyle="bold"
+                android:visibility="gone"
                 android:layout_marginTop="15dp"
                 android:textSize="14sp" />
 
@@ -132,8 +123,8 @@
                 android:id="@+id/title_default_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Default Image"
                 android:visibility="gone"
+                android:text="Default Image"
                 android:textStyle="bold"
                 android:layout_marginTop="15dp"
                 android:textSize="14sp" />
@@ -152,7 +143,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/open"
@@ -179,45 +169,69 @@
 
             </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/title_nutrition"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nutrition"
-                android:visibility="gone"
-                android:textStyle="bold"
-                android:layout_marginTop="15dp"
-                android:textSize="14sp" />
-
-            <Spinner
-                android:id="@+id/nutrition"
+            <LinearLayout
+                android:id="@+id/configuration_item_4"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
                 android:visibility="gone"
-                android:entries="@array/val_component_nutrition"
-                app:popupTheme="@style/Spinner.Custom"
-                android:background="@drawable/spinner_style" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
 
-            <CheckBox
-                android:id="@+id/nutrition_manually_chk"
-                android:layout_width="wrap_content"
-                android:layout_marginTop="7dp"
-                android:layout_marginStart="-5dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:visibility="gone"
-                android:text="Enter Value Manually" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="7dp"
+                    android:orientation="vertical" >
 
-            <EditText
-                android:id="@+id/nutrition_manually"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:textSize="16sp"
-                android:visibility="gone"
-                android:background="@drawable/edittext_style"
-                android:hint="Enter Nutrition Value" />
+                    <TextView
+                        android:id="@+id/title_nutrition"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nutrition"
+                        android:textStyle="bold"
+                        android:layout_marginTop="15dp"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/nutrition"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:textSize="16sp"
+                        android:inputType="phone"
+                        android:background="@drawable/edittext_style"
+                        android:hint="Enter Nutrition" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="7dp"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ph"
+                        android:textStyle="bold"
+                        android:layout_marginTop="15dp"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/ph"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:textSize="16sp"
+                        android:inputType="phone"
+                        android:background="@drawable/edittext_style"
+                        android:hint="Enter Ph" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/configuration_item_1"
@@ -262,17 +276,17 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="CO2 Valve"
+                        android:text="Pump"
                         android:textStyle="bold"
                         android:layout_marginTop="15dp"
                         android:textSize="14sp" />
 
                     <Spinner
-                        android:id="@+id/gas_valve"
+                        android:id="@+id/pump"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
-                        android:entries="@array/val_component_state2"
+                        android:entries="@array/val_component_state3"
                         app:popupTheme="@style/Spinner.Custom"
                         android:background="@drawable/spinner_style" />
 
@@ -283,8 +297,8 @@
             <LinearLayout
                 android:id="@+id/configuration_item_2"
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="horizontal" >
 
                 <LinearLayout
@@ -308,6 +322,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
                         android:textSize="16sp"
+                        android:inputType="phone"
                         android:background="@drawable/edittext_style"
                         android:hint="Enter Temperature" />
 
@@ -323,19 +338,20 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pump"
+                        android:text="CO2 Value"
                         android:textStyle="bold"
                         android:layout_marginTop="15dp"
                         android:textSize="14sp" />
 
-                    <Spinner
-                        android:id="@+id/pump"
+                    <EditText
+                        android:id="@+id/gas_valve"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
-                        android:entries="@array/val_component_state3"
-                        app:popupTheme="@style/Spinner.Custom"
-                        android:background="@drawable/spinner_style" />
+                        android:textSize="16sp"
+                        android:inputType="phone"
+                        android:background="@drawable/edittext_style"
+                        android:hint="Enter CO2 Gas" />
 
                 </LinearLayout>
 
@@ -344,8 +360,8 @@
             <LinearLayout
                 android:id="@+id/configuration_item_3"
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="horizontal" >
 
                 <LinearLayout
@@ -369,6 +385,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
                         android:textSize="16sp"
+                        android:inputType="phone"
                         android:background="@drawable/edittext_style"
                         android:hint="Enter Seedling Time" />
 
@@ -395,6 +412,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
                         android:textSize="16sp"
+                        android:inputType="phone"
                         android:background="@drawable/edittext_style"
                         android:hint="Enter Grow Time" />
 

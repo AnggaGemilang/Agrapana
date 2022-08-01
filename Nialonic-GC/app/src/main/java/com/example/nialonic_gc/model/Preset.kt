@@ -16,6 +16,7 @@ data class Preset(
     var pump: String = "",
     var seedlingTime: String = "",
     var growTime: String = "",
+    var ph: String = "",
     var imageUrl: String = "",
 
     var isDeleted: Boolean = false

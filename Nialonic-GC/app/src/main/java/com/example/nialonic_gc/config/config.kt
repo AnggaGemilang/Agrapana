@@ -9,7 +9,7 @@ const val MQTT_CONNECTION_KEEP_ALIVE_INTERVAL = 60
 const val MQTT_CONNECTION_CLEAN_SESSION = true
 const val MQTT_CONNECTION_RECONNECT = true
 
-const val WEBVIEW_URI = "http://10.51.124.8"
+const val WEBVIEW_URI = "http://192.168.1.101/"
 
 const val SSID = "JTK Dosen"
 const val PASSWORD = "jaringan"

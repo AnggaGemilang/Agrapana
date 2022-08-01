@@ -68,6 +68,14 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/tv_ph"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ph : "
+                android:layout_marginTop="3dp"
+                android:textSize="15sp" />
+
+            <TextView
                 android:id="@+id/tv_growth_lamp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -79,7 +87,7 @@
                 android:id="@+id/tv_gas_valve"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CO2 Valve : "
+                android:text="CO2 Value : "
                 android:layout_marginTop="3dp"
                 android:textSize="15sp" />
 

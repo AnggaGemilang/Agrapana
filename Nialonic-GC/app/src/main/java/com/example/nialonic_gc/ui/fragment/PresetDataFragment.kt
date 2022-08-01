@@ -38,6 +38,13 @@ class PresetDataFragment(private val type: String) : Fragment(), PresetsAdapter.
 
     private fun initViewModel() {
         var i = 0
+        viewModel.preset.observe(viewLifecycleOwner) {
+            if(!it.isDeleted){
+                i++
+            }
+            binding.size.text = "Showing $i data"
+            adapter.addPreset(it)
+        }
         viewModel.presets.observe(viewLifecycleOwner) {
             if (it!!.isNotEmpty()) {
                 binding.progressBar.visibility = View.GONE
@@ -51,14 +58,6 @@ class PresetDataFragment(private val type: String) : Fragment(), PresetsAdapter.
                 binding.notFound.visibility = View.VISIBLE
             }
         }
-        viewModel.preset.observe(viewLifecycleOwner) {
-            if(!it.isDeleted){
-                i++
-            }
-            binding.size.text = "Showing $i data"
-            adapter.addPreset(it)
-        }
-
     }
 
     override fun onOptionClick(view: View, preset: Preset) {
@@ -84,6 +83,7 @@ class PresetDataFragment(private val type: String) : Fragment(), PresetsAdapter.
                     bundle.putString("pump", preset.pump)
                     bundle.putString("seedlingTime", preset.seedlingTime)
                     bundle.putString("growTime", preset.growTime)
+                    bundle.putString("ph", preset.ph)
                     dialog.arguments = bundle
                     activity?.let { it1 -> dialog.show(it1.supportFragmentManager, "BottomSheetDialog") }
                 }
