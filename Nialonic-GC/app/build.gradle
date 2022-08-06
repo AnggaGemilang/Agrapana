@@ -10,7 +10,7 @@ plugins {
 android {
     compileSdk 32
     defaultConfig {
-        applicationId "com.example.nialonic_gc"
+        applicationId "com.agrapana.nialonic_gc"
         minSdk 21
         targetSdk 32
         versionCode 1

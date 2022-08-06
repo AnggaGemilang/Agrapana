@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.nialonic_gc">
+    package="com.agrapana.nialonic_gc">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -24,23 +24,23 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activity.CameraWebviewActivity"
+            android:name="com.agrapana.nialonic_gc.ui.activity.CameraWebviewActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.NialonicGC.Webview" />
         <activity
-            android:name=".ui.activity.SettingActivity"
+            android:name="com.agrapana.nialonic_gc.ui.activity.SettingActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.NialonicGC.Setting" />
         <activity
-            android:name=".ui.activity.TurnOnActivity"
+            android:name="com.agrapana.nialonic_gc.ui.activity.TurnOnActivity"
             android:exported="true"
             android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.NialonicGC.TurnOn" />
         <activity
-            android:name=".ui.activity.DetailActivity"
+            android:name="com.agrapana.nialonic_gc.ui.activity.DetailActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.NialonicGC.Detail" >
@@ -48,30 +48,30 @@
         </activity>
 
         <activity
-            android:name=".ui.activity.OnboardingActivity"
+            android:name="com.agrapana.nialonic_gc.ui.activity.OnboardingActivity"
             android:exported="true"
             android:noHistory="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.NialonicGC.OnboardingScreen" />
         <activity
-            android:name=".ui.activity.SplashScreenActivity"
+            android:name="com.agrapana.nialonic_gc.ui.activity.SplashScreenActivity"
             android:exported="true"
             android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.NialonicGC.SplashScreen">
 
-        </activity>
-
-        <activity
-            android:name=".ui.activity.MainActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.NialonicGC.Main">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name="com.agrapana.nialonic_gc.ui.activity.MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NialonicGC.Main">
 
         </activity>
 
