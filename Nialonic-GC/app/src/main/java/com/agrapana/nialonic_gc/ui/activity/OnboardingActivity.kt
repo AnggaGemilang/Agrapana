@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.agrapana.nialonic_gc.R
 import com.agrapana.nialonic_gc.adapter.OnboardingAdapter
 import com.agrapana.nialonic_gc.data.OnboardingData
@@ -22,6 +23,8 @@ class OnboardingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         val onboardingData: MutableList<OnboardingData> = ArrayList()
         onboardingData.add(OnboardingData("Easy Life", "Tanam tanaman hidroponik dengan praktis tanpa lelah dan letih menggunakan Agrapana",

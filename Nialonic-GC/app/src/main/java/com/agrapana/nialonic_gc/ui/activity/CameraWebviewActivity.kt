@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
+import androidx.appcompat.app.AppCompatDelegate
 import com.agrapana.nialonic_gc.R
 import com.agrapana.nialonic_gc.config.WEBVIEW_URI
 import com.agrapana.nialonic_gc.databinding.ActivityCameraWebviewBinding
@@ -19,6 +20,8 @@ class CameraWebviewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraWebviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         setSupportActionBar(binding.toolbar);
         supportActionBar?.setDisplayHomeAsUpEnabled(true);

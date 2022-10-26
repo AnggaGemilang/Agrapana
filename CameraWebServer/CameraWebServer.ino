@@ -19,14 +19,11 @@
 
 #include "camera_pins.h"
 
-//char* ssid = "angga";
-//char* password = "4ngg4Gem!l4ng";
+char* ssid = "JTK MHS";
+char* password = "rajinbelajar";
 
-char* ssid = "Andromax-M2Y-14BE";
-char* password = "27462136";
-
-//char* ssid = "Student_Polban";
-//char* password = "20polban21";
+// char* ssid = "Andromax-M2Y-14BE";
+// char* password = "27462136";
 
 void startCameraServer();
 

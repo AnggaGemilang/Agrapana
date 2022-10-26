@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import com.agrapana.nialonic_gc.config.MQTT_HOST
 import com.agrapana.nialonic_gc.databinding.ActivityTurnOnBinding
 import com.agrapana.nialonic_gc.helper.MqttClientHelper
@@ -31,6 +32,8 @@ class TurnOnActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityTurnOnBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         binding.slider.onSlideCompleteListener = object : SlideToActView.OnSlideCompleteListener{
             override fun onSlideComplete(view: SlideToActView) {

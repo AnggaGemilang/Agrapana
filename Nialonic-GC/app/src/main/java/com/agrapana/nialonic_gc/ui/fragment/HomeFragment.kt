@@ -174,8 +174,6 @@ class HomeFragment : Fragment() {
                             commonMsg.plant_name = ""
                             commonMsg.category = ""
 
-                            Log.d("dadang dong", commonMsg.toString())
-
                             mqttClient.publish("arceniter/common", Gson().toJson(commonMsg))
 
                             val thumbnail = Thumbnail()

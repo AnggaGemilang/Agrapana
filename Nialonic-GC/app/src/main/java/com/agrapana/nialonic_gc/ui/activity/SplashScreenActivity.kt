@@ -10,6 +10,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.agrapana.nialonic_gc.databinding.ActivitySplashScreenBinding
 import org.imaginativeworld.oopsnointernet.NoInternetDialog
 
@@ -25,6 +26,8 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
             window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
