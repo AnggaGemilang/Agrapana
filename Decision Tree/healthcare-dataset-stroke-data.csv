@@ -1,30 +1,30 @@
-id,nutrisi,ph,aksi
-9046,90,7,larutan a & b dimasukkan
-51676,100,6,larutan ph up dimasukkan
-31112,100,8,larutan ph down dimasukkan
-60182,95,7,larutan a & b dimasukkan
-1665,90,7,larutan a & b dimasukkan
-56669,92,7,larutan a & b dimasukkan
-53882,80,7,larutan a & b dimasukkan
-10434,70,7,larutan a & b dimasukkan
-27419,100,6.5,larutan ph up dimasukkan
-60491,100,6.9,larutan ph up dimasukkan
-12109,100,6.9,larutan ph up dimasukkan
-12095,100,6.8,larutan ph up dimasukkan
-12175,100,7.5,larutan ph down dimasukkan
-8213,100,8,larutan ph down dimasukkan
-5317,100,7.1,larutan ph down dimasukkan
-58202,100,7.5,larutan ph down dimasukkan
-56112,100,8,larutan ph down dimasukkan
-34120,90,8,"larutan a, b, & ph down dimasukkan"
-27458,95,7.5,"larutan a, b, & ph down dimasukkan"
-25226,98,7.9,"larutan a, b, & ph down dimasukkan"
-70630,97,8,"larutan a, b, & ph down dimasukkan"
-13861,85,7.5,"larutan a, b, & ph down dimasukkan"
-68794,90,6.5,"larutan a, b, & ph up dimasukkan"
-64778,80,6.8,"larutan a, b, & ph up dimasukkan"
-4219,95,6,"larutan a, b, & ph up dimasukkan"
-70822,99,6.5,"larutan a, b, & ph up dimasukkan"
-38047,96,6.9,"larutan a, b, & ph up dimasukkan"
-61843,70,5,"larutan a, b, & ph up dimasukkan"
-54827,85,5.5,"larutan a, b, & ph up dimasukkan"
+id,nutrition,ph,action
+9046,90,7,"added acid and alkaline solutions"
+51676,100,6,"pH up solution is added"
+31112,100,8,"pH down solution is added"
+60182,95,7,"added acid and alkaline solutions"
+1665,90,7,"added acid and alkaline solutions"
+56669,92,7,"added acid and alkaline solutions"
+53882,80,7,"added acid and alkaline solutions"
+10434,70,7,"added acid and alkaline solutions"
+27419,100,6.5,"pH up solution is added"
+60491,100,6.9,"pH up solution is added"
+12109,100,6.9,"pH up solution is added"
+12095,100,6.8,"pH up solution is added"
+12175,100,7.5,"pH down solution is added"
+8213,100,8,"pH down solution is added"
+5317,100,7.1,"pH down solution is added"
+58202,100,7.5,"pH down solution is added"
+56112,100,8,"pH down solution is added"
+34120,90,8,"solutions acid, alkaline & ph down are added"
+27458,95,7.5,"solutions acid, alkaline & ph down are added"
+25226,98,7.9,"solutions acid, alkaline & ph down are added"
+70630,97,8,"solutions acid, alkaline & ph down are added"
+13861,85,7.5,"solutions acid, alkaline & ph down are added"
+68794,90,6.5,"larutan acid, alkaline & ph up are added"
+64778,80,6.8,"larutan acid, alkaline & ph up are added"
+4219,95,6,"larutan acid, alkaline & ph up are added"
+70822,99,6.5,"larutan acid, alkaline & ph up are added"
+38047,96,6.9,"larutan acid, alkaline & ph up are added"
+61843,70,5,"larutan acid, alkaline & ph up are added"
+54827,85,5.5,"larutan acid, alkaline & ph up are added"

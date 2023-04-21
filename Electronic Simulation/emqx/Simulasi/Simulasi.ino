@@ -1,26 +1,21 @@
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
-#include <ESP8266WiFi.h>
+#include <WiFi.h>
 
 #define MSG_BUFFER_SIZE (50)
-#define LEDPin D1
+//#define LEDPin D1
 #define LightSensorPin A0
 
 //#define ssid "polban_staff"
 //#define password "12polban34"
 
-//#define ssid "JTK Dosen"
-//#define password "jaringan"
+#define WIFI_SSID "JTK MHS"
+#define WIFI_PWD "rajinbelajar"
 
-//#define mqtt_broker "broker.emqx.io"
-//#define mqtt_username "emqx"
-//#define mqtt_password "public"
-//#define mqtt_port 1883
-
-#define mqtt_broker "e18cd11e.us-east-1.emqx.cloud"
-#define mqtt_username "AnggaGemilang"
-#define mqtt_password "4ngg4Gem!l4ng"
-#define mqtt_port 15089
+#define MQTT_BROKER "test.mosquitto.org"
+#define MQTT_USERNAME "TvfNFPgb38"
+#define MQTT_PASSWORD "z7G9v8tTGQ"
+#define MQTT_PORT 1883
 
 WiFiClient wifiClient;
 PubSubClient mqttClient(wifiClient);
@@ -84,32 +79,32 @@ void callback(char *topic, byte *payload, unsigned int length) {
   Serial.print(power);
   Serial.println();
     
-  if (!strcmp(power, "on")) {
-    digitalWrite(LEDPin, HIGH);
-  } 
-  if (!strcmp(power, "off")) {
-    digitalWrite(LEDPin, LOW);
-  }
+//  if (!strcmp(power, "on")) {
+//    digitalWrite(LEDPin, HIGH);
+//  } 
+//  if (!strcmp(power, "off")) {
+//    digitalWrite(LEDPin, LOW);
+//  }
 }
 
 void setup() {
 
   Serial.begin(9600);
-  WiFi.begin(ssid, password);
+  WiFi.begin(WIFI_SSID, WIFI_PWD);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.println("Connecting to WiFi..");
   }
   Serial.println("Connected to the WiFi network!");
 
-  pinMode(LEDPin, OUTPUT);
+//  pinMode(LEDPin, OUTPUT);
   pinMode(LightSensorPin, INPUT);
 
-  mqttClient.setServer(mqtt_broker, mqtt_port);
+  mqttClient.setServer(MQTT_BROKER, MQTT_PORT);
   mqttClient.setCallback(callback);
   while (!mqttClient.connected()) {
     String client_id = String(WiFi.macAddress());
-    if (mqttClient.connect(client_id.c_str(), mqtt_username, mqtt_password)) {
+    if (mqttClient.connect(client_id.c_str())) {
       Serial.println("Connected to Public MQTT Broker");
     } else {
       Serial.print("Failed to connect with MQTT Broker");
@@ -127,7 +122,7 @@ void reconnect() {
   while (!mqttClient.connected()) {
     Serial.print("Attempting MQTT connection...");
     String client_id = String(WiFi.macAddress());
-    if (mqttClient.connect(client_id.c_str(), mqtt_username, mqtt_password)) {
+    if (mqttClient.connect(client_id.c_str())) {
       Serial.println("Connected to Public MQTT Broker");
     } else {
       Serial.print("Failed to connect with MQTT Broker");
@@ -143,7 +138,7 @@ void reconnect() {
 
 void loop() {
   if (!mqttClient.connected()) {
-    reconnect();
+    reconnect(); 
   }
   mqttClient.loop();
 
