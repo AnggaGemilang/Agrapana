@@ -1,0 +1,29 @@
+.parameter-preset {
+    font-size: 10pt !important;
+}
+
+.sidenav {
+    z-index: 9 !important;
+}
+
+.not-found2 {
+    width: 100% !important;
+    min-height: 490px;
+    color: white;
+    padding-bottom: 300px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.not-found {
+    width: 100% !important;
+    min-height: 215px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-wrapper {
+    display: flex;
+}
