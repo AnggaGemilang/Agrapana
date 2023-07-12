@@ -26,7 +26,7 @@
                                     <p class="mb-0">Welcome to Arnesys Web, enter your email and password to sign in</p>
                                 </div>
                                 <div class="card-body">
-                                    <form role="form" action="/monitoring/login/post" method="POST">
+                                    <form role="form" action="{{ route('auth.login.post') }}" method="POST">
                                         @csrf
                                         <div class="mb-3">
                                             <input type="text" class="form-control form-control-lg" placeholder="Enter Username"

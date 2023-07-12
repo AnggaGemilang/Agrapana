@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMainDeviceTable extends Migration
+class CreateMainDevicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateMainDeviceTable extends Migration
      */
     public function up()
     {
-        Schema::create('main_device', function (Blueprint $table) {
+        Schema::create('main_devices', function (Blueprint $table) {
             $table->id();
             $table->double('wind_temperature');
             $table->integer('wind_humidity');
@@ -33,6 +33,6 @@ class CreateMainDeviceTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('main_device');
+        Schema::dropIfExists('main_devices');
     }
 }

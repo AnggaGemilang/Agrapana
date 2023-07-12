@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSupportDeviceTable extends Migration
+class CreateSupportDevicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateSupportDeviceTable extends Migration
      */
     public function up()
     {
-        Schema::create('support_device', function (Blueprint $table) {
+        Schema::create('support_devices', function (Blueprint $table) {
             $table->id();
             $table->integer('number_of');
             $table->double('soil_temperature');
@@ -35,6 +35,6 @@ class CreateSupportDeviceTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('support_device');
+        Schema::dropIfExists('support_devices');
     }
 }
