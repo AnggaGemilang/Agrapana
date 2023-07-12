@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets') }}/img/apple-icon.png">
     <link rel="icon" type="image/png" href="{{ asset('assets') }}/img/favicon.png">
-    <title>Login - Irosysco Web</title>
+    <title>Login - Arnesys Web</title>
     <link href="{{ asset('assets') }}/css/nucleo-icons.css" rel="stylesheet" />
     <link href="{{ asset('assets') }}/css/nucleo-svg.css" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('assets') }}/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
@@ -23,7 +23,7 @@
                             <div class="card card-plain">
                                 <div class="card-header pb-0 text-start">
                                     <h4 class="font-weight-bolder">Sign In</h4>
-                                    <p class="mb-0">Welcome to Irosysco Web, enter your email and password to sign in</p>
+                                    <p class="mb-0">Welcome to Arnesys Web, enter your email and password to sign in</p>
                                 </div>
                                 <div class="card-body">
                                     <form role="form" action="/monitoring/login/post" method="POST">

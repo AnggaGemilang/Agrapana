@@ -6,7 +6,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     <meta name="description" content="" />
-    <title>Irosysco - Overview</title>
+    <title>Arnesys - Overview</title>
     <link rel="icon" type="image/png" href="{{ asset('assets') }}/img/favicon.png">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/landing-page/css/responsive.css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/landing-page/css/bootstrap.css" />
@@ -22,7 +22,7 @@
                 <nav class="navbar navbar-expand-lg custom_nav-container">
                     <a class="navbar-brand" href="#">
                         {{-- <img src="{{ asset("assets") }}/landing-page/images/logo.png" style="width: 150px;" alt=""> --}}
-                        <p style="color: black; font-weight: 700; font-size: 20pt; margin-top: 17px;">Abhipraya</p>
+                        <p style="color: black; font-weight: 700; font-size: 20pt; margin-top: 17px;">Agra.co</p>
                     </a>
                     <a class="navbar-toggler btn btn-outline-success mt-2" href="/monitoring" style="border-radius: 5px; border: 1px solid #3BAF56; padding-bottom: 13px; padding-top: 10px;">
                         <i class="bi bi-person text-success"></i>
@@ -61,7 +61,7 @@
                 <nav class="navbar navbar-expand-lg custom_nav-container pt-5">
                     <a class="navbar-brand" href="#">
                         {{-- <img src="{{ asset("assets") }}/landing-page/images/logo.png" style="width: 150px;" alt=""> --}}
-                        <p style="color: black; font-weight: 700; font-size: 20pt; margin-top: 37px;">Abhipraya</p>
+                        <p style="color: black; font-weight: 700; font-size: 20pt; margin-top: 37px;">Agra.co</p>
                     </a>
                     <a class="navbar-toggler btn btn-outline-light mt-2" href="/monitoring" style="border-radius: 5px; border: 1px solid white; padding-bottom: 13px; padding-top: 10px;">
                         <i class="bi bi-person text-light"></i>
@@ -102,14 +102,11 @@
                             <h1>
                                 <b>
                                     Proudly Present <br>
-                                    Irosysco
+                                    Arnesys
                                 </b>
                             </h1>
                             <p>
-                                An innovation in the field of agriculture that allows farmers to plant in a modern way
-                                that can be done automatically with climate engineering so that farmers can grow various
-                                crops,
-                                even outside of their habitat
+                                An innovation in the field of agriculture that can monitor various parameters in the air and soil, predict rainfall, and foresee diseases and pests that will appear
                             </p>
                             <div class="btn-box">
                                 <a href="#technologies-section" class="btn-1">
@@ -141,7 +138,7 @@
             </div>
             <div class="container" style="padding-top: 75px;">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="card pl-3 pr-3">
                             <div class="card-body">
                                 <div class="row">
@@ -160,39 +157,52 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="card pl-3 pr-3">
                             <div class="card-body">
                                 <div class="row">
                                     <i style="font-size: 50pt;" class="bi bi-stars text-success"></i>
                                 </div>
                                 <div class="row mt-3">
-                                    <h5><b>Artificial Intelligence</b></h5>
+                                    <h5><b>Smart System</b></h5>
                                 </div>
                                 <div class="row">
                                     <p>
-                                        Using this technology allows users to get convenience in controlling automatic
-                                        PH distribution and smart spraying, analyze plant health, detect crop maturity
-                                        and predict harvest time.
+                                        Implement Artificial Intelligence technology, especially Fuzzy Logic and Naive Baiyes algorithm that allow user to know weather also pests and diseases prediction .
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="card pl-3 pr-3">
                             <div class="card-body">
                                 <div class="row">
                                     <i style="font-size: 50pt;" class="bi bi-brightness-high text-success"></i>
                                 </div>
                                 <div class="row mt-3">
-                                    <h5><b>Climate Engineering</b></h5>
+                                    <h5><b>Solar Panel</b></h5>
                                 </div>
                                 <div class="row">
                                     <p>
-                                        Using this technology allows the user to plant various kinds of plants outside
-                                        of their habitat by adjusting the parameter values supporting plant growth
-                                        according to their needs
+                                        Solar panels power Arnesys by converting sunlight into electricity. By utilizing solar energy, make it can operate independently in remote or off-grid locations expanding the range scope.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card pl-3 pr-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <i style="font-size: 50pt;" class="bi bi-stars text-success"></i>
+                                </div>
+                                <div class="row mt-3">
+                                    <h5><b>LoRA</b></h5>
+                                </div>
+                                <div class="row">
+                                    <p>
+                                        LoRa enables efficient connectivity for Arnesys, allowing them to transmit data over long distances while consuming minimal energy with some sources of node component.
                                     </p>
                                 </div>
                             </div>
@@ -209,19 +219,15 @@
                     <div class="detail-box">
                         <div class="heading_container">
                             <h1>
-                                <b>What Is Irosysco?</b>
+                                <b>What Is Arnesys?</b>
                             </h1>
                         </div>
                         <p>
-                            Irosysco is a multifunctional smart box capable of engineering the climate and meeting
-                            the needs of plants such as light, CO2, nutrients, water, temperature, and the like so that
-                            they can thrive with adjustable parameters so that they can be used for various kinds of
-                            plants such as microgreens, endemic plants, and hydroponic plants. We can monitor and
-                            control this tool via an android smartphone which is also equipped with machine learning
-                            technology so that it allows the system to detect plant types automatically, analyze plant
-                            health, and predict harvest time, so of course with these advantages it is expected to be
-                            able to facilitate users in caring for Plants well, especially for those who do not have
-                            enough free time
+                            Arnesys is an IoT-based monitoring system for horticultural farming that incorporates LoRa technology and Artificial Intelligence (AI) to provide efficient and intelligent monitoring capabilities.
+                            Equipped with various sensors, the device continuously collects and transmits data such as soil moisture, temperature, air humidity, and light intensity to an IoT platform.
+                            By leveraging the wide-range coverage of LoRa network, the device enables seamless communication between the sensors and the central monitoring system, even in remote agricultural areas.
+                            The collected data is then processed and analyzed using AI algorithms, allowing farmers to gain valuable insights into crop conditions, optimize resource allocation, and make data-driven decisions.
+                            This integrated solution enhances precision agriculture practices, enabling farmers to remotely monitor and manage horticultural crops with increased efficiency, reduced costs, and improved yields.
                         </p>
                     </div>
                 </div>
@@ -241,7 +247,7 @@
                                 <div style="margin-left: 20px;">
                                     <h4>Convenience</h4>
                                     <p>
-                                        Irosysco is designed to make it easier for users, so it is supported by the
+                                        Arnesys is designed to make it easier for users, so it is supported by the
                                         latest technologies
                                     </p>
                                 </div>
@@ -252,7 +258,7 @@
                                 <i class="icon-features bi bi-shuffle" aria-hidden="true"></i>
                                 <div style="margin-left: 20px;">
                                     <h4>Flexibility</h4>
-                                    <p>Irosysco is very flexible because it can be accessed by users through website
+                                    <p>Arnesys is very flexible because it can be accessed by users through website
                                         and mobile applications</p>
                                 </div>
                             </div>
@@ -265,7 +271,7 @@
                                 <div style="margin-left: 20px;">
                                     <h4>Reliability</h4>
                                     <p>
-                                        Irosysco has many parameters so that it can produce maximum output for the
+                                        Arnesys has many parameters so that it can produce maximum output for the
                                         needs of a plant
                                     </p>
                                 </div>
@@ -277,7 +283,7 @@
                                 <div style="margin-left: 20px;">
                                     <h4>Portable</h4>
                                     <p>
-                                        Irosysco is designed to have a high level of portability, so that this tool can
+                                        Arnesys is designed to have a high level of portability, so that this tool can
                                         be assembled and carried anywhere easily
                                     </p>
                                 </div>
@@ -295,7 +301,7 @@
                         <p class="mt-3 text-center">Or download to mobile device</p>
                         <div class="btn-play-store" style="display: flex; justify-content: center; align-items: center;">
                             <a style="background: #f6f6f6; color: rgba(0, 0, 0, 0.8); width: 220px; border-radius: 10px; display: flex; justify-content: center; align-items: center;"
-                                href="https://play.google.com/store/apps/details?id=com.agrapana.irosysco&hl=en_US" target="_blank">
+                                href="https://play.google.com/store/apps/details?id=com.agrapana.Arnesys&hl=en_US" target="_blank">
                                 <i class="bi bi-google-play" style="font-size: 20pt;"></i><br>
                                 <p style="margin-top: 15px; padding-left: 10px;">Google Play Store</p>
                             </a>
@@ -322,19 +328,15 @@
                     <div class="detail-box">
                         <div class="heading_container">
                             <h1>
-                                <b>What Does Irosysco Do?</b>
+                                <b>What Does Arnesys Do?</b>
                             </h1>
                         </div>
                         <p>
-                            Irosysco is a multifunctional smart box capable of engineering the climate and meeting
-                            the needs of plants such as light, CO2, nutrients, water, temperature, and the like so that
-                            they can thrive with adjustable parameters so that they can be used for various kinds of
-                            plants such as microgreens, endemic plants, and hydroponic plants. We can monitor and
-                            control this tool via an android smartphone which is also equipped with machine learning
-                            technology so that it allows the system to detect plant types automatically, analyze plant
-                            health, and predict harvest time, so of course with these advantages it is expected to be
-                            able to facilitate users in caring for Plants well, especially for those who do not have
-                            enough free time
+                            Arnesys is an IoT-based monitoring system for horticultural farming that incorporates LoRa technology and Artificial Intelligence (AI) to provide efficient and intelligent monitoring capabilities.
+                            Equipped with various sensors, the device continuously collects and transmits data such as soil moisture, temperature, air humidity, and light intensity to an IoT platform.
+                            By leveraging the wide-range coverage of LoRa network, the device enables seamless communication between the sensors and the central monitoring system, even in remote agricultural areas.
+                            The collected data is then processed and analyzed using AI algorithms, allowing farmers to gain valuable insights into crop conditions, optimize resource allocation, and make data-driven decisions.
+                            This integrated solution enhances precision agriculture practices, enabling farmers to remotely monitor and manage horticultural crops with increased efficiency, reduced costs, and improved yields.
                         </p>
                     </div>
                 </div>
@@ -347,8 +349,7 @@
                                 <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
                                 <div style="margin-left: 20px;">
                                     <p>
-                                        Irosysco can carry out climate engineering and nutrient control to help
-                                        maximize plant growth
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                                     </p>
                                 </div>
                             </div>
@@ -358,32 +359,7 @@
                                 <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
                                 <div style="margin-left: 20px;">
                                     <p>
-                                        Irosysco is connected to the website and mobile app which can make
-                                        it easier for users to control and monitor plant
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div style="display: flex;">
-                                <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
-                                <div style="margin-left: 20px;">
-                                    <p>
-                                        Irosysco is a solution in the midst of increasing interest in urban farming
-                                        because it is easy to use and portable
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div style="display: flex;">
-                                <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
-                                <div style="margin-left: 20px;">
-                                    <p>
-                                        Irosysco can be a medium of cultivate plants such as microgreens and can
-                                        become a new business opportunity
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                                     </p>
                                 </div>
                             </div>
@@ -395,8 +371,7 @@
                                 <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
                                 <div style="margin-left: 20px;">
                                     <p>
-                                        Irosysco be a research or learning media (mini laboratory) to observe the
-                                        growth of a plant
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                                     </p>
                                 </div>
                             </div>
@@ -406,8 +381,8 @@
                                 <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
                                 <div style="margin-left: 20px;">
                                     <p>
-                                        Irosysco can be a medium for healing malnourished plants, because the plants
-                                        will be maximally supported </p>
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -418,8 +393,7 @@
                                 <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
                                 <div style="margin-left: 20px;">
                                     <p>
-                                        Irosysco can help increase food and nutrition security
-                                        and realize Indonesia's food self-sufficiency
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                                     </p>
                                 </div>
                             </div>
@@ -429,8 +403,29 @@
                                 <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
                                 <div style="margin-left: 20px;">
                                     <p>
-                                        Irosysco is expected to be implemented in agricultural industrial technology in
-                                        Indonesia and the world
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div style="display: flex;">
+                                <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
+                                <div style="margin-left: 20px;">
+                                    <p>
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div style="display: flex;">
+                                <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
+                                <div style="margin-left: 20px;">
+                                    <p>
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                                     </p>
                                 </div>
                             </div>
@@ -442,7 +437,7 @@
                     <div class="ml-5" style="padding: 10px 30px; background: #f6f6f6; border-radius: 10px;">
                         <hr style="width: 120px; height: 0; border: 0; border-bottom: 4px solid #66BB6A;">
                         <p>
-                            Irosysco is expected to become a tool that is able to provide solutions to various problems
+                            Arnesys is expected to become a tool that is able to provide solutions to various problems
                             related to agriculture that occur in general in the world, and specifically in Indonesia.
                         </p>
                     </div>
@@ -474,12 +469,12 @@
                         <p style="margin-top: -5px;">Application and Network Developer</p>
                     </div>
                     <div class="member-item" data-id="3">
-                        <h4>Agung Bachtiar</h4>
+                        <h4>Indra Aolia Nugraha</h4>
                         <p style="margin-top: -5px;">Electrical Designer and Controls</p>
                     </div>
                     <div class="member-item" data-id="4">
-                        <h4>Putri Ismi Azizah</h4>
-                        <p style="margin-top: -5px;">Cooling System Designer</p>
+                        <h4>Ghaitsa Inayatur Rahma</h4>
+                        <p style="margin-top: -5px;">Agricultural Experts and Analyzers</p>
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -495,11 +490,11 @@
                                         alt="Image 2">
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="3">
-                                    <img src="{{ asset('assets') }}/landing-page/images/agung.png"
+                                    <img src="{{ asset('assets') }}/landing-page/images/indra2.png"
                                         class="gallery__img" alt="Image 3">
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="4">
-                                    <img src="{{ asset('assets') }}/landing-page/images/putri.png"
+                                    <img src="{{ asset('assets') }}/landing-page/images/ghaitsa2.png"
                                         class="gallery__img" alt="Image 4">
                                 </figure>
                             </div>
@@ -559,7 +554,7 @@
                 <div class="col d-flex justify-content-center align-items-center">
                     <div style="margin-top: -40px;">
                         <p style="font-size: 25pt; font-weight: 700;">The Future of <span class="text-success">Farm
-                                Technology</span> is Irosysco</p>
+                                Technology</span> is Arnesys</p>
                         <div style="display: flex; justify-content: center;">
                             <a href="/monitoring" class="btn btn-success mt-1" style="width: 250px;">
                                 {{ session()->has('login') ? "Go to Dashboard" : "Login" }}
@@ -619,7 +614,7 @@
                         </div>
                         <div class="detail-box pl-2">
                             <p>
-                                abhipraya.polban@gmail.com
+                                agra.co.polban@gmail.com
                             </p>
                         </div>
                     </div>
@@ -634,7 +629,7 @@
                             About
                         </h6>
                         <p>
-                            We are from the Abhipraya team, Abhipraya is a team that dreams of becoming a startup, has a
+                            We are from the agra.co team, agra.co is a team that dreams of becoming a startup, has a
                             main concern in the agricultural sector and is actively looking for solutions to reduce the
                             potential for crop failure as a solution to food security in the world, especially in
                             Indonesia.
@@ -679,7 +674,7 @@
                             Products
                         </h6>
                         <p>
-                            It is an innovative work from a Bandung State Polytechnic student named Irosysco to advance
+                            It is an innovative work from a Bandung State Polytechnic student named Arnesys to advance
                             the world of agriculture in Indonesia, especially for the hydroponic method of urban
                             farming.
                         </p>
@@ -699,7 +694,7 @@
                     </div>
                 </div>
                 <div class="row mt-3 pl-3">
-                    <p class="copyright">© Copyright 2023. Abhipraya.</p>
+                    <p class="copyright">© Copyright 2023. agra.co.</p>
                 </div>
             </div>
         </div>

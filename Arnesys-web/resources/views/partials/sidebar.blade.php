@@ -15,7 +15,7 @@ if(\Request::is('monitoring')) {
             aria-hidden="true" id="iconSidenav"></i>
         <a class="navbar-brand m-0" href="/monitoring" style="text-align: center; margin-top: 20px;">
             {{-- <img src="{{ asset('assets') }}/img/logo-black.png" class="navbar-brand-img h-100" alt="main_logo"> --}}
-            <p class="ms-1 font-weight-bold text-center">Irosysco Web</p>
+            <p class="ms-1 font-weight-bold text-center">Arnesys Web</p>
         </a>
     </div>
     <hr class="horizontal dark mt-0">
