@@ -1,0 +1,76 @@
+= Perangkat Utama
+- temperatur udara
+- kelembaban udara
+- tekanan udara
+- kecepatan udara
+- curah hujan
+
+= Perangkat Pendukung
+- kelembaban tanah
+- pH tanah
+- temperatur tanah
+- Nitrogen tanah (N)
+- Phosphor tanah (P)
+- Kalium tanah (K)
+
+Fitur Aplikasi (mobile dan website)
+- login
+- tambah perangkat utama
+- monitoring realtime semua parameter perangkat utama dan perangkat pendukung
+- output prediksi hama beberapa hari sebelumnya dan kemudian
+- output prediksi cuaca beberapa hari sebelumnya dan kemudian
+- saran
+
+=====================================================
+
+Tampilan Aplikasi Website
+- Portal *Done*
+- Login
+- Dashboard (Hari & Jam, Jumlah lahan, Jumlah client)
+- Tambah Client
+- Kelola Lahan (Field)
+-- List client
+- Detail Client
+-- List lahan
+- Detail Lahan Perangkat Utama
+-- Grafik Cuaca
+-- Grafik Hama atau Penyakit
+-- Monitoring Cuaca
+
+- Detail Lahan per Perangkat Pendukung
+-- Grafik Suhu
+-- Grafik Kelembaban
+-- Grafik pH
+-- Monitoring Tanah
+
+=====================================================
+
+Tampilan Aplikasi Mobile
+- Splash screen *Done*
+- Onboarding *Done*
+- Login *Done*
+
+- Dashboard
+-- Monitoring Cuaca (Hari, Suhu, Kelembaban, Tekanan, Kecepatan)
+-- Monitoring Tanah (Suhu, Kelembaban, pH, N.P.K)  
+-- Informasi cuaca
+-- Informasi hama atau penyakit
+-- Saran aktivitas
+
+- Pengelolaan Lahan (Field)
+
+- Detail Lahan 
+-- Visualisasi grafis perangkat utama dan pendukung, informasi singkat lahan
+
+- Detail Lahan Perangkat Utama
+-- Grafik Cuaca
+-- Grafik Hama atau Penyakit
+-- Monitoring Cuaca
+
+- Detail Lahan per Perangkat Pendukung
+-- Grafik Suhu
+-- Grafik Kelembaban
+-- Grafik pH
+-- Monitoring Tanah
+
+- Pengaturan *Done*
