@@ -10,30 +10,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Toast
-import androidx.lifecycle.ViewModelProviders
 import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialogFragment
 import com.agrapana.arnesys.config.MQTT_HOST
 import com.agrapana.arnesys.databinding.FragmentAddPlantBinding
 import com.agrapana.arnesys.helper.MqttClientHelper
-import com.agrapana.arnesys.model.*
-import com.agrapana.arnesys.viewmodel.PlantViewModel
-import com.agrapana.arnesys.viewmodel.PresetViewModel
-import com.google.gson.Gson
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
 import org.eclipse.paho.client.mqttv3.MqttMessage
-import java.text.SimpleDateFormat
 import java.util.*
 
 class AddPlantFragment : RoundedBottomSheetDialogFragment() {
 
-    private lateinit var viewModelPreset: PresetViewModel
-    private lateinit var viewModelPlant: PlantViewModel
-    private var presets: List<Preset> = emptyList()
-    private var commonMsg = Common()
-    private var thumbnailMsg = Thumbnail()
     private var presetsName = mutableListOf<String>()
 
     private lateinit var binding: FragmentAddPlantBinding
@@ -48,8 +35,6 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModelPreset = ViewModelProviders.of(this)[PresetViewModel::class.java]
-        viewModelPlant = ViewModelProviders.of(this)[PlantViewModel::class.java]
         binding = FragmentAddPlantBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -60,18 +45,6 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
 
         setMqttCallBack()
 
-        viewModelPreset.getAllDataPreset()
-        viewModelPreset.presets.observe(viewLifecycleOwner) {
-            if (it!!.isNotEmpty()) {
-                presetsName.add("Choose Plant Type")
-                for (preset in it) {
-                    presetsName.add(preset.plantName)
-                }
-                val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, presetsName)
-                binding.type.adapter = adapter
-                presets = it
-            }
-        }
         binding.newConfiguration.setOnCheckedChangeListener { _, isChecked ->
             binding.type.isEnabled = !isChecked
             if(isChecked){
@@ -117,37 +90,6 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
                 val fileName = UUID.randomUUID().toString() +".png"
 
             } else {
-                val common = Common()
-                common.power = "on"
-                common.category = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].category
-                common.is_planting = "yes"
-
-                val sdf = SimpleDateFormat("dd-M-yyyy, hh:mm")
-                common.started_planting = sdf.format(Date())
-
-                val controlling = Controlling()
-                if(controlling.mode == "seedling"){
-                    common.plant_name =
-                        presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].plantName + "#" + presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].seedlingTime
-                } else {
-                    common.plant_name =
-                        presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].plantName + "#" + presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].growTime
-                }
-
-                mqttClient.publish("arceniter/common", Gson().toJson(common))
-                controlling.gas = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].gasValve
-                controlling.nutrition = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].nutrition
-                controlling.pump = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].pump
-                controlling.mode = binding.mode.selectedItem.toString()
-                controlling.temperature = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].temperature
-                mqttClient.publish("arceniter/controlling", Gson().toJson(controlling))
-
-                val thumbnail = Thumbnail()
-                thumbnail.imgURL = presets[presetsName.indexOf(binding.type.selectedItem.toString())-1].imageUrl
-                thumbnail.ref = thumbnailMsg.ref
-
-                mqttClient.publish("arceniter/thumbnail", Gson().toJson(thumbnail))
-
                 dismiss()
             }
         }
@@ -166,9 +108,9 @@ class AddPlantFragment : RoundedBottomSheetDialogFragment() {
             @Throws(Exception::class)
             override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
                 if(topic == "arceniter/common") {
-                    commonMsg = Gson().fromJson(mqttMessage.toString(), Common::class.java)
+
                 } else {
-                    thumbnailMsg = Gson().fromJson(mqttMessage.toString(), Thumbnail::class.java)
+
                 }
             }
             override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {

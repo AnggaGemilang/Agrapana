@@ -13,7 +13,6 @@ import com.agrapana.arnesys.R
 import com.agrapana.arnesys.config.MQTT_HOST
 import com.agrapana.arnesys.databinding.ActivitySettingBinding
 import com.agrapana.arnesys.helper.MqttClientHelper
-import com.agrapana.arnesys.model.Thumbnail
 import com.google.gson.Gson
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
@@ -115,8 +114,6 @@ class SettingActivity : AppCompatActivity() {
             MqttClientHelper(requireContext())
         }
 
-        var thumbnailMSG = Thumbnail()
-
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
@@ -130,9 +127,6 @@ class SettingActivity : AppCompatActivity() {
                 val editor: SharedPreferences.Editor? = prefs.edit()
                 editor?.putString("refreshData", newValue.toString())
                 editor?.apply()
-                val thumbnail = Thumbnail()
-                thumbnail.ref = newValue.toString()
-                mqttClient.publish("arceniter/thumbnail", Gson().toJson(thumbnail))
                 true
             }
 
@@ -157,11 +151,7 @@ class SettingActivity : AppCompatActivity() {
                 @Throws(Exception::class)
                 override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
                     if(topic == "arceniter/thumbnail"){
-                        thumbnailMSG = Gson().fromJson(mqttMessage.toString(), Thumbnail::class.java)
-                        val prefs: SharedPreferences = activity!!.getSharedPreferences("prefs", MODE_PRIVATE)
-                        val editor: SharedPreferences.Editor? = prefs.edit()
-                        editor?.putString("refreshData", thumbnailMSG.ref)
-                        editor?.apply()
+
                     }
                 }
                 override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {

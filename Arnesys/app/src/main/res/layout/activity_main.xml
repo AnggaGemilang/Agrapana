@@ -21,7 +21,6 @@
         app:contentInsetStart="0dp"
         android:backgroundTint="@color/green_50"
         app:contentInsetEnd="0dp"
-        app:fabAlignmentMode="end"
         app:fabCradleRoundedCornerRadius="45dp"
         app:fabCradleMargin="15dp">
 

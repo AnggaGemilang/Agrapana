@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import kotlin.random.Random
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -21,11 +20,7 @@ import com.agrapana.arnesys.*
 import com.agrapana.arnesys.config.MQTT_HOST
 import com.agrapana.arnesys.databinding.FragmentHomeBinding
 import com.agrapana.arnesys.helper.MqttClientHelper
-import com.agrapana.arnesys.model.*
-import com.agrapana.arnesys.ui.activity.DetailActivity
 import com.agrapana.arnesys.ui.activity.SettingActivity
-import com.agrapana.arnesys.ui.activity.TurnOnActivity
-import com.agrapana.arnesys.viewmodel.PlantViewModel
 import com.google.gson.Gson
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
@@ -40,11 +35,6 @@ import java.util.*
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var viewModel: PlantViewModel
-    private var commonMsg = Common()
-    private var controllingMsg = Controlling()
-    private var thumbnailMsg = Thumbnail()
-    private var monitoringMsg = Monitoring()
 
     private val mqttClient by lazy {
         MqttClientHelper(requireContext())
@@ -54,7 +44,6 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProviders.of(this)[PlantViewModel::class.java]
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -62,8 +51,7 @@ class HomeFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.toolbar.inflateMenu(R.menu.action_nav3)
-        binding.toolbar.menu.getItem(1).isVisible = false
+        binding.toolbar.inflateMenu(R.menu.action_nav1)
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId) {
                 R.id.power -> {
@@ -72,18 +60,12 @@ class HomeFragment : Fragment() {
                     builder.setMessage("This can be perform the machine")
                     builder.setPositiveButton("YES") { _, _ ->
                         binding.loadingPanel.visibility = View.VISIBLE
-                        commonMsg.power = "off"
-                        mqttClient.publish("arceniter/common", Gson().toJson(commonMsg))
-                        startActivity(Intent(context, TurnOnActivity::class.java))
                     }
                     builder.setNegativeButton("NO") { dialog, _ ->
                         dialog.dismiss()
                     }
                     val alert = builder.create()
                     alert.show()
-                }
-                R.id.detail -> {
-                    startActivity(Intent(requireContext(), DetailActivity::class.java))
                 }
                 R.id.about -> {
                     AlertDialog.Builder(requireContext())
@@ -96,6 +78,19 @@ class HomeFragment : Fragment() {
                 }
                 R.id.setting -> {
                     startActivity(Intent(context, SettingActivity::class.java))
+                }
+                R.id.logout -> {
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setTitle("Are You Sure?")
+                    builder.setMessage("You can't get in to your account")
+                    builder.setPositiveButton("YES") { _, _ ->
+
+                    }
+                    builder.setNegativeButton("NO") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    val alert = builder.create()
+                    alert.show()
                 }
             }
             true
@@ -170,75 +165,11 @@ class HomeFragment : Fragment() {
             override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
                 Log.w("Debug", "Message received from host '$MQTT_HOST': $mqttMessage")
                 if(topic == "arnesys/common"){
-                    commonMsg = Gson().fromJson(mqttMessage.toString(), Common::class.java)
-                    val data = commonMsg.plant_name.split("#").toTypedArray()
-                    binding.plantName.text = data[0].capitalize()
-                    binding.startedPlanting.text = commonMsg.started_planting
-                    if(commonMsg.is_planting == "no"){
-                        binding.keteranganTidakAda.visibility = View.VISIBLE
-                        binding.keteranganAda.visibility = View.GONE
-                        binding.valTemperature.text = "N/A"
-                        binding.valPh.text = "N/A"
-                        binding.valGas.text = "N/A"
-                        binding.valNutrition.text = "N/A"
-                        binding.valNutritionVolume.text = "N/A"
-                        binding.valGrowthLamp.text = "N/A"
-                    } else {
-                        Log.d("harusnya yang ini", monitoringMsg.toString());
 
-                        binding.toolbar.menu.getItem(1).isVisible = true
-                        binding.keteranganTidakAda.visibility = View.GONE
-                        binding.keteranganAda.visibility = View.VISIBLE
-                        binding.valTemperature.text = monitoringMsg.temperature.toString() + "°C"
-                        binding.valPh.text = monitoringMsg.ph + " Ph"
-                        binding.valGas.text = monitoringMsg.gas.toString() + " ppm`"
-                        binding.valNutrition.text = monitoringMsg.nutrition.toString() + " ppm"
-                        binding.valNutritionVolume.text = monitoringMsg.nutrition_volume.toString() + " %"
-                        binding.valGrowthLamp.text = monitoringMsg.growth_lamp.capitalize()
-
-                        val cal = Calendar.getInstance()
-                        val s = SimpleDateFormat("dd-M-yyyy, hh:mm")
-                        cal.add(Calendar.DAY_OF_YEAR, Integer.parseInt(data[1]))
-
-                        if(s.format(Date(cal.timeInMillis)) == commonMsg.started_planting){
-                            val progressDialog = ProgressDialog(requireContext())
-                            progressDialog.setTitle("Please Wait")
-                            progressDialog.setMessage("System is working . . .")
-                            progressDialog.show()
-
-                            val plant = Plant()
-                            plant.imgUrl = thumbnailMsg.imgURL
-                            plant.category = commonMsg.category
-                            plant.plantType = commonMsg.plant_name
-                            plant.mode = controllingMsg.mode
-                            plant.plantStarted = commonMsg.started_planting
-                            val sdf = SimpleDateFormat("dd-M-yyyy, hh:mm")
-                            plant.plantEnded = sdf.format(Date())
-                            plant.status = "Done"
-
-                            commonMsg.is_planting = "no"
-                            commonMsg.started_planting = ""
-                            commonMsg.plant_name = ""
-                            commonMsg.category = ""
-
-                            Log.d("dadang dong", commonMsg.toString())
-
-                            mqttClient.publish("arnesys/common", Gson().toJson(commonMsg))
-
-                            val thumbnail = Thumbnail()
-                            thumbnail.imgURL = ""
-                            thumbnail.ref = thumbnailMsg.ref
-                            mqttClient.publish("arnesys/thumbnail", Gson().toJson(thumbnail))
-                        }
-                    }
                 } else if (topic == "arnesys/monitoring"){
-                    monitoringMsg = Gson().fromJson(mqttMessage.toString(), Monitoring::class.java)
-                    Log.d("dadang", monitoringMsg.toString())
+
                 } else if (topic == "arnesys/thumbnail"){
-                    thumbnailMsg = Gson().fromJson(mqttMessage.toString(), Thumbnail::class.java)
-                    Glide.with(this@HomeFragment)
-                        .load(thumbnailMsg.imgURL)
-                        .into(binding.image)
+
                 }
                 binding.plantNamePlaceholder.visibility = View.GONE
                 binding.imagePlaceholder.visibility = View.GONE
@@ -268,9 +199,9 @@ class HomeFragment : Fragment() {
     }
 
     override fun onDestroy() {
-//        if (mqttClient.isConnected()) {
-//            mqttClient.destroy()
-//        }
+        if (mqttClient.isConnected()) {
+            mqttClient.destroy()
+        }
         super.onDestroy()
     }
 
