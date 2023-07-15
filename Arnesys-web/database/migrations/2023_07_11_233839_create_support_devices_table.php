@@ -16,6 +16,7 @@ class CreateSupportDevicesTable extends Migration
         Schema::create('support_devices', function (Blueprint $table) {
             $table->id();
             $table->integer('number_of');
+            $table->string('coordinate', 50);
             $table->double('soil_temperature');
             $table->integer('soil_humidity');
             $table->integer('soil_ph');

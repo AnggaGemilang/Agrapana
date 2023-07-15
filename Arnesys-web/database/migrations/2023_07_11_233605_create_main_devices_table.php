@@ -15,6 +15,10 @@ class CreateMainDevicesTable extends Migration
     {
         Schema::create('main_devices', function (Blueprint $table) {
             $table->id();
+            $table->string('address', 255);
+            $table->string('plant_type', 50);
+            $table->string('thumbnail', 255)->nullable();
+            $table->integer('number_of_support_devices');
             $table->double('wind_temperature');
             $table->integer('wind_humidity');
             $table->double('wind_pressure');
