@@ -21,6 +21,8 @@ Fitur Aplikasi (mobile dan website)
 - output prediksi cuaca beberapa hari sebelumnya dan kemudian
 - saran
 
+=====================================================
+
 Tampilan Aplikasi Website
 - Portal *Done*
 - Login
@@ -41,6 +43,7 @@ Tampilan Aplikasi Website
 -- Grafik pH
 -- Monitoring Tanah
 
+=====================================================
 
 Tampilan Aplikasi Mobile
 - Splash screen *Done*
