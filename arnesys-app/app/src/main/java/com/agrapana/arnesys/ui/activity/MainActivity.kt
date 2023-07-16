@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.agrapana.arnesys.R
 import com.agrapana.arnesys.databinding.ActivityMainBinding
-import com.agrapana.arnesys.ui.fragment.AddPlantFragment
+import com.agrapana.arnesys.ui.fragment.FieldFragment
 import com.agrapana.arnesys.ui.fragment.HomeFragment
 import org.imaginativeworld.oopsnointernet.NoInternetDialog
 
@@ -29,14 +29,8 @@ class MainActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
 
-        binding.bottomNavigationBar.background = null
-        binding.bottomNavigationBar.menu.getItem(1).isEnabled = false
-
-        binding.fab.setOnClickListener {
-            AddPlantFragment().show(supportFragmentManager, "BottomSheetDialog")
-        }
-
         val homeFragment = HomeFragment()
+        val fieldFragment = FieldFragment()
         makeCurrentFragment(homeFragment)
 
         binding.bottomNavigationBar.setOnNavigationItemSelectedListener() {
@@ -45,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                     makeCurrentFragment(homeFragment)
                 }
                 R.id.fields -> {
-
+                    makeCurrentFragment(fieldFragment)
                 }
             }
             true

@@ -1,6 +1,5 @@
 package com.agrapana.arnesys.ui.fragment
 
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -14,20 +13,16 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
 import com.agrapana.arnesys.*
 import com.agrapana.arnesys.config.MQTT_HOST
 import com.agrapana.arnesys.databinding.FragmentHomeBinding
 import com.agrapana.arnesys.helper.MqttClientHelper
 import com.agrapana.arnesys.ui.activity.SettingActivity
-import com.google.gson.Gson
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
 import org.eclipse.paho.client.mqttv3.MqttMessage
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
