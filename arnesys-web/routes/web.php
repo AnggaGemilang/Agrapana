@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrontEndController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\FieldController;
 use App\Http\Controllers\VacancyController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -34,15 +36,17 @@ Route::post('/auth/login/post', [LoginController::class, 'handleLogin'])->name('
 Route::group(['prefix' => 'master', 'middleware' => ['auth:web,webstudent,webclient', 'verified']], function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/fields/{id}', [FieldController::class, 'getByClient'])->name('client.field');
+    Route::get('/fields/detail/{id}', [FieldController::class, 'detail'])->name('client.field.detail');
 
     // Role Operator
     Route::group(['middleware' => ['role:Operator']], function () {
-
+        Route::get('/clients', [ClientController::class, 'index'])->name('client');
     });
 
     // Role Client
-    Route::group(['middleware' => ['role:Client']], function () {
+    // Route::group(['middleware' => ['role:Client']], function () {
 
-    });
+    // });
 
 });

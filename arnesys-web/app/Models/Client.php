@@ -18,6 +18,7 @@ class Client extends Authenticatable
         'name',
         'email',
         'password',
+        'photo',
     ];
 
     protected $guarded = [];

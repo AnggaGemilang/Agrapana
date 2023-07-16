@@ -24,20 +24,23 @@ Fitur Aplikasi (mobile dan website)
 =====================================================
 
 Tampilan Aplikasi Website
-- Portal *Done*
-- Login
-- Dashboard (Hari & Jam, Jumlah lahan, Jumlah client)
-- Tambah Client
-- Kelola Lahan (Field)
+1. Portal *Done* ===
+2. Login *Done* ===
+3. Dashboard (Hari & Jam, Jumlah lahan, Jumlah client) *Done* ===
+4. Tambah Client *Done* ===
+
+5. Kelola Lahan (Field) *Done* ===
 -- List client
-- Detail Client
+
+6. Detail Client *Done* ===
 -- List lahan
-- Detail Lahan Perangkat Utama
+
+7. Detail Lahan Perangkat Utama
 -- Grafik Cuaca
 -- Grafik Hama atau Penyakit
 -- Monitoring Cuaca
 
-- Detail Lahan per Perangkat Pendukung
+8. Detail Lahan per Perangkat Pendukung
 -- Grafik Suhu
 -- Grafik Kelembaban
 -- Grafik pH
@@ -46,33 +49,33 @@ Tampilan Aplikasi Website
 =====================================================
 
 Tampilan Aplikasi Mobile
-- Splash screen *Done*
-- Onboarding *Done*
-- Login *Done*
+1. Splash screen *Done* ===
+2. Onboarding *Done* ===
+3. Login *Done* ===
 
-- Dashboard
+4. Dashboard *Done* ===
 -- Monitoring Cuaca (Hari, Suhu, Kelembaban, Tekanan, Kecepatan)
 -- Monitoring Tanah (Suhu, Kelembaban, pH, N.P.K)  
 -- Informasi cuaca
 -- Informasi hama atau penyakit
 -- Saran aktivitas
 
-- Pengelolaan Lahan (Field)
+5. Pengelolaan Lahan (Field) *Done* ===
 
-- Detail Lahan 
+6. Detail Lahan 
 -- Visualisasi grafis perangkat utama dan pendukung, informasi singkat lahan
 
-- Detail Lahan Perangkat Utama
+7. Detail Lahan Perangkat Utama
 -- Grafik Cuaca
 -- Grafik Hama atau Penyakit
 -- Monitoring Cuaca
 
-- Detail Lahan per Perangkat Pendukung
+8. Detail Lahan per Perangkat Pendukung
 -- Grafik Suhu
 -- Grafik Kelembaban
 -- Grafik pH
 -- Monitoring Tanah
 
-- Pengaturan *Done*
+9. Pengaturan *Done* ===
 
 ======================================================

@@ -26,7 +26,7 @@
                     </a>
                     <a class="navbar-toggler btn btn-outline-success mt-2" href="{{ route('dashboard') }}" style="border-radius: 5px; border: 1px solid #3BAF56; padding-bottom: 13px; padding-top: 10px;">
                         <i class="bi bi-person text-success"></i>
-                        <span class="ml-2 text-success">{{ Auth::user() ? "Go to Dashboard" : "Login" }}</span>
+                        <span class="ml-2 text-success">{{ Auth::user() ? "Dashboard" : "Login" }}</span>
                     </a>
                     <div class="collapse navbar-collapse" style="padding-top: 5px; padding-left: 20px;"
                         id="navbarSupportedContent">
@@ -49,7 +49,7 @@
                         </ul>
                         <a href="{{ route('dashboard') }}" class="btn btn-outline-success my-2 my-sm-0 pl-3 pr-3">
                             <i class="bi bi-person"></i>
-                            <span class="ml-2">{{ Auth::user() ? "Go to Dashboard" : "Login" }}</span>
+                            <span class="ml-2">{{ Auth::user() ? "Dashboard" : "Login" }}</span>
                         </a>
                     </div>
                 </nav>
@@ -65,7 +65,7 @@
                     </a>
                     <a class="navbar-toggler btn btn-outline-light mt-2" href="{{ route('dashboard') }}" style="border-radius: 5px; border: 1px solid white; padding-bottom: 13px; padding-top: 10px;">
                         <i class="bi bi-person text-light"></i>
-                        <span class="ml-2 text-light">{{ Auth::user() ? "Go to Dashboard" : "Login" }}</span>
+                        <span class="ml-2 text-light">{{ Auth::user() ? "Dashboard" : "Login" }}</span>
                     </a>
                     <div class="collapse navbar-collapse" style="padding-top: 25px; padding-left: 20px;"
                         id="navbarSupportedContent">
@@ -88,7 +88,7 @@
                         </ul>
                         <a href="{{ route('dashboard') }}" class="btn btn-outline-light my-2 my-sm-0 pl-3 pr-3">
                             <i class="bi bi-person"></i>
-                            <span class="ml-2">{{ Auth::user() ? "Go to Dashboard" : "Login" }}</span>
+                            <span class="ml-2">{{ Auth::user() ? "Dashboard" : "Login" }}</span>
                         </a>
                     </div>
                 </nav>
@@ -296,7 +296,7 @@
                     <div class="pl-5" style="margin-top: 80px;">
                         <a href="{{ route('dashboard') }}" class="btn btn-success w-100">
                             <i class="bi bi-user"></i>
-                            <span>{{ Auth::user() ? "Go to Dashboard" : "Login" }}</span>
+                            <span>{{ Auth::user() ? "Dashboard" : "Login" }}</span>
                         </a>
                         <p class="mt-3 text-center">Or download to mobile device</p>
                         <div class="btn-play-store" style="display: flex; justify-content: center; align-items: center;">
@@ -557,7 +557,7 @@
                                 Technology</span> is Arnesys</p>
                         <div style="display: flex; justify-content: center;">
                             <a href="{{ route('dashboard') }}" class="btn btn-success mt-1" style="width: 250px;">
-                                {{ Auth::user() ? "Go to Dashboard" : "Login" }}
+                                {{ Auth::user() ? "Dashboard" : "Login" }}
                             </a>
                         </div>
                     </div>

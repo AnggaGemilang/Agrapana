@@ -42,7 +42,7 @@
                             <a href="javascript:;" class="nav-link text-white font-weight-bold px-0">
                                 <img src="{{ asset('assets') }}/img/team-3.jpg"
                                     style="width: 35px; height: 35px; border-radius: 50px; margin-right: 10px">
-                                <span class="d-sm-inline d-none">Angga Gemilang</span>
+                                <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
                             </a>
                         </li>
                         <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -74,9 +74,10 @@
 
             @yield('content')
 
-            @include('components.master.footer')
-
         </div>
+
+        @include('components.master.footer')
+
     </main>
 
     <script type="text/javascript" src="{{ asset('assets') }}/landing-page/js/jquery-3.4.1.min.js"></script>

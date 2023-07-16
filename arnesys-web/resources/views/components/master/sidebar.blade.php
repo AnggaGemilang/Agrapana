@@ -1,10 +1,10 @@
 @php
-if(\Request::is('monitoring')) {
+if(\Request::is('master/dashboard')) {
     @$dashboard = 'active';
-} else if(\Request::is('monitoring/plant-list')) {
-    @$plantlist = 'active';
-} else if(\Request::is('monitoring/presets')) {
-    @$preset = 'active';
+} else if(\Request::is('master/client')) {
+    @$client = 'active';
+} else if(\Request::is('master/field')) {
+    @$field = 'active';
 }
 @endphp
 
@@ -21,8 +21,11 @@ if(\Request::is('monitoring')) {
     <hr class="horizontal dark mt-0">
     <div class="w-auto" id="sidenav-collapse-main">
         <ul class="navbar-nav">
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Data</h6>
+            </li>
             <li class="nav-item">
-                <a class="nav-link {{ @$dashboard }}" href="/monitoring">
+                <a class="nav-link {{ @$dashboard }}" href="{{ route('dashboard') }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
@@ -30,24 +33,31 @@ if(\Request::is('monitoring')) {
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {{ @$plantlist }}" href="/monitoring/plant-list">
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Plant List</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ @$preset }}" href="/monitoring/presets">
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Presets</span>
-                </a>
-            </li>
+
+            @hasrole('Operator')
+                <li class="nav-item">
+                    <a class="nav-link {{ @$client }}" href="{{ route('client') }}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Client</span>
+                    </a>
+                </li>
+            @endrole
+
+            @hasrole('Client')
+                <li class="nav-item">
+                    <a class="nav-link {{ @$field }}" href="{{ route('field') }}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-credit-card text-warning text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Field</span>
+                    </a>
+                </li>
+            @endrole
+
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Settings</h6>
             </li>
