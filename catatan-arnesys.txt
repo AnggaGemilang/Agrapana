@@ -79,3 +79,8 @@ Tampilan Aplikasi Mobile
 9. Pengaturan *Done* ===
 
 ======================================================
+
+Client
+Field
+Data monitoring perangkat utama
+Data monitoring perangkat pendukung

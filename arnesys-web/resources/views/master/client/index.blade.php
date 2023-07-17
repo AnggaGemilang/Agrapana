@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Dashboard')
+@section('title', 'Clients')
 
 @section('breadcrumb-content')
 
@@ -32,7 +32,7 @@
                                     <h6>Clients Data</h6>
                                 </div>
                                 <div class="col text-end">
-                                    <button id="addModalBtn" class="btn btn-success" style="float: right; margin-top: -5px;">Register Client</button>
+                                    <a href="{{ route('client.create') }}" class="btn btn-outline-success" style="float: right; margin-top: -5px;">Register New Client</a>
                                 </div>
                             </div>
                         </div>
@@ -42,80 +42,59 @@
                                     <thead>
                                         <tr>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Author</th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Function</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Status</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Employed</th>
-                                            <th class="text-secondary opacity-7"></th>
+                                                Name
+                                            </th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Number of Fields
+                                            </th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Email
+                                            </th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Client Created
+                                            </th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Action
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="../assets/img/team-3.jpg" class="avatar avatar-sm me-3"
-                                                            alt="user2">
+                                        @foreach ($clients as $row)
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex px-2 py-1">
+                                                        <div>
+                                                            <img
+                                                                @if ($row->photo == NULL)
+                                                                    src="{{ asset('assets') }}/img/team-3.jpg"
+                                                                @else
+                                                                    src="{{ $row->photo }}"
+                                                                @endif
+                                                                class="avatar avatar-sm me-3" alt="user2">
+                                                        </div>
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <h6 class="mb-0 text-sm">{{ $row->name }}</h6>
+                                                        </div>
                                                     </div>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">Alexa Liras</h6>
-                                                        <p class="text-xs text-secondary mb-0">alexa@creative-tim.com</p>
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <p class="text-xs text-secondary mb-0">{{ $row->number_of_fields }} Fields</p>
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <p class="text-xs text-secondary mb-0">{{ $row->email }}</p>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    <span class="text-secondary text-xs font-weight-bold">{{ $row->created_at }}</span>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <div class="d-flex justify-content-center">
+                                                        <a class="btn btn-link text-success text-gradient px-3 mb-0" href="javascript:;"><i class="fas fa-plus me-2"></i></a>
+                                                        <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i></a>
+                                                        <a class="btn btn-link text-dark text-gradient px-3 mb-0" href="{{ route('client.field', $row->id) }}"><i class="fas fa-arrow-right me-2"></i><span></span></a>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">Programator</p>
-                                                <p class="text-xs text-secondary mb-0">Developer</p>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-secondary">Offline</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">11/01/19</span>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a href="{{ route('client.field', 123) }}" class="text-secondary font-weight-bold text-xs"
-                                                    data-toggle="tooltip" data-original-title="Edit user">
-                                                    Detail
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="../assets/img/team-3.jpg" class="avatar avatar-sm me-3"
-                                                            alt="user4">
-                                                    </div>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">Michael Levi</h6>
-                                                        <p class="text-xs text-secondary mb-0">michael@creative-tim.com</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">Programator</p>
-                                                <p class="text-xs text-secondary mb-0">Developer</p>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-success">Online</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">24/12/08</span>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a href="{{ route('client.field', 123) }}" class="text-secondary font-weight-bold text-xs"
-                                                    data-toggle="tooltip" data-original-title="Edit user">
-                                                    Detail
-                                                </a>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -126,7 +105,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="registerClientModal" tabindex="-1" role="dialog" aria-labelledby="modalSayaLabel"
+    <div class="modal fade" id="addNewFieldModal" tabindex="-1" role="dialog" aria-labelledby="modalSayaLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -238,12 +217,12 @@
 @push('js')
 <script>
 
-    $("#addModalBtn").click(function () {
-        $("#registerClientModal").modal("show")
+    $("#addFieldModalBtn").click(function () {
+        $("#addNewFieldModal").modal("show")
     })
 
     $(".btnClose").click(function () {
-        $("#registerClientModal").modal("hide")
+        $("#addNewFieldModal").modal("hide")
     })
 
 </script>

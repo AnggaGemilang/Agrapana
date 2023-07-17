@@ -36,17 +36,20 @@ Route::post('/auth/login/post', [LoginController::class, 'handleLogin'])->name('
 Route::group(['prefix' => 'master', 'middleware' => ['auth:web,webstudent,webclient', 'verified']], function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/fields/{id}', [FieldController::class, 'getByClient'])->name('client.field');
-    Route::get('/fields/detail/{id}', [FieldController::class, 'detail'])->name('client.field.detail');
+    Route::get('/fields/detail/main-device/{id}', [FieldController::class, 'detailMainDevice'])->name('client.field.detail.main');
+    Route::get('/fields/detail/support-device/{id}/{number}', [FieldController::class, 'detailSupportDevice'])->name('client.field.detail.support');
 
     // Role Operator
     Route::group(['middleware' => ['role:Operator']], function () {
         Route::get('/clients', [ClientController::class, 'index'])->name('client');
+        Route::get('/client/create', [ClientController::class, 'create'])->name('client.create');
+        Route::post('/client/post', [ClientController::class, 'store'])->name('client.store');
+        Route::get('/fields/{id}', [FieldController::class, 'getByClient'])->name('client.field');
     });
 
     // Role Client
-    // Route::group(['middleware' => ['role:Client']], function () {
-
-    // });
+    Route::group(['middleware' => ['role:Client']], function () {
+        Route::get('/fields', [FieldController::class, 'index'])->name('field');
+    });
 
 });
