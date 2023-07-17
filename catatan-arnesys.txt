@@ -77,5 +77,3 @@ Tampilan Aplikasi Mobile
 -- Monitoring Tanah
 
 9. Pengaturan *Done* ===
-
-======================================================
