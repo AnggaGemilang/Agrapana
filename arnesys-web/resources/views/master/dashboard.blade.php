@@ -19,7 +19,7 @@
 
 @section('content')
 
-<div class="row content-wrapper mt-3">
+<div class="row content-wrapper mt-3" style="padding-bottom: 70px;">
     <div class="col-xl-12 col-sm-12">
         <div class="row">
 
@@ -29,18 +29,20 @@
                     <div class="card">
                         <div class="card-body p-3">
                             <div class="row">
-                                <div class="col-8">
-                                    <div class="numbers" style="min-height: 93px;">
-                                        <p class="text-md mb-0 text-capitalize font-weight-bold">Today <br> Value</p>
-                                        <h4 id="txtTemperature" class="font-weight-bolder mt-2">
-                                            25&deg;
-                                        </h4>
-                                    </div>
+                                <div class="col-9">
+                                    <p class="text-md mb-0 text-capitalize font-weight-bold">Date and <br> Time</p>
                                 </div>
-                                <div class="col-4 text-end">
-                                    <div class="icon icon-shape bg-gradient-danger shadow-success text-center rounded-circle">
+                                <div class="col-3">
+                                    <div class="icon icon-shape bg-gradient-danger shadow-success text-center rounded-circle" style="float: right;">
                                         <i class="ni ni-bulb-61 text-lg opacity-10" aria-hidden="true"></i>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4 id="txtDatetime" class="font-weight-bolder mt-2">
+                                        . . .
+                                    </h4>
                                 </div>
                             </div>
                         </div>
@@ -50,18 +52,20 @@
                     <div class="card">
                         <div class="card-body p-3">
                             <div class="row">
-                                <div class="col-8">
-                                    <div class="numbers" style="min-height: 93px;">
-                                        <p class="text-md mb-0 text-capitalize font-weight-bold">Ph Meter <br> Value</p>
-                                        <h4 id="txtPh" class="font-weight-bolder mt-2">
-                                            7 Ph
-                                        </h4>
-                                    </div>
+                                <div class="col-9">
+                                    <p class="text-md mb-0 text-capitalize font-weight-bold">Number of <br> Clients</p>
                                 </div>
-                                <div class="col-4 text-end">
-                                    <div class="icon icon-shape bg-gradient-warning shadow-success text-center rounded-circle">
+                                <div class="col-3">
+                                    <div class="icon icon-shape bg-gradient-warning shadow-success text-center rounded-circle" style="float: right;">
                                         <i class="ni ni-folder-17 text-lg opacity-10" aria-hidden="true"></i>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4 id="txtpH" class="font-weight-bolder mt-2">
+                                        {{ $numberOfClients }}
+                                    </h4>
                                 </div>
                             </div>
                         </div>
@@ -71,18 +75,20 @@
                     <div class="card">
                         <div class="card-body p-3">
                             <div class="row">
-                                <div class="col-8">
-                                    <div class="numbers" style="min-height: 93px;">
-                                        <p class="text-md mb-0 text-capitalize font-weight-bold">Gas CO2 <br> Value</p>
-                                        <h4 id="txtGas" class="font-weight-bolder mt-2">
-                                            620 PPM
-                                        </h4>
-                                    </div>
+                                <div class="col-9">
+                                    <p class="text-md mb-0 text-capitalize font-weight-bold">Number of <br> Fields</p>
                                 </div>
-                                <div class="col-4 text-end">
-                                    <div class="icon icon-shape bg-gradient-primary shadow-success text-center rounded-circle">
+                                <div class="col-3">
+                                    <div class="icon icon-shape bg-gradient-primary shadow-success text-center rounded-circle" style="float: right;">
                                         <i class="ni ni-support-16 text-lg opacity-10" aria-hidden="true"></i>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4 id="txtGas" class="font-weight-bolder mt-2">
+                                        {{ $numberOfFields }}
+                                    </h4>
                                 </div>
                             </div>
                         </div>
@@ -93,64 +99,47 @@
 
             @hasrole('Client')
 
-                <div class="col-xl-4 col-sm-6">
+                <div class="col-xl-6 col-sm-6">
                     <div class="card">
                         <div class="card-body p-3">
                             <div class="row">
-                                <div class="col-8">
-                                    <div class="numbers" style="min-height: 93px;">
-                                        <p class="text-md mb-0 text-capitalize font-weight-bold">Temperature2 <br> Value</p>
-                                        <h4 id="txtTemperature" class="font-weight-bolder mt-2">
-                                            25&deg;
-                                        </h4>
-                                    </div>
+                                <div class="col-9">
+                                    <p class="text-md mb-0 text-capitalize font-weight-bold">Date and <br> Time</p>
                                 </div>
-                                <div class="col-4 text-end">
-                                    <div class="icon icon-shape bg-gradient-danger shadow-success text-center rounded-circle">
+                                <div class="col-3">
+                                    <div class="icon icon-shape bg-gradient-danger shadow-success text-center rounded-circle" style="float: right;">
                                         <i class="ni ni-bulb-61 text-lg opacity-10" aria-hidden="true"></i>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
-                    <div class="card">
-                        <div class="card-body p-3">
                             <div class="row">
-                                <div class="col-8">
-                                    <div class="numbers" style="min-height: 93px;">
-                                        <p class="text-md mb-0 text-capitalize font-weight-bold">Ph Meter <br> Value</p>
-                                        <h4 id="txtPh" class="font-weight-bolder mt-2">
-                                            7 Ph
-                                        </h4>
-                                    </div>
-                                </div>
-                                <div class="col-4 text-end">
-                                    <div class="icon icon-shape bg-gradient-warning shadow-success text-center rounded-circle">
-                                        <i class="ni ni-folder-17 text-lg opacity-10" aria-hidden="true"></i>
-                                    </div>
+                                <div class="col-12">
+                                    <h4 id="txtDatetime" class="font-weight-bolder mt-2">
+                                        . . .
+                                    </h4>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-4 col-sm-6">
+                <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
                     <div class="card">
                         <div class="card-body p-3">
                             <div class="row">
-                                <div class="col-8">
-                                    <div class="numbers" style="min-height: 93px;">
-                                        <p class="text-md mb-0 text-capitalize font-weight-bold">Gas CO2 <br> Value</p>
-                                        <h4 id="txtGas" class="font-weight-bolder mt-2">
-                                            620 PPM
-                                        </h4>
+                                <div class="col-9">
+                                    <p class="text-md mb-0 text-capitalize font-weight-bold">Number of <br> Fields</p>
+                                </div>
+                                <div class="col-3">
+                                    <div class="icon icon-shape bg-gradient-warning shadow-success text-center rounded-circle" style="float: right;">
+                                        <i class="ni ni-folder-17 text-lg opacity-10" aria-hidden="true"></i>
                                     </div>
                                 </div>
-                                <div class="col-4 text-end">
-                                    <div class="icon icon-shape bg-gradient-primary shadow-success text-center rounded-circle">
-                                        <i class="ni ni-support-16 text-lg opacity-10" aria-hidden="true"></i>
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4 id="txtpH" class="font-weight-bolder mt-2">
+                                        {{ $numberOfFieldsByClient }}
+                                    </h4>
                                 </div>
                             </div>
                         </div>
@@ -165,146 +154,41 @@
 @endsection
 
 @push('js')
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
-
 <script>
-    $(document).ready(function(){
-        MQTTconnect()
-    })
 
-    var connected_flag = 0
-	var mqtt
-    var reconnectTimeout = 2000
-	var host="test.mosquitto.org"
-	var port=8080
-    var sub_topic="arceniter/#"
-    var userId = "TvfNFPgb38"
-    var passwordId = "z7G9v8tTGQ"
+function display_ct7() {
+    var x = new Date()
+    var ampm = x.getHours( ) >= 12 ? ' PM' : ' AM';
+    hours = x.getHours( ) % 12;
+    hours = hours ? hours : 12;
+    hours=hours.toString().length==1? 0+hours.toString() : hours;
 
-    function onConnectionLost(){
-        console.log("connection lost")
-        connected_flag = 0
-	}
+    var minutes=x.getMinutes().toString()
+    minutes=minutes.length==1 ? 0+minutes : minutes;
 
-    function onFailure(message) {
-		console.log("Failed")
-        setTimeout(MQTTconnect, reconnectTimeout)
-    }
+    var seconds=x.getSeconds().toString()
+    seconds=seconds.length==1 ? 0+seconds : seconds;
 
-    function onMessageArrived(r_message){
-		//console.log("Message received ",r_message.payloadString)
+    var month=(x.getMonth() +1).toString();
+    month=month.length==1 ? 0+month : month;
 
-        out_msg = "Message received "+ r_message.payloadString + "<br>"
-		out_msg=out_msg+"Message received Topic "+r_message.destinationName
-		// console.log(out_msg)
+    var dt=x.getDate().toString();
+    dt=dt.length==1 ? 0+dt : dt;
 
-        var topic = r_message.destinationName
+    var x1=month + "/" + dt + "/" + x.getFullYear();
+    x1 = x1 + ", " +  hours + ":" +  minutes + ":" +  seconds + " " + ampm;
+    document.getElementById('txtDatetime').innerHTML = x1;
+    display_c7();
+}
 
-        console.log(topic)
+function display_c7(){
+    var refresh = 1000;
+    mytime = setTimeout('display_ct7()', refresh)
+}
 
-        if(topic=="arceniter/monitoring"){
-            var data = JSON.parse(r_message.payloadString)
-            console.log(data)
-            $("#txtTemperature").text(data.temperature + '\u00B0')
-            $("#txtPh").text(data.ph + " Ph")
-            $("#txtGas").text(data.gas + " PPM")
-            $("#txtNutrition").text(data.nutrition + " PPM")
-            $("#txtVolume").text(data.nutrition_volume + "%")
-		}
-		if(topic=="arceniter/common"){
-            var data = JSON.parse(r_message.payloadString)
-            console.log(data)
-            $("#txtPlantName").text(data.plant_name.split('#')[0])
-            let custom = data.started_planting.split(',')[0] + ", " + data.started_planting.split(',')[1]
-            $("#txtStartedPlant").text(custom)
-            if(data.is_planting == "no"){
-                $(".not-found2").css('display', 'flex')
-                $(".content-wrapper").css('display', 'none')
-            } else {
-                $(".not-found2").css('display', 'hidden')
-                $(".content-wrapper").css('display', 'flex')
-            }
-        }
-	}
-
-    function onConnected(recon,url){
-	    console.log(" in onConnected " + reconn)
-	}
-
-	function onConnect() {
-	    connected_flag = 1
-        console.log("on Connect "+connected_flag)
-        mqtt.subscribe(sub_topic)
-	  }
-
-    function MQTTconnect() {
-        console.log("connecting to "+ host +":"+ port)
-        var x = Math.floor(Math.random() * 10000)
-        var cname = "controlform-" + x
-        mqtt = new Paho.MQTT.Client(host,port,cname)
-        mqtt.onConnectionLost = onConnectionLost
-        mqtt.onMessageArrived = onMessageArrived
-        mqtt.connect({
-            timeout: 3,
-            onSuccess: onConnect,
-            onFailure: onFailure
-        })
-        return false
-	}
-
-    function sub_topics(){
-		document.getElementById("messages").innerHTML =""
-		if (connected_flag==0){
-            out_msg = "<b>Not Connected so can't subscribe</b>"
-            console.log(out_msg)
-            return false
-		}
-
-        var stopic= document.forms["subs"]["Stopic"].value
-        console.log("Subscribing to topic ="+stopic)
-        mqtt.subscribe(stopic)
-        return false
-	}
-
-    function send_message(msg,topic){
-		if (connected_flag==0){
-            out_msg="<b>Not Connected so can't send</b>"
-            console.log(out_msg)
-            document.getElementById("messages").innerHTML = out_msg
-    		return false
-		}
-
-        var value=msg.value
-		console.log("value= "+value)
-		console.log("topic= "+topic)
-		message = new Paho.MQTT.Message(value)
-		message.destinationName = "house/"+topic
-
-		mqtt.send(message)
-		return false
-	}
-
-    var ctx = document.getElementById("numberOfLeaves")
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['1/3/2023', '1/10/2023', '1/17/2023', '1/24/2023'],
-            datasets: [
-                {
-                    label: 'Number of Leaves',
-                    data: [3, 5, 7, 10],
-                    backgroundColor: [
-                        '#66BB6A',
-                    ],
-                    borderColor: [
-                        '#66BB6A',
-                    ],
-                    borderWidth: 1
-                }
-            ]
-        },
-    })
+$(document).ready(function() {
+    display_c7()
+})
 
 </script>
 @endpush

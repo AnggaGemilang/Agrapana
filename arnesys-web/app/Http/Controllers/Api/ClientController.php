@@ -3,35 +3,35 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Client;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
     public function index()
     {
-        return User::latest()->paginate(5);
+        return Client::latest()->paginate(5);
     }
 
     public function store(Request $request)
     {
-        return User::create($request->all());
+        return Client::create($request->all());
     }
 
-    public function show(User $user)
+    public function show(Client $client)
     {
-        return $user;
+        return $client;
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request, Client $client)
     {
-        $user->update($request->all());
-        $user->refresh();
-        return $user;
+        $client->update($request->all());
+        $client->refresh();
+        return $client;
     }
 
-    public function destroy(User $user)
+    public function destroy(Client $client)
     {
-        return $user->delete();
+        return $client->delete();
     }
 }

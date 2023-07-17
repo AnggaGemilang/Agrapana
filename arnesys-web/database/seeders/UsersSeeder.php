@@ -18,8 +18,8 @@ class UsersSeeder extends Seeder
             'name' => 'Politeknik Negeri Bandung',
             'email' => 'operator@polban.ac.id',
             'email_verified_at' => now(),
-            'password' => Hash::make('operator123'),
             'remember_token' => Str::random(10),
+            'password' => Hash::make('operator123'),
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         ]);

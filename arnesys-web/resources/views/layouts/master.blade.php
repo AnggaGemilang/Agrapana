@@ -17,6 +17,9 @@
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
+
+    @include('sweetalert::alert')
+
     <div class="min-height-300 position-absolute w-100" style="background: #4C7E81;"></div>
 
     @include('components.master.sidebar')
@@ -42,7 +45,15 @@
                             <a href="javascript:;" class="nav-link text-white font-weight-bold px-0">
                                 <img src="{{ asset('assets') }}/img/team-3.jpg"
                                     style="width: 35px; height: 35px; border-radius: 50px; margin-right: 10px">
-                                <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
+                                <span class="d-sm-inline d-none">
+                                    @hasrole('Operator')
+                                        {{ Auth::user()->name }}
+                                    @endrole
+
+                                    @hasrole('Client')
+                                        {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}
+                                    @endrole
+                                </span>
                             </a>
                         </li>
                         <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -80,6 +91,7 @@
 
     </main>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script type="text/javascript" src="{{ asset('assets') }}/landing-page/js/jquery-3.4.1.min.js"></script>
     <script src="{{ asset('assets') }}/js/core/popper.min.js"></script>
     <script src="{{ asset('assets') }}/js/core/bootstrap.min.js"></script>
