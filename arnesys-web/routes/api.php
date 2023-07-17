@@ -21,17 +21,29 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group([
     'namespace'  => 'App\Http\Controllers\Api'
 ], function () {
-    Route::apiResource('main-devices', 'MainDeviceController');
+    Route::apiResource('monitoring-main-devices', 'MonitoringMainDeviceController');
 });
 
 Route::group([
     'namespace'  => 'App\Http\Controllers\Api',
 ], function () {
-    Route::apiResource('support-devices', 'SupportDeviceController');
+    Route::apiResource('monitoring-support-devices', 'MonitoringSupportDeviceController');
 });
 
 Route::group([
     'namespace'  => 'App\Http\Controllers\Api',
 ], function () {
-    Route::apiResource('users', 'ClientController');
+    Route::apiResource('users', 'UserController');
+});
+
+Route::group([
+    'namespace'  => 'App\Http\Controllers\Api',
+], function () {
+    Route::apiResource('clients', 'ClientController');
+});
+
+Route::group([
+    'namespace'  => 'App\Http\Controllers\Api',
+], function () {
+    Route::apiResource('fields', 'FieldController');
 });

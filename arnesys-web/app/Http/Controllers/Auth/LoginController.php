@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class LoginController extends Controller
 {
@@ -51,10 +52,8 @@ class LoginController extends Controller
         } else if(Auth::guard('webclient')->attempt(['email' => $request->email, 'password' => $request->password])){
             return redirect()->route('dashboard');
         } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'username atau password salah'
-            ], 422);
+            Alert::error('Failed', 'Username or password is incorrect');
+            return redirect()->back();
         }
     }
 

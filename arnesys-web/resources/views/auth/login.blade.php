@@ -12,6 +12,9 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
 </head>
 <body>
+
+    @include('sweetalert::alert')
+
     <main class="main-content">
         <section>
             <div class="page-header min-vh-100">
