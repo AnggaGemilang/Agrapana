@@ -11,6 +11,13 @@
                     Pages
                 </a>
             </li>
+            @hasrole('Operator')
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">
+                <a class="opacity-5 text-white" href="{{ route('client') }}">
+                    Client
+                </a>
+            </li>
+            @endrole
             <li class="breadcrumb-item text-sm text-white active" aria-current="page">
                 Field
             </li>

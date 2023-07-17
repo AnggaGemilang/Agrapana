@@ -12,7 +12,7 @@ class FieldController extends Controller
 {
 
     function index(){
-        $fields = Field::where('field_id', Auth::user()->id)->get();
+        $fields = Field::where('client_id', Auth::user()->id)->get();
         return view('master.field.index', compact('fields'));
     }
 

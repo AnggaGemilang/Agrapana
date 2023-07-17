@@ -10,7 +10,12 @@
                 <a class="opacity-5 text-white" href="javascript:;">Pages</a>
             </li>
             <li class="breadcrumb-item text-sm text-white active" aria-current="page">
-                <a class="opacity-5 text-white" href="{{ route('client.field',  $field->client_id) }}">Field</a>
+                @hasrole('Operator')
+                    <a class="opacity-5 text-white" href="{{ route('client.field',  $field->client_id) }}">Field</a>
+                @endrole
+                @hasrole('Client')
+                    <a class="opacity-5 text-white" href="{{ route('field') }}">Field</a>
+                @endrole
             </li>
             <li class="breadcrumb-item text-sm text-white active" aria-current="page">
                 Detail
