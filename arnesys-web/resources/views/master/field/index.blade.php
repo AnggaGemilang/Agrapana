@@ -7,7 +7,8 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm">
-                <a class="opacity-5 text-white" href="javascript:;">Pages
+                <a class="opacity-5 text-white" href="javascript:;">
+                    Pages
                 </a>
             </li>
             <li class="breadcrumb-item text-sm text-white active" aria-current="page">
@@ -58,10 +59,10 @@
                                                     <div class="d-flex px-2 py-1">
                                                         <div>
                                                             <img
-                                                                @if ($row->photo == NULL)
+                                                                @if ($row->thumbnail == NULL)
                                                                     src="{{ asset('assets') }}/img/field.jpg"
                                                                 @else
-                                                                    src="{{ $row->photo }}"
+                                                                    src="{{ Storage::url($row->thumbnail) }}"
                                                                 @endif
                                                                 class="avatar avatar-sm me-3" alt="user2">
                                                         </div>
@@ -85,7 +86,17 @@
                                                 </td>
                                                 <td class="align-middle">
                                                     <div class="d-flex justify-content-center">
-                                                        <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
+
+                                                        @hasrole('Operator')
+
+                                                            <form action="{{ route('field.delete', $row->id) }}" method="POST">
+                                                                @csrf
+                                                                @method('delete')
+                                                                <button type="button" class="btn btn-link text-danger text-gradient px-3 mb-0 delete-btn"><i class="far fa-trash-alt me-2"></i>Delete</button>
+                                                            </form>
+
+                                                        @endrole
+
                                                         <button class="btn btn-link detail-btn text-dark text-gradient px-3 mb-0">
                                                             <i class="fas fa-arrow-down me-2"></i>
                                                             <span>Detail</span>
@@ -151,6 +162,24 @@
 @push('js')
 
 <script>
+
+    $('tr').on('click', '.delete-btn', function (e){
+        e.preventDefault();
+        swal({
+            title: "Are you sure?",
+            text: "Field would be deleted",
+            icon: "warning",
+            type: "warning",
+            buttons: ["Cancel","Yes!"],
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Delete!'
+        }).then((willAccept) => {
+            if (willAccept) {
+                $(this).parent('form').trigger('submit')
+            }
+        });
+    });
 
     $('tr').on('click', '.detail-btn', function() {
         $(this).closest('tr').next().find('.detail-elements').slideToggle(200, 'linear')

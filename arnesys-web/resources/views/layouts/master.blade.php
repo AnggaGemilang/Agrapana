@@ -17,6 +17,9 @@
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
+
+    @include('sweetalert::alert')
+
     <div class="min-height-300 position-absolute w-100" style="background: #4C7E81;"></div>
 
     @include('components.master.sidebar')
@@ -80,6 +83,7 @@
 
     </main>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script type="text/javascript" src="{{ asset('assets') }}/landing-page/js/jquery-3.4.1.min.js"></script>
     <script src="{{ asset('assets') }}/js/core/popper.min.js"></script>
     <script src="{{ asset('assets') }}/js/core/bootstrap.min.js"></script>

@@ -4,9 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrontEndController;
-use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\FieldController;
-use App\Http\Controllers\VacancyController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,8 +41,11 @@ Route::group(['prefix' => 'master', 'middleware' => ['auth:web,webstudent,webcli
     Route::group(['middleware' => ['role:Operator']], function () {
         Route::get('/clients', [ClientController::class, 'index'])->name('client');
         Route::get('/client/create', [ClientController::class, 'create'])->name('client.create');
-        Route::post('/client/post', [ClientController::class, 'store'])->name('client.store');
         Route::get('/fields/{id}', [FieldController::class, 'getByClient'])->name('client.field');
+        Route::delete('/client/delete/{id}', [ClientController::class, 'delete'])->name('client.delete');
+        Route::post('/client/post', [ClientController::class, 'store'])->name('client.store');
+        Route::delete('/fields/delete/{id}', [FieldController::class, 'delete'])->name('field.delete');
+        Route::post('/field/store', [FieldController::class, 'store'])->name('field.store');
     });
 
     // Role Client

@@ -28,19 +28,20 @@ Tampilan Aplikasi Website
 2. Login *Done* ===
 3. Dashboard (Hari & Jam, Jumlah lahan, Jumlah client) *Done* ===
 4. Tambah Client *Done* ===
+5. Tambah Field *Done* ===
 
-5. Kelola Lahan (Field) *Done* ===
+6. Kelola Lahan (Field) *Done* ===
 -- List client
 
-6. Detail Client *Done* ===
+7. Detail Client *Done* ===
 -- List lahan
 
-7. Detail Lahan Perangkat Utama
+8. Detail Lahan Perangkat Utama
 -- Grafik Cuaca
 -- Grafik Hama atau Penyakit
 -- Monitoring Cuaca
 
-8. Detail Lahan per Perangkat Pendukung
+9. Detail Lahan per Perangkat Pendukung
 -- Grafik Suhu
 -- Grafik Kelembaban
 -- Grafik pH

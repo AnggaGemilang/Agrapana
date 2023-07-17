@@ -16,7 +16,11 @@ class ClientsSeeder extends Seeder
     public function run(): void
     {
         $ClientRole = Client::create([
-            'name' => 'Angga Gemilang',
+            'first_name' => 'Angga',
+            'last_name' => 'Gemilang',
+            'username' => 'angga_gemilang',
+            'no_telp' => '083195008217',
+            'address' => 'Bandung',
             'email' => 'angga@polban.ac.id',
             'email_verified_at' => now(),
             'password' => Hash::make('angga123'),
