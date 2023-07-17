@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-use App\Models\Country;
 use App\Models\Presence;
 
 class PublicController extends Controller
@@ -18,7 +18,7 @@ class PublicController extends Controller
     public function postPresence(Request $request){
         $validator = Validator::make($request->presenceData, [
             'full_name' => 'required',
-            'nationality' => 'required',
+            'school' => 'required',
             'opinion' => 'required'
         ]);
 
@@ -42,9 +42,9 @@ class PublicController extends Controller
             Presence::create(
                 [
                     "full_name" => $data["full_name"],
-                    "nationality" => $data["nationality"],
-                    "signature" => $file,
+                    "school" => $data["school"],
                     "opinion" => $data["opinion"],
+                    "signature" => $file,
                 ]
             );
         } catch (QueryException $ex){
@@ -58,10 +58,4 @@ class PublicController extends Controller
             'message' => "Thank You For Your Answer"
         ]);
     }
-
-    public function getCountry(){
-        $presence = Country::all();
-        return response()->json($presence);
-    }
-
 }

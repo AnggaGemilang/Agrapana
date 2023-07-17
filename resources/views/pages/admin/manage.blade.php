@@ -31,8 +31,9 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Lengkap</th>
-                                    <th>Kewarganegaraan</th>
+                                    <th>Sekolah</th>
                                     <th>Pendapat</th>
+                                    <th>Waktu</th>
                                     <th>Tanda Tangan</th>
                                 </tr>
                             </thead>
@@ -44,10 +45,11 @@
                                 <tr data-id="{{ $data->id }}">
                                     <td>{{ $i++; }}</td>
                                     <td>{{ $data->full_name; }}</td>
-                                    <td>{{ $data->nicename; }}</td>
+                                    <td>{{ $data->school; }}</td>
                                     <td>{{ $data->opinion; }}</td>
+                                    <td>{{ $data->created_at; }}</td>
                                     <td>
-                                        <img src="/uploaded/{{ $data->signature; }}" alt="">
+                                        <img src="{{ url('uploaded/' . $data->signature); }}" alt="">
                                     </td>
                                 </tr>
                                 @endforeach

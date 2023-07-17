@@ -16,10 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [PublicController::class, 'index'])->name('presence');
-
-Route::get('/getCountry', [PublicController::class, 'getCountry'])->name('presence.get.country');
 Route::post('/post', [PublicController::class, 'postPresence'])->name('presence.post');
-
 Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login');
 Route::post('admin/login/post', [AdminController::class, 'loginPost'])->name('admin.login.post');

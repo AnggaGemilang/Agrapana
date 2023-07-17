@@ -13,10 +13,6 @@ class AdminController extends Controller
         if($request->session()->has('login')){
             $totalVisitor = Presence::all()->count();
 
-            $totalCountry = Presence::select('nationality')
-                ->groupBy('nationality')
-                ->get();
-
             $graphByVisitor = Presence::select([
                     DB::raw('COUNT(id) AS count'),
                     DB::raw('DATE(created_at) AS date'),
@@ -25,24 +21,14 @@ class AdminController extends Controller
                 ->orderBy('date', 'ASC')
                 ->get();
 
-            $graphByCountry = Presence::select([
-                    DB::raw('db_negara.nicename'),
-                    DB::raw('COUNT(nationality) AS count'),
-                ])
-                ->join('db_negara', 'db_negara.id','=','db_presensi.nationality')
-                ->groupBy('db_negara.nicename')
-                ->get();
-
-            return view('pages.admin.home', compact('totalVisitor', 'totalCountry', 'graphByVisitor', 'graphByCountry'));
+            return view('pages.admin.home', compact('totalVisitor', 'graphByVisitor'));
 		} else{
             return view('pages.auth.login');
 		}
     }
 
     public function getManage() {
-        $presence = Presence::join('db_negara','db_presensi.nationality','=','db_negara.id')
-            ->select('db_presensi.*','db_negara.nicename')
-            ->get();
+        $presence = Presence::all();
         return view('pages.admin.manage', compact('presence'));
     }
 

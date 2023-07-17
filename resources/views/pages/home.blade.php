@@ -61,7 +61,7 @@
                             <div class="tab">
                                 <div class="form-group">
                                     <label for="full_name">a. Full Name</label>
-                                    <input type="text" name="full_name" placeholder="Type our first name here..." autocomplete="off" id="fullName">
+                                    <input type="text" name="full_name" placeholder="Type your full name here..." autocomplete="off" id="fullName">
                                     <small class="required-element">Required</small>
                                 </div>
                                 <div class="btn-ok-wrapper d-flex">
@@ -76,10 +76,8 @@
 
                             <div class="tab">
                                 <div class="form-group">
-                                    <label for="nationality">b. Nationality</label>
-                                    <select name="nationality" id="nationality">
-                                        <option value="">Choose Nationality</option>
-                                    </select>
+                                    <label for="school">b. School or University</label>
+                                    <input type="text" name="school" placeholder="Type your school or university ..." autocomplete="off" id="school">
                                     <small class="required-element">Required</small>
                                 </div>
                                 <div class="btn-ok-wrapper d-flex">
@@ -112,7 +110,7 @@
                                 <div class="col-md-12" style="display: flex; justify-content: center;">
                                     <div class="signature-wrapper" style="width: 55%;">
                                         <div class="form-group">
-                                            <label for="signature" style="width: 100%">c. Signature</label>
+                                            <label for="signature" style="width: 100%">d. Signature</label>
                                             <canvas id="signature-pad" class="signature-pad" style="border: 1px solid #AAB7A6;margin-left: 22px !important;"></canvas>
                                         </div>
                                         <div class="btn-ok-wrapper d-flex">
@@ -182,35 +180,12 @@
                 signaturePad.clear();
             });
 
-            getCountryData()
             changeBackground()
         })
 
         function changeBackground() {
             let kodeGambar = Math.floor((Math.random() * 3) + 1)
             $(".hero_area").css("background-image", "linear-gradient(rgba(122, 136, 119, 0.9), rgba(0, 0, 0, 0.6)), url('assets/presence-page/images/" + kodeGambar + ".jpg')")
-        }
-
-        function getCountryData() {
-            $.ajax({
-                url: '{{ route("presence.get.country") }}',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type: 'GET',
-                success: function (data) {
-                    $("#nationality").children().remove()
-                    $("#nationality").append($('<option value="">').text("Choose Nationality"))
-                    $.each(data, function (key, value) {
-                        $("#nationality")
-                            .append($('<option value="' + value.id + '">').text(value.nicename))
-                    })
-                },
-                error: function (data) {
-                    $("#nationality").children().remove()
-                    $("#nationality").append($('<option>').text("Choose Nationality"))
-                },
-            })
         }
 
         var currentTab = 0
@@ -326,7 +301,7 @@
 
                 let datas = {
                     full_name: $("#fullName").val(),
-                    nationality: $("#nationality").val(),
+                    school: $("#school").val(),
                     signature: signaturePad.toDataURL('image/png'),
                     opinion: $("#opinion").val()
                 }

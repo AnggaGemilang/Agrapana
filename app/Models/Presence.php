@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Presence extends Model
 {
     use HasFactory;
-    protected $table = 'db_presensi';
+    protected $table = 't_presensi';
     protected $fillable = [
-        'full_name', 'nationality', 'signature', 'opinion'
+        'full_name', 'school', 'signature', 'opinion'
     ];
 }
