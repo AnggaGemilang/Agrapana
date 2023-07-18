@@ -49,9 +49,9 @@ class LoginActivity : AppCompatActivity() {
     private fun login(email: String, password: String) {
         viewModel.getLoginObservable().observe(this) {
             if (it == null) {
-                Toast.makeText(this, "Failed to delete user...", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Succeed", Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(this, "Successfully deleted user...", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Failed", Toast.LENGTH_LONG).show()
                 finish()
             }
         }
