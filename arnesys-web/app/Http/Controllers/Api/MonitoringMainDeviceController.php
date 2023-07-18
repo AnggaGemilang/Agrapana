@@ -18,8 +18,9 @@ class MonitoringMainDeviceController extends Controller
         return MonitoringMainDevice::create($request->all());
     }
 
-    public function show(MonitoringMainDevice $monitoringMainDevice)
+    public function show($id)
     {
+        $monitoringMainDevice = MonitoringMainDevice::where('field_id', $id)->paginate(5);
         return $monitoringMainDevice;
     }
 

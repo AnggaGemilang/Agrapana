@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\FieldController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,31 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group([
-    'namespace'  => 'App\Http\Controllers\Api'
+    'namespace'  => 'App\Http\Controllers\Api',
 ], function () {
     Route::apiResource('monitoring-main-devices', 'MonitoringMainDeviceController');
-});
-
-Route::group([
-    'namespace'  => 'App\Http\Controllers\Api',
-], function () {
     Route::apiResource('monitoring-support-devices', 'MonitoringSupportDeviceController');
-});
-
-Route::group([
-    'namespace'  => 'App\Http\Controllers\Api',
-], function () {
-    Route::apiResource('users', 'UserController');
-});
-
-Route::group([
-    'namespace'  => 'App\Http\Controllers\Api',
-], function () {
-    Route::apiResource('clients', 'ClientController');
-});
-
-Route::group([
-    'namespace'  => 'App\Http\Controllers\Api',
-], function () {
-    Route::apiResource('fields', 'FieldController');
+    Route::get('/login/post', [AuthController::class, 'login']);
+    Route::get('/field/{id}', [FieldController::class, 'show']);
 });
