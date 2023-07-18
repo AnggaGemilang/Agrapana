@@ -26,18 +26,7 @@ class LoginActivity : AppCompatActivity() {
         initViewModel()
 
         binding.btnLogin.setOnClickListener {
-
             login(binding.etEmail.text.toString(), binding.etPassword.text.toString())
-
-//            if(validUsername == binding.etEmail.text.toString() && validPassword == binding.etPassword.text.toString()){
-//                val prefs: SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
-//                val editor: SharedPreferences.Editor? = prefs.edit()
-//                editor?.putBoolean("loginStart", false)
-//                editor?.apply()
-//                startActivity(Intent(this, MainActivity::class.java))
-//            } else {
-//                Toast.makeText(this, "Email or Password Incorrect", Toast.LENGTH_LONG).show()
-//            }
         }
     }
 
@@ -49,10 +38,14 @@ class LoginActivity : AppCompatActivity() {
     private fun login(email: String, password: String) {
         viewModel.getLoginObservable().observe(this) {
             if (it == null) {
-                Toast.makeText(this, "Succeed", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Username or password is incorrect", Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(this, "Failed", Toast.LENGTH_LONG).show()
-                finish()
+                val prefs: SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
+                val editor: SharedPreferences.Editor? = prefs.edit()
+                editor?.putBoolean("loginStart", false)
+                editor?.putString("client_id", it.data?.id)
+                editor?.apply()
+                startActivity(Intent(this, MainActivity::class.java))
             }
         }
         viewModel.login(email, password)

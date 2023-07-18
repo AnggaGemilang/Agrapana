@@ -3,6 +3,12 @@ package com.agrapana.arnesys.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.agrapana.arnesys.model.FieldList
+import com.agrapana.arnesys.model.FieldResponse
+import com.agrapana.arnesys.retrofit.FieldService
+import com.agrapana.arnesys.retrofit.RetroInstance
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class FieldViewModel: ViewModel() {
 
@@ -12,13 +18,21 @@ class FieldViewModel: ViewModel() {
         return recyclerListData
     }
 
-    fun getUsersList() {
+    fun getFieldsList(client_id: String) {
+        val retroInstance = RetroInstance.getRetroInstance().create(FieldService::class.java)
+        val call = retroInstance.getFieldsByClient(client_id)
+        call.enqueue(object : Callback<FieldResponse>{
+            override fun onFailure(call: Call<FieldResponse>, t: Throwable) {
+//                recyclerListData.postValue(null)
+            }
 
-
+            override fun onResponse(call: Call<FieldResponse>, response: Response<FieldResponse>) {
+//                if(response.isSuccessful) {
+//                    recyclerListData.postValue(response.body())
+//                } else {
+//                    recyclerListData.postValue(null)
+//                }
+            }
+        })
     }
-
-    fun searchUser(searchText: String) {
-
-    }
-
 }

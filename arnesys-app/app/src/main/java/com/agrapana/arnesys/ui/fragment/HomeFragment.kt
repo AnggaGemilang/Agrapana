@@ -1,6 +1,7 @@
 package com.agrapana.arnesys.ui.fragment
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -12,11 +13,13 @@ import kotlin.random.Random
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.agrapana.arnesys.*
 import com.agrapana.arnesys.config.MQTT_HOST
 import com.agrapana.arnesys.databinding.FragmentHomeBinding
 import com.agrapana.arnesys.helper.MqttClientHelper
+import com.agrapana.arnesys.ui.activity.LoginActivity
 import com.agrapana.arnesys.ui.activity.SettingActivity
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
@@ -79,7 +82,14 @@ class HomeFragment : Fragment() {
                     builder.setTitle("Are You Sure?")
                     builder.setMessage("You can't get in to your account")
                     builder.setPositiveButton("YES") { _, _ ->
-
+                        val prefs: SharedPreferences? = this.activity?.getSharedPreferences("prefs",
+                            AppCompatActivity.MODE_PRIVATE
+                        )
+                        val editor: SharedPreferences.Editor? = prefs?.edit()
+                        editor?.putBoolean("loginStart", true)
+                        editor?.putString("client_id", null)
+                        editor?.apply()
+                        startActivity(Intent(activity, LoginActivity::class.java))
                     }
                     builder.setNegativeButton("NO") { dialog, _ ->
                         dialog.dismiss()

@@ -1,5 +1,35 @@
 package com.agrapana.arnesys.model
 
+import java.sql.Timestamp
+
 data class FieldList(val data: List<Field>)
-data class Field(val id: String?,val name: String?,  val email: String?, val status: String?, val gender: String?)
-data class FieldResponse(val code: Int?, val meta: String?, val data: Field?)
+data class Field(
+    val id: String?,
+    val address: String?,
+    val plant_type: String?,
+    val thumbnail: String?,
+    val number_of_support_device: Int?,
+    val client_id: String?,
+    val created_at: Timestamp?,
+    val updated_at: Timestamp?
+)
+data class Links(
+    val url: String?,
+    val label: String?,
+    val active: Boolean?
+)
+data class FieldResponse(
+    val current_page: Int?,
+    val data: Field?,
+    val first_page_url: String?,
+    val from: Int?,
+    val last_page: Int?,
+    val last_page_url: String?,
+    val links: Links?,
+    val next_page_url: String?,
+    val path: String?,
+    val per_page: Int?,
+    val prev_page_url: String?,
+    val to: Int?,
+    val total: Int?
+)
