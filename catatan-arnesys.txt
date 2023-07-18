@@ -36,12 +36,12 @@ Tampilan Aplikasi Website
 7. Detail Client *Done* ===
 -- List lahan
 
-8. Detail Lahan Perangkat Utama
+8. Detail Lahan Perangkat Utama *Done* ===
 -- Grafik Cuaca
 -- Grafik Hama atau Penyakit
 -- Monitoring Cuaca
 
-9. Detail Lahan per Perangkat Pendukung
+9. Detail Lahan per Perangkat Pendukung *Done* ===
 -- Grafik Suhu
 -- Grafik Kelembaban
 -- Grafik pH
@@ -61,22 +61,22 @@ Tampilan Aplikasi Mobile
 -- Informasi hama atau penyakit
 -- Saran aktivitas
 
-5. Pengelolaan Lahan (Field) *Done* ===
+5. Pengelolaan Field *Done* ===
 
-6. Detail Lahan 
--- Visualisasi grafis perangkat utama dan pendukung, informasi singkat lahan
-
-7. Detail Lahan Perangkat Utama
+6. Detail Lahan Perangkat Utama
 -- Grafik Cuaca
 -- Grafik Hama atau Penyakit
 -- Monitoring Cuaca
 
-8. Detail Lahan per Perangkat Pendukung
+7. Detail Lahan per Perangkat Pendukung
 -- Grafik Suhu
 -- Grafik Kelembaban
 -- Grafik pH
 -- Monitoring Tanah
 
+<<<<<<< HEAD
+9. Pengaturan *Done* ===
+=======
 9. Pengaturan *Done* ===
 
 ======================================================
@@ -85,3 +85,4 @@ Client
 Field
 Data monitoring perangkat utama
 Data monitoring perangkat pendukung
+>>>>>>> 8cbb71cd97b061b75e20fc1111024fca87eef9d8
