@@ -19,8 +19,11 @@ class MonitoringSupportDeviceController extends Controller
         return MonitoringSupportDevice::create($request->all());
     }
 
-    public function show(MonitoringSupportDevice $monitoringSupportDevice)
+    public function show($id, $number)
     {
+        $monitoringSupportDevice = MonitoringSupportDevice::where('field_id', $id)
+            ->where('number_of', $number)
+            ->paginate(5);
         return $monitoringSupportDevice;
     }
 
