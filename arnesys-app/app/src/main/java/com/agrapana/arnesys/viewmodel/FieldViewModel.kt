@@ -4,8 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.agrapana.arnesys.model.FieldList
 import com.agrapana.arnesys.model.FieldResponse
-import com.agrapana.arnesys.retrofit.FieldService
-import com.agrapana.arnesys.retrofit.RetroInstance
+import com.agrapana.arnesys.api.FieldService
+import com.agrapana.arnesys.api.RetroInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

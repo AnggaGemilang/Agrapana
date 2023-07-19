@@ -1,38 +1,27 @@
 package com.agrapana.arnesys.viewmodel
 
+import android.app.Application
+import android.util.Log
+import android.view.View
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.agrapana.arnesys.model.AuthListener
 import com.agrapana.arnesys.model.AuthResponse
-import com.agrapana.arnesys.retrofit.AuthService
-import com.agrapana.arnesys.retrofit.RetroInstance
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.agrapana.arnesys.repository.AuthRepository
 
-class LoginViewModel: ViewModel() {
 
-    var loginLiveData: MutableLiveData<AuthResponse?> = MutableLiveData()
+class LoginViewModel : ViewModel() {
 
-    fun getLoginObservable(): MutableLiveData<AuthResponse?> {
-        return loginLiveData
-    }
+    var authListener: AuthListener? = null
 
-    fun login(email: String, password: String) {
-        val retroInstance = RetroInstance.getRetroInstance().create(AuthService::class.java)
-        val call = retroInstance.login(email, password)
-        call.enqueue(object : Callback<AuthResponse?> {
-            override fun onFailure(call: Call<AuthResponse?>, t: Throwable) {
-                loginLiveData.postValue(null)
-            }
+    fun onLoginButtonClick(email: String, password: String){
+        if(email.isEmpty() || password.isEmpty()){
+            authListener?.onFailure("Email or Password Is Incorrect!")
+        }
 
-            override fun onResponse(call: Call<AuthResponse?>, response: Response<AuthResponse?>) {
-                if(response.isSuccessful) {
-                    loginLiveData.postValue(response.body())
-                } else {
-                    loginLiveData.postValue(null)
-                }
-            }
-        })
+        val loginResponse = AuthRepository().userLogin(email, password)
+        authListener?.onSuccess(loginResponse)
     }
 
 }

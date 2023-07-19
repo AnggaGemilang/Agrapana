@@ -33,6 +33,7 @@ import java.util.*
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var prefs: SharedPreferences
 
     private val mqttClient by lazy {
         MqttClientHelper(requireContext())
@@ -49,6 +50,15 @@ class HomeFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        prefs = this.activity?.getSharedPreferences("prefs",
+            AppCompatActivity.MODE_PRIVATE
+        )!!
+
+        val name: String? = prefs.getString("name", "")
+        val nameParts = name!!.trim().split("\\s+".toRegex())
+        binding.greeting.text = "Hello there, ${nameParts[0]}"
+
         binding.toolbar.inflateMenu(R.menu.action_nav1)
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId) {
@@ -82,10 +92,7 @@ class HomeFragment : Fragment() {
                     builder.setTitle("Are You Sure?")
                     builder.setMessage("You can't get in to your account")
                     builder.setPositiveButton("YES") { _, _ ->
-                        val prefs: SharedPreferences? = this.activity?.getSharedPreferences("prefs",
-                            AppCompatActivity.MODE_PRIVATE
-                        )
-                        val editor: SharedPreferences.Editor? = prefs?.edit()
+                        val editor: SharedPreferences.Editor? = prefs.edit()
                         editor?.putBoolean("loginStart", true)
                         editor?.putString("client_id", null)
                         editor?.apply()
@@ -105,9 +112,6 @@ class HomeFragment : Fragment() {
         binding.txtTanggalHome.text = dtf.format(localDate)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            binding.plantNamePlaceholder.visibility = View.GONE
-            binding.imagePlaceholder.visibility = View.GONE
-            binding.startedPlantingPlaceholder.visibility = View.GONE
             binding.valTemperaturePlaceholder.visibility = View.GONE
             binding.valGasPlaceholder.visibility = View.GONE
             binding.valPhPlaceholder.visibility = View.GONE
@@ -115,9 +119,6 @@ class HomeFragment : Fragment() {
             binding.valNutritionPlaceholder.visibility = View.GONE
             binding.valGasPlaceholder.visibility = View.GONE
             binding.valGrowthLampPlaceholder.visibility = View.GONE
-            binding.plantName.visibility = View.VISIBLE
-            binding.image.visibility = View.VISIBLE
-            binding.startedPlanting.visibility = View.VISIBLE
             binding.valTemperature.visibility = View.VISIBLE
             binding.valGas.visibility = View.VISIBLE
             binding.valPh.visibility = View.VISIBLE
@@ -140,19 +141,19 @@ class HomeFragment : Fragment() {
     }
 
     private fun minusOneSecond(){
-        val df = DecimalFormat("#.##")
-        df.roundingMode = RoundingMode.DOWN
-
-        val suhu = 23.4 + Random.nextDouble() * (23.8 - 23.4)
-        val kelembaban = (50..54).shuffled().last()
-        val cahaya = (80..83).shuffled().last()
-
-        val suhuConverted = df.format(suhu)
-
-        binding.valTemperature.text = suhuConverted + "°C"
-        binding.valPh.text = kelembaban.toString() + " %"
-        binding.valGas.text = cahaya.toString()
-        binding.valNutrition.text = "Normal"
+//        val df = DecimalFormat("#.##")
+//        df.roundingMode = RoundingMode.DOWN
+//
+//        val suhu = 23.4 + Random.nextDouble() * (23.8 - 23.4)
+//        val kelembaban = (50..54).shuffled().last()
+//        val cahaya = (80..83).shuffled().last()
+//
+//        val suhuConverted = df.format(suhu)
+//
+//        binding.valTemperature.text = suhuConverted + "°C"
+//        binding.valPh.text = kelembaban.toString() + " %"
+//        binding.valGas.text = cahaya.toString()
+//        binding.valNutrition.text = "Normal"
     }
 
     private fun setMqttCallBack() {
@@ -176,9 +177,6 @@ class HomeFragment : Fragment() {
                 } else if (topic == "arnesys/thumbnail"){
 
                 }
-                binding.plantNamePlaceholder.visibility = View.GONE
-                binding.imagePlaceholder.visibility = View.GONE
-                binding.startedPlantingPlaceholder.visibility = View.GONE
                 binding.valTemperaturePlaceholder.visibility = View.GONE
                 binding.valGasPlaceholder.visibility = View.GONE
                 binding.valPhPlaceholder.visibility = View.GONE
@@ -186,9 +184,6 @@ class HomeFragment : Fragment() {
                 binding.valNutritionPlaceholder.visibility = View.GONE
                 binding.valGasPlaceholder.visibility = View.GONE
                 binding.valGrowthLampPlaceholder.visibility = View.GONE
-                binding.plantName.visibility = View.VISIBLE
-                binding.image.visibility = View.VISIBLE
-                binding.startedPlanting.visibility = View.VISIBLE
                 binding.valTemperature.visibility = View.VISIBLE
                 binding.valGas.visibility = View.VISIBLE
                 binding.valPh.visibility = View.VISIBLE

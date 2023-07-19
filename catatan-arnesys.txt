@@ -61,7 +61,7 @@ Tampilan Aplikasi Mobile
 -- Informasi hama atau penyakit
 -- Saran aktivitas
 
-5. Pengelolaan Field *Done* ===
+5. Pengelolaan Field
 
 6. Detail Lahan Perangkat Utama
 -- Grafik Cuaca
