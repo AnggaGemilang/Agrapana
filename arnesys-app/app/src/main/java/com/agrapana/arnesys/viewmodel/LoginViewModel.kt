@@ -1,13 +1,7 @@
 package com.agrapana.arnesys.viewmodel
 
-import android.app.Application
-import android.util.Log
-import android.view.View
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.agrapana.arnesys.model.AuthListener
-import com.agrapana.arnesys.model.AuthResponse
+import com.agrapana.arnesys.helper.AuthListener
 import com.agrapana.arnesys.repository.AuthRepository
 
 

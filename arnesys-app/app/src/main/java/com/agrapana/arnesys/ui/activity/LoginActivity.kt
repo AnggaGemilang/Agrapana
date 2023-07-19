@@ -4,17 +4,13 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.agrapana.arnesys.databinding.ActivityLoginBinding
-import com.agrapana.arnesys.model.AuthListener
+import com.agrapana.arnesys.helper.AuthListener
 import com.agrapana.arnesys.model.AuthResponse
 import com.agrapana.arnesys.viewmodel.LoginViewModel
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 class LoginActivity : AppCompatActivity(), AuthListener {
 
