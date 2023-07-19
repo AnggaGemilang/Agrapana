@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
@@ -35,12 +36,17 @@ class LoginActivity : AppCompatActivity(), AuthListener {
     override fun onSuccess(response: LiveData<AuthResponse?>) {
 
         response.observe(this) {
-            val prefs: SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
-            val editor: SharedPreferences.Editor? = prefs.edit()
-            editor?.putBoolean("loginStart", false)
-            editor?.putString("client_id", it!!.data!!.id)
-            editor?.apply()
-            startActivity(Intent(this, MainActivity::class.java))
+
+            if(it!!.status == "failed"){
+                Toast.makeText(this, "Email or Password Is Incorrect!", Toast.LENGTH_SHORT).show()
+            } else {
+                val prefs: SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
+                val editor: SharedPreferences.Editor? = prefs.edit()
+                editor?.putBoolean("loginStart", false)
+                editor?.putString("client_id", it.data?.id)
+                editor?.apply()
+                startActivity(Intent(this, MainActivity::class.java))
+            }
         }
     }
 
