@@ -34,7 +34,7 @@
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="455dp"
+                        android:layout_height="402dp"
                         android:layout_marginTop="-80dp"
                         android:layout_marginStart="-5dp"
                         android:layout_marginEnd="-5dp"
@@ -122,12 +122,6 @@
                     </LinearLayout>
 
                 </FrameLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:background="@drawable/rounded_bottom_left_right"
-                    android:layout_marginTop="-85dp" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -628,7 +622,7 @@
                             android:layout_columnWeight="1"
                             android:layout_marginTop="-10dp"
                             android:clickable="true"
-                            android:layout_marginBottom="65dp"
+                            android:layout_marginBottom="110dp"
                             android:foreground="?android:attr/selectableItemBackground"
                             app:cardBackgroundColor="@color/white"
                             app:cardUseCompatPadding="true"
@@ -696,7 +690,7 @@
                             android:layout_marginTop="-10dp"
                             android:layout_columnWeight="1"
                             android:clickable="true"
-                            android:layout_marginBottom="65dp"
+                            android:layout_marginBottom="110dp"
                             android:foreground="?android:attr/selectableItemBackground"
                             app:cardBackgroundColor="@color/white"
                             app:cardUseCompatPadding="true"

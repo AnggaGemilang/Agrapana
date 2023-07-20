@@ -1,7 +1,5 @@
 package com.agrapana.arnesys.model
 
-import java.sql.Timestamp
-
 data class FieldList(val data: List<Field>)
 data class Field(
     val id: String?,
@@ -11,7 +9,8 @@ data class Field(
     val number_of_support_device: Int?,
     val client_id: String?,
     val created_at: String?,
-    val updated_at: String?
+    val updated_at: String?,
+    var isExpandable: Boolean = false,
 )
 data class Links(
     val url: String?,
