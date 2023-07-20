@@ -1,4 +1,4 @@
-package com.agrapana.arnesys.retrofit
+package com.agrapana.arnesys.api
 
 import com.agrapana.arnesys.model.AuthResponse
 import retrofit2.Call

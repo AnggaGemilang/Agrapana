@@ -1,6 +1,7 @@
 package com.agrapana.arnesys.ui.fragment
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -8,28 +9,35 @@ import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import kotlin.random.Random
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.agrapana.arnesys.*
+import com.agrapana.arnesys.adapter.FieldFilterAdapter
 import com.agrapana.arnesys.config.MQTT_HOST
 import com.agrapana.arnesys.databinding.FragmentHomeBinding
 import com.agrapana.arnesys.helper.MqttClientHelper
+import com.agrapana.arnesys.ui.activity.LoginActivity
 import com.agrapana.arnesys.ui.activity.SettingActivity
+import com.agrapana.arnesys.viewmodel.FieldViewModel
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
 import org.eclipse.paho.client.mqttv3.MqttMessage
-import java.math.RoundingMode
-import java.text.DecimalFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 
+
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var prefs: SharedPreferences
+    private lateinit var recyclerViewAdapter: FieldFilterAdapter
+    private lateinit var viewModel: FieldViewModel
 
     private val mqttClient by lazy {
         MqttClientHelper(requireContext())
@@ -46,6 +54,15 @@ class HomeFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        prefs = this.activity?.getSharedPreferences("prefs",
+            AppCompatActivity.MODE_PRIVATE
+        )!!
+
+        val name: String? = prefs.getString("name", "")
+        val nameParts = name!!.trim().split("\\s+".toRegex())
+        binding.greeting.text = "Hello there, ${nameParts[0]}"
+
         binding.toolbar.inflateMenu(R.menu.action_nav1)
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId) {
@@ -79,7 +96,11 @@ class HomeFragment : Fragment() {
                     builder.setTitle("Are You Sure?")
                     builder.setMessage("You can't get in to your account")
                     builder.setPositiveButton("YES") { _, _ ->
-
+                        val editor: SharedPreferences.Editor? = prefs.edit()
+                        editor?.putBoolean("loginStart", true)
+                        editor?.putString("client_id", null)
+                        editor?.apply()
+                        startActivity(Intent(activity, LoginActivity::class.java))
                     }
                     builder.setNegativeButton("NO") { dialog, _ ->
                         dialog.dismiss()
@@ -90,14 +111,15 @@ class HomeFragment : Fragment() {
             }
             true
         }
+
         val dtf = DateTimeFormatter.ofPattern("dd MMM")
         val localDate = LocalDate.now()
         binding.txtTanggalHome.text = dtf.format(localDate)
 
+        initRecyclerView()
+        initViewModel()
+
         Handler(Looper.getMainLooper()).postDelayed({
-            binding.plantNamePlaceholder.visibility = View.GONE
-            binding.imagePlaceholder.visibility = View.GONE
-            binding.startedPlantingPlaceholder.visibility = View.GONE
             binding.valTemperaturePlaceholder.visibility = View.GONE
             binding.valGasPlaceholder.visibility = View.GONE
             binding.valPhPlaceholder.visibility = View.GONE
@@ -105,9 +127,6 @@ class HomeFragment : Fragment() {
             binding.valNutritionPlaceholder.visibility = View.GONE
             binding.valGasPlaceholder.visibility = View.GONE
             binding.valGrowthLampPlaceholder.visibility = View.GONE
-            binding.plantName.visibility = View.VISIBLE
-            binding.image.visibility = View.VISIBLE
-            binding.startedPlanting.visibility = View.VISIBLE
             binding.valTemperature.visibility = View.VISIBLE
             binding.valGas.visibility = View.VISIBLE
             binding.valPh.visibility = View.VISIBLE
@@ -120,7 +139,6 @@ class HomeFragment : Fragment() {
 
             mainHandler.post(object : Runnable {
                 override fun run() {
-                    minusOneSecond()
                     mainHandler.postDelayed(this, 5000)
                 }
             })
@@ -129,20 +147,25 @@ class HomeFragment : Fragment() {
     //        setMqttCallBack()
     }
 
-    private fun minusOneSecond(){
-        val df = DecimalFormat("#.##")
-        df.roundingMode = RoundingMode.DOWN
+    private fun initRecyclerView() {
+        val linearLayoutManager = LinearLayoutManager(
+            activity, LinearLayoutManager.HORIZONTAL, false
+        )
+        binding.recyclerView.layoutManager = linearLayoutManager
+        recyclerViewAdapter = FieldFilterAdapter(activity!!)
+        binding.recyclerView.adapter = recyclerViewAdapter
+        recyclerViewAdapter.notifyDataSetChanged()
+    }
 
-        val suhu = 23.4 + Random.nextDouble() * (23.8 - 23.4)
-        val kelembaban = (50..54).shuffled().last()
-        val cahaya = (80..83).shuffled().last()
-
-        val suhuConverted = df.format(suhu)
-
-        binding.valTemperature.text = suhuConverted + "°C"
-        binding.valPh.text = kelembaban.toString() + " %"
-        binding.valGas.text = cahaya.toString()
-        binding.valNutrition.text = "Normal"
+    private fun initViewModel() {
+        val clientId: String? = prefs.getString("client_id", "")
+        viewModel = ViewModelProvider(this)[FieldViewModel::class.java]
+        viewModel.getAllField(clientId!!)
+        viewModel.getLoadFieldObservable().observe(activity!!) {
+            if(it?.data != null){
+                recyclerViewAdapter.setFieldList(it.data)
+            }
+        }
     }
 
     private fun setMqttCallBack() {
@@ -166,9 +189,6 @@ class HomeFragment : Fragment() {
                 } else if (topic == "arnesys/thumbnail"){
 
                 }
-                binding.plantNamePlaceholder.visibility = View.GONE
-                binding.imagePlaceholder.visibility = View.GONE
-                binding.startedPlantingPlaceholder.visibility = View.GONE
                 binding.valTemperaturePlaceholder.visibility = View.GONE
                 binding.valGasPlaceholder.visibility = View.GONE
                 binding.valPhPlaceholder.visibility = View.GONE
@@ -176,9 +196,6 @@ class HomeFragment : Fragment() {
                 binding.valNutritionPlaceholder.visibility = View.GONE
                 binding.valGasPlaceholder.visibility = View.GONE
                 binding.valGrowthLampPlaceholder.visibility = View.GONE
-                binding.plantName.visibility = View.VISIBLE
-                binding.image.visibility = View.VISIBLE
-                binding.startedPlanting.visibility = View.VISIBLE
                 binding.valTemperature.visibility = View.VISIBLE
                 binding.valGas.visibility = View.VISIBLE
                 binding.valPh.visibility = View.VISIBLE

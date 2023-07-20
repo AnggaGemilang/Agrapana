@@ -4,58 +4,54 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
-import androidx.lifecycle.Observer
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import com.agrapana.arnesys.databinding.ActivityLoginBinding
+import com.agrapana.arnesys.helper.AuthListener
 import com.agrapana.arnesys.model.AuthResponse
 import com.agrapana.arnesys.viewmodel.LoginViewModel
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), AuthListener {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel
-    private val validUsername = "angga"
-    private val validPassword = "angga123"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initViewModel()
+        viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+        viewModel.authListener = this
 
         binding.btnLogin.setOnClickListener {
-
-            login(binding.etEmail.text.toString(), binding.etPassword.text.toString())
-
-//            if(validUsername == binding.etEmail.text.toString() && validPassword == binding.etPassword.text.toString()){
-//                val prefs: SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
-//                val editor: SharedPreferences.Editor? = prefs.edit()
-//                editor?.putBoolean("loginStart", false)
-//                editor?.apply()
-//                startActivity(Intent(this, MainActivity::class.java))
-//            } else {
-//                Toast.makeText(this, "Email or Password Incorrect", Toast.LENGTH_LONG).show()
-//            }
+            val email = binding.etEmail.text.toString()
+            val password = binding.etPassword.text.toString()
+            viewModel.onLoginButtonClick(email, password)
         }
     }
 
-    private fun initViewModel() {
-        viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+    override fun onSuccess(response: LiveData<AuthResponse?>) {
 
-    }
+        response.observe(this) {
 
-    private fun login(email: String, password: String) {
-        viewModel.getLoginObservable().observe(this) {
-            if (it == null) {
-                Toast.makeText(this, "Succeed", Toast.LENGTH_LONG).show()
+            if(it!!.status == "failed"){
+                Toast.makeText(this, "Email or Password Is Incorrect!", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Failed", Toast.LENGTH_LONG).show()
-                finish()
+                val prefs: SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
+                val editor: SharedPreferences.Editor? = prefs.edit()
+                editor?.putBoolean("loginStart", false)
+                editor?.putString("client_id", it.data?.id)
+                editor?.apply()
+                startActivity(Intent(this, MainActivity::class.java))
             }
         }
-        viewModel.login(email, password)
+    }
+
+    override fun onFailure(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
 }

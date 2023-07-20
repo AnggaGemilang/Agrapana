@@ -76,21 +76,6 @@ class MqttClientHelper(context: Context?) {
         }
     }
 
-    fun publish(topic: String, msg: String, qos: Int = 0) {
-        try {
-            val message = MqttMessage()
-            Log.d(TAG, msg)
-            message.payload = msg.toByteArray()
-            Log.d(TAG, message.payload.toString())
-            mqttAndroidClient.publish(topic, message.payload, qos, false)
-            Log.d(TAG, "Message published to topic `$topic`: $msg")
-        } catch (e: MqttException) {
-            Log.d(TAG, "Error Publishing to $topic: " + e.message)
-            e.printStackTrace()
-        }
-
-    }
-
     fun isConnected() : Boolean {
         return mqttAndroidClient.isConnected
     }

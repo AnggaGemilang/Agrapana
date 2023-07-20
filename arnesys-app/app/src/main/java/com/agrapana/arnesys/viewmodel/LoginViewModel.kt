@@ -2,37 +2,43 @@ package com.agrapana.arnesys.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.agrapana.arnesys.api.AuthService
+import com.agrapana.arnesys.api.RetroInstance
+import com.agrapana.arnesys.helper.AuthListener
 import com.agrapana.arnesys.model.AuthResponse
-import com.agrapana.arnesys.retrofit.AuthService
-import com.agrapana.arnesys.retrofit.RetroInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginViewModel: ViewModel() {
+class LoginViewModel : ViewModel() {
 
-    var loginLiveData: MutableLiveData<AuthResponse?> = MutableLiveData()
+    val loginResponse = MutableLiveData<AuthResponse?>()
+    var authListener: AuthListener? = null
 
-    fun getLoginObservable(): MutableLiveData<AuthResponse?> {
-        return loginLiveData
+    fun onLoginButtonClick(email: String, password: String){
+        if(email.isEmpty() || password.isEmpty()){
+            authListener?.onFailure("Email or Password Is Empty!")
+        } else {
+            val retroInstance = RetroInstance.getRetroInstance().create(AuthService::class.java)
+            retroInstance.login(email, password)
+                .enqueue(object: Callback<AuthResponse> {
+                    override fun onResponse(
+                        call: Call<AuthResponse>,
+                        response: Response<AuthResponse>
+                    ) {
+                        if(response.isSuccessful){
+                            loginResponse.value = response.body()
+                            authListener?.onSuccess(loginResponse)
+                        } else {
+                            authListener?.onFailure("Email or Password Is Incorrect!")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
+                        loginResponse.value = null
+                    }
+
+                })
+        }
     }
-
-    fun login(email: String, password: String) {
-        val retroInstance = RetroInstance.getRetroInstance().create(AuthService::class.java)
-        val call = retroInstance.login(email, password)
-        call.enqueue(object : Callback<AuthResponse?> {
-            override fun onFailure(call: Call<AuthResponse?>, t: Throwable) {
-                loginLiveData.postValue(null)
-            }
-
-            override fun onResponse(call: Call<AuthResponse?>, response: Response<AuthResponse?>) {
-                if(response.isSuccessful) {
-                    loginLiveData.postValue(response.body())
-                } else {
-                    loginLiveData.postValue(null)
-                }
-            }
-        })
-    }
-
 }

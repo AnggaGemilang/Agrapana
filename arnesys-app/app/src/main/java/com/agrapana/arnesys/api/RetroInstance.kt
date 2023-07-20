@@ -1,4 +1,4 @@
-package com.agrapana.arnesys.retrofit
+package com.agrapana.arnesys.api
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

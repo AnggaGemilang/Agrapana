@@ -1,4 +1,20 @@
 package com.agrapana.arnesys.model
 
-data class Auth(val email: String?, val password: String?)
-data class AuthResponse(val code: Int?, val meta: String?, val data: Auth?)
+import java.sql.Timestamp
+
+data class Auth(
+    val id: String?,
+    val username: String?,
+    val first_name: String?,
+    val last_name: String?,
+    val no_telp: String?,
+    val address: String?,
+    val photo: String?,
+    val email: String?,
+    val email_verified_at: String?,
+    val password: String?,
+    val remember_token: String?,
+    val created_at: String?,
+    val updated_at: String?
+    )
+data class AuthResponse(val status: String?, val message: String?, val data: Auth?)
