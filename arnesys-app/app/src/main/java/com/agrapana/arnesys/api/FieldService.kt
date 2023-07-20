@@ -8,8 +8,8 @@ import retrofit2.http.Path
 
 interface FieldService {
 
-    @GET("fields/{client_id}")
+    @GET("field/{id}")
     @Headers("Accept:application/json","Content-Type:application/json")
-    fun getFieldsByClient(@Path("client_id") client_id: String): Call<FieldResponse>
+    fun getFieldsByClient(@Path("id") id: String): Call<FieldResponse>
 
 }

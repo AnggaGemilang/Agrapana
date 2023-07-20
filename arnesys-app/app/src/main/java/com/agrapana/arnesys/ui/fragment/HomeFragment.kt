@@ -9,31 +9,35 @@ import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import kotlin.random.Random
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.agrapana.arnesys.*
+import com.agrapana.arnesys.adapter.FieldFilterAdapter
 import com.agrapana.arnesys.config.MQTT_HOST
 import com.agrapana.arnesys.databinding.FragmentHomeBinding
 import com.agrapana.arnesys.helper.MqttClientHelper
 import com.agrapana.arnesys.ui.activity.LoginActivity
 import com.agrapana.arnesys.ui.activity.SettingActivity
+import com.agrapana.arnesys.viewmodel.FieldViewModel
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
 import org.eclipse.paho.client.mqttv3.MqttMessage
-import java.math.RoundingMode
-import java.text.DecimalFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
+
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var prefs: SharedPreferences
+    private lateinit var recyclerViewAdapter: FieldFilterAdapter
+    private lateinit var viewModel: FieldViewModel
 
     private val mqttClient by lazy {
         MqttClientHelper(requireContext())
@@ -107,9 +111,13 @@ class HomeFragment : Fragment() {
             }
             true
         }
+
         val dtf = DateTimeFormatter.ofPattern("dd MMM")
         val localDate = LocalDate.now()
         binding.txtTanggalHome.text = dtf.format(localDate)
+
+        initRecyclerView()
+        initViewModel()
 
         Handler(Looper.getMainLooper()).postDelayed({
             binding.valTemperaturePlaceholder.visibility = View.GONE
@@ -131,7 +139,6 @@ class HomeFragment : Fragment() {
 
             mainHandler.post(object : Runnable {
                 override fun run() {
-                    minusOneSecond()
                     mainHandler.postDelayed(this, 5000)
                 }
             })
@@ -140,20 +147,25 @@ class HomeFragment : Fragment() {
     //        setMqttCallBack()
     }
 
-    private fun minusOneSecond(){
-//        val df = DecimalFormat("#.##")
-//        df.roundingMode = RoundingMode.DOWN
-//
-//        val suhu = 23.4 + Random.nextDouble() * (23.8 - 23.4)
-//        val kelembaban = (50..54).shuffled().last()
-//        val cahaya = (80..83).shuffled().last()
-//
-//        val suhuConverted = df.format(suhu)
-//
-//        binding.valTemperature.text = suhuConverted + "°C"
-//        binding.valPh.text = kelembaban.toString() + " %"
-//        binding.valGas.text = cahaya.toString()
-//        binding.valNutrition.text = "Normal"
+    private fun initRecyclerView() {
+        val linearLayoutManager = LinearLayoutManager(
+            activity, LinearLayoutManager.HORIZONTAL, false
+        )
+        binding.recyclerView.layoutManager = linearLayoutManager
+        recyclerViewAdapter = FieldFilterAdapter(activity!!)
+        binding.recyclerView.adapter = recyclerViewAdapter
+        recyclerViewAdapter.notifyDataSetChanged()
+    }
+
+    private fun initViewModel() {
+        val clientId: String? = prefs.getString("client_id", "")
+        viewModel = ViewModelProvider(this)[FieldViewModel::class.java]
+        viewModel.getAllField(clientId!!)
+        viewModel.getLoadFieldObservable().observe(activity!!) {
+            if(it?.data != null){
+                recyclerViewAdapter.setFieldList(it.data)
+            }
+        }
     }
 
     private fun setMqttCallBack() {

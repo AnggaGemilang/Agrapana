@@ -10,8 +10,8 @@ data class Field(
     val thumbnail: String?,
     val number_of_support_device: Int?,
     val client_id: String?,
-    val created_at: Timestamp?,
-    val updated_at: Timestamp?
+    val created_at: String?,
+    val updated_at: String?
 )
 data class Links(
     val url: String?,
@@ -20,12 +20,12 @@ data class Links(
 )
 data class FieldResponse(
     val current_page: Int?,
-    val data: Field?,
+    val data: List<Field>?,
     val first_page_url: String?,
     val from: Int?,
     val last_page: Int?,
     val last_page_url: String?,
-    val links: Links?,
+    val links: List<Links>?,
     val next_page_url: String?,
     val path: String?,
     val per_page: Int?,

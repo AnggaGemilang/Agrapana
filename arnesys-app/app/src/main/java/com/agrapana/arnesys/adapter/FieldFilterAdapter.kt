@@ -1,0 +1,57 @@
+package com.agrapana.arnesys.adapter
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
+import com.agrapana.arnesys.R
+import com.agrapana.arnesys.databinding.TemplateFilterFieldBinding
+import com.agrapana.arnesys.model.Field
+
+
+class FieldFilterAdapter(val context: Context): RecyclerView.Adapter<FieldFilterAdapter.MyViewHolder>() {
+
+    var fieldList = mutableListOf<Field>()
+    var cardViewList: MutableList<CardView> = ArrayList()
+    var textViewList: MutableList<TextView> = ArrayList()
+
+    fun setFieldList(fields: List<Field>): Boolean {
+        this.fieldList = fields.toMutableList()
+        notifyDataSetChanged()
+        return true
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = TemplateFilterFieldBinding.inflate(inflater, parent, false)
+        return MyViewHolder(binding)
+    }
+
+    override fun getItemCount(): Int {
+        return fieldList.size
+    }
+
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        cardViewList.add(holder.binding.cardViewFilter)
+        textViewList.add(holder.binding.txtName);
+        holder.binding.txtName.text = fieldList[position].plant_type
+        cardViewList[0].background.setTint(ContextCompat.getColor(context, R.color.green_20))
+        textViewList[0].setTextColor(ContextCompat.getColor(context, R.color.white));
+        holder.binding.cardViewFilter.setOnClickListener {
+            for (cardView in cardViewList) {
+                cardView.background.setTint(ContextCompat.getColor(context, R.color.black_20))
+                for (textView in textViewList) {
+                    textView.setTextColor(ContextCompat.getColor(context, R.color.black_40))
+                }
+            }
+            holder.binding.txtName.setTextColor(ContextCompat.getColor(context, R.color.white))
+            holder.binding.cardViewFilter.background.setTint(ContextCompat.getColor(context, R.color.green_20))
+        }
+    }
+
+    class MyViewHolder(val binding: TemplateFilterFieldBinding): RecyclerView.ViewHolder(binding.root){}
+
+}
