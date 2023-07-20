@@ -424,8 +424,8 @@
                             android:foreground="?android:attr/selectableItemBackground"
                             app:cardBackgroundColor="@color/white"
                             app:cardUseCompatPadding="true"
-                            app:cardElevation="10dp"
                             android:outlineSpotShadowColor="@color/black_20"
+                            app:cardElevation="10dp"
                             app:cardCornerRadius="10dp"
                             android:focusable="true" >
 

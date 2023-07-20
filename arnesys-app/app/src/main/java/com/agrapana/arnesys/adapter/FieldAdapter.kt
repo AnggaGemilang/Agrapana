@@ -35,15 +35,21 @@ class FieldAdapter(val context: Context): RecyclerView.Adapter<FieldAdapter.MyVi
 
         var nestedList: MutableList<String> = ArrayList()
         val model: Field = fieldList[position]
-        holder.binding.itemTv.text = model.plant_type
+        holder.binding.tvName.text = model.plant_type
+        holder.binding.tvAddress.text = model.address
+        holder.binding.tvCreated.text = model.created_at
+
+        if(model.thumbnail != null){
+//            holder.binding.thumbnail.glide
+        }
 
         val isExpandable = model.isExpandable
         holder.binding.expandableLayout.visibility = if (isExpandable) View.VISIBLE else View.GONE
 
         if (isExpandable) {
-            holder.binding.arroImageview.setImageResource(R.drawable.baseline_arrow_upward_24)
+            holder.binding.arroImageview.setImageResource(R.drawable.baseline_keyboard_arrow_up_24)
         } else {
-            holder.binding.arroImageview.setImageResource(R.drawable.baseline_arrow_downward_24)
+            holder.binding.arroImageview.setImageResource(R.drawable.baseline_keyboard_arrow_down_24)
         }
 
         nestedList.add("Perangkat Utama")
@@ -55,7 +61,7 @@ class FieldAdapter(val context: Context): RecyclerView.Adapter<FieldAdapter.MyVi
         holder.binding.childRv.layoutManager = LinearLayoutManager(holder.itemView.context)
         holder.binding.childRv.setHasFixedSize(true)
         holder.binding.childRv.adapter = adapter
-        holder.binding.linearLayout.setOnClickListener(View.OnClickListener {
+        holder.binding.wrapper.setOnClickListener(View.OnClickListener {
             model.isExpandable = !model.isExpandable
             notifyItemChanged(holder.adapterPosition)
         })
