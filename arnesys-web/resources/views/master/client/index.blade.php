@@ -123,6 +123,10 @@
                             <input type="text" class="form-control" id="plant_type" name="plant_type" placeholder="Enter Plant Type . . .">
                         </div>
                         <div class="form-group">
+                            <label for="land_area">Land Area (ha)</label>
+                            <input type="number" class="form-control" id="land_area" name="land_area" placeholder="Enter Land Area . . .">
+                        </div>
+                        <div class="form-group">
                             <label for="plantName">Number of Support Device</label>
                             <input type="number" class="form-control" id="number_of_support_device" name="number_of_support_device" placeholder="Enter Number of Support Device . . .">
                         </div>

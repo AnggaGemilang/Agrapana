@@ -35,6 +35,7 @@ class FieldController extends Controller
 
         $validator = Validator::make($request->all(), [
             'address' => 'required',
+            'land_area' => 'required',
             'plant_type' => 'required',
             'number_of_support_device' => 'required'
         ]);
@@ -45,10 +46,11 @@ class FieldController extends Controller
         }
 
         $field = new Field();
-        $field->address = $request->address;
         $field->plant_type = $request->plant_type;
+        $field->land_area = strval($request->land_area) . " ha";
+        $field->address = $request->address;
         $field->client_id = $request->client_id;
-        $field->number_of_support_device = $request->number_of_support_device;
+        $field->number_of_support_device = strval($request->number_of_support_device);
 
         if($request->file('thumbnail') != null){
             $thumbnail = $request->file('thumbnail');

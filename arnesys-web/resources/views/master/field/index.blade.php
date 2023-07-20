@@ -45,6 +45,9 @@
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Plant Name
                                             </th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Land Area
+                                            </th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Address
                                             </th>
@@ -81,6 +84,11 @@
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <p class="text-xs font-weight-bold mb-0">{{ $row->address }}</p>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex justify-content-center">
+                                                        <p class="text-xs font-weight-bold mb-0">{{ $row->land_area }}</p>
                                                     </div>
                                                 </td>
                                                 <td>
