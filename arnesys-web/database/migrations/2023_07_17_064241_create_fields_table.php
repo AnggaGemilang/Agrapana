@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('address', 255);
             $table->string('plant_type', 50);
+            $table->string('land_area', 20);
             $table->string('thumbnail', 255)->nullable();
             $table->integer('number_of_support_device');
             $table->string('client_id', 255);

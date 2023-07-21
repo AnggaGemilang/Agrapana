@@ -17,6 +17,7 @@ class FieldSeeder extends Seeder
         Field::create([
             'address' => 'Bandung',
             'plant_type' => 'Tomato',
+            'land_area' => '120 ha',
             'number_of_support_device' => 2,
             'client_id' => '123123123',
             'created_at' => date('Y-m-d H:i:s'),
@@ -26,6 +27,7 @@ class FieldSeeder extends Seeder
         Field::create([
             'address' => 'Tasikmalaya',
             'plant_type' => 'Spinach',
+            'land_area' => '120 ha',
             'number_of_support_device' => 1,
             'client_id' => '123123123',
             'created_at' => date('Y-m-d H:i:s'),
