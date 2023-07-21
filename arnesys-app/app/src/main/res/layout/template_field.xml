@@ -40,7 +40,7 @@
                         android:id="@+id/thumbnail"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="fitXY"
+                        android:scaleType="centerCrop"
                         android:adjustViewBounds="true"
                         android:backgroundTint="@color/main_color"
                         android:src="@drawable/farmland" />
@@ -83,11 +83,11 @@
                         app:tint="@color/grey_50" />
 
                     <TextView
-                        android:id="@+id/tv_created"
+                        android:id="@+id/tv_area"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="Date"
+                        android:text="Land Area"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -105,11 +105,11 @@
                         app:tint="@color/grey_50" />
 
                     <TextView
-                        android:id="@+id/tv_end"
+                        android:id="@+id/tv_created"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="Dadang"
+                        android:text="Date"
                         android:textSize="16sp" />
 
                 </LinearLayout>

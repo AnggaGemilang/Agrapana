@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.agrapana.arnesys.R
 import com.agrapana.arnesys.databinding.TemplateFieldBinding
 import com.agrapana.arnesys.model.Field
-
+import com.bumptech.glide.Glide
 
 class FieldAdapter(val context: Context): RecyclerView.Adapter<FieldAdapter.MyViewHolder>() {
 
@@ -37,10 +37,16 @@ class FieldAdapter(val context: Context): RecyclerView.Adapter<FieldAdapter.MyVi
         val model: Field = fieldList[position]
         holder.binding.tvName.text = model.plant_type
         holder.binding.tvAddress.text = model.address
-        holder.binding.tvCreated.text = model.created_at
+        holder.binding.tvArea.text = model.land_area
 
+        val dateParts = model.created_at.toString().trim().split("\\s+".toRegex())
+        holder.binding.tvCreated.text = dateParts[0]
+
+        val imageParts = model.thumbnail.toString().trim().split("public/".toRegex())
         if(model.thumbnail != null){
-//            holder.binding.thumbnail.glide
+            Glide.with(context).load("https://arnesys.agrapana.tech/storage/" + imageParts[1]).into(holder.binding.thumbnail);
+        } else {
+            Glide.with(context).load(R.drawable.farmland).into(holder.binding.thumbnail);
         }
 
         val isExpandable = model.isExpandable
@@ -57,7 +63,7 @@ class FieldAdapter(val context: Context): RecyclerView.Adapter<FieldAdapter.MyVi
             nestedList.add("Perangkat Pendukung $i")
         }
 
-        val adapter = NestedFieldAdapter(nestedList)
+        val adapter = NestedFieldAdapter(context, nestedList)
         holder.binding.childRv.layoutManager = LinearLayoutManager(holder.itemView.context)
         holder.binding.childRv.setHasFixedSize(true)
         holder.binding.childRv.adapter = adapter

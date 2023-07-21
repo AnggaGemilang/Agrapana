@@ -14,7 +14,7 @@ data class Auth(
     val email_verified_at: String?,
     val password: String?,
     val remember_token: String?,
-    val created_at: String?,
-    val updated_at: String?
+    val created_at: Timestamp?,
+    val updated_at: Timestamp?
     )
 data class AuthResponse(val status: String?, val message: String?, val data: Auth?)
