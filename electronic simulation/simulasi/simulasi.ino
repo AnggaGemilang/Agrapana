@@ -8,13 +8,14 @@
 #define WIFI_PASSWORD "suherman"
 #define MQTT_SERVER "test.mosquitto.org"
 
-HTTPClient http;
+HTTPClient httpMainDevice, httpSupportDevice;
 WiFiClient espClient;
 PubSubClient client(espClient);
 
 char CLIENT_CODE[50] = "client_123/";
 char FIELD_CODE[50] = "field_123/";
-char SERVER[50] = "http://api.thingspeak.com/update";
+char SERVER1[58] = "https://arnesys.agrapana.tech/api/monitoring-main-devices";
+char SERVER2[61] = "https://arnesys.agrapana.tech/api/monitoring-support-devices";
 char topic[100] = "";
 long lastMsg = 0;
 
@@ -59,7 +60,6 @@ void reconnect() {
 
 void setup() {
   Serial.begin(9600);
-  StaticJsonDocument<128> doc;
   setup_wifi();
   client.setServer(MQTT_SERVER, 1883);
 }
@@ -71,19 +71,22 @@ void loop() {
   client.loop();
 
   unsigned long now = millis();
-  if (now - lastMsg > 2000) {
+  if (now - lastMsg > 10000) {
     
     lastMsg = now;
+
+    Serial.println("");
 
 //    Kirim data perangkat utama
 
     StaticJsonDocument<96> doc;
 
-    doc["monitoring"]["dadang1"] = random(0, 100);
-    doc["monitoring"]["dadang2"] = random(0, 100);
-    doc["monitoring"]["dadang3"] = random(0, 100);
-    doc["monitoring"]["dadang4"] = random(0, 100);
-    doc["monitoring"]["dadang5"] = random(0, 100);
+    doc["monitoring"]["wind_temperature"] = random(0, 100);
+    doc["monitoring"]["wind_humidity"] = random(0, 100);
+    doc["monitoring"]["wind_pressure"] = random(0, 100);
+    doc["monitoring"]["wind_speed"] = random(0, 100);
+    doc["monitoring"]["rainfall"] = random(0, 100);
+    doc["monitoring"]["light_intensity"] = random(0, 100);
     serializeJson(doc, output); 
 
     strcpy(topic, "arnesys/");
@@ -97,14 +100,29 @@ void loop() {
     Serial.print("Publish message: ");
     Serial.println(output);
 
+    httpMainDevice.begin(SERVER1);
+
+    httpMainDevice.addHeader("Content-Type", "application/x-www-form-urlencoded");
+    String httpRequestData = "&number_of_support_devices=" + String(random(50)) + "&wind_temperature=" + String(random(50)) + "&wind_humidity=" + String(random(50)) + "&wind_pressure=" + String(random(50)) + "&wind_speed=" + String(random(50)) + "&rainfall=" + String(random(50)) + "&light_intensity=" + String(random(50)) + "&field_id=" + String(CLIENT_CODE);
+    int httpResponseCode = httpMainDevice.POST(httpRequestData);
+           
+    Serial.print("HTTP Response code is: ");
+    Serial.println(httpResponseCode);
+    httpMainDevice.end();
+
 //    Kirim data perangkat pendukung
 
-    doc["monitoring"]["warko1"] = random(0, 100);
-    doc["monitoring"]["warko2"] = random(0, 100);
-    doc["monitoring"]["warko3"] = random(0, 100);
-    doc["monitoring"]["warko4"] = random(0, 100);
-    doc["monitoring"]["warko5"] = random(0, 100);
-    serializeJson(doc, output); 
+    Serial.println("");
+
+    StaticJsonDocument<200> doc2;
+
+    doc2["monitoring"]["soil_temperature"] = random(0, 100);
+    doc2["monitoring"]["soil_humidity"] = random(0, 100);
+    doc2["monitoring"]["soil_ph"] = random(0, 100);
+    doc2["monitoring"]["soil_nitrogen"] = random(0, 100);
+    doc2["monitoring"]["soil_phosphor"] = random(0, 100);
+    doc2["monitoring"]["soil_kalium"] = random(0, 100);
+    serializeJson(doc2, output); 
 
     strcpy(topic, "arnesys/");
     strcat(topic, CLIENT_CODE);
@@ -117,16 +135,18 @@ void loop() {
     Serial.print("Publish message: ");
     Serial.println(output);
 
+    httpSupportDevice.begin(SERVER2);
 
-//    http.begin(server);
-//
-//    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-//    String httpRequestData = "&field1=" + String(random(50));           
-//    int httpResponseCode = http.POST(httpRequestData);
-//           
-//    Serial.print("HTTP Response code is: ");
-//    Serial.println(httpResponseCode);
-//    http.end();
+    httpSupportDevice.addHeader("Content-Type", "application/x-www-form-urlencoded");
+    String httpRequestData2 = "&number_of=1&soil_temperature=" + String(random(50)) + "&soil_humidity=" + String(random(50)) + "&soil_ph=" + String(random(50)) + "&soil_nitrogen=" + String(random(50)) + "&soil_phosphor=" + String(random(50)) + "&soil_kalium=" + String(random(50)) + "&field_id=" + String(CLIENT_CODE);
+    int httpResponseCode2 = httpSupportDevice.POST(httpRequestData2);
+    
+    Serial.print("HTTP Response code is: ");
+    Serial.println(httpResponseCode2);
+    httpSupportDevice.end();
+
+    Serial.println("");
+    Serial.println("=====================================");
     
   }
 }
