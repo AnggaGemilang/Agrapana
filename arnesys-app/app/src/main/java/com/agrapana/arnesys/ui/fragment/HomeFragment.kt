@@ -36,6 +36,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var prefs: SharedPreferences
+    private var clientId: String? = null
     private lateinit var recyclerViewAdapter: FieldFilterAdapter
     private lateinit var viewModel: FieldViewModel
 
@@ -58,6 +59,7 @@ class HomeFragment : Fragment() {
         prefs = this.activity?.getSharedPreferences("prefs",
             AppCompatActivity.MODE_PRIVATE
         )!!
+        clientId = prefs.getString("client_id", "")
 
         val name: String? = prefs.getString("name", "")
         val nameParts = name!!.trim().split("\\s+".toRegex())
@@ -66,15 +68,12 @@ class HomeFragment : Fragment() {
         binding.toolbar.inflateMenu(R.menu.action_nav1)
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId) {
-                R.id.power -> {
+                R.id.notification -> {
                     val builder = AlertDialog.Builder(requireContext())
                     builder.setTitle("Are You Sure?")
                     builder.setMessage("This can be perform the machine")
-                    builder.setPositiveButton("YES") { _, _ ->
-                        binding.loadingPanel.visibility = View.VISIBLE
-                    }
-                    builder.setNegativeButton("NO") { dialog, _ ->
-                        dialog.dismiss()
+                    builder.setPositiveButton("Close") { _, _ ->
+
                     }
                     val alert = builder.create()
                     alert.show()
@@ -144,7 +143,7 @@ class HomeFragment : Fragment() {
             })
 
         }, 3000)
-    //        setMqttCallBack()
+//        setMqttCallBack()
     }
 
     private fun initRecyclerView() {
@@ -158,7 +157,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        val clientId: String? = prefs.getString("client_id", "")
         viewModel = ViewModelProvider(this)[FieldViewModel::class.java]
         viewModel.getAllField(clientId!!)
         viewModel.getLoadFieldObservable().observe(activity!!) {

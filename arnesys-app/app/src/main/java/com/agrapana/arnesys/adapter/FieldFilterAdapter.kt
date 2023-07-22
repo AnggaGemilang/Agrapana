@@ -3,6 +3,8 @@ package com.agrapana.arnesys.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -36,9 +38,16 @@ class FieldFilterAdapter(val context: Context): RecyclerView.Adapter<FieldFilter
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         cardViewList.add(holder.binding.cardViewFilter)
-        textViewList.add(holder.binding.txtName);
+        textViewList.add(holder.binding.txtName)
+
         cardViewList[0].background.setTint(ContextCompat.getColor(context, R.color.green_20))
-        textViewList[0].setTextColor(ContextCompat.getColor(context, R.color.white));
+        textViewList[0].setTextColor(ContextCompat.getColor(context, R.color.white))
+
+        if(cardViewList.size == fieldList.size){
+            val layoutParams = holder.binding.cardViewFilter.layoutParams as LinearLayout.LayoutParams
+            layoutParams.setMargins(0, 0, 115, 0)
+            holder.binding.cardViewFilter.layoutParams = layoutParams
+        }
 
         holder.binding.txtName.text = fieldList[position].plant_type
         holder.binding.cardViewFilter.setOnClickListener {

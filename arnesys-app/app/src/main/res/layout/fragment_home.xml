@@ -180,7 +180,7 @@
                                     android:layout_marginTop="5dp"
                                     android:textStyle="bold"
                                     android:textSize="20sp"
-                                    android:text="30°" />
+                                    android:text="N/A" />
 
                             </LinearLayout>
 
@@ -203,7 +203,7 @@
                                     android:layout_marginTop="5dp"
                                     android:textStyle="bold"
                                     android:textSize="20sp"
-                                    android:text="70%" />
+                                    android:text="N/A" />
 
                             </LinearLayout>
 
@@ -233,15 +233,16 @@
                                 android:orientation="vertical">
 
                                 <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:src="@drawable/ic_baseline_local_fire_department_24" />
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:src="@drawable/baseline_adb_24" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
-                                    android:text="70%" />
+                                    android:layout_marginTop="5dp"
+                                    android:textSize="14sp"
+                                    android:text="N/A" />
 
                             </LinearLayout>
 
@@ -254,15 +255,16 @@
                                 android:orientation="vertical" >
 
                                 <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:src="@drawable/ic_baseline_local_fire_department_24" />
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:src="@drawable/baseline_air_24" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
-                                    android:text="70%" />
+                                    android:layout_marginTop="5dp"
+                                    android:textSize="14sp"
+                                    android:text="N/A" />
 
                             </LinearLayout>
 
@@ -275,15 +277,16 @@
                                 android:orientation="vertical">
 
                                 <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:src="@drawable/ic_baseline_local_fire_department_24" />
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:src="@drawable/baseline_compress_24" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
-                                    android:text="70%" />
+                                    android:layout_marginTop="5dp"
+                                    android:textSize="14sp"
+                                    android:text="N/A" />
 
                             </LinearLayout>
 
@@ -296,15 +299,16 @@
                                 android:orientation="vertical">
 
                                 <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:src="@drawable/ic_baseline_local_fire_department_24" />
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:src="@drawable/ic_baseline_lightbulb_24" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
-                                    android:text="70%" />
+                                    android:layout_marginTop="5dp"
+                                    android:textSize="14sp"
+                                    android:text="N/A" />
 
                             </LinearLayout>
 
@@ -380,7 +384,7 @@
                                         android:textColor="@color/black"
                                         android:gravity="center"
                                         android:textSize="16sp"
-                                        android:text="Heat" />
+                                        android:text="Warmth" />
 
                                     <ImageView
                                         android:layout_width="match_parent"
@@ -446,7 +450,7 @@
                                         android:textColor="@color/black"
                                         android:gravity="center"
                                         android:textSize="16sp"
-                                        android:text="Humidity" />
+                                        android:text="Moisture" />
 
                                     <ImageView
                                         android:layout_width="match_parent"
@@ -513,7 +517,7 @@
                                         android:textColor="@color/black"
                                         android:gravity="center"
                                         android:textSize="16sp"
-                                        android:text="Light" />
+                                        android:text="pH" />
 
                                     <ImageView
                                         android:layout_width="match_parent"
@@ -580,7 +584,7 @@
                                         android:textColor="@color/black"
                                         android:gravity="center"
                                         android:textSize="16sp"
-                                        android:text="Heat Index" />
+                                        android:text="Nitrogen" />
 
                                     <ImageView
                                         android:layout_width="match_parent"
@@ -648,7 +652,7 @@
                                         android:textColor="@color/black"
                                         android:gravity="center"
                                         android:textSize="16sp"
-                                        android:text="N.P.K" />
+                                        android:text="Phosphor" />
 
                                     <ImageView
                                         android:layout_width="match_parent"
@@ -716,7 +720,7 @@
                                         android:textColor="@color/black"
                                         android:gravity="center"
                                         android:textSize="16sp"
-                                        android:text="Soil pH" />
+                                        android:text="Kalium" />
 
                                     <ImageView
                                         android:layout_width="match_parent"
@@ -764,28 +768,5 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-    <RelativeLayout
-        android:id="@+id/loadingPanel"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:visibility="gone"
-        android:clickable="true"
-        android:gravity="center">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.6"
-            android:background="#68000000" />
-
-        <ProgressBar
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_centerInParent="true"
-            android:indeterminateTint="@color/green_light_50"
-            android:indeterminate="true" />
-
-    </RelativeLayout>
 
 </FrameLayout>
