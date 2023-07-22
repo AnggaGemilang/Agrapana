@@ -8,12 +8,6 @@ use Illuminate\Http\Request;
 
 class MonitoringSupportDeviceController extends Controller
 {
-
-    public function index()
-    {
-        return MonitoringSupportDevice::latest()->paginate(5);
-    }
-
     public function store(Request $request)
     {
         return MonitoringSupportDevice::create($request->all());
@@ -25,17 +19,5 @@ class MonitoringSupportDeviceController extends Controller
             ->where('number_of', $number)
             ->paginate(5);
         return $monitoringSupportDevice;
-    }
-
-    public function update(Request $request, MonitoringSupportDevice $monitoringSupportDevice)
-    {
-        $monitoringSupportDevice->update($request->all());
-        $monitoringSupportDevice->refresh();
-        return $monitoringSupportDevice;
-    }
-
-    public function destroy(MonitoringSupportDevice $monitoringSupportDevice)
-    {
-        return $monitoringSupportDevice->delete();
     }
 }
