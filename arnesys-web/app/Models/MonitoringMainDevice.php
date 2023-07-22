@@ -11,15 +11,13 @@ class MonitoringMainDevice extends Model
     use HasFactory;
 
     protected $fillable = [
-        'number_of_support_devices',
         'wind_temperature',
         'wind_humidity',
         'wind_pressure',
         'wind_speed',
         'rainfall',
         'light_intensity',
-        'field_id',
-        'meta_data'
+        'field_id'
     ];
 
     public static function boot()

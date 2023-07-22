@@ -18,4 +18,11 @@ class MonitoringMainDeviceController extends Controller
         $monitoringMainDevice = MonitoringMainDevice::where('field_id', $id)->paginate(5);
         return $monitoringMainDevice;
     }
+
+    public function getByColumn($id, $column)
+    {
+        return MonitoringMainDevice::select($column)
+            ->where('field_id', $id)
+            ->paginate(5);
+    }
 }
