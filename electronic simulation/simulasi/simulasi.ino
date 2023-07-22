@@ -7,18 +7,17 @@
 #define WIFI_SSID "SPEEDY"
 #define WIFI_PASSWORD "suherman"
 #define MQTT_SERVER "test.mosquitto.org"
-#define CLIENT_CODE "client_123"
-#define FIELD_CODE "field_123"
 
 HTTPClient http;
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-const char* server = "http://api.thingspeak.com/update";
+char CLIENT_CODE[50] = "client_123/";
+char FIELD_CODE[50] = "field_123/";
+char SERVER[50] = "http://api.thingspeak.com/update";
+char topic[100] = "";
+long lastMsg = 0;
 
-unsigned long lastMsg = 0;
-char msg[MSG_BUFFER_SIZE];
-char led[25] = "";
 char output[200];
 
 void setup_wifi() {
@@ -38,7 +37,7 @@ void setup_wifi() {
 
   Serial.println("");
   Serial.println("WiFi connected");
-  Serial.println("IP address: ");
+  Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 }
 
@@ -76,16 +75,48 @@ void loop() {
     
     lastMsg = now;
 
+//    Kirim data perangkat utama
+
     StaticJsonDocument<96> doc;
 
-    doc["configuration"]["led"] = led;
-    doc["monitoring"]["light"] = msg;
-    
+    doc["monitoring"]["dadang1"] = random(0, 100);
+    doc["monitoring"]["dadang2"] = random(0, 100);
+    doc["monitoring"]["dadang3"] = random(0, 100);
+    doc["monitoring"]["dadang4"] = random(0, 100);
+    doc["monitoring"]["dadang5"] = random(0, 100);
     serializeJson(doc, output); 
-       
+
+    strcpy(topic, "arnesys/");
+    strcat(topic, CLIENT_CODE);
+    strcat(topic, FIELD_CODE);
+    strcat(topic, "utama");
+    Serial.print("Topic: ");
+    Serial.println(topic);
+    
+    client.publish(topic, output);
     Serial.print("Publish message: ");
     Serial.println(output);
-    client.publish("arnesys", output);
+
+//    Kirim data perangkat pendukung
+
+    doc["monitoring"]["warko1"] = random(0, 100);
+    doc["monitoring"]["warko2"] = random(0, 100);
+    doc["monitoring"]["warko3"] = random(0, 100);
+    doc["monitoring"]["warko4"] = random(0, 100);
+    doc["monitoring"]["warko5"] = random(0, 100);
+    serializeJson(doc, output); 
+
+    strcpy(topic, "arnesys/");
+    strcat(topic, CLIENT_CODE);
+    strcat(topic, FIELD_CODE);
+    strcat(topic, "pendukung/1");
+    Serial.print("Topic: ");
+    Serial.println(topic);
+    
+    client.publish(topic, output);
+    Serial.print("Publish message: ");
+    Serial.println(output);
+
 
 //    http.begin(server);
 //
