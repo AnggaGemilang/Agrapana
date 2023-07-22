@@ -36,6 +36,13 @@ return [
             'throw' => false,
         ],
 
+        'hosting' => [
+            'driver' => 'local',
+            'root' => public_path() . '/../../public_html/arnesys.agrapana.tech/storage',
+            'url' => env('APP_URL').'/arnesys.agrapana.tech/storage',
+            'visibility' => 'public',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
