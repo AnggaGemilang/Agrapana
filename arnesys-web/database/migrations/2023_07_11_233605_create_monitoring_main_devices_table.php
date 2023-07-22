@@ -15,7 +15,6 @@ class CreateMonitoringMainDevicesTable extends Migration
     {
         Schema::create('monitoring_main_devices', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->integer('number_of_support_devices');
             $table->double('wind_temperature');
             $table->integer('wind_humidity');
             $table->integer('light_intensity');

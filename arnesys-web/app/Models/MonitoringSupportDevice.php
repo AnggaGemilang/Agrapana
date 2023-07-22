@@ -18,8 +18,7 @@ class MonitoringSupportDevice extends Model
         'soil_nitrogen',
         'soil_phosphor',
         'soil_kalium',
-        'field_id',
-        'meta_data'
+        'field_id'
     ];
 
     public static function boot()

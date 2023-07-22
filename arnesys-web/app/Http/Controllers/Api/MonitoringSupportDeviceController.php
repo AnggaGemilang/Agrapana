@@ -20,4 +20,13 @@ class MonitoringSupportDeviceController extends Controller
             ->paginate(5);
         return $monitoringSupportDevice;
     }
+
+    public function getByColumn($id, $number, $column)
+    {
+        return MonitoringSupportDevice::select($column)
+            ->where('number_of', $number)
+            ->where('field_id', $id)
+            ->paginate(5);
+    }
+
 }
