@@ -1,15 +1,18 @@
 package com.agrapana.arnesys.model
 
+import java.sql.Timestamp
+
 data class FieldList(val data: List<Field>)
 data class Field(
     val id: String?,
     val address: String?,
     val plant_type: String?,
+    val land_area: String?,
     val thumbnail: String?,
     val number_of_support_device: Int?,
     val client_id: String?,
-    val created_at: String?,
-    val updated_at: String?,
+    val created_at: Timestamp?,
+    val updated_at: Timestamp?,
     var isExpandable: Boolean = false,
 )
 data class Links(
