@@ -12,8 +12,8 @@ HTTPClient httpMainDevice, httpSupportDevice;
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-char CLIENT_CODE[50] = "client_123/";
-char FIELD_CODE[50] = "field_123/";
+char CLIENT_CODE[50] = "d02557b0-c0fa-415e-924c-ac624a691c0d";
+char FIELD_CODE[50] = "cd3eb1ad-f3ee-4fa4-bf19-0e4f7da89746";
 char SERVER1[58] = "https://arnesys.agrapana.tech/api/monitoring-main-devices";
 char SERVER2[61] = "https://arnesys.agrapana.tech/api/monitoring-support-devices";
 char topic[100] = "";
@@ -91,8 +91,9 @@ void loop() {
 
     strcpy(topic, "arnesys/");
     strcat(topic, CLIENT_CODE);
+    strcat(topic, "/");
     strcat(topic, FIELD_CODE);
-    strcat(topic, "utama");
+    strcat(topic, "/utama");
     Serial.print("Topic: ");
     Serial.println(topic);
     
@@ -103,7 +104,7 @@ void loop() {
     httpMainDevice.begin(SERVER1);
 
     httpMainDevice.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    String httpRequestData = "&number_of_support_devices=" + String(random(50)) + "&wind_temperature=" + String(random(50)) + "&wind_humidity=" + String(random(50)) + "&wind_pressure=" + String(random(50)) + "&wind_speed=" + String(random(50)) + "&rainfall=" + String(random(50)) + "&light_intensity=" + String(random(50)) + "&field_id=" + String(CLIENT_CODE);
+    String httpRequestData = "&wind_temperature=" + String(random(50)) + "&wind_humidity=" + String(random(50)) + "&wind_pressure=" + String(random(50)) + "&wind_speed=" + String(random(50)) + "&rainfall=" + String(random(50)) + "&light_intensity=" + String(random(50)) + "&field_id=" + String(CLIENT_CODE);
     int httpResponseCode = httpMainDevice.POST(httpRequestData);
            
     Serial.print("HTTP Response code is: ");
@@ -126,8 +127,9 @@ void loop() {
 
     strcpy(topic, "arnesys/");
     strcat(topic, CLIENT_CODE);
+    strcat(topic, "/");
     strcat(topic, FIELD_CODE);
-    strcat(topic, "pendukung/1");
+    strcat(topic, "/pendukung/1");
     Serial.print("Topic: ");
     Serial.println(topic);
     
