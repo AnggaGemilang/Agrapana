@@ -1,5 +1,16 @@
 package com.agrapana.arnesys.model
 
-data class MonitoringSupportDeviceList(val data: List<MonitoringSupportDevice>)
-data class MonitoringSupportDevice(val id: String?,val name: String?,  val email: String?, val status: String?, val gender: String?)
-data class MonitoringSupportDeviceResponse(val code: Int?, val meta: String?, val data: MonitoringSupportDevice?)
+import com.google.gson.annotations.SerializedName
+
+data class ValueMonitoringSupportDevice(
+    @SerializedName("soil_temperature") var soilTemperature: Int? = null,
+    @SerializedName("soil_humidity") var soilHumidity: Int? = null,
+    @SerializedName("soil_ph") var soilPh: Int? = null,
+    @SerializedName("soil_nitrogen") var soilNitrogen: Int? = null,
+    @SerializedName("soil_phosphor") var soilPhosphor: Int? = null,
+    @SerializedName("soil_kalium") var soilKalium: Int? = null
+)
+
+data class MonitoringSupportDevice(
+    var monitoring: ValueMonitoringSupportDevice
+)

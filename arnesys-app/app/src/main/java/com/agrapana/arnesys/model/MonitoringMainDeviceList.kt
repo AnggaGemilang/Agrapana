@@ -1,5 +1,15 @@
 package com.agrapana.arnesys.model
 
-data class MonitoringMainDeviceList(val data: List<MonitoringMainDevice>)
-data class MonitoringMainDevice(val id: String?,val name: String?,  val email: String?, val status: String?, val gender: String?)
-data class MonitoringMainDeviceResponse(val code: Int?, val meta: String?, val data: MonitoringMainDevice?)
+import com.google.gson.annotations.SerializedName
+
+data class ValueMonitoringMainDevice(
+    @SerializedName("wind_temperature") var windTemperature: Int? = null,
+    @SerializedName("wind_humidity") var windHumidity: Int? = null,
+    @SerializedName("wind_pressure") var windPressure: Int? = null,
+    @SerializedName("wind_speed") var windSpeed: Int? = null,
+    @SerializedName("rainfall") var rainfall: Boolean? = null
+)
+
+data class MonitoringMainDevice(
+    var monitoring: ValueMonitoringMainDevice
+)

@@ -2,7 +2,6 @@ package com.agrapana.arnesys.model
 
 import java.sql.Timestamp
 
-data class FieldList(val data: List<Field>)
 data class Field(
     val id: String?,
     val address: String?,

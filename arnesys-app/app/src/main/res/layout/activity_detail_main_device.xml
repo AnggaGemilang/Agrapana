@@ -161,7 +161,7 @@
                             android:text="Temperature" />
 
                         <TextView
-                            android:id="@+id/val_temperature"
+                            android:id="@+id/val_soil_temperature"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="22sp"
@@ -200,7 +200,7 @@
                             android:text="Ph Meter" />
 
                         <TextView
-                            android:id="@+id/val_ph"
+                            android:id="@+id/val_soil_moisture"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="22sp"
@@ -239,7 +239,7 @@
                             android:text="Gas CO2" />
 
                         <TextView
-                            android:id="@+id/val_gas"
+                            android:id="@+id/val_soil_ph"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="22sp"
@@ -278,7 +278,7 @@
                             android:text="Nutrition" />
 
                         <TextView
-                            android:id="@+id/val_nutrition"
+                            android:id="@+id/val_soil_nitrogen"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="22sp"
@@ -317,7 +317,7 @@
                             android:text="Nutrition Volume" />
 
                         <TextView
-                            android:id="@+id/val_nutrition_volume"
+                            android:id="@+id/val_soil_phosphor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="22sp"
@@ -340,7 +340,7 @@
                         android:background="@drawable/gradient_red"
                         app:tint="@color/red_50"
                         android:padding="12dp"
-                        android:src="@drawable/ic_baseline_lightbulb_24" />
+                        android:src="@drawable/baseline_lightbulb_24" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -356,7 +356,7 @@
                             android:text="Growth Lamp" />
 
                         <TextView
-                            android:id="@+id/val_growth_lamp"
+                            android:id="@+id/val_soil_kalium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="22sp"
