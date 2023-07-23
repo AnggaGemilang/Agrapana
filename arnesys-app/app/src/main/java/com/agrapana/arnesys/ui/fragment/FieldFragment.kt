@@ -101,6 +101,8 @@ class FieldFragment : Fragment() {
             if(it?.data != null){
                 Log.d("cek", it.data.toString())
                 recyclerViewAdapter.setFieldList(it.data)
+                binding.valFieldListPlaceholder.visibility = View.GONE
+                binding.recyclerView.visibility = View.VISIBLE
             }
         }
     }
