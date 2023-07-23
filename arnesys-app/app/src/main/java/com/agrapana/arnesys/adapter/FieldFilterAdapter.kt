@@ -4,19 +4,19 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.agrapana.arnesys.R
 import com.agrapana.arnesys.databinding.TemplateFilterFieldBinding
+import com.agrapana.arnesys.helper.ChangeFieldListener
 import com.agrapana.arnesys.model.Field
-
 
 class FieldFilterAdapter(val context: Context): RecyclerView.Adapter<FieldFilterAdapter.MyViewHolder>() {
 
     var fieldList = mutableListOf<Field>()
+    var changeFieldListener: ChangeFieldListener? = null
     var cardViewList: MutableList<CardView> = ArrayList()
     var textViewList: MutableList<TextView> = ArrayList()
 
@@ -43,6 +43,10 @@ class FieldFilterAdapter(val context: Context): RecyclerView.Adapter<FieldFilter
         cardViewList[0].background.setTint(ContextCompat.getColor(context, R.color.green_20))
         textViewList[0].setTextColor(ContextCompat.getColor(context, R.color.white))
 
+        if(position == 0){
+            changeFieldListener?.onChangeField(fieldList[position].id)
+        }
+
         if(cardViewList.size == fieldList.size){
             val layoutParams = holder.binding.cardViewFilter.layoutParams as LinearLayout.LayoutParams
             layoutParams.setMargins(0, 0, 115, 0)
@@ -59,6 +63,7 @@ class FieldFilterAdapter(val context: Context): RecyclerView.Adapter<FieldFilter
             }
             holder.binding.txtName.setTextColor(ContextCompat.getColor(context, R.color.white))
             holder.binding.cardViewFilter.background.setTint(ContextCompat.getColor(context, R.color.green_20))
+            changeFieldListener?.onChangeField(fieldList[position].id)
         }
     }
 

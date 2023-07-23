@@ -21,6 +21,9 @@ long lastMsg = 0;
 long lastMsg2 = 0;
 
 char output[200];
+unsigned int windTemperature, windHumidity, windPressure, windSpeed, lightIntensity;
+unsigned int soilTemperature, soilHumidity, soilPh, soilNitrogen, soilPhosphor, soilKalium;
+boolean rainfall;
 
 void setup_wifi() {
   Serial.print("Connecting to ");
@@ -83,12 +86,19 @@ void loop() {
 
     StaticJsonDocument<96> doc;
 
-    doc["monitoring"]["warmth"] = random(0, 100);
-    doc["monitoring"]["humidity"] = random(0, 100);
-    doc["monitoring"]["pressure"] = random(0, 100);
-    doc["monitoring"]["wind_speed"] = random(0, 100);
-    doc["monitoring"]["rainfall"] = random(0, 100);
-    doc["monitoring"]["light_intensity"] = random(0, 100);
+    windTemperature = random(25, 28);
+    windHumidity = random(40, 43);
+    windPressure = random(13, 15); 
+    windSpeed = random(6, 9);       
+    rainfall = random(0, 1);
+    lightIntensity = random(2800, 3200);
+
+    doc["monitoring"]["wind_temperature"] = windTemperature;
+    doc["monitoring"]["wind_humidity"] = windHumidity;
+    doc["monitoring"]["wind_pressure"] = windPressure;
+    doc["monitoring"]["wind_speed"] = windSpeed;
+    doc["monitoring"]["rainfall"] = rainfall;
+    doc["monitoring"]["light_intensity"] = lightIntensity;
     serializeJson(doc, output); 
 
     strcpy(topic, "arnesys/");
@@ -109,12 +119,19 @@ void loop() {
 
     StaticJsonDocument<200> doc2;
 
-    doc2["monitoring"]["warmth"] = random(0, 100);
-    doc2["monitoring"]["moisture"] = random(0, 100);
-    doc2["monitoring"]["ph"] = random(0, 100);
-    doc2["monitoring"]["nitrogen"] = random(0, 100);
-    doc2["monitoring"]["phosphor"] = random(0, 100);
-    doc2["monitoring"]["kalium"] = random(0, 100);
+    soilTemperature = random(25, 28);
+    soilHumidity = random(40, 43);
+    soilPh = random(5, 7);
+    soilNitrogen = random(8, 9);
+    soilPhosphor = random(2, 3);
+    soilKalium = random(5, 6);
+
+    doc2["monitoring"]["soil_temperature"] = soilTemperature;
+    doc2["monitoring"]["soil_humidity"] = soilHumidity;
+    doc2["monitoring"]["soil_ph"] = soilPh;
+    doc2["monitoring"]["soil_nitrogen"] = soilNitrogen;
+    doc2["monitoring"]["soil_phosphor"] = soilPhosphor;
+    doc2["monitoring"]["soil_kalium"] = soilKalium;
     serializeJson(doc2, output); 
 
     strcpy(topic, "arnesys/");
@@ -145,7 +162,7 @@ void loop() {
     httpMainDevice.begin(SERVER1);
 
     httpMainDevice.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    String httpRequestData = "&wind_temperature=" + String(random(50)) + "&wind_humidity=" + String(random(50)) + "&wind_pressure=" + String(random(50)) + "&wind_speed=" + String(random(50)) + "&rainfall=" + String(random(50)) + "&light_intensity=" + String(random(50)) + "&field_id=" + String(CLIENT_CODE);
+    String httpRequestData = "&wind_temperature=" + String(windTemperature) + "&wind_humidity=" + String(windHumidity) + "&wind_pressure=" + String(windPressure) + "&wind_speed=" + String(windSpeed) + "&rainfall=" + String(rainfall) + "&light_intensity=" + String(lightIntensity) + "&field_id=" + String(CLIENT_CODE);
     int httpResponseCode = httpMainDevice.POST(httpRequestData);
            
     Serial.print("HTTP Response code is: ");
@@ -159,7 +176,7 @@ void loop() {
     httpSupportDevice.begin(SERVER2);
 
     httpSupportDevice.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    String httpRequestData2 = "&number_of=1&soil_temperature=" + String(random(50)) + "&soil_humidity=" + String(random(50)) + "&soil_ph=" + String(random(50)) + "&soil_nitrogen=" + String(random(50)) + "&soil_phosphor=" + String(random(50)) + "&soil_kalium=" + String(random(50)) + "&field_id=" + String(CLIENT_CODE);
+    String httpRequestData2 = "&number_of=1&soil_temperature=" + String(soilTemperature) + "&soil_humidity=" + String(soilHumidity) + "&soil_ph=" + String(soilPh) + "&soil_nitrogen=" + String(soilNitrogen) + "&soil_phosphor=" + String(soilPhosphor) + "&soil_kalium=" + String(soilKalium) + "&field_id=" + String(CLIENT_CODE);
     int httpResponseCode2 = httpSupportDevice.POST(httpRequestData2);
     
     Serial.print("HTTP Response code is: ");

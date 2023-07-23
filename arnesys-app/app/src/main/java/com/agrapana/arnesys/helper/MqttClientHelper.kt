@@ -14,8 +14,9 @@ class MqttClientHelper(context: Context?) {
     }
 
     var mqttAndroidClient: MqttAndroidClient
-    val serverUri = MQTT_HOST
     private val clientId: String = MqttClient.generateClientId()
+
+    val serverUri = MQTT_HOST
 
     fun setCallback(callback: MqttCallbackExtended?) {
         callback?.let { mqttAndroidClient.setCallback(it) }
@@ -76,12 +77,40 @@ class MqttClientHelper(context: Context?) {
         }
     }
 
+    fun unsubscribe(topic: String) {
+        try {
+            mqttAndroidClient.unsubscribe(topic, null, object : IMqttActionListener {
+                override fun onSuccess(asyncActionToken: IMqttToken?) {
+                    Log.d(TAG, "Unsubscribed to $topic")
+                }
+
+                override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
+                    Log.d(TAG, "Failed to unsubscribe $topic")
+                }
+            })
+        } catch (e: MqttException) {
+            e.printStackTrace()
+        }
+    }
+
     fun isConnected() : Boolean {
         return mqttAndroidClient.isConnected
     }
 
-    fun destroy() {
-        mqttAndroidClient.unregisterResources()
-        mqttAndroidClient.disconnect()
+    fun disconnect() {
+        try {
+            mqttAndroidClient.disconnect(null, object : IMqttActionListener {
+                override fun onSuccess(asyncActionToken: IMqttToken?) {
+                    Log.d(TAG, "Disconnected")
+                }
+
+                override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
+                    Log.d(TAG, "Failed to disconnect")
+                }
+            })
+        } catch (e: MqttException) {
+            e.printStackTrace()
+        }
     }
+
 }

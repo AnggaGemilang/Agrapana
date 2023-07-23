@@ -41,6 +41,8 @@ class DetailMainDeviceActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
 
+        val string: String? = intent.getStringExtra("keyString")
+
         setSupportActionBar(binding.toolbar);
         supportActionBar?.title = "Suwarko"
         supportActionBar?.subtitle = "Nanang"

@@ -30,9 +30,13 @@ class NestedFieldAdapter(val context: Context, private val fieldList: List<Strin
         holder.binding.cardView.setOnClickListener {
 
             if(dateParts[1] == "Utama"){
-                context.startActivity(Intent(context, DetailMainDeviceActivity::class.java))
+                val intent = Intent(context, DetailMainDeviceActivity::class.java)
+                intent.putExtra("keyString", "sabihis")
+                context.startActivity(intent)
             } else {
-                context.startActivity(Intent(context, DetailSupportDeviceActivity::class.java))
+                val intent = Intent(context, DetailSupportDeviceActivity::class.java)
+                intent.putExtra("keyString", "sabihis")
+                context.startActivity(intent)
             }
         }
     }
