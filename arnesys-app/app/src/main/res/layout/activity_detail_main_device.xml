@@ -20,7 +20,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/profile_id"
+                android:id="@+id/img_thumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:background="@drawable/farmland"
@@ -48,6 +48,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="20dp"
             android:orientation="vertical" >
 
             <com.google.android.material.tabs.TabLayout
@@ -91,47 +92,8 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="20sp"
-                    android:text="Characteristics" />
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:orientation="horizontal" >
-
-                    <ImageView
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
-                        android:background="@drawable/gradient_yellow"
-                        android:padding="12dp"
-                        android:src="@drawable/ic_baseline_soup_kitchen_24"
-                        app:tint="@color/yellow_75" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:paddingTop="6dp"
-                        android:orientation="vertical" >
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:text="Harvest Prediction" />
-
-                        <TextView
-                            android:id="@+id/prediction"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="19sp"
-                            android:textStyle="bold"
-                            android:text="8 Days Left (1 August 2022)" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
+                    android:layout_marginBottom="10dp"
+                    android:text="Real-time Monitoring" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -142,8 +104,8 @@
                     <ImageView
                         android:layout_width="65dp"
                         android:layout_height="65dp"
-                        android:background="@drawable/gradient_blue"
-                        app:tint="@color/blue_50"
+                        android:background="@drawable/gradient_green"
+                        app:tint="@color/green_20"
                         android:padding="12dp"
                         android:src="@drawable/ic_baseline_local_fire_department_24" />
 
@@ -158,54 +120,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="18sp"
-                            android:text="Temperature" />
+                            android:text="Warmth" />
 
                         <TextView
-                            android:id="@+id/val_soil_temperature"
+                            android:id="@+id/val_wind_temperature"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="22sp"
                             android:textStyle="bold"
-                            android:text="36°C" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal" >
-
-                    <ImageView
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
-                        android:background="@drawable/gradient_red"
-                        app:tint="@color/red_50"
-                        android:padding="12dp"
-                        android:src="@drawable/ic_baseline_contactless_24" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:paddingTop="6dp"
-                        android:orientation="vertical" >
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:text="Ph Meter" />
-
-                        <TextView
-                            android:id="@+id/val_soil_moisture"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="22sp"
-                            android:textStyle="bold"
-                            android:text="7 Ph" />
+                            android:text="N/A" />
 
                     </LinearLayout>
 
@@ -221,48 +144,9 @@
                         android:layout_width="65dp"
                         android:layout_height="65dp"
                         android:background="@drawable/gradient_green"
-                        android:padding="15dp"
-                        android:src="@drawable/ic_baseline_gas_meter_24"
-                        app:tint="@color/green_light_100" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:paddingTop="6dp"
-                        android:orientation="vertical" >
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:text="Gas CO2" />
-
-                        <TextView
-                            android:id="@+id/val_soil_ph"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="22sp"
-                            android:textStyle="bold"
-                            android:text="420.99 ppm" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal" >
-
-                    <ImageView
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
-                        android:background="@drawable/gradient_yellow"
+                        app:tint="@color/green_20"
                         android:padding="12dp"
-                        android:src="@drawable/ic_baseline_energy_savings_leaf_24"
-                        app:tint="@color/yellow_75" />
+                        android:src="@drawable/ic_baseline_contactless_24" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -275,15 +159,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="18sp"
-                            android:text="Nutrition" />
+                            android:text="Humidity" />
 
                         <TextView
-                            android:id="@+id/val_soil_nitrogen"
+                            android:id="@+id/val_wind_humidity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="22sp"
                             android:textStyle="bold"
-                            android:text="200.99 ppm" />
+                            android:text="N/A" />
 
                     </LinearLayout>
 
@@ -298,10 +182,10 @@
                     <ImageView
                         android:layout_width="65dp"
                         android:layout_height="65dp"
-                        app:tint="@color/blue_50"
-                        android:background="@drawable/gradient_blue"
+                        android:background="@drawable/gradient_green"
+                        app:tint="@color/green_20"
                         android:padding="12dp"
-                        android:src="@drawable/ic_baseline_opacity_24" />
+                        android:src="@drawable/baseline_adb_24" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -314,15 +198,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="18sp"
-                            android:text="Nutrition Volume" />
+                            android:text="Pests" />
 
                         <TextView
-                            android:id="@+id/val_soil_phosphor"
+                            android:id="@+id/val_pest"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="22sp"
                             android:textStyle="bold"
-                            android:text="5 ml" />
+                            android:text="N/A" />
 
                     </LinearLayout>
 
@@ -337,8 +221,86 @@
                     <ImageView
                         android:layout_width="65dp"
                         android:layout_height="65dp"
-                        android:background="@drawable/gradient_red"
-                        app:tint="@color/red_50"
+                        android:background="@drawable/gradient_green"
+                        app:tint="@color/green_20"
+                        android:padding="12dp"
+                        android:src="@drawable/baseline_air_24" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:paddingTop="6dp"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:text="Wind Speed" />
+
+                        <TextView
+                            android:id="@+id/val_wind_speed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:text="N/A" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:background="@drawable/gradient_green"
+                        app:tint="@color/green_20"
+                        android:padding="12dp"
+                        android:src="@drawable/baseline_compress_24" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:paddingTop="6dp"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:text="Wind Pressure" />
+
+                        <TextView
+                            android:id="@+id/val_wind_pressure"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:text="N/A" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:background="@drawable/gradient_green"
+                        app:tint="@color/green_20"
                         android:padding="12dp"
                         android:src="@drawable/baseline_lightbulb_24" />
 
@@ -353,15 +315,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="18sp"
-                            android:text="Growth Lamp" />
+                            android:text="Light Intensity" />
 
                         <TextView
-                            android:id="@+id/val_soil_kalium"
+                            android:id="@+id/val_light_intensity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="22sp"
                             android:textStyle="bold"
-                            android:text="On" />
+                            android:text="N/A" />
 
                     </LinearLayout>
 

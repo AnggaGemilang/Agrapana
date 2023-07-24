@@ -147,7 +147,6 @@ class HomeFragment : Fragment(), ChangeFieldListener {
     }
 
     private fun setMqttCallBack() {
-        Log.d("mqtt", "aya naon ieuuu")
         mqttClient.setCallback(object : MqttCallbackExtended {
             override fun connectComplete(b: Boolean, s: String) {
                 Log.w("Debug", "Connection to host connected:\n'$MQTT_HOST'")
@@ -179,9 +178,7 @@ class HomeFragment : Fragment(), ChangeFieldListener {
                     binding.valSoilPhosphor.text = message.monitoring.soilPhosphor.toString()
                     binding.valSoilKalium.text = message.monitoring.soilKalium.toString()
                 }
-
                 showTextField()
-
             }
             override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
                 Log.w("Debug", "Message published to host '$MQTT_HOST'")

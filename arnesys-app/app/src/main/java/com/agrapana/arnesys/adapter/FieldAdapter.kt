@@ -58,12 +58,12 @@ class FieldAdapter(val context: Context): RecyclerView.Adapter<FieldAdapter.MyVi
             holder.binding.arroImageview.setImageResource(R.drawable.baseline_keyboard_arrow_down_24)
         }
 
-        nestedList.add("Perangkat Utama")
+        nestedList.add("Main Device")
         for (i in 1..model.number_of_support_device!!){
-            nestedList.add("Perangkat Pendukung $i")
+            nestedList.add("Support Device $i")
         }
 
-        val adapter = NestedFieldAdapter(context, nestedList)
+        val adapter = NestedFieldAdapter(context, nestedList, model)
         holder.binding.childRv.layoutManager = LinearLayoutManager(holder.itemView.context)
         holder.binding.childRv.setHasFixedSize(true)
         holder.binding.childRv.adapter = adapter

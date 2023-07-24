@@ -1,8 +1,9 @@
 package com.agrapana.arnesys.ui.activity
 
-import android.app.PendingIntent.getActivity
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
@@ -12,21 +13,34 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.agrapana.arnesys.R
+import com.agrapana.arnesys.config.MQTT_HOST
 import com.agrapana.arnesys.databinding.ActivityDetailMainDeviceBinding
+import com.agrapana.arnesys.helper.MqttClientHelper
+import com.agrapana.arnesys.model.Field
+import com.agrapana.arnesys.model.MonitoringMainDevice
+import com.agrapana.arnesys.model.MonitoringSupportDevice
 import com.agrapana.arnesys.ui.fragment.ChartFragment
+import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
+import com.google.gson.Gson
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
+import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
+import org.eclipse.paho.client.mqttv3.MqttMessage
 import org.imaginativeworld.oopsnointernet.NoInternetDialog
 import java.util.*
+
 
 class DetailMainDeviceActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailMainDeviceBinding
+    private lateinit var prefs: SharedPreferences
     private var noInternetDialog: NoInternetDialog? = null
-    private var imageFromMQTT: String = ""
 
+    private var clientId: String? = null
+    private var fieldId: String? = null
 
     private val mqttClient by lazy {
-//        MqttClientHelper(this)
+        MqttClientHelper(this)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -41,20 +55,31 @@ class DetailMainDeviceActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
 
-        val string: String? = intent.getStringExtra("keyString")
+        prefs = this.getSharedPreferences("prefs", MODE_PRIVATE)!!
+        clientId = prefs.getString("client_id", "")
 
-        setSupportActionBar(binding.toolbar);
-        supportActionBar?.title = "Suwarko"
-        supportActionBar?.subtitle = "Nanang"
+        val passedData: Field = Gson().fromJson(intent.getStringExtra("passData"), Field::class.java)
+        fieldId = passedData.id
+
+        val imageParts = passedData.thumbnail.toString().trim().split("public/".toRegex())
+        if(passedData.thumbnail != null){
+            Glide.with(this).load("https://arnesys.agrapana.tech/storage/" + imageParts[1]).into(binding.imgThumbnail);
+        } else {
+            Glide.with(this).load(R.drawable.farmland).into(binding.imgThumbnail);
+        }
+
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.title = "Main Device"
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
         supportActionBar?.setDisplayShowHomeEnabled(true);
 
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Weather"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("OPT"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Tab Menu 3"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Tab Menu 4"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Tab Menu 5"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Tab Menu 6"))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Pests"))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Warmth"))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Humidity"))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Wind Speed"))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Wind Pressure"))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Wind Intensity"))
         binding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
         replaceFragment(ChartFragment())
 
@@ -81,63 +106,32 @@ class DetailMainDeviceActivity : AppCompatActivity() {
     }
 
     private fun setMqttCallBack() {
-//        mqttClient.setCallback(object : MqttCallbackExtended {
-//            override fun connectComplete(b: Boolean, s: String) {
-//                Log.w("Debug", "Connection to host connected:\n'$MQTT_HOST'")
-//                mqttClient.subscribe("arceniter/common")
-//                mqttClient.subscribe("arceniter/monitoring")
-//                mqttClient.subscribe("arceniter/controlling")
-//                mqttClient.subscribe("arceniter/thumbnail")
-//            }
-//
-//            override fun connectionLost(throwable: Throwable) {
-//                Log.w("Debug", "Connection to host lost:\n'$MQTT_HOST'")
-//            }
-//
-//            @Throws(Exception::class)
-//            override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
-//                binding.mainContent.visibility = View.VISIBLE
-//                binding.loadingPanel.visibility = View.GONE
-//                Log.w("Debug", "Message received from host '$MQTT_HOST': $mqttMessage")
-//                when (topic) {
-//                    "arceniter/common" -> {
-//                        commonMsg = Gson().fromJson(mqttMessage.toString(), Common::class.java)
-//                        val data = commonMsg.plant_name.split("#").toTypedArray()
-//                        binding.plantName.text = data[0].capitalize()
-//                        binding.startedPlanting.text = commonMsg.started_planting
-//
-//                        val cal = Calendar.getInstance()
-//                        val s = SimpleDateFormat("dd MMM yyyy")
-//                        cal.add(Calendar.DAY_OF_YEAR, Integer.parseInt(data[1]))
-//                        binding.prediction.text = "(" + s.format(Date(cal.timeInMillis)) + ")"
-//                    }
-//                    "arceniter/monitoring" -> {
-//                        val monitoring = Gson().fromJson(mqttMessage.toString(), Monitoring::class.java)
-//                        binding.valTemperature.text = monitoring.temperature.toString() + "°C"
-//                        binding.valPh.text = monitoring.ph + " Ph"
-//                        binding.valGas.text = monitoring.gas.toString() + " ppm`"
-//                        binding.valNutrition.text = monitoring.nutrition.toString() + " ppm"
-//                        binding.valNutritionVolume.text = monitoring.nutrition_volume.toString() + "%"
-//                        binding.valGrowthLamp.text = monitoring.growth_lamp.capitalize()
-//                    }
-//                    "arceniter/controlling" -> {
-//                        val controlling = Gson().fromJson(mqttMessage.toString(), Controlling::class.java)
-//                        controllingMsg = controlling
-//                    }
-//                    "arceniter/thumbnail" -> {
-//                        thumbnailMsg = Gson().fromJson(mqttMessage.toString(), Thumbnail::class.java)
-//                        binding.image.visibility = View.VISIBLE
-//                        Glide.with(this@DetailActivity)
-//                            .load(thumbnailMsg.imgURL)
-//                            .into(binding.image)
-//                        imageFromMQTT = thumbnailMsg.imgURL
-//                    }
-//                }
-//            }
-//            override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
-//                Log.w("Debug", "Message published to host '$MQTT_HOST'")
-//            }
-//        })
+        mqttClient.setCallback(object : MqttCallbackExtended {
+            override fun connectComplete(b: Boolean, s: String) {
+                Log.w("Debug", "Connection to host connected:\n'$MQTT_HOST'")
+                mqttClient.subscribe("arnesys/$clientId/$fieldId/utama")
+            }
+            override fun connectionLost(throwable: Throwable) {
+                Log.w("Debug", "Connection to host lost:\n'$MQTT_HOST'")
+            }
+            @Throws(Exception::class)
+            override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
+                Log.w("mqttMessage", "Message received from host '$MQTT_HOST': $mqttMessage")
+                if(topic == "arnesys/$clientId/$fieldId/utama"){
+                    val message = Gson().fromJson(mqttMessage.toString(), MonitoringMainDevice::class.java)
+                    Log.d("mqtt", message.toString())
+                    binding.valWindTemperature.text = message.monitoring.windTemperature.toString() + "°"
+                    binding.valWindHumidity.text = message.monitoring.windHumidity.toString() + "%"
+                    binding.valWindSpeed.text = message.monitoring.windSpeed.toString() + "mph"
+                    binding.valWindPressure.text = message.monitoring.windPressure.toString()
+//                    binding.valPest.text = message.monitoring.pest.toString()
+//                    binding.valLight.text = message.monitoring.lightIntensity.toString()
+                }
+            }
+            override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
+                Log.w("Debug", "Message published to host '$MQTT_HOST'")
+            }
+        })
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.agrapana.arnesys.databinding.TemplateNestedFieldBinding
+import com.agrapana.arnesys.model.Field
 import com.agrapana.arnesys.ui.activity.DetailMainDeviceActivity
 import com.agrapana.arnesys.ui.activity.DetailSupportDeviceActivity
+import com.google.gson.Gson
 
-class NestedFieldAdapter(val context: Context, private val fieldList: List<String>): RecyclerView.Adapter<NestedFieldAdapter.MyViewHolder>() {
+class NestedFieldAdapter(val context: Context, private val fieldList: List<String>, private val fieldDetail: Field): RecyclerView.Adapter<NestedFieldAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -29,13 +31,14 @@ class NestedFieldAdapter(val context: Context, private val fieldList: List<Strin
         val dateParts = deviceName.trim().split("\\s+".toRegex())
         holder.binding.cardView.setOnClickListener {
 
-            if(dateParts[1] == "Utama"){
+            if(dateParts[0] == "Main"){
                 val intent = Intent(context, DetailMainDeviceActivity::class.java)
-                intent.putExtra("keyString", "sabihis")
+                intent.putExtra("passData", Gson().toJson(fieldDetail))
                 context.startActivity(intent)
             } else {
                 val intent = Intent(context, DetailSupportDeviceActivity::class.java)
-                intent.putExtra("keyString", "sabihis")
+                intent.putExtra("passData", Gson().toJson(fieldDetail))
+                intent.putExtra("identity", deviceName)
                 context.startActivity(intent)
             }
         }
