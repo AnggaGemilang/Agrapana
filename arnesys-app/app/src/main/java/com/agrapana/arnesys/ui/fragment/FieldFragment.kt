@@ -8,8 +8,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.agrapana.arnesys.R
@@ -26,6 +28,7 @@ class FieldFragment : Fragment() {
     private lateinit var prefs: SharedPreferences
     private lateinit var recyclerViewAdapter: FieldAdapter
     private lateinit var viewModel: FieldViewModel
+    private lateinit var window: Window
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,9 +41,21 @@ class FieldFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        window = requireActivity().window
+
         prefs = this.activity?.getSharedPreferences("prefs",
             AppCompatActivity.MODE_PRIVATE
         )!!
+
+        binding.scrollView.setOnScrollChangeListener(
+            NestedScrollView.OnScrollChangeListener {
+                    _, _, scrollY, _, _ ->
+                if(scrollY > 720){
+                    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                } else {
+                    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE;
+                }
+            })
 
         initRecyclerView()
         initViewModel()

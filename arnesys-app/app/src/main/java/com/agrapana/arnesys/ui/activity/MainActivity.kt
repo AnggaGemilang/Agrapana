@@ -1,6 +1,10 @@
 package com.agrapana.arnesys.ui.activity
 
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.View
+import android.view.View.OnTouchListener
+import android.view.ViewTreeObserver
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -10,6 +14,7 @@ import com.agrapana.arnesys.databinding.ActivityMainBinding
 import com.agrapana.arnesys.ui.fragment.FieldFragment
 import com.agrapana.arnesys.ui.fragment.HomeFragment
 import org.imaginativeworld.oopsnointernet.NoInternetDialog
+
 
 class MainActivity : AppCompatActivity() {
 
