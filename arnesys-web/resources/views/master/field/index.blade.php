@@ -162,11 +162,9 @@
 @push('style')
 
 <style>
-
     .detail-elements {
         display: none;
     }
-
 </style>
 
 @endpush

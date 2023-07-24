@@ -213,10 +213,14 @@
                         <div class="tab-pane active bg-white" id="1">
                             <div class="row">
                                 <div class="col">
-                                    <h4>Dadang</h4>
+                                    <h4 id="valDataType">Warmth</h4>
                                 </div>
-                                <div class="col" style="float: right;">
-                                    
+                                <div class="col d-flex justify-content-end">
+                                    <select class="form-select" style="width: 200px;">
+                                        <option selected>Last Time</option>
+                                        <option value="1">Per 2 Hour</option>
+                                        <option value="2">Per data</option>
+                                    </select>
                                 </div>
                             </div>
                             <canvas id="chart"></canvas>
@@ -250,23 +254,38 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
 
     <script>
+
         var ctx = document.getElementById("chart")
-        var myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['1/3/2023', '1/10/2023', '1/17/2023', '1/24/2023'],
-                datasets: [{
-                    label: 'Number of Leaves',
-                    data: [3, 5, 7, 10],
-                    backgroundColor: [
-                        '#66BB6A',
-                    ],
-                    borderColor: [
-                        '#66BB6A',
-                    ],
-                    borderWidth: 1
-                }]
-            },
+
+        $(document).ready(function() {
+            showChart()
         })
+
+        $(".nav-link").click(function() {
+            const title = $(this).find("span").text()
+            $("#valDataType").text(title)
+            showChart()
+        })
+
+        function showChart(){
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['1/3/2023', '1/10/2023', '1/17/2023', '1/24/2023'],
+                    datasets: [{
+                        label: 'Number of Leaves',
+                        data: [3, 5, 7, 10],
+                        backgroundColor: [
+                            '#66BB6A',
+                        ],
+                        borderColor: [
+                            '#66BB6A',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+            })
+        }
+
     </script>
 @endpush
