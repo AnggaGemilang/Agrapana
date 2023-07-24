@@ -9,13 +9,14 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.agrapana.arnesys.R
 import com.agrapana.arnesys.databinding.FragmentChartBinding
+import com.agrapana.arnesys.model.Field
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 import java.util.ArrayList
 
-class ChartFragment : Fragment() {
+class ChartFragment(private val field: Field, private val column: String) : Fragment() {
 
     private lateinit var binding: FragmentChartBinding
     lateinit var lineList: ArrayList<Entry>
@@ -32,6 +33,8 @@ class ChartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.columnName.text = column
 
         lineList = ArrayList()
         lineList.add(Entry(10f, 1f))

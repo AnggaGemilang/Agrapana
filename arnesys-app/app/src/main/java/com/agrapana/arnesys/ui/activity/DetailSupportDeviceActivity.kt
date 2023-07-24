@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -80,13 +81,17 @@ class DetailSupportDeviceActivity : AppCompatActivity() {
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Phosphor"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Kalium"))
         binding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
-        replaceFragment(ChartFragment())
+        replaceFragment(ChartFragment(passedData, "Warmth"))
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
-                    0 -> replaceFragment(ChartFragment())
-                    1 -> replaceFragment(ChartFragment())
+                    0 -> replaceFragment(ChartFragment(passedData, "Warmth"))
+                    1 -> replaceFragment(ChartFragment(passedData, "Moisture"))
+                    2 -> replaceFragment(ChartFragment(passedData, "pH"))
+                    3 -> replaceFragment(ChartFragment(passedData, "Nitrogen"))
+                    4 -> replaceFragment(ChartFragment(passedData, "Phosphor"))
+                    5 -> replaceFragment(ChartFragment(passedData, "Kalium"))
                 }
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {}
@@ -126,6 +131,20 @@ class DetailSupportDeviceActivity : AppCompatActivity() {
                     binding.valSoilPhosphor.text = message.monitoring.soilPhosphor.toString()
                     binding.valSoilKalium.text = message.monitoring.soilKalium.toString()
                 }
+
+                binding.valSoilTemperaturePlaceholder.visibility = View.GONE
+                binding.valSoilMoisturePlaceholder.visibility = View.GONE
+                binding.valSoilPhPlaceholder.visibility = View.GONE
+                binding.valSoilNitrogenPlaceholder.visibility = View.GONE
+                binding.valSoilPhosphorPlaceholder.visibility = View.GONE
+                binding.valSoilKaliumPlaceholder.visibility = View.GONE
+                binding.valSoilTemperature.visibility = View.VISIBLE
+                binding.valSoilMoisture.visibility = View.VISIBLE
+                binding.valSoilPh.visibility = View.VISIBLE
+                binding.valSoilNitrogen.visibility = View.VISIBLE
+                binding.valSoilPhosphor.visibility = View.VISIBLE
+                binding.valSoilKalium.visibility = View.VISIBLE
+
             }
             override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
                 Log.w("Debug", "Message published to host '$MQTT_HOST'")
@@ -181,13 +200,6 @@ class DetailSupportDeviceActivity : AppCompatActivity() {
         builder1.airplaneModeOffButtonText = "Airplane mode" // Optional
         builder1.showAirplaneModeOffButtons = true // Optional
         noInternetDialog = builder1.build()
-    }
-
-    override fun onDestroy() {
-//        if (mqttClient.isConnected()) {
-//            mqttClient.destroy()
-//        }
-        super.onDestroy()
     }
 
 }

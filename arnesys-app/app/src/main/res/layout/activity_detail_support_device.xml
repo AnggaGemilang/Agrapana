@@ -20,7 +20,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img_thumbnail"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="250dp"
                 android:background="@drawable/farmland"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
@@ -97,7 +97,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal" >
 
                     <ImageView
@@ -112,7 +112,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
-                        android:paddingTop="6dp"
+                        android:paddingTop="3dp"
                         android:orientation="vertical" >
 
                         <TextView
@@ -127,7 +127,21 @@
                             android:layout_height="wrap_content"
                             android:textSize="22sp"
                             android:textStyle="bold"
+                            android:visibility="gone"
                             android:text="N/A" />
+
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/val_soil_temperature_placeholder"
+                            android:layout_width="match_parent"
+                            android:layout_marginVertical="2dp"
+                            android:layout_height="25dp" >
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/shimmer_placeholder2" />
+
+                        </com.facebook.shimmer.ShimmerFrameLayout>
 
                     </LinearLayout>
 
@@ -136,7 +150,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal" >
 
                     <ImageView
@@ -151,7 +165,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
-                        android:paddingTop="6dp"
+                        android:paddingTop="3dp"
                         android:orientation="vertical" >
 
                         <TextView
@@ -166,7 +180,21 @@
                             android:layout_height="wrap_content"
                             android:textSize="22sp"
                             android:textStyle="bold"
+                            android:visibility="gone"
                             android:text="N/A" />
+
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/val_soil_moisture_placeholder"
+                            android:layout_width="match_parent"
+                            android:layout_marginVertical="2dp"
+                            android:layout_height="25dp" >
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/shimmer_placeholder2" />
+
+                        </com.facebook.shimmer.ShimmerFrameLayout>
 
                     </LinearLayout>
 
@@ -175,7 +203,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal" >
 
                     <ImageView
@@ -190,7 +218,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
-                        android:paddingTop="6dp"
+                        android:paddingTop="3dp"
                         android:orientation="vertical" >
 
                         <TextView
@@ -205,7 +233,21 @@
                             android:layout_height="wrap_content"
                             android:textSize="22sp"
                             android:textStyle="bold"
+                            android:visibility="gone"
                             android:text="N/A" />
+
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/val_soil_ph_placeholder"
+                            android:layout_width="match_parent"
+                            android:layout_marginVertical="2dp"
+                            android:layout_height="25dp" >
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/shimmer_placeholder2" />
+
+                        </com.facebook.shimmer.ShimmerFrameLayout>
 
                     </LinearLayout>
 
@@ -214,7 +256,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal" >
 
                     <ImageView
@@ -229,7 +271,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
-                        android:paddingTop="6dp"
+                        android:paddingTop="3dp"
                         android:orientation="vertical" >
 
                         <TextView
@@ -244,7 +286,21 @@
                             android:layout_height="wrap_content"
                             android:textSize="22sp"
                             android:textStyle="bold"
+                            android:visibility="gone"
                             android:text="N/A" />
+
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/val_soil_nitrogen_placeholder"
+                            android:layout_width="match_parent"
+                            android:layout_marginVertical="2dp"
+                            android:layout_height="25dp" >
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/shimmer_placeholder2" />
+
+                        </com.facebook.shimmer.ShimmerFrameLayout>
 
                     </LinearLayout>
 
@@ -253,7 +309,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal" >
 
                     <ImageView
@@ -268,7 +324,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
-                        android:paddingTop="6dp"
+                        android:paddingTop="3dp"
                         android:orientation="vertical" >
 
                         <TextView
@@ -283,7 +339,21 @@
                             android:layout_height="wrap_content"
                             android:textSize="22sp"
                             android:textStyle="bold"
+                            android:visibility="gone"
                             android:text="N/A" />
+
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/val_soil_phosphor_placeholder"
+                            android:layout_width="match_parent"
+                            android:layout_marginVertical="2dp"
+                            android:layout_height="25dp" >
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/shimmer_placeholder2" />
+
+                        </com.facebook.shimmer.ShimmerFrameLayout>
 
                     </LinearLayout>
 
@@ -292,7 +362,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal" >
 
                     <ImageView
@@ -307,7 +377,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
-                        android:paddingTop="6dp"
+                        android:paddingTop="3dp"
                         android:orientation="vertical" >
 
                         <TextView
@@ -322,7 +392,21 @@
                             android:layout_height="wrap_content"
                             android:textSize="22sp"
                             android:textStyle="bold"
+                            android:visibility="gone"
                             android:text="N/A" />
+
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/val_soil_kalium_placeholder"
+                            android:layout_width="match_parent"
+                            android:layout_marginVertical="2dp"
+                            android:layout_height="25dp" >
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/shimmer_placeholder2" />
+
+                        </com.facebook.shimmer.ShimmerFrameLayout>
 
                     </LinearLayout>
 

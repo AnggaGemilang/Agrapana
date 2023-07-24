@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -81,13 +82,18 @@ class DetailMainDeviceActivity : AppCompatActivity() {
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Wind Pressure"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Wind Intensity"))
         binding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
-        replaceFragment(ChartFragment())
+        replaceFragment(ChartFragment(passedData, "Weather"))
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
-                    0 -> replaceFragment(ChartFragment())
-                    1 -> replaceFragment(ChartFragment())
+                    0 -> replaceFragment(ChartFragment(passedData, "Weather"))
+                    1 -> replaceFragment(ChartFragment(passedData, "Pests"))
+                    2 -> replaceFragment(ChartFragment(passedData, "Warmth"))
+                    3 -> replaceFragment(ChartFragment(passedData, "Humidity"))
+                    4 -> replaceFragment(ChartFragment(passedData, "Wind Speed"))
+                    5 -> replaceFragment(ChartFragment(passedData, "Wind Pressure"))
+                    6 -> replaceFragment(ChartFragment(passedData, "Wind Intensity"))
                 }
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {}
@@ -127,6 +133,20 @@ class DetailMainDeviceActivity : AppCompatActivity() {
 //                    binding.valPest.text = message.monitoring.pest.toString()
 //                    binding.valLight.text = message.monitoring.lightIntensity.toString()
                 }
+
+                binding.valWindWarmthPlaceholder.visibility = View.GONE
+                binding.valWindHumidityPlaceholder.visibility = View.GONE
+                binding.valPestsPlaceholder.visibility = View.GONE
+                binding.valWindSpeedPlaceholder.visibility = View.GONE
+                binding.valWindPressurePlaceholder.visibility = View.GONE
+                binding.valLightIntensityPlaceholder.visibility = View.GONE
+                binding.valWindTemperature.visibility = View.VISIBLE
+                binding.valWindHumidity.visibility = View.VISIBLE
+                binding.valPest.visibility = View.VISIBLE
+                binding.valWindSpeed.visibility = View.VISIBLE
+                binding.valWindPressure.visibility = View.VISIBLE
+                binding.valLightIntensity.visibility = View.VISIBLE
+
             }
             override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
                 Log.w("Debug", "Message published to host '$MQTT_HOST'")
