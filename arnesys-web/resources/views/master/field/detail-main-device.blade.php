@@ -244,6 +244,7 @@
 
 @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/mqtt.js') }}"></script>
 
     <script>
 
@@ -252,6 +253,7 @@
         function closeLoader(){
             $(".loader").hide()
             $("body").css("overflow-y", "auto")
+            MQTTconnect()
         }
 
         $(document).ready(function() {
