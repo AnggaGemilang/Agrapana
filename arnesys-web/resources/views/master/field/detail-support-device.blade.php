@@ -39,7 +39,7 @@
                                             <div class="numbers" style="min-height: 93px;">
                                                 <p class="text-md mb-0 text-capitalize font-weight-bold">Temperature <br>
                                                     Value</p>
-                                                <h4 id="txtTemperature" class="font-weight-bolder mt-2">
+                                                <h4 id="txtSoilTemperature" class="font-weight-bolder mt-2">
                                                     25&deg;
                                                 </h4>
                                             </div>
@@ -62,8 +62,8 @@
                                             <div class="numbers" style="min-height: 93px;">
                                                 <p class="text-md mb-0 text-capitalize font-weight-bold">Moisture <br> Value
                                                 </p>
-                                                <h4 id="txtPh" class="font-weight-bolder mt-2">
-                                                    7 Ph
+                                                <h4 id="txtSoilMoisture" class="font-weight-bolder mt-2">
+                                                    40%
                                                 </h4>
                                             </div>
                                         </div>
@@ -85,7 +85,7 @@
                                             <div class="numbers" style="min-height: 93px;">
                                                 <p class="text-md mb-0 text-capitalize font-weight-bold">pH <br> Value
                                                 </p>
-                                                <h4 id="txtGas" class="font-weight-bolder mt-2">
+                                                <h4 id="txtSoilPh" class="font-weight-bolder mt-2">
                                                     7
                                                 </h4>
                                             </div>
@@ -110,7 +110,7 @@
                                             <div class="numbers" style="min-height: 93px;">
                                                 <p class="text-md mb-0 text-capitalize font-weight-bold">Nitrogen <br>
                                                     Value</p>
-                                                <h4 id="txtNutrition" class="font-weight-bolder mt-2">
+                                                <h4 id="txtSoilNitrogen" class="font-weight-bolder mt-2">
                                                     3
                                                 </h4>
                                             </div>
@@ -134,7 +134,7 @@
                                                 <p class="text-md mb-0 text-capitalize font-weight-bold">Phosphor <br>
                                                     Value
                                                 </p>
-                                                <h4 id="txtVolume" class="font-weight-bolder mt-2">
+                                                <h4 id="txtSoilPhosphor" class="font-weight-bolder mt-2">
                                                     2
                                                 </h4>
                                             </div>
@@ -158,7 +158,7 @@
                                                 <p class="text-md mb-0 text-capitalize font-weight-bold">Kalium <br>
                                                     Value
                                                 </p>
-                                                <h4 id="txtLamp" class="font-weight-bolder mt-2">
+                                                <h4 id="txtSoilKalium" class="font-weight-bolder mt-2">
                                                     2
                                                 </h4>
                                             </div>
@@ -252,19 +252,57 @@
 
 @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/mqtt.js') }}"></script>
 
     <script>
 
         var ctx = document.getElementById("chart")
+        var clientId =  "<?php echo $field->client_id; ?>"
+        var fieldId =  "<?php echo $field->id; ?>"
 
         function closeLoader(){
             $(".loader").hide()
             $("body").css("overflow-y", "auto")
         }
 
+        function MQTTconnect() {
+            console.log("connecting to "+ host +":"+ port)
+            var x = Math.floor(Math.random() * 10000)
+            var cname = "controlform-" + x
+            mqtt = new Paho.MQTT.Client(host,port,cname)
+            mqtt.onConnectionLost = onConnectionLost
+            mqtt.onMessageArrived = onMessageArrived
+            mqtt.connect({
+                timeout: 3,
+                onSuccess: onConnect,
+                onFailure: onFailure
+            })
+            return false
+        }
+
+        function onMessageArrived(r_message){
+            closeLoader()
+
+            out_msg = "Message received "+ r_message.payloadString + "<br>"
+            out_msg=out_msg+"Message received Topic "+r_message.destinationName
+
+            var topic = r_message.destinationName
+
+            if(topic==`arnesys/${clientId}/${fieldId}/pendukung/1`){
+                var data = JSON.parse(r_message.payloadString)
+                console.log(data)
+                $("#txtSoilTemperature").text(data.monitoring.soil_temperature + "°")
+                $("#txtSoilMoisture").text(data.monitoring.soil_humidity + "%")
+                $("#txtSoilPh").text(data.monitoring.soil_ph)
+                $("#txtSoilNitrogen").text(data.monitoring.soil_nitrogen)
+                $("#txtSoilPhosphor").text(data.monitoring.soil_phosphor)
+                $("#txtSoilKalium").text(data.monitoring.soil_kalium)
+            }
+        }
+
         $(document).ready(function() {
             showChart()
-            closeLoader()
+            MQTTconnect()
         })
 
         $(".nav-link").click(function() {

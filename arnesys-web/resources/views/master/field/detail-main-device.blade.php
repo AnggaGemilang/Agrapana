@@ -48,14 +48,14 @@
                                     <p class="mb-0 text-capitalize" style="margin-top: 48px; font-size: 11pt;">
                                         Wind Speed
                                     </p>
-                                    <h4 id="txtPlantName" class="mb-0 text-capitalize font-weight-bolder"
+                                    <h4 id="txtWindSpeed" class="mb-0 font-weight-bolder"
                                         style="font-size: 14pt;">
                                         7 mph
                                     </h4>
                                     <p class="mb-0 text-capitalize" style="font-size: 11pt; margin-top: 15px;">
                                         Wind Pressure
                                     </p>
-                                    <h4 id="txtStartedPlant" class="mb-0 text-capitalize font-weight-bolder"
+                                    <h4 id="txtWindPressure" class="mb-0 text-capitalize font-weight-bolder"
                                         style="font-size: 14pt;">
                                         13
                                     </h4>
@@ -74,7 +74,7 @@
                                             <div class="numbers" style="min-height: 93px;">
                                                 <p class="text-md mb-0 text-capitalize font-weight-bold">Warmth <br>
                                                     Value</p>
-                                                <h4 id="txtTemperature" class="font-weight-bolder mt-2">
+                                                <h4 id="txtWindTemperature" class="font-weight-bolder mt-2">
                                                     25&deg;
                                                 </h4>
                                             </div>
@@ -97,7 +97,7 @@
                                             <div class="numbers" style="min-height: 93px;">
                                                 <p class="text-md mb-0 text-capitalize font-weight-bold">Humidity <br> Value
                                                 </p>
-                                                <h4 id="txtPh" class="font-weight-bolder mt-2">
+                                                <h4 id="txtHumidity" class="font-weight-bolder mt-2">
                                                     20%
                                                 </h4>
                                             </div>
@@ -122,7 +122,7 @@
                                             <div class="numbers" style="min-height: 93px;">
                                                 <p class="text-md mb-0 text-capitalize font-weight-bold">Pests <br>
                                                     Forecast</p>
-                                                <h4 id="txtNutrition" class="font-weight-bolder mt-2">
+                                                <h4 id="txtPest" class="font-weight-bolder mt-2">
                                                     Safe
                                                 </h4>
                                             </div>
@@ -146,7 +146,7 @@
                                                 <p class="text-md mb-0 text-capitalize font-weight-bold">Light <br>
                                                     Intensity
                                                 </p>
-                                                <h4 id="txtLamp" class="font-weight-bolder mt-2">
+                                                <h4 id="txtLightIntensity" class="font-weight-bolder mt-2">
                                                     1000
                                                 </h4>
                                             </div>
@@ -249,17 +249,53 @@
     <script>
 
         var ctx = document.getElementById("chart")
+        var clientId =  "<?php echo $field->client_id; ?>"
+        var fieldId =  "<?php echo $field->id; ?>"
 
         function closeLoader(){
             $(".loader").hide()
             $("body").css("overflow-y", "auto")
-            MQTTconnect()
         }
 
         $(document).ready(function() {
+            MQTTconnect()
             showChart()
-            closeLoader()
         })
+
+        function MQTTconnect() {
+            console.log("connecting to "+ host +":"+ port)
+            var x = Math.floor(Math.random() * 10000)
+            var cname = "controlform-" + x
+            mqtt = new Paho.MQTT.Client(host,port,cname)
+            mqtt.onConnectionLost = onConnectionLost
+            mqtt.onMessageArrived = onMessageArrived
+            mqtt.connect({
+                timeout: 3,
+                onSuccess: onConnect,
+                onFailure: onFailure
+            })
+            return false
+        }
+
+        function onMessageArrived(r_message){
+            closeLoader()
+
+            out_msg = "Message received "+ r_message.payloadString + "<br>"
+            out_msg=out_msg+"Message received Topic "+r_message.destinationName
+
+            var topic = r_message.destinationName
+
+            if(topic==`arnesys/${clientId}/${fieldId}/utama`){
+                var data = JSON.parse(r_message.payloadString)
+                console.log(data)
+                $("#txtWindSpeed").text(data.monitoring.wind_speed + " mph")
+                $("#txtWindPressure").text(data.monitoring.wind_pressure)
+                $("#txtWindTemperature").text(data.monitoring.wind_temperature + "°")
+                $("#txtWindHumidity").text(data.monitoring.wind_humidity + "%")
+                $("#txtWindPest").text("safe")
+                $("#txtWindLightIntensity").text("sabihis")
+            }
+        }
 
         $(".nav-link").click(function() {
             const title = $(this).find("span").text()
