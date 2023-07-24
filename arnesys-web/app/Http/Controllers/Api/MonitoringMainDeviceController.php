@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\MonitoringMainDevice;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class MonitoringMainDeviceController extends Controller
@@ -24,16 +25,19 @@ class MonitoringMainDeviceController extends Controller
         $monitoringMainDevice = [];
         if($type == "latest"){
             $monitoringMainDevice = MonitoringMainDevice::select($column, 'created_at')
-            ->where('field_id', $id)
-            ->paginate(5);
+                ->where('field_id', $id)
+                ->orderBy('created_at', 'DESC')
+                ->paginate(5);
         } else if($type == "hour"){
-            $monitoringMainDevice = MonitoringMainDevice::select($column, 'created_at')
-            ->where('field_id', $id)
-            ->paginate(5);
+            $monitoringMainDevice = MonitoringMainDevice::select($column, DB::raw('HOUR(created_at)'))
+                ->where('field_id', $id)
+                ->groupBy(DB::raw('HOUR(created_at)'))
+                ->paginate(5);
         } else {
-            $monitoringMainDevice = MonitoringMainDevice::select($column, 'created_at')
-            ->where('field_id', $id)
-            ->paginate(5);
+            $monitoringMainDevice = MonitoringMainDevice::select($column, DB::raw('DAY(created_at)'))
+                ->where('field_id', $id)
+                ->groupBy(DB::raw('DAY(created_at)'))
+                ->paginate(5);
         }
         return $monitoringMainDevice;
     }

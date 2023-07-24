@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\MonitoringSupportDevice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MonitoringSupportDeviceController extends Controller
 {
@@ -25,21 +26,23 @@ class MonitoringSupportDeviceController extends Controller
     {
         $monitoringSupportDevice = [];
         if($type == "latest"){
-            dd($id);
-            $monitoringSupportDevice = MonitoringSupportDevice::select($column)
-            ->where('number_of', $number)
-            ->where('field_id', $id)
-            ->paginate(5);
+            $monitoringSupportDevice = MonitoringSupportDevice::select($column, "created_at")
+                ->where('number_of', $number)
+                ->where('field_id', $id)
+                ->orderBy('created_at', 'DESC')
+                ->paginate('10');
         } else if($type == "hour"){
-            $monitoringSupportDevice = MonitoringSupportDevice::select($column)
-            ->where('number_of', $number)
-            ->where('field_id', $id)
-            ->paginate(5);
+            $monitoringSupportDevice = MonitoringSupportDevice::select($column, DB::raw('HOUR(created_at)'))
+                ->where('number_of', $number)
+                ->where('field_id', $id)
+                ->groupBy(DB::raw('HOUR(created_at)'))
+                ->paginate('10');
         } else {
-            $monitoringSupportDevice = MonitoringSupportDevice::select($column)
-            ->where('number_of', $number)
-            ->where('field_id', $id)
-            ->paginate(5);
+            $monitoringSupportDevice = MonitoringSupportDevice::select($column, DB::raw('DAY(created_at)'))
+                ->where('number_of', $number)
+                ->where('field_id', $id)
+                ->groupBy(DB::raw('DAY(created_at)'))
+                ->paginate('10');
         }
         return $monitoringSupportDevice;
     }
