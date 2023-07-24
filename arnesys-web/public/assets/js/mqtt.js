@@ -28,28 +28,12 @@ function onMessageArrived(r_message){
 
     console.log(topic)
 
-    if(topic=="arceniter/monitoring"){
+    if(topic=="arnesys/d02557b0-c0fa-415e-924c-ac624a691c0d/cd3eb1ad-f3ee-4fa4-bf19-0e4f7da89746/utama"){
         var data = JSON.parse(r_message.payloadString)
         console.log(data)
-        $("#txtTemperature").text(data.temperature + '\u00B0')
-        $("#txtPh").text(data.ph + " Ph")
-        $("#txtGas").text(data.gas + " PPM")
-        $("#txtNutrition").text(data.nutrition + " PPM")
-        $("#txtVolume").text(data.nutrition_volume + "%")
-    }
-    if(topic=="arceniter/common"){
+    } else if(topic=="arnesys/d02557b0-c0fa-415e-924c-ac624a691c0d/cd3eb1ad-f3ee-4fa4-bf19-0e4f7da89746/pendukung/1"){
         var data = JSON.parse(r_message.payloadString)
         console.log(data)
-        $("#txtPlantName").text(data.plant_name.split('#')[0])
-        let custom = data.started_planting.split(',')[0] + ", " + data.started_planting.split(',')[1]
-        $("#txtStartedPlant").text(custom)
-        if(data.is_planting == "no"){
-            $(".not-found2").css('display', 'flex')
-            $(".content-wrapper").css('display', 'none')
-        } else {
-            $(".not-found2").css('display', 'hidden')
-            $(".content-wrapper").css('display', 'flex')
-        }
     }
 }
 
