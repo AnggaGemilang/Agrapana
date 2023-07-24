@@ -16,9 +16,13 @@
 
 </head>
 
-<body class="g-sidenav-show bg-gray-100">
+<body class="g-sidenav-show bg-gray-100" style="overflow-y: hidden;">
 
     @include('sweetalert::alert')
+
+    <div class="loader">
+        <img style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);" src="{{ asset('assets/img/loader/loader1.gif') }}" />
+    </div>
 
     <div class="min-height-300 position-absolute w-100" style="background: #4C7E81;"></div>
 

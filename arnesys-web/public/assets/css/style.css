@@ -42,3 +42,14 @@ footer {
 .avatar {
     object-fit: cover;
 }
+
+.loader {
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background: #F1F2F3;
+    min-height: 100vh;
+    z-index: 99999999;
+}

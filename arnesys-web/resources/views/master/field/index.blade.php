@@ -195,6 +195,15 @@
         $(this).closest('tr').next().find('.detail-elements').slideToggle(200, 'linear')
     });
 
+    function closeLoader(){
+        $(".loader").hide()
+        $("body").css("overflow-y", "auto")
+    }
+
+    $(document).ready(function() {
+        closeLoader()
+    })
+
 </script>
 
 @endpush

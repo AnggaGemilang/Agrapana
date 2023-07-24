@@ -249,8 +249,14 @@
 
         var ctx = document.getElementById("chart")
 
+        function closeLoader(){
+            $(".loader").hide()
+            $("body").css("overflow-y", "auto")
+        }
+
         $(document).ready(function() {
             showChart()
+            closeLoader()
         })
 
         $(".nav-link").click(function() {
