@@ -176,11 +176,6 @@
         $("#addNewFieldModal").modal("hide")
     })
 
-    function closeLoader(){
-        $(".loader").hide()
-        $("body").css("overflow-y", "auto")
-    }
-
     $(document).ready(function() {
         closeLoader()
     })

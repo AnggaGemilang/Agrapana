@@ -187,11 +187,6 @@
             mytime = setTimeout('display_ct7()', refresh)
         }
 
-        function closeLoader(){
-            $(".loader").hide()
-            $("body").css("overflow-y", "auto")
-        }
-
         $(document).ready(function() {
             display_c7()
         })

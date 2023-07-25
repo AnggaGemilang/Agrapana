@@ -185,27 +185,27 @@
                         <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link active" href="#1" role="tab" aria-selected="false"
                                 data-toggle="tab">
-                                <span class="text-success text-bold size">Warmth</span>
+                                <span class="text-success text-bold size" data-column="soil_temperature">Warmth</span>
                             </a>
                             <a class="nav-item nav-link " href="#1" role="tab" aria-selected="false"
                                 data-toggle="tab">
-                                <span class="text-success text-bold size">Moisture</span>
+                                <span class="text-success text-bold size" data-column="soil_humidity">Moisture</span>
                             </a>
                             <a class="nav-item nav-link " href="#1" role="tab" aria-selected="false"
                                 data-toggle="tab">
-                                <span class="text-success text-bold size">pH</span>
+                                <span class="text-success text-bold size" data-column="soil_ph">pH</span>
                             </a>
                             <a class="nav-item nav-link " href="#1" role="tab" aria-selected="false"
                                 data-toggle="tab">
-                                <span class="text-success text-bold size">Nitrogen</span>
+                                <span class="text-success text-bold size" data-column="soil_nitrogen">Nitrogen</span>
                             </a>
                             <a class="nav-item nav-link " href="#1" role="tab" aria-selected="false"
                                 data-toggle="tab">
-                                <span class="text-success text-bold size">Phosphor</span>
+                                <span class="text-success text-bold size" data-column="soil_phosphor">Phosphor</span>
                             </a>
                             <a class="nav-item nav-link " href="#1" role="tab" aria-selected="false"
                                 data-toggle="tab">
-                                <span class="text-success text-bold size">Kalium</span>
+                                <span class="text-success text-bold size" data-column="soil_kalium">Kalium</span>
                             </a>
                         </div>
                     </nav>
@@ -215,8 +215,8 @@
                                 <div class="col">
                                     <h4 id="valDataType">Warmth</h4>
                                 </div>
-                                <div class="col d-flex justify-content-end">
-                                    <select class="form-select" style="width: 150px;">
+                                <div class="col d-flex justify-content-end" style="margin-right: 15px;">
+                                    <select class="form-select" id="filter-history" style="width: 150px;">
                                         <option value="latest" selected>Latest</option>
                                         <option value="hour">Per Hour</option>
                                         <option value="day">Per Day</option>
@@ -243,7 +243,7 @@
 
         .tab-pane {
             padding-left: 75px;
-            padding-right: 65px;
+            padding-right: 60px;
             padding-top: 50px;
             padding-bottom: 50px;
         }
@@ -256,24 +256,23 @@
 
     <script>
 
+        var myChart
         var ctx = document.getElementById("chart")
         var clientId =  "<?php echo $field->client_id; ?>"
         var fieldId =  "<?php echo $field->id; ?>"
+        var title = "Warmth"
+        var column = "soil_temperature"
+        var number = "1"
+        var type = "latest"
 
-        function getDataChart(fieldId, number, column, filterType){
+        function getDataChart(fieldId, number, column, type, title){
             $.ajax({
-                url:"/api/monitoring-support-devices/get-chart/" + fieldId +  "/" + number + "/" + column + "/" + filterType,
+                url:"/api/monitoring-support-devices/get-chart/" + fieldId +  "/" + number + "/" + column + "/" + type,
                 type:"GET",
-                success: function(val) {
-                    console.log(val)
-                    showChart()
+                success: function(datas) {
+                    showChart(title, datas)
                 }
             });
-        }
-
-        function closeLoader(){
-            $(".loader").hide()
-            $("body").css("overflow-y", "auto")
         }
 
         function MQTTconnect() {
@@ -311,14 +310,22 @@
             }
         }
 
-        function showChart(){
-            var myChart = new Chart(ctx, {
+        function showChart(title, datas){
+            myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['1/3/2023', '1/10/2023', '1/17/2023', '1/24/2023'],
+                    labels: datas.data.map(function(a){
+                        const dateFormat = new Date(a.created_at)
+                        return dateFormat.getDate()+
+                            "/"+(dateFormat.getMonth()+1)+
+                            "/"+dateFormat.getFullYear()+
+                            " "+dateFormat.getHours()+
+                            ":"+dateFormat.getMinutes()+
+                            ":"+dateFormat.getSeconds();
+                    }),
                     datasets: [{
-                        label: 'Number of Leaves',
-                        data: [3, 5, 7, 10],
+                        label: title,
+                        data: datas.data.map(a => a.value),
                         backgroundColor: [
                             '#66BB6A',
                         ],
@@ -328,18 +335,39 @@
                         borderWidth: 1
                     }]
                 },
+                options: {
+                    animation: false,
+                    scales: {
+                        x: {
+                            ticks: {
+                                maxRotation: 90,
+                                minRotation: 90
+                            }
+                        }
+                    }
+                }
             })
         }
 
         $(".nav-link").click(function() {
-            const title = $(this).find("span").text()
+            openLoader()
+            title = $(this).find("span").text()
+            column = $(this).find("span").attr("data-column")
             $("#valDataType").text(title)
-            getDataChart(fieldId, 1, "soil_temperature", "latest")
+            myChart.destroy()
+            getDataChart(fieldId, number, column, type, title)
+        })
+
+        $("#filter-history").change(function() {
+            openLoader()
+            type = $(this).val()
+            myChart.destroy()
+            getDataChart(fieldId, number, column, type, title)
         })
 
         $(document).ready(function() {
             MQTTconnect()
-            getDataChart(fieldId, 1, "soil_temperature", "latest")
+            getDataChart(fieldId, number, column, type, title)
         })
 
     </script>
