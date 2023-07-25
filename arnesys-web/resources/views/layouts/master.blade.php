@@ -21,7 +21,8 @@
     @include('sweetalert::alert')
 
     <div class="loader">
-        <img style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);" src="{{ asset('assets/img/loader/loader1.gif') }}" />
+        <img style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);"
+            src="{{ asset('assets/img/loader/loader1.gif') }}" />
     </div>
 
     <div class="min-height-300 position-absolute w-100" style="background: #4C7E81;"></div>
@@ -33,7 +34,8 @@
         <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur"
             data-scroll="false">
 
-            <div class="container-fluid py-1 px-3 pt-3" style="padding-left: 0 !important; padding-right: 0 !important;">
+            <div class="container-fluid py-1 px-3 pt-3"
+                style="padding-left: 0 !important; padding-right: 0 !important;">
 
                 @yield('breadcrumb-content')
 
@@ -96,14 +98,15 @@
 
     </main>
 
-    <script type="text/javascript" src="{{ asset('assets') }}/landing-page/js/jquery-3.4.1.min.js"></script>
+    <script src="{{ asset('assets') }}/landing-page/js/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="{{ asset('assets') }}/js/core/popper.min.js"></script>
-    <script src="{{ asset('assets') }}/js/argon-dashboard.min.js"></script>
-    <script src="{{ asset('assets') }}/js/script.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="{{ asset('assets') }}/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="{{ asset('assets') }}/js/plugins/smooth-scrollbar.min.js"></script>
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ asset('assets') }}/js/plugins/chartjs.min.js"></script>
+    <script src="{{ asset('assets') }}/js/script.js"></script>
 
     @stack('js')
 </body>

@@ -12,11 +12,6 @@ function onConnectionLost(){
     connected_flag = 0
 }
 
-function onFailure(message) {
-    console.log("Failed")
-    setTimeout(MQTTconnect, reconnectTimeout)
-}
-
 function onConnected(recon,url){
     console.log(" in onConnected " + reconn)
 }

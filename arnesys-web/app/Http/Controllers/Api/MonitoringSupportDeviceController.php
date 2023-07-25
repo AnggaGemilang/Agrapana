@@ -36,13 +36,13 @@ class MonitoringSupportDeviceController extends Controller
                 ->where('number_of', $number)
                 ->where('field_id', $id)
                 ->groupBy(DB::raw('HOUR(created_at)'))
-                ->paginate('10');
+                ->paginate(10);
         } else {
             $monitoringSupportDevice = MonitoringSupportDevice::select($column . " AS value", 'created_at', DB::raw('DAY(created_at) AS day'))
                 ->where('number_of', $number)
                 ->where('field_id', $id)
                 ->groupBy(DB::raw('DAY(created_at)'))
-                ->paginate('10');
+                ->paginate(10);
         }
         return $monitoringSupportDevice;
     }

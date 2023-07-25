@@ -276,6 +276,12 @@
             return false
         }
 
+        function onFailure(message) {
+            console.log("Failed")
+            setTimeout(MQTTconnect, reconnectTimeout)
+            MQTTconnect()
+        }
+
         function onMessageArrived(r_message){
             closeLoader()
 
