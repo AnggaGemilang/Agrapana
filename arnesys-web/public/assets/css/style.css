@@ -1,3 +1,16 @@
+body {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.scroller-wrapper {
+    height: 100%;
+    position: relative;
+}
+
 .parameter-preset {
     font-size: 10pt !important;
 }
@@ -28,12 +41,9 @@
     display: flex;
 }
 
-main {
-    display: none;
-}
-
 .main-content {
     min-height: 100vh;
+    display: none;
 }
 
 footer {

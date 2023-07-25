@@ -261,27 +261,6 @@
             MQTTconnect()
         })
 
-        function MQTTconnect() {
-            // console.log("connecting to "+ host +":"+ port)
-            var x = Math.floor(Math.random() * 10000)
-            var cname = "controlform-" + x
-            mqtt = new Paho.MQTT.Client(host,port,cname)
-            mqtt.onConnectionLost = onConnectionLost
-            mqtt.onMessageArrived = onMessageArrived
-            mqtt.connect({
-                timeout: 3,
-                onSuccess: onConnect,
-                onFailure: onFailure
-            })
-            return false
-        }
-
-        function onFailure(message) {
-            console.log("Failed")
-            setTimeout(MQTTconnect, reconnectTimeout)
-            MQTTconnect()
-        }
-
         function onMessageArrived(r_message){
             closeLoader()
 

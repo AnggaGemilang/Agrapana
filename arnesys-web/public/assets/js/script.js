@@ -4,9 +4,14 @@
 
     if (isWindows) {
 
+        if (document.getElementsByClassName('scroller-wrapper')[0]) {
+            var sidebar = document.querySelector('.scroller-wrapper');
+            var ps2 = new PerfectScrollbar(sidebar);
+        };
+
         if (document.getElementsByClassName('sidenav')[0]) {
             var sidebar = document.querySelector('.sidenav');
-            var ps1 = new PerfectScrollbar(sidebar);
+            var ps2 = new PerfectScrollbar(sidebar);
         };
 
     };
@@ -14,12 +19,16 @@
 
 function closeLoader(){
     $(".loader").hide()
-    $("main").show()
-    $("body").css("overflow-y", "auto")
+    $(".main-content").show()
+    $(".ps__rail-x").show()
+    $(".ps__rail-y").show()
+    $(".scroller-wrapper").css("overflow-y", "auto")
 }
 
 function openLoader(){
     $(".loader").show()
-    $("main").hide()
-    $("body").css("overflow-y", "hidden")
+    $(".main-content").hide()
+    $(".ps__rail-x").hide()
+    $(".ps__rail-y").hide()
+    $(".scroller-wrapper").css("overflow-y", "hidden")
 }
