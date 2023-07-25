@@ -216,10 +216,10 @@
                                     <h4 id="valDataType">Warmth</h4>
                                 </div>
                                 <div class="col d-flex justify-content-end">
-                                    <select class="form-select" style="width: 200px;">
-                                        <option selected>Last Time</option>
-                                        <option value="1">Per 2 Hour</option>
-                                        <option value="2">Per data</option>
+                                    <select class="form-select" style="width: 150px;">
+                                        <option value="latest" selected>Latest</option>
+                                        <option value="hour">Per Hour</option>
+                                        <option value="day">Per Day</option>
                                     </select>
                                 </div>
                             </div>
@@ -260,13 +260,24 @@
         var clientId =  "<?php echo $field->client_id; ?>"
         var fieldId =  "<?php echo $field->id; ?>"
 
+        function getDataChart(fieldId, number, column, filterType){
+            $.ajax({
+                url:"/api/monitoring-support-devices/get-chart/" + fieldId +  "/" + number + "/" + column + "/" + filterType,
+                type:"GET",
+                success: function(val) {
+                    console.log(val)
+                    showChart()
+                }
+            });
+        }
+
         function closeLoader(){
             $(".loader").hide()
             $("body").css("overflow-y", "auto")
         }
 
         function MQTTconnect() {
-            console.log("connecting to "+ host +":"+ port)
+            // console.log("connecting to "+ host +":"+ port)
             var x = Math.floor(Math.random() * 10000)
             var cname = "controlform-" + x
             mqtt = new Paho.MQTT.Client(host,port,cname)
@@ -290,7 +301,7 @@
 
             if(topic==`arnesys/${clientId}/${fieldId}/pendukung/1`){
                 var data = JSON.parse(r_message.payloadString)
-                console.log(data)
+                // console.log(data)
                 $("#txtSoilTemperature").text(data.monitoring.soil_temperature + "°")
                 $("#txtSoilMoisture").text(data.monitoring.soil_humidity + "%")
                 $("#txtSoilPh").text(data.monitoring.soil_ph)
@@ -299,17 +310,6 @@
                 $("#txtSoilKalium").text(data.monitoring.soil_kalium)
             }
         }
-
-        $(document).ready(function() {
-            showChart()
-            MQTTconnect()
-        })
-
-        $(".nav-link").click(function() {
-            const title = $(this).find("span").text()
-            $("#valDataType").text(title)
-            showChart()
-        })
 
         function showChart(){
             var myChart = new Chart(ctx, {
@@ -330,6 +330,17 @@
                 },
             })
         }
+
+        $(".nav-link").click(function() {
+            const title = $(this).find("span").text()
+            $("#valDataType").text(title)
+            getDataChart(fieldId, 1, "soil_temperature", "latest")
+        })
+
+        $(document).ready(function() {
+            MQTTconnect()
+            getDataChart(fieldId, 1, "soil_temperature", "latest")
+        })
 
     </script>
 @endpush

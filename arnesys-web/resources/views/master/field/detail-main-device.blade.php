@@ -208,10 +208,10 @@
                                     <h4 id="valDataType">Weather</h4>
                                 </div>
                                 <div class="col d-flex justify-content-end">
-                                    <select class="form-select" style="width: 200px;">
-                                        <option selected>Last Time</option>
-                                        <option value="1">Per 2 Hour</option>
-                                        <option value="2">Per data</option>
+                                    <select class="form-select" style="width: 150px;">
+                                        <option value="latest" selected>Latest</option>
+                                        <option value="hour">Per Hour</option>
+                                        <option value="day">Per Day</option>
                                     </select>
                                 </div>
                             </div>

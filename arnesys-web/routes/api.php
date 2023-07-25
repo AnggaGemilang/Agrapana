@@ -28,8 +28,8 @@ Route::group([
     Route::apiResource('monitoring-main-devices', 'MonitoringMainDeviceController');
     Route::apiResource('monitoring-support-devices', 'MonitoringSupportDeviceController');
 
-    Route::get('/monitoring-main-devices/get-by-column/{id}/{column}', [MonitoringMainDeviceController::class, 'getByColumn']);
-    Route::get('/monitoring-support-devices/get-by-column/{id}/{number}/{column}', [MonitoringSupportDeviceController::class, 'getByColumn']);
+    Route::get('/monitoring-main-devices/get-chart/{id}/{column}/{type}', [MonitoringMainDeviceController::class, 'getChartData']);
+    Route::get('/monitoring-support-devices/get-chart/{id}/{number}/{column}/{type}', [MonitoringSupportDeviceController::class, 'getChartData']);
 
     Route::get('/login/post', [AuthController::class, 'login']);
     Route::get('/field/{id}', [FieldController::class, 'show']);

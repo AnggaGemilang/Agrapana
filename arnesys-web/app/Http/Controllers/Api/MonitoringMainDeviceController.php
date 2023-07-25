@@ -19,10 +19,22 @@ class MonitoringMainDeviceController extends Controller
         return $monitoringMainDevice;
     }
 
-    public function getByColumn($id, $column)
+    public function getChartData($id, $column, $type)
     {
-        return MonitoringMainDevice::select($column)
+        $monitoringMainDevice = [];
+        if($type == "latest"){
+            $monitoringMainDevice = MonitoringMainDevice::select($column, 'created_at')
             ->where('field_id', $id)
             ->paginate(5);
+        } else if($type == "hour"){
+            $monitoringMainDevice = MonitoringMainDevice::select($column, 'created_at')
+            ->where('field_id', $id)
+            ->paginate(5);
+        } else {
+            $monitoringMainDevice = MonitoringMainDevice::select($column, 'created_at')
+            ->where('field_id', $id)
+            ->paginate(5);
+        }
+        return $monitoringMainDevice;
     }
 }
