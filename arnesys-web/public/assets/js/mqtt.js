@@ -2,7 +2,7 @@ var connected_flag = 0
 var mqtt
 var reconnectTimeout = 2000
 var host="test.mosquitto.org"
-var port=1883
+var port=8080
 var sub_topic="arnesys/#"
 
 function onConnectionLost(){
@@ -27,7 +27,6 @@ function MQTTconnect() {
     mqtt.onConnectionLost = onConnectionLost
     mqtt.onMessageArrived = onMessageArrived
     mqtt.connect({
-        useSSL: true,
         timeout: 5,
         onSuccess: onConnect,
         onFailure: onFailure
