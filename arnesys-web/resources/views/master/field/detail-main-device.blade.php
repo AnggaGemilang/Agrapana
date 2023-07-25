@@ -173,31 +173,31 @@
                         <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link active " role="tab" aria-selected="true" href="#1"
                                 data-toggle="tab">
-                                <span class="text-success text-bold size">Weather</span>
+                                <span class="text-success text-bold size" data-column="wind_temperature">Weather</span>
                             </a>
                             <a class="nav-item nav-link " href="#1" role="tab" aria-selected="false"
                                 data-toggle="tab">
-                                <span class="text-success text-bold size">Pests</span>
+                                <span class="text-success text-bold size" data-column="wind_temperature">Pests</span>
                             </a>
                             <a class="nav-item nav-link " href="#1" role="tab" aria-selected="false"
                                 data-toggle="tab">
-                                <span class="text-success text-bold size">Warmth</span>
+                                <span class="text-success text-bold size" data-column="wind_temperature">Warmth</span>
                             </a>
                             <a class="nav-item nav-link " href="#1" role="tab" aria-selected="false"
                                 data-toggle="tab">
-                                <span class="text-success text-bold size">Humidity</span>
+                                <span class="text-success text-bold size" data-column="wind_humidity">Humidity</span>
                             </a>
                             <a class="nav-item nav-link " href="#1" role="tab" aria-selected="false"
                                 data-toggle="tab">
-                                <span class="text-success text-bold size">Wind Speed</span>
+                                <span class="text-success text-bold size" data-column="wind_speed">Wind Speed</span>
                             </a>
                             <a class="nav-item nav-link " href="#1" role="tab" aria-selected="false"
                                 data-toggle="tab">
-                                <span class="text-success text-bold size">Wind Pressure</span>
+                                <span class="text-success text-bold size" data-column="wind_pressure">Wind Pressure</span>
                             </a>
                             <a class="nav-item nav-link " href="#1" role="tab" aria-selected="false"
                                 data-toggle="tab">
-                                <span class="text-success text-bold size">Light Intensity</span>
+                                <span class="text-success text-bold size" data-column="light_intensity">Light Intensity</span>
                             </a>
                         </div>
                     </nav>
@@ -207,8 +207,8 @@
                                 <div class="col">
                                     <h4 id="valDataType">Weather</h4>
                                 </div>
-                                <div class="col d-flex justify-content-end">
-                                    <select class="form-select" style="width: 150px;">
+                                <div class="col d-flex justify-content-end" style="margin-right: 15px;">
+                                    <select class="form-select" id="filter-history" style="width: 150px;">
                                         <option value="latest" selected>Latest</option>
                                         <option value="hour">Per Hour</option>
                                         <option value="day">Per Day</option>
@@ -235,7 +235,7 @@
 
         .tab-pane {
             padding-left: 75px;
-            padding-right: 65px;
+            padding-right: 60px;
             padding-top: 50px;
             padding-bottom: 50px;
         }
@@ -248,22 +248,21 @@
 
     <script>
 
+        var myChart
         var ctx = document.getElementById("chart")
         var clientId =  "<?php echo $field->client_id; ?>"
         var fieldId =  "<?php echo $field->id; ?>"
-
-        function closeLoader(){
-            $(".loader").hide()
-            $("body").css("overflow-y", "auto")
-        }
+        var title = "Weather"
+        var column = "wind_temperature"
+        var type = "latest"
 
         $(document).ready(function() {
+            getDataChart(fieldId, column, type, title)
             MQTTconnect()
-            showChart()
         })
 
         function MQTTconnect() {
-            console.log("connecting to "+ host +":"+ port)
+            // console.log("connecting to "+ host +":"+ port)
             var x = Math.floor(Math.random() * 10000)
             var cname = "controlform-" + x
             mqtt = new Paho.MQTT.Client(host,port,cname)
@@ -287,7 +286,7 @@
 
             if(topic==`arnesys/${clientId}/${fieldId}/utama`){
                 var data = JSON.parse(r_message.payloadString)
-                console.log(data)
+                // console.log(data)
                 $("#txtWindSpeed").text(data.monitoring.wind_speed + " mph")
                 $("#txtWindPressure").text(data.monitoring.wind_pressure)
                 $("#txtWindTemperature").text(data.monitoring.wind_temperature + "°")
@@ -297,20 +296,48 @@
             }
         }
 
+        function getDataChart(fieldId, column, filterType, title){
+            $.ajax({
+                url:"/api/monitoring-main-devices/get-chart/" + fieldId + "/" + column + "/" + filterType,
+                type:"GET",
+                success: function(datas) {
+                    showChart(title, datas)
+                }
+            });
+        }
+
         $(".nav-link").click(function() {
-            const title = $(this).find("span").text()
+            openLoader()
+            title = $(this).find("span").text()
+            column = $(this).find("span").attr("data-column")
             $("#valDataType").text(title)
-            showChart()
+            myChart.destroy()
+            getDataChart(fieldId, column, type, title)
         })
 
-        function showChart(){
-            var myChart = new Chart(ctx, {
+        $("#filter-history").change(function() {
+            openLoader()
+            type = $(this).val()
+            myChart.destroy()
+            getDataChart(fieldId, column, type, title)
+        })
+
+        function showChart(title, datas){
+            myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['1/3/2023', '1/10/2023', '1/17/2023', '1/24/2023'],
+                    labels: datas.data.map(function(a){
+                        const dateFormat = new Date(a.created_at)
+                        return dateFormat.getDate()+
+                            "/"+(dateFormat.getMonth()+1)+
+                            "/"+dateFormat.getFullYear()+
+                            " "+dateFormat.getHours()+
+                            ":"+dateFormat.getMinutes()+
+                            ":"+dateFormat.getSeconds();
+                    }),
                     datasets: [{
-                        label: 'Number of Leaves',
-                        data: [3, 5, 7, 10],
+                        label: title,
+                        data: datas.data.map(a => a.value),
                         backgroundColor: [
                             '#66BB6A',
                         ],
@@ -320,6 +347,17 @@
                         borderWidth: 1
                     }]
                 },
+                options: {
+                    animation: false,
+                    scales: {
+                        x: {
+                            ticks: {
+                                maxRotation: 90,
+                                minRotation: 90
+                            }
+                        }
+                    }
+                }
             })
         }
 

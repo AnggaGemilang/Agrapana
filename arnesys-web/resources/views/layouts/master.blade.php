@@ -28,7 +28,7 @@
 
     @include('components.master.sidebar')
 
-    <main class="main-content position-relative border-radius-lg ">
+    <main class="main-content position-relative border-radius-lg">
 
         <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur"
             data-scroll="false">
@@ -100,7 +100,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="{{ asset('assets') }}/js/core/popper.min.js"></script>
-    <script src="{{ asset('assets') }}/js/argon-dashboard.min.js?v=2.0.4"></script>
+    <script src="{{ asset('assets') }}/js/argon-dashboard.min.js"></script>
+    <script src="{{ asset('assets') }}/js/script.js"></script>
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 

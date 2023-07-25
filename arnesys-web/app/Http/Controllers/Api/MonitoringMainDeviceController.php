@@ -24,20 +24,20 @@ class MonitoringMainDeviceController extends Controller
     {
         $monitoringMainDevice = [];
         if($type == "latest"){
-            $monitoringMainDevice = MonitoringMainDevice::select($column, 'created_at')
+            $monitoringMainDevice = MonitoringMainDevice::select($column . " AS value", 'created_at')
                 ->where('field_id', $id)
                 ->orderBy('created_at', 'DESC')
-                ->paginate(5);
+                ->paginate(10);
         } else if($type == "hour"){
-            $monitoringMainDevice = MonitoringMainDevice::select($column, DB::raw('HOUR(created_at)'))
+            $monitoringMainDevice = MonitoringMainDevice::select($column . " AS value", 'created_at', DB::raw('HOUR(created_at) AS hour'))
                 ->where('field_id', $id)
                 ->groupBy(DB::raw('HOUR(created_at)'))
-                ->paginate(5);
+                ->paginate(10);
         } else {
-            $monitoringMainDevice = MonitoringMainDevice::select($column, DB::raw('DAY(created_at)'))
+            $monitoringMainDevice = MonitoringMainDevice::select($column . " AS value", 'created_at', DB::raw('DAY(created_at) AS day'))
                 ->where('field_id', $id)
                 ->groupBy(DB::raw('DAY(created_at)'))
-                ->paginate(5);
+                ->paginate(10);
         }
         return $monitoringMainDevice;
     }

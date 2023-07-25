@@ -23,7 +23,7 @@ function onConnected(recon,url){
 
 function onConnect() {
     connected_flag = 1
-    console.log("on Connect "+connected_flag)
+    // console.log("on Connect "+connected_flag)
     mqtt.subscribe(sub_topic)
   }
 
