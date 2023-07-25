@@ -78,7 +78,7 @@ void loop() {
 
   unsigned long now = millis();
 
-  if (now - lastMsg > 5000) {
+  if (now - lastMsg > 4500) {
     
     lastMsg = now;
 
@@ -164,7 +164,7 @@ void loop() {
     httpMainDevice.begin(SERVER1);
 
     httpMainDevice.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    String httpRequestData = "&wind_temperature=" + String(windTemperature) + "&wind_humidity=" + String(windHumidity) + "&wind_pressure=" + String(windPressure) + "&wind_speed=" + String(windSpeed) + "&rainfall=" + String(rainfall) + "&light_intensity=" + String(lightIntensity) + "&field_id=" + String(CLIENT_CODE);
+    String httpRequestData = "&wind_temperature=" + String(windTemperature) + "&wind_humidity=" + String(windHumidity) + "&wind_pressure=" + String(windPressure) + "&wind_speed=" + String(windSpeed) + "&rainfall=" + String(rainfall) + "&light_intensity=" + String(lightIntensity) + "&field_id=" + String(FIELD_CODE);
     int httpResponseCode = httpMainDevice.POST(httpRequestData);
            
     Serial.print("HTTP Response code is: ");
@@ -178,7 +178,7 @@ void loop() {
     httpSupportDevice.begin(SERVER2);
 
     httpSupportDevice.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    String httpRequestData2 = "&number_of=1&soil_temperature=" + String(soilTemperature) + "&soil_humidity=" + String(soilHumidity) + "&soil_ph=" + String(soilPh) + "&soil_nitrogen=" + String(soilNitrogen) + "&soil_phosphor=" + String(soilPhosphor) + "&soil_kalium=" + String(soilKalium) + "&field_id=" + String(CLIENT_CODE);
+    String httpRequestData2 = "&number_of=1&soil_temperature=" + String(soilTemperature) + "&soil_humidity=" + String(soilHumidity) + "&soil_ph=" + String(soilPh) + "&soil_nitrogen=" + String(soilNitrogen) + "&soil_phosphor=" + String(soilPhosphor) + "&soil_kalium=" + String(soilKalium) + "&field_id=" + String(FIELD_CODE);
     int httpResponseCode2 = httpSupportDevice.POST(httpRequestData2);
     
     Serial.print("HTTP Response code is: ");
