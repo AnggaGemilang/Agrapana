@@ -79,7 +79,7 @@ class DetailMainDeviceActivity : AppCompatActivity() {
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Humidity"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Wind Speed"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Wind Pressure"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Wind Intensity"))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Light Intensity"))
         binding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
         replaceFragment(MainDeviceChartFragment(passedData.id!!, "Weather"))
 
@@ -92,7 +92,7 @@ class DetailMainDeviceActivity : AppCompatActivity() {
                     3 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Humidity"))
                     4 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Wind Speed"))
                     5 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Wind Pressure"))
-                    6 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Wind Intensity"))
+                    6 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Light Intensity"))
                 }
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {}

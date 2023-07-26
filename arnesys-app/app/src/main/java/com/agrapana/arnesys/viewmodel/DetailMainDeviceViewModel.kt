@@ -1,5 +1,6 @@
 package com.agrapana.arnesys.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.agrapana.arnesys.api.FieldService
@@ -20,6 +21,11 @@ class DetailMainDeviceViewModel: ViewModel() {
     }
 
     fun getChartMainDevice(id: String, column: String, type: String) {
+
+        Log.d("dadang_id", id)
+        Log.d("dadang_column", column)
+        Log.d("dadang_type", type)
+
         val retroInstance = RetroInstance.getRetroInstance().create(MonitoringMainDeviceService::class.java)
         retroInstance.getChartOfMonitoringMainDevice(id, column, type)
             .enqueue(object : Callback<ChartMainDeviceResponse> {
@@ -28,6 +34,7 @@ class DetailMainDeviceViewModel: ViewModel() {
                     response: Response<ChartMainDeviceResponse>)
                 {
                     if(response.isSuccessful){
+                        Log.d("dadang_nanang", response.body().toString())
                         loadChartMainDevice.postValue(response.body())
                     } else {
                         loadChartMainDevice.postValue(null)

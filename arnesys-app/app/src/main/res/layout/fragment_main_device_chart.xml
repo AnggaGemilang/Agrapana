@@ -32,7 +32,7 @@
 
             <Spinner
                 android:id="@+id/spinner"
-                android:layout_width="140dp"
+                android:layout_width="145dp"
                 android:layout_height="wrap_content"
                 android:entries="@array/val_component_state"
                 app:popupTheme="@style/Spinner.Custom"

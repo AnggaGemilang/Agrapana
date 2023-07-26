@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -46,15 +47,52 @@ class SupportDeviceChartFragment(
         binding.columnName.text = column
 
         initViewModel()
+
+        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                //
+            }
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                type = parent?.getItemAtPosition(position).toString().lowercase()
+                getChartData()
+            }
+        }
     }
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this)[DetailSupportDeviceViewModel::class.java]
-        viewModel.getChartSupportDevice(id, number, column, type)
-        viewModel.getLoadChartObservable().observe(activity!!) {
-            if(it?.data != null){
-                Log.d("dadang_support", it.data.toString())
+    }
 
+    private fun getChartData(){
+
+        lateinit var columnDB: String
+
+        when(column) {
+            "Warmth" -> {
+                columnDB = "soil_temperature"
+            }
+            "Moisture" -> {
+                columnDB = "soil_humidity"
+            }
+            "pH" -> {
+                columnDB = "soil_ph"
+            }
+            "Nitrogen" -> {
+                columnDB = "soil_nitrogen"
+            }
+            "Phosphor" -> {
+                columnDB = "soil_phosphor"
+            }
+            "Kalium" -> {
+                columnDB = "soil_kalium"
+            }
+        }
+
+        viewModel.getChartSupportDevice(id, number, columnDB, type)
+        viewModel.getLoadChartObservable().observe(activity!!) {
+            Log.d("dadang_support", it?.data.toString())
+
+            if(it?.data != null){
                 lineList = ArrayList()
                 lineList.add(Entry(10f, 1f))
                 lineList.add(Entry(12f, 2f))

@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -46,15 +48,55 @@ class MainDeviceChartFragment(
 
         initViewModel()
 
+        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                //
+            }
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                type = parent?.getItemAtPosition(position).toString().lowercase()
+                getChartData()
+            }
+        }
     }
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this)[DetailMainDeviceViewModel::class.java]
-        viewModel.getChartMainDevice(id, column, type)
-        viewModel.getLoadChartObservable().observe(activity!!) {
-            if(it?.data != null){
-                Log.d("dadang_main", it.data.toString())
+    }
 
+    private fun getChartData(){
+
+        lateinit var columnDB: String
+
+        when(column) {
+            "Weather" -> {
+                columnDB = "wind_temperature"
+            }
+            "Pests" -> {
+                columnDB = "wind_temperature"
+            }
+            "Warmth" -> {
+                columnDB = "wind_temperature"
+            }
+            "Humidity" -> {
+                columnDB = "wind_humidity"
+            }
+            "Wind Speed" -> {
+                columnDB = "wind_speed"
+            }
+            "Wind Pressure" -> {
+                columnDB = "wind_pressure"
+            }
+            "Light Intensity" -> {
+                columnDB = "light_intensity"
+            }
+        }
+
+        viewModel.getChartMainDevice(id, columnDB, type)
+        viewModel.getLoadChartObservable().observe(activity!!) {
+
+            Log.d("dadang_main", it?.data.toString())
+
+            if(it?.data != null){
                 lineList = ArrayList()
                 lineList.add(Entry(10f, 1f))
                 lineList.add(Entry(12f, 2f))
