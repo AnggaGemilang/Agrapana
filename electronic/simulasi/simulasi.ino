@@ -4,7 +4,10 @@
 #include <HTTPClient.h>
 
 #define MSG_BUFFER_SIZE (50)
-#define MQTT_SERVER "test.mosquitto.org"
+//#define MQTT_SERVER "test.mosquitto.org"
+#define MQTT_SERVER "broker.emqx.io"
+//#define MQTT_PORT 1883
+#define MQTT_PORT 8084
 #define WIFI_SSID "SPEEDY"
 #define WIFI_PASSWORD "suherman"
 //#define WIFI_SSID "kostankuning@wifi.id"
@@ -67,7 +70,7 @@ void reconnect() {
 void setup() {
   Serial.begin(9600);
   setup_wifi();
-  client.setServer(MQTT_SERVER, 1883);
+  client.setServer(MQTT_SERVER, MQTT_PORT);
 }
 
 void loop() {
