@@ -4,10 +4,8 @@
 #include <HTTPClient.h>
 
 #define MSG_BUFFER_SIZE (50)
-//#define MQTT_SERVER "test.mosquitto.org"
-#define MQTT_SERVER "broker.emqx.io"
-//#define MQTT_PORT 1883
-#define MQTT_PORT 8084
+#define MQTT_SERVER "test.mosquitto.org"
+#define MQTT_PORT 1883
 #define WIFI_SSID "SPEEDY"
 #define WIFI_PASSWORD "suherman"
 //#define WIFI_SSID "kostankuning@wifi.id"
@@ -81,7 +79,7 @@ void loop() {
 
   unsigned long now = millis();
 
-  if (now - lastMsg > 4250) {
+  if (now - lastMsg > 4000) {
     
     lastMsg = now;
 
@@ -156,7 +154,7 @@ void loop() {
     
   }
 
-  if (now - lastMsg2 > 12500) {
+  if (now - lastMsg2 > 10000) {
     
     lastMsg2 = now;
 
