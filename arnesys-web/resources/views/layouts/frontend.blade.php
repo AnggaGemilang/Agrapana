@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -24,9 +25,10 @@
                         {{-- <img src="{{ asset("assets") }}/landing-page/images/logo.png" style="width: 150px;" alt=""> --}}
                         <p style="color: black; font-weight: 700; font-size: 20pt; margin-top: 17px;">Agra.co</p>
                     </a>
-                    <a class="navbar-toggler btn btn-outline-success mt-2" href="{{ route('dashboard') }}" style="border-radius: 5px; border: 1px solid #3BAF56; padding-bottom: 13px; padding-top: 10px;">
+                    <a class="navbar-toggler btn btn-outline-success mt-2" href="{{ route('dashboard') }}"
+                        style="border-radius: 5px; border: 1px solid #3BAF56; padding-bottom: 13px; padding-top: 10px;">
                         <i class="bi bi-person text-success"></i>
-                        <span class="ml-2 text-success">{{ Auth::user() ? "Dashboard" : "Login" }}</span>
+                        <span class="ml-2 text-success">{{ Auth::user() ? 'Dashboard' : 'Login' }}</span>
                     </a>
                     <div class="collapse navbar-collapse" style="padding-top: 5px; padding-left: 20px;"
                         id="navbarSupportedContent">
@@ -49,7 +51,7 @@
                         </ul>
                         <a href="{{ route('dashboard') }}" class="btn btn-outline-success my-2 my-sm-0 pl-3 pr-3">
                             <i class="bi bi-person"></i>
-                            <span class="ml-2">{{ Auth::user() ? "Dashboard" : "Login" }}</span>
+                            <span class="ml-2">{{ Auth::user() ? 'Dashboard' : 'Login' }}</span>
                         </a>
                     </div>
                 </nav>
@@ -63,9 +65,10 @@
                         {{-- <img src="{{ asset("assets") }}/landing-page/images/logo.png" style="width: 150px;" alt=""> --}}
                         <p style="color: black; font-weight: 700; font-size: 20pt; margin-top: 37px;">Agra.co</p>
                     </a>
-                    <a class="navbar-toggler btn btn-outline-light mt-2" href="{{ route('dashboard') }}" style="border-radius: 5px; border: 1px solid white; padding-bottom: 13px; padding-top: 10px;">
+                    <a class="navbar-toggler btn btn-outline-light mt-2" href="{{ route('dashboard') }}"
+                        style="border-radius: 5px; border: 1px solid white; padding-bottom: 13px; padding-top: 10px;">
                         <i class="bi bi-person text-light"></i>
-                        <span class="ml-2 text-light">{{ Auth::user() ? "Dashboard" : "Login" }}</span>
+                        <span class="ml-2 text-light">{{ Auth::user() ? 'Dashboard' : 'Login' }}</span>
                     </a>
                     <div class="collapse navbar-collapse" style="padding-top: 25px; padding-left: 20px;"
                         id="navbarSupportedContent">
@@ -88,7 +91,7 @@
                         </ul>
                         <a href="{{ route('dashboard') }}" class="btn btn-outline-light my-2 my-sm-0 pl-3 pr-3">
                             <i class="bi bi-person"></i>
-                            <span class="ml-2">{{ Auth::user() ? "Dashboard" : "Login" }}</span>
+                            <span class="ml-2">{{ Auth::user() ? 'Dashboard' : 'Login' }}</span>
                         </a>
                     </div>
                 </nav>
@@ -106,7 +109,8 @@
                                 </b>
                             </h1>
                             <p>
-                                An innovation in the field of agriculture that can monitor various parameters in the air and soil, predict rainfall, and foresee diseases and pests that will appear
+                                An innovation in the field of agriculture that can monitor various parameters in the air
+                                and soil, predict rainfall, and foresee diseases and pests that will appear
                             </p>
                             <div class="btn-box">
                                 <a href="#technologies-section" class="btn-1">
@@ -168,7 +172,9 @@
                                 </div>
                                 <div class="row">
                                     <p>
-                                        Implement Artificial Intelligence technology, especially Fuzzy Logic and Naive Baiyes algorithm that allow user to know weather also pests and diseases prediction .
+                                        Implement Artificial Intelligence technology, especially Fuzzy Logic and Naive
+                                        Baiyes algorithm that allow user to know weather also pests and diseases
+                                        prediction .
                                     </p>
                                 </div>
                             </div>
@@ -185,7 +191,9 @@
                                 </div>
                                 <div class="row">
                                     <p>
-                                        Solar panels power Arnesys by converting sunlight into electricity. By utilizing solar energy, make it can operate independently in remote or off-grid locations expanding the range scope.
+                                        Solar panels power Arnesys by converting sunlight into electricity. By utilizing
+                                        solar energy, make it can operate independently in remote or off-grid locations
+                                        expanding the range scope.
                                     </p>
                                 </div>
                             </div>
@@ -202,7 +210,9 @@
                                 </div>
                                 <div class="row">
                                     <p>
-                                        LoRa enables efficient connectivity for Arnesys, allowing them to transmit data over long distances while consuming minimal energy with some sources of node component.
+                                        LoRa enables efficient connectivity for Arnesys, allowing them to transmit data
+                                        over long distances while consuming minimal energy with some sources of node
+                                        component.
                                     </p>
                                 </div>
                             </div>
@@ -214,7 +224,7 @@
     </section>
     <section class="about_section layout_padding reveal" id="about-section">
         <div class="container">
-            <div class="row" style="background: url('{{asset('assets')}}/')">
+            <div class="row" style="background: url('{{ asset('assets') }}/')">
                 <div class="col-md-6">
                     <div class="detail-box">
                         <div class="heading_container">
@@ -223,11 +233,20 @@
                             </h1>
                         </div>
                         <p>
-                            Arnesys is an IoT-based monitoring system for horticultural farming that incorporates LoRa technology and Artificial Intelligence (AI) to provide efficient and intelligent monitoring capabilities.
-                            Equipped with various sensors, the device continuously collects and transmits data such as soil moisture, temperature, air humidity, and light intensity to an IoT platform.
-                            By leveraging the wide-range coverage of LoRa network, the device enables seamless communication between the sensors and the central monitoring system, even in remote agricultural areas.
-                            The collected data is then processed and analyzed using AI algorithms, allowing farmers to gain valuable insights into crop conditions, optimize resource allocation, and make data-driven decisions.
-                            This integrated solution enhances precision agriculture practices, enabling farmers to remotely monitor and manage horticultural crops with increased efficiency, reduced costs, and improved yields.
+                            Arnesys is an IoT-based monitoring system for horticultural farming that incorporates LoRa
+                            technology and Artificial Intelligence (AI) to provide efficient and intelligent monitoring
+                            capabilities.
+                            Equipped with various sensors, the device continuously collects and transmits data such as
+                            soil moisture, temperature, air humidity, and light intensity to an IoT platform.
+                            By leveraging the wide-range coverage of LoRa network, the device enables seamless
+                            communication between the sensors and the central monitoring system, even in remote
+                            agricultural areas.
+                            The collected data is then processed and analyzed using AI algorithms, allowing farmers to
+                            gain valuable insights into crop conditions, optimize resource allocation, and make
+                            data-driven decisions.
+                            This integrated solution enhances precision agriculture practices, enabling farmers to
+                            remotely monitor and manage horticultural crops with increased efficiency, reduced costs,
+                            and improved yields.
                         </p>
                     </div>
                 </div>
@@ -296,12 +315,14 @@
                     <div class="pl-5" style="margin-top: 80px;">
                         <a href="{{ route('dashboard') }}" class="btn btn-success w-100">
                             <i class="bi bi-user"></i>
-                            <span>{{ Auth::user() ? "Dashboard" : "Login" }}</span>
+                            <span>{{ Auth::user() ? 'Dashboard' : 'Login' }}</span>
                         </a>
                         <p class="mt-3 text-center">Or download to mobile device</p>
-                        <div class="btn-play-store" style="display: flex; justify-content: center; align-items: center;">
+                        <div class="btn-play-store"
+                            style="display: flex; justify-content: center; align-items: center;">
                             <a style="background: #f6f6f6; color: rgba(0, 0, 0, 0.8); width: 220px; border-radius: 10px; display: flex; justify-content: center; align-items: center;"
-                                href="https://play.google.com/store/apps/details?id=com.agrapana.Arnesys&hl=en_US" target="_blank">
+                                href="https://play.google.com/store/apps/details?id=com.agrapana.Arnesys&hl=en_US"
+                                target="_blank">
                                 <i class="bi bi-google-play" style="font-size: 20pt;"></i><br>
                                 <p style="margin-top: 15px; padding-left: 10px;">Google Play Store</p>
                             </a>
@@ -317,7 +338,7 @@
                 style="width: 150px; position: absolute; right: 0; top: -250px; z-index: -1;" />
         </div>
         <div class="container">
-            <div class="row" style="background: url('{{asset('assets')}}/')">
+            <div class="row" style="background: url('{{ asset('assets') }}/')">
                 <div class="col-md-6 d-flex justify-content-center" style="position: relative;">
                     <div class="img-box">
                         <img src="{{ asset('assets') }}/landing-page/images/arceniter.png" alt=""
@@ -332,11 +353,20 @@
                             </h1>
                         </div>
                         <p>
-                            Arnesys is an IoT-based monitoring system for horticultural farming that incorporates LoRa technology and Artificial Intelligence (AI) to provide efficient and intelligent monitoring capabilities.
-                            Equipped with various sensors, the device continuously collects and transmits data such as soil moisture, temperature, air humidity, and light intensity to an IoT platform.
-                            By leveraging the wide-range coverage of LoRa network, the device enables seamless communication between the sensors and the central monitoring system, even in remote agricultural areas.
-                            The collected data is then processed and analyzed using AI algorithms, allowing farmers to gain valuable insights into crop conditions, optimize resource allocation, and make data-driven decisions.
-                            This integrated solution enhances precision agriculture practices, enabling farmers to remotely monitor and manage horticultural crops with increased efficiency, reduced costs, and improved yields.
+                            Arnesys is an IoT-based monitoring system for horticultural farming that incorporates LoRa
+                            technology and Artificial Intelligence (AI) to provide efficient and intelligent monitoring
+                            capabilities.
+                            Equipped with various sensors, the device continuously collects and transmits data such as
+                            soil moisture, temperature, air humidity, and light intensity to an IoT platform.
+                            By leveraging the wide-range coverage of LoRa network, the device enables seamless
+                            communication between the sensors and the central monitoring system, even in remote
+                            agricultural areas.
+                            The collected data is then processed and analyzed using AI algorithms, allowing farmers to
+                            gain valuable insights into crop conditions, optimize resource allocation, and make
+                            data-driven decisions.
+                            This integrated solution enhances precision agriculture practices, enabling farmers to
+                            remotely monitor and manage horticultural crops with increased efficiency, reduced costs,
+                            and improved yields.
                         </p>
                     </div>
                 </div>
@@ -486,8 +516,8 @@
                                         class="gallery__img" alt="Image 1">
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="2">
-                                    <img src="{{ asset('assets') }}/landing-page/images/angga.png" class="gallery__img"
-                                        alt="Image 2">
+                                    <img src="{{ asset('assets') }}/landing-page/images/angga.png"
+                                        class="gallery__img" alt="Image 2">
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="3">
                                     <img src="{{ asset('assets') }}/landing-page/images/indra2.png"
@@ -538,8 +568,8 @@
                         <div class="map">
                             <iframe
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.153515811431!2d107.57158381467832!3d-6.872202069149748!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x7913ceaaa291250e!2zNsKwNTInMTkuMSJTIDEwN8KwMzQnMjUuNSJF!5e0!3m2!1sen!2sid!4v1669960692810!5m2!1sen!2sid"
-                                width="600" height="450" style="border:0; z-index: 2;" allowfullscreen="" loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                width="600" height="450" style="border:0; z-index: 2;" allowfullscreen=""
+                                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                     </div>
                 </div>
@@ -557,7 +587,7 @@
                                 Technology</span> is Arnesys</p>
                         <div style="display: flex; justify-content: center;">
                             <a href="{{ route('dashboard') }}" class="btn btn-success mt-1" style="width: 250px;">
-                                {{ Auth::user() ? "Dashboard" : "Login" }}
+                                {{ Auth::user() ? 'Dashboard' : 'Login' }}
                             </a>
                         </div>
                     </div>
@@ -700,36 +730,34 @@
         </div>
     </section>
 
-    <script type="text/javascript" src="{{ asset('assets') }}/landing-page/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="{{ asset('assets') }}/landing-page/extensions/jquery/jquery.js"></script>
     <script type="text/javascript" src="{{ asset('assets') }}/landing-page/js/bootstrap.js"></script>
     <script type="text/javascript" src="{{ asset('assets') }}/landing-page/js/custom.js"></script>
-    <script type="text/javascript" src="{{ asset('assets') }}/landing-page/extensions/jquery/jquery.js"></script>
     <script type="text/javascript"
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
-    </script>
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
 
     <script>
-        $(".member-item").hover(function () {
+        $(".member-item").hover(function() {
             var id = $(this).attr('data-id')
             $(this).css('margin-left', '20px')
             $(`.gallery__item[data-id='${id}']`).find('.gallery__img').css('filter', 'grayscale(0%)')
-        }, function () {
+        }, function() {
             var id = $(this).attr('data-id')
             $(this).css('margin-left', '0px')
             $(`.gallery__item[data-id='${id}']`).find('.gallery__img').css('filter', 'grayscale(90%)')
         })
 
-        $(".gallery__item").hover(function () {
+        $(".gallery__item").hover(function() {
             var id = $(this).attr('data-id')
             $(this).find('.gallery__img').css('filter', 'grayscale(0%)')
             $(`.member-item[data-id='${id}']`).css('margin-left', '20px')
-        }, function () {
+        }, function() {
             var id = $(this).attr('data-id')
             $(this).find('.gallery__img').css('filter', 'grayscale(90%)')
             $(`.member-item[data-id='${id}']`).css('margin-left', '0px')
         })
 
-        window.onscroll = function () {
+        window.onscroll = function() {
             scrollFunction()
         }
 
@@ -754,7 +782,6 @@
                 }
             }
         }
-
     </script>
 
 </body>

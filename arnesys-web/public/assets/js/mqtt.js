@@ -1,15 +1,18 @@
 var connected_flag = 0
 var mqtt
-var reconnectTimeout = 1000
+var reconnectTimeout = 2000
 var host="test.mosquitto.org"
-var port=8080
+var port=1883
 var sub_topic="arnesys/#"
-var userId = ""
-var passwordId = ""
 
 function onConnectionLost(){
     console.log("connection lost")
     connected_flag = 0
+}
+
+function onFailure(message) {
+    console.log("Failed")
+    setTimeout(MQTTconnect, reconnectTimeout)
 }
 
 function onConnected(recon,url){
@@ -24,6 +27,7 @@ function MQTTconnect() {
     mqtt.onConnectionLost = onConnectionLost
     mqtt.onMessageArrived = onMessageArrived
     mqtt.connect({
+        useSSL: true,
         timeout: 5,
         onSuccess: onConnect,
         onFailure: onFailure
@@ -31,16 +35,11 @@ function MQTTconnect() {
     return false
 }
 
-function onFailure(message) {
-    setTimeout(MQTTconnect, reconnectTimeout)
-    console.log("Reconnecting...")
-}
-
 function onConnect() {
     connected_flag = 1
-    // console.log("on Connect "+connected_flag)
+    console.log("on Connect "+connected_flag)
     mqtt.subscribe(sub_topic)
-  }
+}
 
 function sub_topics(){
     document.getElementById("messages").innerHTML =""

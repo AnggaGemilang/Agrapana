@@ -81,7 +81,7 @@ void loop() {
 
   unsigned long now = millis();
 
-  if (now - lastMsg > 4500) {
+  if (now - lastMsg > 4250) {
     
     lastMsg = now;
 
@@ -156,7 +156,7 @@ void loop() {
     
   }
 
-  if (now - lastMsg2 > 10000) {
+  if (now - lastMsg2 > 12500) {
     
     lastMsg2 = now;
 
