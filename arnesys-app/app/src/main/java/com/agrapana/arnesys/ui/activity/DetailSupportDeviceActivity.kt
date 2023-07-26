@@ -19,7 +19,8 @@ import com.agrapana.arnesys.databinding.ActivityDetailSupportDeviceBinding
 import com.agrapana.arnesys.helper.MqttClientHelper
 import com.agrapana.arnesys.model.Field
 import com.agrapana.arnesys.model.MonitoringSupportDevice
-import com.agrapana.arnesys.ui.fragment.ChartFragment
+import com.agrapana.arnesys.ui.fragment.MainDeviceChartFragment
+import com.agrapana.arnesys.ui.fragment.SupportDeviceChartFragment
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
@@ -81,17 +82,17 @@ class DetailSupportDeviceActivity : AppCompatActivity() {
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Phosphor"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Kalium"))
         binding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
-        replaceFragment(ChartFragment(passedData, "Warmth"))
+        replaceFragment(SupportDeviceChartFragment(passedData.id!!, 1, "Warmth"))
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
-                    0 -> replaceFragment(ChartFragment(passedData, "Warmth"))
-                    1 -> replaceFragment(ChartFragment(passedData, "Moisture"))
-                    2 -> replaceFragment(ChartFragment(passedData, "pH"))
-                    3 -> replaceFragment(ChartFragment(passedData, "Nitrogen"))
-                    4 -> replaceFragment(ChartFragment(passedData, "Phosphor"))
-                    5 -> replaceFragment(ChartFragment(passedData, "Kalium"))
+                    0 -> replaceFragment(SupportDeviceChartFragment(passedData.id, 1,"Warmth"))
+                    1 -> replaceFragment(SupportDeviceChartFragment(passedData.id, 1,"Moisture"))
+                    2 -> replaceFragment(SupportDeviceChartFragment(passedData.id, 1,"pH"))
+                    3 -> replaceFragment(SupportDeviceChartFragment(passedData.id, 1,"Nitrogen"))
+                    4 -> replaceFragment(SupportDeviceChartFragment(passedData.id, 1,"Phosphor"))
+                    5 -> replaceFragment(SupportDeviceChartFragment(passedData.id, 1,"Kalium"))
                 }
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {}

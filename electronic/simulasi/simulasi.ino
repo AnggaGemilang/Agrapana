@@ -6,10 +6,10 @@
 #define MSG_BUFFER_SIZE (50)
 #define MQTT_SERVER "test.mosquitto.org"
 #define MQTT_PORT 1883
-#define WIFI_SSID "SPEEDY"
-#define WIFI_PASSWORD "suherman"
-//#define WIFI_SSID "kostankuning@wifi.id"
-//#define WIFI_PASSWORD "kostankuning14"
+//#define WIFI_SSID "SPEEDY"
+//#define WIFI_PASSWORD "suherman"
+#define WIFI_SSID "kostankuning@wifi.id"
+#define WIFI_PASSWORD "kostankuning14"
 
 HTTPClient httpMainDevice, httpSupportDevice;
 WiFiClient espClient;

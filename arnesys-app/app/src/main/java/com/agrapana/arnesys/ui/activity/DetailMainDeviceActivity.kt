@@ -19,8 +19,7 @@ import com.agrapana.arnesys.databinding.ActivityDetailMainDeviceBinding
 import com.agrapana.arnesys.helper.MqttClientHelper
 import com.agrapana.arnesys.model.Field
 import com.agrapana.arnesys.model.MonitoringMainDevice
-import com.agrapana.arnesys.model.MonitoringSupportDevice
-import com.agrapana.arnesys.ui.fragment.ChartFragment
+import com.agrapana.arnesys.ui.fragment.MainDeviceChartFragment
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
@@ -82,18 +81,18 @@ class DetailMainDeviceActivity : AppCompatActivity() {
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Wind Pressure"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Wind Intensity"))
         binding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
-        replaceFragment(ChartFragment(passedData, "Weather"))
+        replaceFragment(MainDeviceChartFragment(passedData.id!!, "Weather"))
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
-                    0 -> replaceFragment(ChartFragment(passedData, "Weather"))
-                    1 -> replaceFragment(ChartFragment(passedData, "Pests"))
-                    2 -> replaceFragment(ChartFragment(passedData, "Warmth"))
-                    3 -> replaceFragment(ChartFragment(passedData, "Humidity"))
-                    4 -> replaceFragment(ChartFragment(passedData, "Wind Speed"))
-                    5 -> replaceFragment(ChartFragment(passedData, "Wind Pressure"))
-                    6 -> replaceFragment(ChartFragment(passedData, "Wind Intensity"))
+                    0 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Weather"))
+                    1 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Pests"))
+                    2 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Warmth"))
+                    3 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Humidity"))
+                    4 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Wind Speed"))
+                    5 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Wind Pressure"))
+                    6 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Wind Intensity"))
                 }
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {}

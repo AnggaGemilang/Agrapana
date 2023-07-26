@@ -27,10 +27,12 @@
         <activity
             android:name=".ui.activity.DetailSupportDeviceActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Arnesys.Detail" />
         <activity
             android:name=".ui.activity.DetailMainDeviceActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Arnesys.Detail" />
         <activity
             android:name=".ui.activity.LoginActivity"
