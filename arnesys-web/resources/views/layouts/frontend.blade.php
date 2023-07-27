@@ -23,7 +23,7 @@
                 <nav class="navbar navbar-expand-lg custom_nav-container">
                     <a class="navbar-brand" href="#">
                         {{-- <img src="{{ asset("assets") }}/landing-page/images/logo.png" style="width: 150px;" alt=""> --}}
-                        <p style="color: black; font-weight: 700; font-size: 20pt; margin-top: 17px;">Agra.co</p>
+                        <p style="color: black; font-weight: 700; font-size: 20pt; margin-top: 17px;">Arnesys</p>
                     </a>
                     <a class="navbar-toggler btn btn-outline-success mt-2" href="{{ route('dashboard') }}"
                         style="border-radius: 5px; border: 1px solid #3BAF56; padding-bottom: 13px; padding-top: 10px;">
@@ -63,7 +63,7 @@
                 <nav class="navbar navbar-expand-lg custom_nav-container pt-5">
                     <a class="navbar-brand" href="#">
                         {{-- <img src="{{ asset("assets") }}/landing-page/images/logo.png" style="width: 150px;" alt=""> --}}
-                        <p style="color: black; font-weight: 700; font-size: 20pt; margin-top: 37px;">Agra.co</p>
+                        <p style="color: black; font-weight: 700; font-size: 20pt; margin-top: 37px;">Arnesys</p>
                     </a>
                     <a class="navbar-toggler btn btn-outline-light mt-2" href="{{ route('dashboard') }}"
                         style="border-radius: 5px; border: 1px solid white; padding-bottom: 13px; padding-top: 10px;">
@@ -253,7 +253,7 @@
                 <div class="col-md-6 d-flex justify-content-center" style="position: relative;">
                     <div class="img-box">
                         <img src="{{ asset('assets') }}/landing-page/images/arnesys.png" alt=""
-                            style="width: 650px; z-index: -1;" />
+                            style="width: 580px; z-index: -1;" />
                     </div>
                 </div>
             </div>
@@ -342,7 +342,7 @@
                 <div class="col-md-6 d-flex justify-content-center" style="position: relative;">
                     <div class="img-box">
                         <img src="{{ asset('assets') }}/landing-page/images/arnesys.png" alt=""
-                            style="width: 650px; z-index: -1; margin-left: -50px;" />
+                            style="width: 580px; z-index: -1; margin-left: -50px;" />
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -379,7 +379,7 @@
                                 <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
                                 <div style="margin-left: 20px;">
                                     <p>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                        Make it easier for farmers to monitor the condition of agricultural land.
                                     </p>
                                 </div>
                             </div>
@@ -389,29 +389,7 @@
                                 <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
                                 <div style="margin-left: 20px;">
                                     <p>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div style="display: flex;">
-                                <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
-                                <div style="margin-left: 20px;">
-                                    <p>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div style="display: flex;">
-                                <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
-                                <div style="margin-left: 20px;">
-                                    <p>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                        Arnesys has the ability to monitor soil and air conditions.
                                     </p>
                                 </div>
                             </div>
@@ -423,7 +401,7 @@
                                 <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
                                 <div style="margin-left: 20px;">
                                     <p>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                        Arnesys allows users to get weather, and pest prediction results on field conditions.
                                     </p>
                                 </div>
                             </div>
@@ -433,7 +411,7 @@
                                 <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
                                 <div style="margin-left: 20px;">
                                     <p>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                        Arnesys is equipped with technology in the form of solar panels to help supply electricity.
                                     </p>
                                 </div>
                             </div>
@@ -445,7 +423,7 @@
                                 <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
                                 <div style="margin-left: 20px;">
                                     <p>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                        Arnesys is equipped with technology in the form of Lora to monitor whatever area of land a farmer has.
                                     </p>
                                 </div>
                             </div>
@@ -455,7 +433,29 @@
                                 <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
                                 <div style="margin-left: 20px;">
                                     <p>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                        Arnesys is equipped with technology in the form of AI with the Fuzzy and Naive Bayes methods to make predictions.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div style="display: flex;">
+                                <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
+                                <div style="margin-left: 20px;">
+                                    <p>
+                                        Users can use the website platform or mobile application to the account.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div style="display: flex;">
+                                <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
+                                <div style="margin-left: 20px;">
+                                    <p>
+                                        Arnesys is designed to be portable so that it is easy to carry and move.
                                     </p>
                                 </div>
                             </div>
@@ -644,7 +644,7 @@
                         </div>
                         <div class="detail-box pl-2">
                             <p>
-                                agra.co.polban@gmail.com
+                                greengrowth.polban@gmail.com
                             </p>
                         </div>
                     </div>
@@ -659,7 +659,7 @@
                             About
                         </h6>
                         <p>
-                            We are from the agra.co team, agra.co is a team that dreams of becoming a startup, has a
+                            We are from the Greengrowth team, Greengrowth is a team that dreams of becoming a startup, has a
                             main concern in the agricultural sector and is actively looking for solutions to reduce the
                             potential for crop failure as a solution to food security in the world, especially in
                             Indonesia.
@@ -724,7 +724,7 @@
                     </div>
                 </div>
                 <div class="row mt-3 pl-3">
-                    <p class="copyright">© Copyright 2023. agra.co.</p>
+                    <p class="copyright">© Copyright 2023. greengrowth.co.</p>
                 </div>
             </div>
         </div>
