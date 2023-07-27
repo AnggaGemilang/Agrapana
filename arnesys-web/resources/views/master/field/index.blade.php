@@ -39,20 +39,20 @@
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Plant Name
                                             </th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Field Code
+                                            </th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Land Area
                                             </th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Address
                                             </th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">
                                                 Number of Support Device
-                                            </th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Field Created
                                             </th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Action
@@ -80,6 +80,11 @@
                                                 </td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
+                                                        <p class="text-xs font-weight-bold mb-0">{{ $row->id }}</p>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex justify-content-center">
                                                         <p class="text-xs font-weight-bold mb-0">{{ $row->address }}</p>
                                                     </div>
                                                 </td>
@@ -92,9 +97,6 @@
                                                     <div class="d-flex justify-content-center">
                                                         <p class="text-xs font-weight-bold mb-0">{{ $row->number_of_support_device }} Support Devices</p>
                                                     </div>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{ $row->created_at }}</span>
                                                 </td>
                                                 <td class="align-middle">
                                                     <div class="d-flex justify-content-center">

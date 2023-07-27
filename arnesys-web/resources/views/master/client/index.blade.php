@@ -41,8 +41,11 @@
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Name
+                                            </th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Client Code
                                             </th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Email
@@ -73,6 +76,9 @@
                                                             <h6 class="mb-0 text-sm">{{ $row->first_name . ' ' . $row->last_name }}</h6>
                                                         </div>
                                                     </div>
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <p class="text-xs text-secondary mb-0">{{ $row->id }}</p>
                                                 </td>
                                                 <td class="align-middle text-center text-sm">
                                                     <p class="text-xs text-secondary mb-0">{{ $row->email }}</p>
@@ -120,15 +126,15 @@
                         </div>
                         <div class="form-group">
                             <label for="plant-type">Plant Type</label>
-                            <input type="text" class="form-control" id="plant_type" name="plant_type" placeholder="Enter Plant Type . . .">
+                            <input type="text" class="form-control" id="plant_type" name="plant_type" placeholder="Enter plant type . . .">
                         </div>
                         <div class="form-group">
                             <label for="land_area">Land Area (ha)</label>
-                            <input type="number" class="form-control" id="land_area" name="land_area" placeholder="Enter Land Area . . .">
+                            <input type="number" class="form-control" id="land_area" name="land_area" placeholder="Enter land area . . .">
                         </div>
                         <div class="form-group">
                             <label for="plantName">Number of Support Device</label>
-                            <input type="number" class="form-control" id="number_of_support_device" name="number_of_support_device" placeholder="Enter Number of Support Device . . .">
+                            <input type="number" class="form-control" id="number_of_support_device" name="number_of_support_device" placeholder="Enter number of support device . . .">
                         </div>
                         <div class="form-group">
                             <label for="thumbnail">Thumbnail</label>

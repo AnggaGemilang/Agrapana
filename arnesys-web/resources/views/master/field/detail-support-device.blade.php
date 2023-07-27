@@ -258,7 +258,6 @@
 
         var myChart
         var ctx = document.getElementById("chart")
-        var clientId =  "<?php echo $field->client_id; ?>"
         var fieldId =  "<?php echo $field->id; ?>"
         var title = "Warmth"
         var column = "soil_temperature"
@@ -283,7 +282,7 @@
 
             var topic = r_message.destinationName
 
-            if(topic==`arnesys/${clientId}/${fieldId}/pendukung/1`){
+            if(topic==`arnesys/${fieldId}/pendukung/1`){
                 var data = JSON.parse(r_message.payloadString)
                 // console.log(data)
                 $("#txtSoilTemperature").text(data.monitoring.soil_temperature + "°")
@@ -309,7 +308,7 @@
                             ":"+dateFormat.getSeconds();
                     }),
                     datasets: [{
-                        label: title,
+                        label: "Histories of " + title,
                         data: datas.data.map(a => a.value),
                         backgroundColor: [
                             '#66BB6A',
@@ -325,8 +324,8 @@
                     scales: {
                         x: {
                             ticks: {
-                                maxRotation: 90,
-                                minRotation: 90
+                                maxRotation: 45,
+                                minRotation: 45
                             }
                         }
                     }

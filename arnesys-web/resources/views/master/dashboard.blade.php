@@ -177,7 +177,10 @@
 
             var x1=month + "/" + dt + "/" + x.getFullYear();
             x1 = x1 + ", " +  hours + ":" +  minutes + ":" +  seconds + " " + ampm;
-            document.getElementById('txtDatetime').innerHTML = x1;
+            console.log(x1)
+            $("#txtDatetime").text(x1)
+
+
             display_c7()
             closeLoader()
         }

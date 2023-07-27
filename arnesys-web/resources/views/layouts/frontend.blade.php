@@ -252,8 +252,8 @@
                 </div>
                 <div class="col-md-6 d-flex justify-content-center" style="position: relative;">
                     <div class="img-box">
-                        <img src="{{ asset('assets') }}/landing-page/images/arceniter.png" alt=""
-                            style="width: 450px; z-index: -1;" />
+                        <img src="{{ asset('assets') }}/landing-page/images/arnesys.png" alt=""
+                            style="width: 650px; z-index: -1;" />
                     </div>
                 </div>
             </div>
@@ -341,8 +341,8 @@
             <div class="row" style="background: url('{{ asset('assets') }}/')">
                 <div class="col-md-6 d-flex justify-content-center" style="position: relative;">
                     <div class="img-box">
-                        <img src="{{ asset('assets') }}/landing-page/images/arceniter.png" alt=""
-                            style="width: 450px; z-index: -1;" />
+                        <img src="{{ asset('assets') }}/landing-page/images/arnesys.png" alt=""
+                            style="width: 650px; z-index: -1; margin-left: -50px;" />
                     </div>
                 </div>
                 <div class="col-md-6">
