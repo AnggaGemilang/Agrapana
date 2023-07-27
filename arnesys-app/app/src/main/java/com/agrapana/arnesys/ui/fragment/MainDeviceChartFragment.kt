@@ -49,8 +49,6 @@ class MainDeviceChartFragment(
                 //
             }
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                binding.content.visibility = View.GONE
-                binding.progressBar.visibility = View.VISIBLE
                 type = parent?.getItemAtPosition(position).toString().lowercase()
                 getChartData()
             }
