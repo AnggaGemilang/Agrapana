@@ -41,8 +41,11 @@
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Name
+                                            </th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Client Code
                                             </th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Email
@@ -73,6 +76,9 @@
                                                             <h6 class="mb-0 text-sm">{{ $row->first_name . ' ' . $row->last_name }}</h6>
                                                         </div>
                                                     </div>
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <p class="text-xs text-secondary mb-0">{{ $row->id }}</p>
                                                 </td>
                                                 <td class="align-middle text-center text-sm">
                                                     <p class="text-xs text-secondary mb-0">{{ $row->email }}</p>

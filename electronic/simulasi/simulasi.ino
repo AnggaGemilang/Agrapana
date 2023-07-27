@@ -2,6 +2,7 @@
 #include <ArduinoJson.h>
 #include <WiFi.h>
 #include <HTTPClient.h>
+#include <Fuzzy.h>
 
 #define MSG_BUFFER_SIZE (50)
 #define MQTT_SERVER "test.mosquitto.org"
