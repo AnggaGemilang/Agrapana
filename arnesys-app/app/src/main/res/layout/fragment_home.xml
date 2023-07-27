@@ -266,6 +266,7 @@
                                 android:layout_weight="1"
                                 android:layout_gravity="center_horizontal"
                                 android:gravity="center_horizontal"
+                                android:tooltipText="Pests"
                                 android:orientation="vertical">
 
                                 <ImageView
@@ -305,6 +306,7 @@
                                 android:layout_weight="1"
                                 android:layout_gravity="center_horizontal"
                                 android:gravity="center_horizontal"
+                                android:tooltipText="Wind Speed"
                                 android:orientation="vertical" >
 
                                 <ImageView
@@ -344,6 +346,7 @@
                                 android:layout_weight="1"
                                 android:layout_gravity="center_horizontal"
                                 android:gravity="center_horizontal"
+                                android:tooltipText="Wind Pressure"
                                 android:orientation="vertical">
 
                                 <ImageView
@@ -383,6 +386,7 @@
                                 android:layout_weight="1"
                                 android:layout_gravity="center_horizontal"
                                 android:gravity="center_horizontal"
+                                android:tooltipText="Light Intensity"
                                 android:orientation="vertical">
 
                                 <ImageView

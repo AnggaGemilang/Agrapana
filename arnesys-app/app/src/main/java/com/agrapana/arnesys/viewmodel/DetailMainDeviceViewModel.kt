@@ -21,11 +21,6 @@ class DetailMainDeviceViewModel: ViewModel() {
     }
 
     fun getChartMainDevice(id: String, column: String, type: String) {
-
-        Log.d("dadang_id", id)
-        Log.d("dadang_column", column)
-        Log.d("dadang_type", type)
-
         val retroInstance = RetroInstance.getRetroInstance().create(MonitoringMainDeviceService::class.java)
         retroInstance.getChartOfMonitoringMainDevice(id, column, type)
             .enqueue(object : Callback<ChartMainDeviceResponse> {

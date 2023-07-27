@@ -2,23 +2,23 @@ package com.agrapana.arnesys.ui.fragment
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.agrapana.arnesys.R
 import com.agrapana.arnesys.databinding.FragmentMainDeviceChartBinding
+import com.agrapana.arnesys.helper.XAxisFormatter
+import com.agrapana.arnesys.helper.YAxisFormatter
 import com.agrapana.arnesys.viewmodel.DetailMainDeviceViewModel
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.utils.ColorTemplate
-import java.util.ArrayList
 
 class MainDeviceChartFragment(
     private val id: String,
@@ -28,10 +28,6 @@ class MainDeviceChartFragment(
     private lateinit var binding: FragmentMainDeviceChartBinding
     private lateinit var viewModel: DetailMainDeviceViewModel
     private var type: String = "latest"
-
-    lateinit var lineList: ArrayList<Entry>
-    private lateinit var lineDataSet: LineDataSet
-    lateinit var lineData: LineData
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +40,7 @@ class MainDeviceChartFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.columnName.text = column
+        binding.columnName.text = "$column Data"
 
         initViewModel()
 
@@ -53,6 +49,8 @@ class MainDeviceChartFragment(
                 //
             }
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                binding.content.visibility = View.GONE
+                binding.progressBar.visibility = View.VISIBLE
                 type = parent?.getItemAtPosition(position).toString().lowercase()
                 getChartData()
             }
@@ -61,6 +59,7 @@ class MainDeviceChartFragment(
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this)[DetailMainDeviceViewModel::class.java]
+        getChartData()
     }
 
     private fun getChartData(){
@@ -93,26 +92,49 @@ class MainDeviceChartFragment(
 
         viewModel.getChartMainDevice(id, columnDB, type)
         viewModel.getLoadChartObservable().observe(activity!!) {
+            binding.progressBar.visibility = View.GONE
+            binding.content.visibility = View.VISIBLE
+            val data = it?.data
+            if(data != null){
+                var lineDataSet: LineDataSet
 
-            Log.d("dadang_main", it?.data.toString())
+                val dateData = ArrayList<String>()
+                var lineList: ArrayList<Entry> = ArrayList()
 
-            if(it?.data != null){
-                lineList = ArrayList()
-                lineList.add(Entry(10f, 1f))
-                lineList.add(Entry(12f, 2f))
-                lineList.add(Entry(15f, 3f))
-                lineList.add(Entry(20f, 4f))
+                for((index, item) in data.withIndex()){
+                    dateData.add(item.created_at.toString())
+                    lineList.add(Entry(index.toFloat(), item.value!!.toFloat()))
+                }
 
-                lineDataSet = LineDataSet(lineList, "histories of $column")
-                lineData = LineData(lineDataSet)
-                binding.chart.data = lineData
-                lineDataSet.setColors(*ColorTemplate.PASTEL_COLORS)
+                lineDataSet = LineDataSet(lineList, "Histories of $column")
+                lineDataSet.color = ContextCompat.getColor(requireContext(), R.color.green_40)
                 lineDataSet.valueTextColor = Color.BLACK
                 lineDataSet.valueTextSize = 14f
                 lineDataSet.setDrawFilled(false)
-                lineDataSet.fillDrawable = ContextCompat.getDrawable(activity!!, R.drawable.gradient_chart)
+                lineDataSet.setDrawValues(false)
+                lineDataSet.setCircleColor(ContextCompat.getColor(requireContext(), R.color.green_75))
+
+                var lineData = LineData(lineDataSet)
+
+                binding.apply {
+
+                    val xAxis: XAxis = chart.xAxis
+                    xAxis.labelRotationAngle = -45f;
+                    xAxis.position = XAxis.XAxisPosition.BOTTOM
+                    xAxis.valueFormatter = XAxisFormatter(dateData)
+
+                    val yAxis = chart.axisLeft
+                    yAxis.valueFormatter = YAxisFormatter()
+
+                    val legend = chart.legend
+                    legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER;
+                    legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+
+                    chart.description.isEnabled = false
+                    chart.data = lineData
+                    chart.invalidate()
+                }
             }
         }
     }
-
 }

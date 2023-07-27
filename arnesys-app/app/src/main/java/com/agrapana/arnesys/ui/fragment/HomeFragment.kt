@@ -211,7 +211,6 @@ class HomeFragment: Fragment(), ChangeFieldListener {
         if (mqttClient.isConnected()) {
             mqttClient.unsubscribe("arnesys/$clientId/$fieldId/utama")
             mqttClient.unsubscribe("arnesys/$clientId/$fieldId/pendukung/1")
-            Toast.makeText(context, "Field Changed", Toast.LENGTH_SHORT).show()
             hideTextField()
         }
         fieldId = id
