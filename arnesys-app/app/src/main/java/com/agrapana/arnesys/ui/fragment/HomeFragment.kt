@@ -171,8 +171,8 @@ class HomeFragment: Fragment(), ChangeFieldListener {
         mqttClient.setCallback(object : MqttCallbackExtended {
             override fun connectComplete(b: Boolean, s: String) {
                 Log.w("Debug", "Connection to host connected:\n'$MQTT_HOST'")
-                mqttClient.subscribe("arnesys/$clientId/$fieldId/utama")
-                mqttClient.subscribe("arnesys/$clientId/$fieldId/pendukung/1")
+                mqttClient.subscribe("arnesys/$fieldId/utama")
+                mqttClient.subscribe("arnesys/$fieldId/pendukung/1")
             }
             override fun connectionLost(throwable: Throwable) {
                 Log.w("Debug", "Connection to host lost:\n'$MQTT_HOST'")
@@ -180,7 +180,7 @@ class HomeFragment: Fragment(), ChangeFieldListener {
             @Throws(Exception::class)
             override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
                 Log.w("mqttMessage", "Message received from host '$MQTT_HOST': $mqttMessage")
-                if(topic == "arnesys/$clientId/$fieldId/utama"){
+                if(topic == "arnesys/$fieldId/utama"){
                     val message = Gson().fromJson(mqttMessage.toString(), MonitoringMainDevice::class.java)
                     Log.d("mqtt", message.toString())
                     binding.valWindTemperature.text = message.monitoring.windTemperature.toString() + "°"
@@ -189,7 +189,8 @@ class HomeFragment: Fragment(), ChangeFieldListener {
                     binding.valPressure.text = message.monitoring.windPressure.toString()
 //                    binding.valPest.text = message.monitoring.pest.toString()
 //                    binding.valLight.text = message.monitoring.lightIntensity.toString()
-                } else if (topic == "arnesys/$clientId/$fieldId/pendukung/1"){
+                    showTextField()
+                } else if (topic == "arnesys/$fieldId/pendukung/1"){
                     val message = Gson().fromJson(mqttMessage.toString(), MonitoringSupportDevice::class.java)
                     Log.d("mqtt", message.toString())
                     binding.valSoilTemperature.text = message.monitoring.soilTemperature.toString() + "°"
@@ -198,8 +199,8 @@ class HomeFragment: Fragment(), ChangeFieldListener {
                     binding.valSoilNitrogen.text = message.monitoring.soilNitrogen.toString()
                     binding.valSoilPhosphor.text = message.monitoring.soilPhosphor.toString()
                     binding.valSoilKalium.text = message.monitoring.soilKalium.toString()
+                    showTextField()
                 }
-                showTextField()
             }
             override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
                 Log.w("Debug", "Message published to host '$MQTT_HOST'")
@@ -209,13 +210,13 @@ class HomeFragment: Fragment(), ChangeFieldListener {
 
     override fun onChangeField(id: String?) {
         if (mqttClient.isConnected()) {
-            mqttClient.unsubscribe("arnesys/$clientId/$fieldId/utama")
-            mqttClient.unsubscribe("arnesys/$clientId/$fieldId/pendukung/1")
             hideTextField()
+            mqttClient.unsubscribe("arnesys/$fieldId/utama")
+            mqttClient.unsubscribe("arnesys/$fieldId/pendukung/1")
         }
         fieldId = id
-        mqttClient.subscribe("arnesys/$clientId/$fieldId/utama")
-        mqttClient.subscribe("arnesys/$clientId/$fieldId/pendukung/1")
+        mqttClient.subscribe("arnesys/$fieldId/utama")
+        mqttClient.subscribe("arnesys/$fieldId/pendukung/1")
         setMqttCallBack()
     }
 

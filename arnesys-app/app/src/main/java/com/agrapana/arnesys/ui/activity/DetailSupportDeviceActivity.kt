@@ -114,7 +114,7 @@ class DetailSupportDeviceActivity : AppCompatActivity() {
         mqttClient.setCallback(object : MqttCallbackExtended {
             override fun connectComplete(b: Boolean, s: String) {
                 Log.w("Debug", "Connection to host connected:\n'$MQTT_HOST'")
-                mqttClient.subscribe("arnesys/$clientId/$fieldId/pendukung/1")
+                mqttClient.subscribe("arnesys/$fieldId/pendukung/1")
             }
             override fun connectionLost(throwable: Throwable) {
                 Log.w("Debug", "Connection to host lost:\n'$MQTT_HOST'")
@@ -122,7 +122,7 @@ class DetailSupportDeviceActivity : AppCompatActivity() {
             @Throws(Exception::class)
             override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
                 Log.w("mqttMessage", "Message received from host '$MQTT_HOST': $mqttMessage")
-                if(topic == "arnesys/$clientId/$fieldId/pendukung/1"){
+                if(topic == "arnesys/$fieldId/pendukung/1"){
                     val message = Gson().fromJson(mqttMessage.toString(), MonitoringSupportDevice::class.java)
                     Log.d("mqtt", message.toString())
                     binding.valSoilTemperature.text = message.monitoring.soilTemperature.toString() + "°"

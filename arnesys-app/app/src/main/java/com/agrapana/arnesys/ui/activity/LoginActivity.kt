@@ -44,6 +44,7 @@ class LoginActivity : AppCompatActivity(), AuthListener {
                 val editor: SharedPreferences.Editor? = prefs.edit()
                 editor?.putBoolean("loginStart", false)
                 editor?.putString("client_id", it.data?.id)
+                editor?.putString("name", it.data?.first_name + " " + it.data?.last_name)
                 editor?.apply()
                 startActivity(Intent(this, MainActivity::class.java))
             }
