@@ -26,19 +26,19 @@ class MonitoringSupportDeviceController extends Controller
     {
         $monitoringSupportDevice = [];
         if($type == "latest"){
-            $monitoringSupportDevice = MonitoringSupportDevice::select($column . " AS value", "created_at")
+            $monitoringSupportDevice = MonitoringSupportDevice::select($column . " AS value", "created_at", DB::raw('YEAR(created_at) AS time'))
                 ->where('number_of', $number)
                 ->where('field_id', $id)
                 ->orderBy('created_at', 'DESC')
                 ->paginate('10');
         } else if($type == "hour"){
-            $monitoringSupportDevice = MonitoringSupportDevice::select($column . " AS value", 'created_at', DB::raw('HOUR(created_at) AS hour'))
+            $monitoringSupportDevice = MonitoringSupportDevice::select($column . " AS value", 'created_at', DB::raw('HOUR(created_at) AS time'))
                 ->where('number_of', $number)
                 ->where('field_id', $id)
                 ->groupBy(DB::raw('HOUR(created_at)'))
                 ->paginate(10);
         } else {
-            $monitoringSupportDevice = MonitoringSupportDevice::select($column . " AS value", 'created_at', DB::raw('DAY(created_at) AS day'))
+            $monitoringSupportDevice = MonitoringSupportDevice::select($column . " AS value", 'created_at', DB::raw('DAY(created_at) AS time'))
                 ->where('number_of', $number)
                 ->where('field_id', $id)
                 ->groupBy(DB::raw('DAY(created_at)'))
