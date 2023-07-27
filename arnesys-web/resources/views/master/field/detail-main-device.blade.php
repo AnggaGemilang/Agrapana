@@ -29,18 +29,19 @@
         <div class="col-xl-12 col-sm-12">
             <div class="row">
                 <div class="col-4">
-                    <div class="card" style="height: 100%;">
+                    <div class="card">
                         <div class="card-body p-3">
-                            <div class="row">
-                                <div class="col-6" style="padding-right: 0px !important;">
-                                    <div class="numbers" style="min-height: 93px;">
-                                        <p class="mb-0 text-capitalize font-weight-bold" style="font-size: 13pt;">Weather
+                            <div class="row" style="height: 258px;">
+                                <div class="col-7" style="padding-right: 0px !important;">
+                                    <div class="row">
+                                        <p class="mb-0 text-capitalize font-weight-bold" style="font-size: 13pt;">Weather <br>
                                             Condition</p>
-                                        <img src="{{ asset('assets') }}/img/spinach.png" alt=""
-                                            style="margin-top: 9px; width: 155px;">
+                                    </div>
+                                    <div class="row" style="align-items: center; height: 78%;">
+                                        <img class="weatherForecast" src="{{ asset('assets') }}/img/sun.png" alt="" style="width: 175px;">
                                     </div>
                                 </div>
-                                <div class="col-6 text-end" style="padding-left: 0px !important;">
+                                <div class="col-5 text-end" style="padding-left: 0px !important;">
                                     <div
                                         class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
                                         <i class="ni ni-bell-55 text-lg opacity-10" aria-hidden="true"></i>
@@ -269,7 +270,7 @@
 
             var topic = r_message.destinationName
 
-            if(topic==`arnesys/${clientId}/${fieldId}/utama`){
+            if(topic==`arnesys/${fieldId}/utama`){
                 var data = JSON.parse(r_message.payloadString)
                 // console.log(data)
                 $("#txtWindSpeed").text(data.monitoring.wind_speed + " mph")
@@ -321,7 +322,7 @@
                             ":"+dateFormat.getSeconds();
                     }),
                     datasets: [{
-                        label: title,
+                        label: "Histories of " + title,
                         data: datas.data.map(a => a.value),
                         backgroundColor: [
                             '#66BB6A',
@@ -337,8 +338,8 @@
                     scales: {
                         x: {
                             ticks: {
-                                maxRotation: 90,
-                                minRotation: 90
+                                maxRotation: 45,
+                                minRotation: 45
                             }
                         }
                     }

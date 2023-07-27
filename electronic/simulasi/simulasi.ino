@@ -7,16 +7,15 @@
 #define MSG_BUFFER_SIZE (50)
 #define MQTT_SERVER "test.mosquitto.org"
 #define MQTT_PORT 1883
-//#define WIFI_SSID "SPEEDY"
-//#define WIFI_PASSWORD "suherman"
-#define WIFI_SSID "kostankuning@wifi.id"
-#define WIFI_PASSWORD "kostankuning14"
+#define WIFI_SSID "SPEEDY"
+#define WIFI_PASSWORD "suherman"
+//#define WIFI_SSID "kostankuning@wifi.id"
+//#define WIFI_PASSWORD "kostankuning14"
 
 HTTPClient httpMainDevice, httpSupportDevice;
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-char CLIENT_CODE[50] = "d02557b0-c0fa-415e-924c-ac624a691c0d";
 char FIELD_CODE[50] = "cd3eb1ad-f3ee-4fa4-bf19-0e4f7da89746";
 char SERVER1[58] = "https://arnesys.agrapana.tech/api/monitoring-main-devices";
 char SERVER2[61] = "https://arnesys.agrapana.tech/api/monitoring-support-devices";
@@ -106,8 +105,6 @@ void loop() {
     serializeJson(doc, output); 
 
     strcpy(topic, "arnesys/");
-    strcat(topic, CLIENT_CODE);
-    strcat(topic, "/");
     strcat(topic, FIELD_CODE);
     strcat(topic, "/utama");
     Serial.print("Topic: ");
@@ -139,8 +136,6 @@ void loop() {
     serializeJson(doc2, output); 
 
     strcpy(topic, "arnesys/");
-    strcat(topic, CLIENT_CODE);
-    strcat(topic, "/");
     strcat(topic, FIELD_CODE);
     strcat(topic, "/pendukung/1");
     Serial.print("Topic: ");

@@ -126,15 +126,15 @@
                         </div>
                         <div class="form-group">
                             <label for="plant-type">Plant Type</label>
-                            <input type="text" class="form-control" id="plant_type" name="plant_type" placeholder="Enter Plant Type . . .">
+                            <input type="text" class="form-control" id="plant_type" name="plant_type" placeholder="Enter plant type . . .">
                         </div>
                         <div class="form-group">
                             <label for="land_area">Land Area (ha)</label>
-                            <input type="number" class="form-control" id="land_area" name="land_area" placeholder="Enter Land Area . . .">
+                            <input type="number" class="form-control" id="land_area" name="land_area" placeholder="Enter land area . . .">
                         </div>
                         <div class="form-group">
                             <label for="plantName">Number of Support Device</label>
-                            <input type="number" class="form-control" id="number_of_support_device" name="number_of_support_device" placeholder="Enter Number of Support Device . . .">
+                            <input type="number" class="form-control" id="number_of_support_device" name="number_of_support_device" placeholder="Enter number of support device . . .">
                         </div>
                         <div class="form-group">
                             <label for="thumbnail">Thumbnail</label>
