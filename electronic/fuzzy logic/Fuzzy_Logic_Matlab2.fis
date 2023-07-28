@@ -15,34 +15,34 @@ DefuzzMethod='centroid'
 Name='suhu'
 Range=[0 40]
 NumMFs=3
-MF1='dingin':'trapmf',[-10 0 13.5 27]
-MF2='normal':'trimf',[25 28 31]
-MF3='panas':'trapmf',[29 34.5 40 100]
+MF1='dingin':'trapmf',[0 13.5 13.5 27]
+MF2='normal':'trapmf',[29 34.5 34.5 40]
+MF3='panas':'trapmf',[25 28 28 31]
 
 [Input2]
 Name='kecepatanangin'
-Range=[0 10]
+Range=[0 15]
 NumMFs=3
-MF1='pelan':'trapmf',[-4 0 2 4]
-MF2='sedang':'trimf',[2 5 8]
-MF3='kencang':'trapmf',[6 8 10 20]
+MF1='pelan':'trapmf',[0 2 2 4]
+MF2='sedang':'trapmf',[2 5 5 8]
+MF3='kencang':'trapmf',[6 10.5 10.5 15]
 
 [Input3]
 Name='kelembaban'
-Range=[70 95]
+Range=[50 100]
 NumMFs=3
 MF1='basah':'trapmf',[85 90 95 100]
-MF2='sedang':'trimf',[75 82.5 90]
+MF2='sedang':'trapmf',[75 82.5 82.5 90]
 MF3='kering':'trapmf',[50 70 75 80]
 
 [Output1]
 Name='prediksi_cuaca'
 Range=[0 100]
 NumMFs=4
-MF1='cerah_berawan':'trapmf',[-5 0 2.5 5]
-MF2='hujan_ringan':'trimf',[2.5 11.25 20]
-MF3='hujan_lebat':'trapmf',[45 72.5 100 120]
-MF4='hujan_sedang':'trimf',[15 32.5 50]
+MF1='cerah_berawan':'trapmf',[0 2.5 2.5 5]
+MF2='hujan_ringan':'trapmf',[2.5 11.25 11.25 20]
+MF3='hujan_lebat':'trapmf',[45 72.5 72.5 100]
+MF4='hujan_sedang':'trapmf',[15 32.5 32.5 50]
 
 [Rules]
 1 1 1, 2 (1) : 1
