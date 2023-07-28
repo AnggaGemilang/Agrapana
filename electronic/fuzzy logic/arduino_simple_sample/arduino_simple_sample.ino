@@ -1,110 +1,101 @@
 #include <Fuzzy.h>
 
-// Instantiating a Fuzzy object
 Fuzzy *fuzzy = new Fuzzy();
+
+// FuzzySet Input Suhu
+FuzzySet *suhuDingin = new FuzzySet(-10, 0, 13.5, 27);
+FuzzySet *suhuNormal = new FuzzySet(25, 28, 31);
+FuzzySet *suhuPanas = new FuzzySet(29, 34.5, 40, 100);
+
+// FuzzySet Input Kecepatan Udara
+FuzzySet *kecepatanPelan = new FuzzySet(-4, 0, 2, 4);
+FuzzySet *kecepatanSedang = new FuzzySet(2, 5, 8);
+FuzzySet *kecepatanKencang = new FuzzySet(6, 8, 10, 20);
+
+// FuzzySet Input Kelembaban
+FuzzySet *kelembabanKering = new FuzzySet(50, 70, 75, 80);
+FuzzySet *kelembabanSedang = new FuzzySet(75, 82.5, 90);
+FuzzySet *kelembabanBasah = new FuzzySet(85, 90, 95, 100);
+
+// FuzzySet Output Prediksi Cuaca
+FuzzySet *cerahBerawan = new FuzzySet(-5, 0, 2.5, 5);
+FuzzySet *hujanRingan = new FuzzySet(2.5, 11.25, 20);
+FuzzySet *hujanSedang = new FuzzySet(15, 32.5, 50);
+FuzzySet *hujanLebat = new FuzzySet(45, 72.5, 100, 120);
 
 void setup()
 {
-  // Set the Serial output
   Serial.begin(9600);
-  // Set a random seed
   randomSeed(analogRead(0));
+     
+  // FuzzyInput suhu
+  FuzzyInput *temperature = new FuzzyInput(1);
+  temperature->addFuzzySet(suhuDingin);
+  temperature->addFuzzySet(suhuNormal);
+  temperature->addFuzzySet(suhuPanas);
+  fuzzy->addFuzzyInput(temperature);
+    
+  // FuzzyInput kecepatan angin
+  FuzzyInput *windSpeed = new FuzzyInput(2);
+  windSpeed->addFuzzySet(kecepatanPelan);
+  windSpeed->addFuzzySet(kecepatanSedang);
+  windSpeed->addFuzzySet(kecepatanKencang);
+  fuzzy->addFuzzyInput(windSpeed);
+    
+  // FuzzyInput kelembaban
+  FuzzyInput *humidity = new FuzzyInput(4);
+  humidity->addFuzzySet(kelembabanKering);
+  humidity->addFuzzySet(kelembabanSedang);
+  humidity->addFuzzySet(kelembabanBasah);
+  fuzzy->addFuzzyInput(humidity);
 
-  // Instantiating a FuzzyInput object
-  FuzzyInput *distance = new FuzzyInput(1);
-  // Instantiating a FuzzySet object
-  FuzzySet *small = new FuzzySet(0, 20, 20, 40);
-  // Including the FuzzySet into FuzzyInput
-  distance->addFuzzySet(small);
-  // Instantiating a FuzzySet object
-  FuzzySet *safe = new FuzzySet(30, 50, 50, 70);
-  // Including the FuzzySet into FuzzyInput
-  distance->addFuzzySet(safe);
-  // Instantiating a FuzzySet object
-  FuzzySet *big = new FuzzySet(60, 80, 80, 80);
-  // Including the FuzzySet into FuzzyInput
-  distance->addFuzzySet(big);
-  // Including the FuzzyInput into Fuzzy
-  fuzzy->addFuzzyInput(distance);
+//===================================================
 
-  // Instantiating a FuzzyOutput objects
-  FuzzyOutput *speed = new FuzzyOutput(1);
-  // Instantiating a FuzzySet object
-  FuzzySet *slow = new FuzzySet(0, 10, 10, 20);
-  // Including the FuzzySet into FuzzyOutput
-  speed->addFuzzySet(slow);
-  // Instantiating a FuzzySet object
-  FuzzySet *average = new FuzzySet(10, 20, 30, 40);
-  // Including the FuzzySet into FuzzyOutput
-  speed->addFuzzySet(average);
-  // Instantiating a FuzzySet object
-  FuzzySet *fast = new FuzzySet(30, 40, 40, 50);
-  // Including the FuzzySet into FuzzyOutput
-  speed->addFuzzySet(fast);
-  // Including the FuzzyOutput into Fuzzy
-  fuzzy->addFuzzyOutput(speed);
+  // FuzzyOutput kondisi cuaca
+  FuzzyOutput *prediksiCuaca = new FuzzyOutput(1);
+  prediksiCuaca->addFuzzySet(cerahBerawan);
+  prediksiCuaca->addFuzzySet(hujanRingan);
+  prediksiCuaca->addFuzzySet(hujanSedang);
+  prediksiCuaca->addFuzzySet(hujanLebat);
+  fuzzy->addFuzzyOutput(prediksiCuaca);
 
-  // Building FuzzyRule "IF distance = small THEN speed = slow"
-  // Instantiating a FuzzyRuleAntecedent objects
+//===================================================
+
   FuzzyRuleAntecedent *ifDistanceSmall = new FuzzyRuleAntecedent();
-  // Creating a FuzzyRuleAntecedent with just a single FuzzySet
   ifDistanceSmall->joinSingle(small);
-  // Instantiating a FuzzyRuleConsequent objects
   FuzzyRuleConsequent *thenSpeedSlow = new FuzzyRuleConsequent();
-  // Including a FuzzySet to this FuzzyRuleConsequent
   thenSpeedSlow->addOutput(slow);
-  // Instantiating a FuzzyRule objects
   FuzzyRule *fuzzyRule01 = new FuzzyRule(1, ifDistanceSmall, thenSpeedSlow);
-  // Including the FuzzyRule into Fuzzy
   fuzzy->addFuzzyRule(fuzzyRule01);
 
-  // Building FuzzyRule "IF distance = safe THEN speed = average"
-  // Instantiating a FuzzyRuleAntecedent objects
   FuzzyRuleAntecedent *ifDistanceSafe = new FuzzyRuleAntecedent();
-  // Creating a FuzzyRuleAntecedent with just a single FuzzySet
   ifDistanceSafe->joinSingle(safe);
-  // Instantiating a FuzzyRuleConsequent objects
   FuzzyRuleConsequent *thenSpeedAverage = new FuzzyRuleConsequent();
-  // Including a FuzzySet to this FuzzyRuleConsequent
   thenSpeedAverage->addOutput(average);
-  // Instantiating a FuzzyRule objects
   FuzzyRule *fuzzyRule02 = new FuzzyRule(2, ifDistanceSafe, thenSpeedAverage);
-  // Including the FuzzyRule into Fuzzy
   fuzzy->addFuzzyRule(fuzzyRule02);
 
-  // Building FuzzyRule "IF distance = big THEN speed = high"
-  // Instantiating a FuzzyRuleAntecedent objects
   FuzzyRuleAntecedent *ifDistanceBig = new FuzzyRuleAntecedent();
-  // Creating a FuzzyRuleAntecedent with just a single FuzzySet
   ifDistanceBig->joinSingle(big);
-  // Instantiating a FuzzyRuleConsequent objects
   FuzzyRuleConsequent *thenSpeedFast = new FuzzyRuleConsequent();
-  // Including a FuzzySet to this FuzzyRuleConsequent
   thenSpeedFast->addOutput(fast);
-  // Instantiating a FuzzyRule objects
   FuzzyRule *fuzzyRule03 = new FuzzyRule(3, ifDistanceBig, thenSpeedFast);
-  // Including the FuzzyRule into Fuzzy
   fuzzy->addFuzzyRule(fuzzyRule03);
 }
 
 void loop()
 {
-  // Getting a random value
-  int input = random(0, 80);
-  // Printing something
-  Serial.println("\n\n\nEntrance: ");
-  Serial.print("\t\t\tDistance: ");
-  Serial.println(input);
-  // Set the random value as an input
-  fuzzy->setInput(1, input);
-  // Running the Fuzzification
+  int input1 = random(0, 80);
+  int input2 = random(0, 80);
+  int input3 = random(0, 80);
+
+  fuzzy->setInput(1, input1);
+  fuzzy->setInput(2, input2);
+  fuzzy->setInput(3, input3);
   fuzzy->fuzzify();
-  // Running the Defuzzification
   float output = fuzzy->defuzzify(1);
-  // Printing something
   Serial.println("Result: ");
-  Serial.print("\t\t\tSpeed: ");
   Serial.println(output);
-  // wait 12 seconds
+
   delay(12000);
 }
