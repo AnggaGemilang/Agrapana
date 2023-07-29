@@ -74,8 +74,6 @@ class DetailMainDeviceActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Weather"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Pests"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Warmth"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Humidity"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Wind Speed"))
@@ -87,13 +85,11 @@ class DetailMainDeviceActivity : AppCompatActivity() {
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
-                    0 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Weather"))
-                    1 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Pests"))
-                    2 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Warmth"))
-                    3 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Humidity"))
-                    4 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Wind Speed"))
-                    5 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Wind Pressure"))
-                    6 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Light Intensity"))
+                    0 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Warmth"))
+                    1 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Humidity"))
+                    2 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Wind Speed"))
+                    3 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Wind Pressure"))
+                    4 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Light Intensity"))
                 }
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {}

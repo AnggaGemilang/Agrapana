@@ -2,23 +2,16 @@ package com.agrapana.arnesys.ui.fragment
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver.OnScrollChangedListener
 import android.view.Window
-import android.view.WindowInsetsController
-import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
-import android.view.WindowManager
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -42,7 +35,6 @@ import org.eclipse.paho.client.mqttv3.MqttMessage
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class HomeFragment: Fragment(), ChangeFieldListener {
@@ -217,8 +209,7 @@ class HomeFragment: Fragment(), ChangeFieldListener {
                             }
                         }
                         binding.valPest.text = status
-                        binding.valPestPlaceholder.visibility = View.GONE
-                        binding.valPest.visibility = View.VISIBLE
+                        showAdditionalField()
                     }
                     "arnesys/$fieldId/pendukung/1" -> {
                         val message = Gson().fromJson(mqttMessage.toString(), MonitoringSupportDevice::class.java)
@@ -231,7 +222,7 @@ class HomeFragment: Fragment(), ChangeFieldListener {
                         binding.valSoilKalium.text = message.monitoring.soilKalium.toString()
                     }
                 }
-                showTextField()
+                showMainField()
             }
             override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
                 Log.w("Debug", "Message published to host '$MQTT_HOST'")
@@ -241,12 +232,11 @@ class HomeFragment: Fragment(), ChangeFieldListener {
 
     override fun onChangeField(id: String?) {
         if (mqttClient.isConnected()) {
-            hideTextField()
+            hideMainField()
             mqttClient.unsubscribe("arnesys/$fieldId/utama")
             mqttClient.unsubscribe("arnesys/$fieldId/utama/ai")
             mqttClient.unsubscribe("arnesys/$fieldId/pendukung/1")
-            binding.valPest.visibility = View.GONE
-            binding.valPestPlaceholder.visibility = View.VISIBLE
+            hideAdditionalField()
         }
         fieldId = id
         mqttClient.subscribe("arnesys/$fieldId/utama")
@@ -255,7 +245,24 @@ class HomeFragment: Fragment(), ChangeFieldListener {
         setMqttCallBack()
     }
 
-    private fun hideTextField(){
+    private fun hideAdditionalField(){
+        binding.valPest.visibility = View.GONE
+        binding.valPestPlaceholder.visibility = View.VISIBLE
+        binding.valWeather.visibility = View.GONE
+        binding.valWeatherPlaceholder.visibility = View.VISIBLE
+    }
+
+    private fun showAdditionalField(){
+        binding.valPestPlaceholder.visibility = View.GONE
+        binding.valPest.visibility = View.VISIBLE
+        binding.valWeatherPlaceholder.visibility = View.GONE
+        binding.valWeather.visibility = View.VISIBLE
+    }
+
+    private fun hideMainField(){
+
+        // Monitoring Atas
+
         binding.valWindTemperaturePlaceholder.visibility = View.VISIBLE
         binding.valWindHumidityPlaceholder.visibility = View.VISIBLE
         binding.valWindSpeedPlaceholder.visibility = View.VISIBLE
@@ -283,7 +290,10 @@ class HomeFragment: Fragment(), ChangeFieldListener {
         binding.valSoilKalium.visibility = View.GONE
     }
 
-    private fun showTextField(){
+    private fun showMainField(){
+
+        // Monitoring Atas
+
         binding.valWindTemperaturePlaceholder.visibility = View.GONE
         binding.valWindHumidityPlaceholder.visibility = View.GONE
         binding.valWindSpeedPlaceholder.visibility = View.GONE
