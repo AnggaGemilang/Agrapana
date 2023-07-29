@@ -28,6 +28,7 @@ import com.agrapana.arnesys.model.MonitoringSupportDevice
 import com.agrapana.arnesys.ui.activity.LoginActivity
 import com.agrapana.arnesys.ui.activity.SettingActivity
 import com.agrapana.arnesys.viewmodel.FieldViewModel
+import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
@@ -209,6 +210,19 @@ class HomeFragment: Fragment(), ChangeFieldListener {
                             }
                         }
                         binding.valPest.text = status
+
+                        when (message.aiProcessing.weatherForecast) {
+                            "Cerah-Berawan" -> {
+                                Glide.with(requireContext()).load(R.drawable.sun_cloud).into(binding.valWeather)
+                            }
+                            "Hujan Lebat" -> {
+                                Glide.with(requireContext()).load(R.drawable.rain).into(binding.valWeather)
+                            }
+                            else -> {
+                                Glide.with(requireContext()).load(R.drawable.light_rain).into(binding.valWeather)
+                            }
+                        }
+
                         showAdditionalField()
                     }
                     "arnesys/$fieldId/pendukung/1" -> {

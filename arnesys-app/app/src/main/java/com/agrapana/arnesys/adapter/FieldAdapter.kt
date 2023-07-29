@@ -44,9 +44,9 @@ class FieldAdapter(val context: Context): RecyclerView.Adapter<FieldAdapter.MyVi
 
         val imageParts = model.thumbnail.toString().trim().split("public/".toRegex())
         if(model.thumbnail != null){
-            Glide.with(context).load("https://arnesys.agrapana.tech/storage/" + imageParts[1]).into(holder.binding.thumbnail);
+            Glide.with(context).load("https://arnesys.agrapana.tech/storage/" + imageParts[1]).into(holder.binding.thumbnail)
         } else {
-            Glide.with(context).load(R.drawable.farmland).into(holder.binding.thumbnail);
+            Glide.with(context).load(R.drawable.farmland).into(holder.binding.thumbnail)
         }
 
         val isExpandable = model.isExpandable
