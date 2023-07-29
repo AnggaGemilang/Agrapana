@@ -29,6 +29,7 @@ import com.agrapana.arnesys.config.MQTT_HOST
 import com.agrapana.arnesys.databinding.FragmentHomeBinding
 import com.agrapana.arnesys.helper.ChangeFieldListener
 import com.agrapana.arnesys.helper.MqttClientHelper
+import com.agrapana.arnesys.model.MonitoringAIProcessing
 import com.agrapana.arnesys.model.MonitoringMainDevice
 import com.agrapana.arnesys.model.MonitoringSupportDevice
 import com.agrapana.arnesys.ui.activity.LoginActivity
@@ -53,6 +54,8 @@ class HomeFragment: Fragment(), ChangeFieldListener {
 
     private var clientId: String? = null
     private var fieldId: String? = null
+
+    private var valPestTxt: String = "N/A"
 
     private val mqttClient by lazy {
         MqttClientHelper(requireContext())
@@ -79,6 +82,14 @@ class HomeFragment: Fragment(), ChangeFieldListener {
         val name: String? = prefs.getString("name", "")
         val nameParts = name!!.trim().split("\\s+".toRegex())
         binding.greeting.text = "Hello there, ${nameParts[0]}"
+
+        binding.btnPest.setOnClickListener {
+            Toast.makeText(context, binding.valPest.text, Toast.LENGTH_SHORT).show()
+            if(binding.valPest.text != "N/A"){
+                val dialog = SeekPestsFragment()
+                activity?.let { it1 -> dialog.show(it1.supportFragmentManager, "BottomSheetDialog") }
+            }
+        }
 
         binding.toolbar.inflateMenu(R.menu.action_nav1)
         binding.toolbar.setOnMenuItemClickListener {
@@ -172,6 +183,7 @@ class HomeFragment: Fragment(), ChangeFieldListener {
             override fun connectComplete(b: Boolean, s: String) {
                 Log.w("Debug", "Connection to host connected:\n'$MQTT_HOST'")
                 mqttClient.subscribe("arnesys/$fieldId/utama")
+                mqttClient.subscribe("arnesys/$fieldId/utama/ai")
                 mqttClient.subscribe("arnesys/$fieldId/pendukung/1")
             }
             override fun connectionLost(throwable: Throwable) {
@@ -180,26 +192,33 @@ class HomeFragment: Fragment(), ChangeFieldListener {
             @Throws(Exception::class)
             override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
                 Log.w("mqttMessage", "Message received from host '$MQTT_HOST': $mqttMessage")
-                if(topic == "arnesys/$fieldId/utama"){
-                    val message = Gson().fromJson(mqttMessage.toString(), MonitoringMainDevice::class.java)
-                    Log.d("mqtt", message.toString())
-                    binding.valWindTemperature.text = message.monitoring.windTemperature.toString() + "°"
-                    binding.valWindHumidity.text = message.monitoring.windHumidity.toString() + "%"
-                    binding.valWindSpeed.text = message.monitoring.windSpeed.toString() + "mph"
-                    binding.valPressure.text = message.monitoring.windPressure.toString()
-//                    binding.valPest.text = message.monitoring.pest.toString()
-//                    binding.valLight.text = message.monitoring.lightIntensity.toString()
-                    showTextField()
-                } else if (topic == "arnesys/$fieldId/pendukung/1"){
-                    val message = Gson().fromJson(mqttMessage.toString(), MonitoringSupportDevice::class.java)
-                    Log.d("mqtt", message.toString())
-                    binding.valSoilTemperature.text = message.monitoring.soilTemperature.toString() + "°"
-                    binding.valSoilMoisture.text = message.monitoring.soilHumidity.toString() + "%"
-                    binding.valSoilPh.text = message.monitoring.soilPh.toString()
-                    binding.valSoilNitrogen.text = message.monitoring.soilNitrogen.toString()
-                    binding.valSoilPhosphor.text = message.monitoring.soilPhosphor.toString()
-                    binding.valSoilKalium.text = message.monitoring.soilKalium.toString()
-                    showTextField()
+                when (topic) {
+                    "arnesys/$fieldId/utama" -> {
+                        val message = Gson().fromJson(mqttMessage.toString(), MonitoringMainDevice::class.java)
+                        Log.d("/utama", message.toString())
+                        binding.valWindTemperature.text = message.monitoring.windTemperature.toString() + "°"
+                        binding.valWindHumidity.text = message.monitoring.windHumidity.toString() + "%"
+                        binding.valWindSpeed.text = message.monitoring.windSpeed.toString() + "mph"
+                        binding.valPressure.text = message.monitoring.windPressure.toString()
+                        binding.valLight.text = message.monitoring.windPressure.toString()
+                        showTextField()
+                    }
+                    "arnesys/$fieldId/utama/ai" -> {
+                        val message = Gson().fromJson(mqttMessage.toString(), MonitoringAIProcessing::class.java)
+                        Log.d("/utama/ai", message.toString())
+                        showTextField()
+                    }
+                    "arnesys/$fieldId/pendukung/1" -> {
+                        val message = Gson().fromJson(mqttMessage.toString(), MonitoringSupportDevice::class.java)
+                        Log.d("/pendukung", message.toString())
+                        binding.valSoilTemperature.text = message.monitoring.soilTemperature.toString() + "°"
+                        binding.valSoilMoisture.text = message.monitoring.soilHumidity.toString() + "%"
+                        binding.valSoilPh.text = message.monitoring.soilPh.toString()
+                        binding.valSoilNitrogen.text = message.monitoring.soilNitrogen.toString()
+                        binding.valSoilPhosphor.text = message.monitoring.soilPhosphor.toString()
+                        binding.valSoilKalium.text = message.monitoring.soilKalium.toString()
+                        showTextField()
+                    }
                 }
             }
             override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
@@ -212,10 +231,12 @@ class HomeFragment: Fragment(), ChangeFieldListener {
         if (mqttClient.isConnected()) {
             hideTextField()
             mqttClient.unsubscribe("arnesys/$fieldId/utama")
+            mqttClient.unsubscribe("arnesys/$fieldId/utama/ai")
             mqttClient.unsubscribe("arnesys/$fieldId/pendukung/1")
         }
         fieldId = id
         mqttClient.subscribe("arnesys/$fieldId/utama")
+        mqttClient.subscribe("arnesys/$fieldId/utama/ai")
         mqttClient.subscribe("arnesys/$fieldId/pendukung/1")
         setMqttCallBack()
     }
