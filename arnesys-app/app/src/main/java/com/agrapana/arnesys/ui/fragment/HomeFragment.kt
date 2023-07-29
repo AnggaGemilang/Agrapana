@@ -90,7 +90,7 @@ class HomeFragment: Fragment(), ChangeFieldListener {
             when(it.itemId) {
                 R.id.notification -> {
                     val builder = AlertDialog.Builder(requireContext())
-                    builder.setTitle("Are You Sure?")
+                    builder.setTitle("Tips for you")
                     builder.setMessage("This can be perform the machine")
                     builder.setPositiveButton("Close") { _, _ ->
 
