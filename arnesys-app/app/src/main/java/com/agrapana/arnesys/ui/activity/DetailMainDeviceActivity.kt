@@ -19,6 +19,7 @@ import com.agrapana.arnesys.config.MQTT_HOST
 import com.agrapana.arnesys.databinding.ActivityDetailMainDeviceBinding
 import com.agrapana.arnesys.helper.MqttClientHelper
 import com.agrapana.arnesys.model.Field
+import com.agrapana.arnesys.model.MonitoringAIProcessing
 import com.agrapana.arnesys.model.MonitoringMainDevice
 import com.agrapana.arnesys.ui.fragment.MainDeviceChartFragment
 import com.bumptech.glide.Glide
@@ -80,7 +81,7 @@ class DetailMainDeviceActivity : AppCompatActivity() {
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Wind Pressure"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Light Intensity"))
         binding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
-        replaceFragment(MainDeviceChartFragment(passedData.id!!, "Weather"))
+        replaceFragment(MainDeviceChartFragment(passedData.id!!, "Warmth"))
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -111,6 +112,7 @@ class DetailMainDeviceActivity : AppCompatActivity() {
             override fun connectComplete(b: Boolean, s: String) {
                 Log.w("Debug", "Connection to host connected:\n'$MQTT_HOST'")
                 mqttClient.subscribe("arnesys/$fieldId/utama")
+                mqttClient.subscribe("arnesys/$fieldId/utama/ai")
             }
             override fun connectionLost(throwable: Throwable) {
                 Log.w("Debug", "Connection to host lost:\n'$MQTT_HOST'")
@@ -120,28 +122,58 @@ class DetailMainDeviceActivity : AppCompatActivity() {
                 Log.w("mqttMessage", "Message received from host '$MQTT_HOST': $mqttMessage")
                 if(topic == "arnesys/$fieldId/utama"){
                     val message = Gson().fromJson(mqttMessage.toString(), MonitoringMainDevice::class.java)
-                    Log.d("mqtt", message.toString())
+                    Log.d("/utama", message.toString())
                     binding.valWindTemperature.text = message.monitoring.windTemperature.toString() + "°"
                     binding.valWindHumidity.text = message.monitoring.windHumidity.toString() + "%"
                     binding.valWindSpeed.text = message.monitoring.windSpeed.toString() + "mph"
                     binding.valWindPressure.text = message.monitoring.windPressure.toString()
-//                    binding.valPest.text = message.monitoring.pest.toString()
-//                    binding.valLight.text = message.monitoring.lightIntensity.toString()
+                    binding.valLightIntensity.text = message.monitoring.windPressure.toString()
+
+                    binding.valWindWarmthPlaceholder.visibility = View.GONE
+                    binding.valWindHumidityPlaceholder.visibility = View.GONE
+                    binding.valWindSpeedPlaceholder.visibility = View.GONE
+                    binding.valWindPressurePlaceholder.visibility = View.GONE
+                    binding.valLightIntensityPlaceholder.visibility = View.GONE
+                    binding.valWindTemperature.visibility = View.VISIBLE
+                    binding.valWindHumidity.visibility = View.VISIBLE
+                    binding.valWindSpeed.visibility = View.VISIBLE
+                    binding.valWindPressure.visibility = View.VISIBLE
+                    binding.valLightIntensity.visibility = View.VISIBLE
+                } else if(topic == "arnesys/$fieldId/utama/ai"){
+                    val message = Gson().fromJson(mqttMessage.toString(), MonitoringAIProcessing::class.java)
+                    Log.d("/utama/ai", message.toString())
+
+                    val pestListRisk = message.aiProcessing.pestsPrediction!!.split(",")
+
+                    var status = "Safe"
+                    for (item in pestListRisk){
+                        val data = item.split("=")
+                        if(data[1] == "tinggi"){
+                            status = "Risky"
+                        }
+                    }
+                    binding.valPest.text = status
+
+                    when (message.aiProcessing.weatherForecast) {
+                        "Cerah-Berawan" -> {
+                            binding.valWeather.text = "Cerah Berawan"
+                        }
+                        "Hujan Ringan" -> {
+                            binding.valWeather.text = "Hujan Ringan"
+                        }
+                        "Hujan Ringan" -> {
+                            binding.valWeather.text = "Hujan Lebat"
+                        }
+                        else -> {
+                            binding.valWeather.text = "Hujan Sedang"
+                        }
+                    }
+
+                    binding.valPestsPlaceholder.visibility = View.GONE
+                    binding.valPest.visibility = View.VISIBLE
+                    binding.valWeatherPlaceholder.visibility = View.GONE
+                    binding.valWeather.visibility = View.VISIBLE
                 }
-
-                binding.valWindWarmthPlaceholder.visibility = View.GONE
-                binding.valWindHumidityPlaceholder.visibility = View.GONE
-                binding.valPestsPlaceholder.visibility = View.GONE
-                binding.valWindSpeedPlaceholder.visibility = View.GONE
-                binding.valWindPressurePlaceholder.visibility = View.GONE
-                binding.valLightIntensityPlaceholder.visibility = View.GONE
-                binding.valWindTemperature.visibility = View.VISIBLE
-                binding.valWindHumidity.visibility = View.VISIBLE
-                binding.valPest.visibility = View.VISIBLE
-                binding.valWindSpeed.visibility = View.VISIBLE
-                binding.valWindPressure.visibility = View.VISIBLE
-                binding.valLightIntensity.visibility = View.VISIBLE
-
             }
             override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
                 Log.w("Debug", "Message published to host '$MQTT_HOST'")

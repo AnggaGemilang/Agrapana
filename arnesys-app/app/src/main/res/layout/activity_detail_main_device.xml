@@ -98,6 +98,112 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:background="@drawable/gradient_green"
+                        app:tint="@color/green_20"
+                        android:padding="12dp"
+                        android:src="@drawable/baseline_wb_sunny_24" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:paddingTop="3dp"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:text="Weather" />
+
+                        <TextView
+                            android:id="@+id/val_weather"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            android:text="N/A" />
+
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/val_weather_placeholder"
+                            android:layout_width="match_parent"
+                            android:layout_marginVertical="2dp"
+                            android:layout_height="25dp" >
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/shimmer_placeholder2" />
+
+                        </com.facebook.shimmer.ShimmerFrameLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:background="@drawable/gradient_green"
+                        app:tint="@color/green_20"
+                        android:padding="12dp"
+                        android:src="@drawable/baseline_adb_24" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:paddingTop="3dp"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:text="Pests" />
+
+                        <TextView
+                            android:id="@+id/val_pest"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            android:text="N/A" />
+
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/val_pests_placeholder"
+                            android:layout_width="match_parent"
+                            android:layout_marginVertical="2dp"
+                            android:layout_height="25dp" >
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/shimmer_placeholder2" />
+
+                        </com.facebook.shimmer.ShimmerFrameLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:orientation="horizontal" >
 
@@ -186,59 +292,6 @@
 
                         <com.facebook.shimmer.ShimmerFrameLayout
                             android:id="@+id/val_wind_humidity_placeholder"
-                            android:layout_width="match_parent"
-                            android:layout_marginVertical="2dp"
-                            android:layout_height="25dp" >
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@color/shimmer_placeholder2" />
-
-                        </com.facebook.shimmer.ShimmerFrameLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal" >
-
-                    <ImageView
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
-                        android:background="@drawable/gradient_green"
-                        app:tint="@color/green_20"
-                        android:padding="12dp"
-                        android:src="@drawable/baseline_adb_24" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:paddingTop="3dp"
-                        android:orientation="vertical" >
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:text="Pests" />
-
-                        <TextView
-                            android:id="@+id/val_pest"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="22sp"
-                            android:textStyle="bold"
-                            android:visibility="gone"
-                            android:text="N/A" />
-
-                        <com.facebook.shimmer.ShimmerFrameLayout
-                            android:id="@+id/val_pests_placeholder"
                             android:layout_width="match_parent"
                             android:layout_marginVertical="2dp"
                             android:layout_height="25dp" >
