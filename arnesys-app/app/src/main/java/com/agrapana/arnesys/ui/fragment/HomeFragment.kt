@@ -42,6 +42,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class HomeFragment: Fragment(), ChangeFieldListener {
@@ -52,6 +53,7 @@ class HomeFragment: Fragment(), ChangeFieldListener {
     private lateinit var viewModel: FieldViewModel
     private lateinit var window: Window
 
+    private var pestListRisk: List<String>? = null
     private var clientId: String? = null
     private var fieldId: String? = null
 
@@ -84,9 +86,8 @@ class HomeFragment: Fragment(), ChangeFieldListener {
         binding.greeting.text = "Hello there, ${nameParts[0]}"
 
         binding.btnPest.setOnClickListener {
-            Toast.makeText(context, binding.valPest.text, Toast.LENGTH_SHORT).show()
             if(binding.valPest.text != "N/A"){
-                val dialog = SeekPestsFragment()
+                val dialog = SeekPestsFragment(pestListRisk)
                 activity?.let { it1 -> dialog.show(it1.supportFragmentManager, "BottomSheetDialog") }
             }
         }
@@ -201,12 +202,23 @@ class HomeFragment: Fragment(), ChangeFieldListener {
                         binding.valWindSpeed.text = message.monitoring.windSpeed.toString() + "mph"
                         binding.valPressure.text = message.monitoring.windPressure.toString()
                         binding.valLight.text = message.monitoring.windPressure.toString()
-                        showTextField()
                     }
                     "arnesys/$fieldId/utama/ai" -> {
                         val message = Gson().fromJson(mqttMessage.toString(), MonitoringAIProcessing::class.java)
                         Log.d("/utama/ai", message.toString())
-                        showTextField()
+
+                        pestListRisk = message.aiProcessing.pestsPrediction!!.split(",")
+
+                        var status = "Safe"
+                        for (item in pestListRisk!!){
+                            val data = item.split("=")
+                            if(data[1] == "tinggi"){
+                                status = "Risky"
+                            }
+                        }
+                        binding.valPest.text = status
+                        binding.valPestPlaceholder.visibility = View.GONE
+                        binding.valPest.visibility = View.VISIBLE
                     }
                     "arnesys/$fieldId/pendukung/1" -> {
                         val message = Gson().fromJson(mqttMessage.toString(), MonitoringSupportDevice::class.java)
@@ -217,9 +229,9 @@ class HomeFragment: Fragment(), ChangeFieldListener {
                         binding.valSoilNitrogen.text = message.monitoring.soilNitrogen.toString()
                         binding.valSoilPhosphor.text = message.monitoring.soilPhosphor.toString()
                         binding.valSoilKalium.text = message.monitoring.soilKalium.toString()
-                        showTextField()
                     }
                 }
+                showTextField()
             }
             override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
                 Log.w("Debug", "Message published to host '$MQTT_HOST'")
@@ -233,6 +245,8 @@ class HomeFragment: Fragment(), ChangeFieldListener {
             mqttClient.unsubscribe("arnesys/$fieldId/utama")
             mqttClient.unsubscribe("arnesys/$fieldId/utama/ai")
             mqttClient.unsubscribe("arnesys/$fieldId/pendukung/1")
+            binding.valPest.visibility = View.GONE
+            binding.valPestPlaceholder.visibility = View.VISIBLE
         }
         fieldId = id
         mqttClient.subscribe("arnesys/$fieldId/utama")
@@ -244,13 +258,11 @@ class HomeFragment: Fragment(), ChangeFieldListener {
     private fun hideTextField(){
         binding.valWindTemperaturePlaceholder.visibility = View.VISIBLE
         binding.valWindHumidityPlaceholder.visibility = View.VISIBLE
-        binding.valPestPlaceholder.visibility = View.VISIBLE
         binding.valWindSpeedPlaceholder.visibility = View.VISIBLE
         binding.valPressurePlaceholder.visibility = View.VISIBLE
         binding.valLightPlaceholder.visibility = View.VISIBLE
         binding.valWindTemperature.visibility = View.GONE
         binding.valWindHumidity.visibility = View.GONE
-        binding.valPest.visibility = View.GONE
         binding.valWindSpeed.visibility = View.GONE
         binding.valPressure.visibility = View.GONE
         binding.valLight.visibility = View.GONE
@@ -274,13 +286,11 @@ class HomeFragment: Fragment(), ChangeFieldListener {
     private fun showTextField(){
         binding.valWindTemperaturePlaceholder.visibility = View.GONE
         binding.valWindHumidityPlaceholder.visibility = View.GONE
-        binding.valPestPlaceholder.visibility = View.GONE
         binding.valWindSpeedPlaceholder.visibility = View.GONE
         binding.valPressurePlaceholder.visibility = View.GONE
         binding.valLightPlaceholder.visibility = View.GONE
         binding.valWindTemperature.visibility = View.VISIBLE
         binding.valWindHumidity.visibility = View.VISIBLE
-        binding.valPest.visibility = View.VISIBLE
         binding.valWindSpeed.visibility = View.VISIBLE
         binding.valPressure.visibility = View.VISIBLE
         binding.valLight.visibility = View.VISIBLE

@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
-    tools:context=".ui.fragment.AddPlantFragment">
+    android:background="@color/white" >
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -29,6 +28,15 @@
                 app:cardBackgroundColor="@color/green_75"
                 app:cardCornerRadius="50dp" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Detail Pests Prediction"
+                android:textSize="25sp"
+                android:layout_gravity="center"
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -38,10 +46,10 @@
                 <ImageView
                     android:layout_width="65dp"
                     android:layout_height="65dp"
-                    android:background="@drawable/gradient_yellow"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_baseline_call_made_24"
-                    app:tint="@color/yellow_75" />
+                    android:background="@drawable/gradient_green"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_baseline_eco_24"
+                    app:tint="@color/green_light_100" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -54,54 +62,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
-                        android:text="Planting Started" />
+                        android:text="Ulat Daun" />
 
                     <TextView
-                        android:id="@+id/tv_planting_started"
+                        android:id="@+id/txt_ulat_daun"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="19sp"
                         android:textStyle="bold"
-                        android:text="1 August 2022" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:orientation="horizontal" >
-
-                <ImageView
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
-                    android:background="@drawable/gradient_blue"
-                    app:tint="@color/blue_50"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_baseline_done_all_24" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:paddingTop="6dp"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:text="Planting Ended" />
-
-                    <TextView
-                        android:id="@+id/tv_planting_ended"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="19sp"
-                        android:textStyle="bold"
-                        android:text="26 August 2022" />
+                        android:text="N/A" />
 
                 </LinearLayout>
 
@@ -132,15 +101,54 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
-                        android:text="Number of Leaves" />
+                        android:text="Ulat Krop" />
 
                     <TextView
-                        android:id="@+id/tv_number_leaves"
+                        android:id="@+id/txt_ulat_krop"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="19sp"
                         android:textStyle="bold"
-                        android:text="20 Pieces" />
+                        android:text="N/A" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:background="@drawable/gradient_green"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_baseline_eco_24"
+                    app:tint="@color/green_light_100" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:paddingTop="6dp"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:text="Busuk Hitam" />
+
+                    <TextView
+                        android:id="@+id/txt_busuk_hitam"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="19sp"
+                        android:textStyle="bold"
+                        android:text="N/A" />
 
                 </LinearLayout>
 
