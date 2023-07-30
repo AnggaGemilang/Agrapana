@@ -22,6 +22,7 @@ import com.agrapana.arnesys.model.Field
 import com.agrapana.arnesys.model.MonitoringAIProcessing
 import com.agrapana.arnesys.model.MonitoringMainDevice
 import com.agrapana.arnesys.ui.fragment.MainDeviceChartFragment
+import com.agrapana.arnesys.ui.fragment.SeekPestsFragment
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
@@ -38,6 +39,7 @@ class DetailMainDeviceActivity : AppCompatActivity() {
     private lateinit var prefs: SharedPreferences
     private var noInternetDialog: NoInternetDialog? = null
 
+    private var pestListRisk: List<String>? = null
     private var clientId: String? = null
     private var fieldId: String? = null
 
@@ -74,6 +76,13 @@ class DetailMainDeviceActivity : AppCompatActivity() {
         supportActionBar?.title = "Main Device"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        binding.pestWrapper.setOnClickListener {
+            if(binding.valPest.text != "N/A"){
+                val dialog = SeekPestsFragment(pestListRisk)
+                dialog.show(supportFragmentManager, "BottomSheetDialog")
+            }
+        }
 
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Warmth"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Humidity"))
@@ -143,10 +152,10 @@ class DetailMainDeviceActivity : AppCompatActivity() {
                     val message = Gson().fromJson(mqttMessage.toString(), MonitoringAIProcessing::class.java)
                     Log.d("/utama/ai", message.toString())
 
-                    val pestListRisk = message.aiProcessing.pestsPrediction!!.split(",")
+                    pestListRisk = message.aiProcessing.pestsPrediction!!.split(",")
 
                     var status = "Safe"
-                    for (item in pestListRisk){
+                    for (item in pestListRisk!!){
                         val data = item.split("=")
                         if(data[1] == "tinggi"){
                             status = "Risky"
