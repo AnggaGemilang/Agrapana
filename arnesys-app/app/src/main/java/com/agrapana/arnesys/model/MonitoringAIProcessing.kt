@@ -7,6 +7,11 @@ data class ValueMonitoringAIProcessing(
     @SerializedName("pests_prediction") var pestsPrediction: String? = null,
 )
 
+data class Suggestion(
+    var cause: String? = null,
+    var suggestion: String? = null,
+)
+
 data class MonitoringAIProcessing(
     @SerializedName("ai_processing")var aiProcessing: ValueMonitoringAIProcessing
 )

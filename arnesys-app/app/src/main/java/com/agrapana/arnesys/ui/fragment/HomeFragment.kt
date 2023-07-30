@@ -25,6 +25,7 @@ import com.agrapana.arnesys.helper.MqttClientHelper
 import com.agrapana.arnesys.model.MonitoringAIProcessing
 import com.agrapana.arnesys.model.MonitoringMainDevice
 import com.agrapana.arnesys.model.MonitoringSupportDevice
+import com.agrapana.arnesys.model.Suggestion
 import com.agrapana.arnesys.ui.activity.LoginActivity
 import com.agrapana.arnesys.ui.activity.SettingActivity
 import com.agrapana.arnesys.viewmodel.FieldViewModel
@@ -36,6 +37,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class HomeFragment: Fragment(), ChangeFieldListener {
@@ -46,11 +48,10 @@ class HomeFragment: Fragment(), ChangeFieldListener {
     private lateinit var viewModel: FieldViewModel
     private lateinit var window: Window
 
+    private var messageSupportDevice: MonitoringSupportDevice? = null
     private var pestListRisk: List<String>? = null
     private var clientId: String? = null
     private var fieldId: String? = null
-
-    private var valPestTxt: String = "N/A"
 
     private val mqttClient by lazy {
         MqttClientHelper(requireContext())
@@ -89,14 +90,32 @@ class HomeFragment: Fragment(), ChangeFieldListener {
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId) {
                 R.id.notification -> {
-                    val builder = AlertDialog.Builder(requireContext())
-                    builder.setTitle("Tips for you")
-                    builder.setMessage("This can be perform the machine")
-                    builder.setPositiveButton("Close") { _, _ ->
+                    val suggestionList = ArrayList<Suggestion>()
 
+                    if(messageSupportDevice != null){
+                        if(messageSupportDevice?.monitoring?.soilNitrogen!! < 4){
+                            suggestionList.add(Suggestion("Kekurangan Nitrogen", "Memberikan pupuk organic, seperti kotoran sapi, kotoran hewan, serbuk gergaji, atau menambahkan bakteri salah satunya azotobacter, Anabaena, dll."))
+                        }
+
+                        if(messageSupportDevice?.monitoring?.soilPhosphor!! < 4){
+                            suggestionList.add(Suggestion("Kekurangan Phosphor", "Memberikan abu sekam padi 30%"))
+                        }
+
+                        if(messageSupportDevice?.monitoring?.soilKalium!! < 5){
+                            suggestionList.add(Suggestion("Kekurangan Kalium", "Memberikan abu kayu, cangkang telur (disemprotkan pada daun), atau tepung tulang"))
+                        }
+
+                        if(messageSupportDevice?.monitoring?.soilPh!! < 5){
+                            suggestionList.add(Suggestion("Kekurangan pH", "Memberikan abu kayu, atau dengan mikroorganisme seperti EM4"))
+                        }
+
+                        if(messageSupportDevice?.monitoring?.soilPh!! > 8){
+                            suggestionList.add(Suggestion("Kelebihan pH", "Memberikan belerang, sulfur atau serbuk kayu"))
+                        }
+
+                        val dialog = SuggestionFragment(suggestionList)
+                        activity?.let { it1 -> dialog.show(it1.supportFragmentManager, "BottomSheetDialog") }
                     }
-                    val alert = builder.create()
-                    alert.show()
                 }
                 R.id.about -> {
                     AlertDialog.Builder(requireContext())
@@ -226,14 +245,14 @@ class HomeFragment: Fragment(), ChangeFieldListener {
                         showAdditionalField()
                     }
                     "arnesys/$fieldId/pendukung/1" -> {
-                        val message = Gson().fromJson(mqttMessage.toString(), MonitoringSupportDevice::class.java)
-                        Log.d("/pendukung", message.toString())
-                        binding.valSoilTemperature.text = message.monitoring.soilTemperature.toString() + "°"
-                        binding.valSoilMoisture.text = message.monitoring.soilHumidity.toString() + "%"
-                        binding.valSoilPh.text = message.monitoring.soilPh.toString()
-                        binding.valSoilNitrogen.text = message.monitoring.soilNitrogen.toString()
-                        binding.valSoilPhosphor.text = message.monitoring.soilPhosphor.toString()
-                        binding.valSoilKalium.text = message.monitoring.soilKalium.toString()
+                        messageSupportDevice = Gson().fromJson(mqttMessage.toString(), MonitoringSupportDevice::class.java)
+                        Log.d("/pendukung", messageSupportDevice.toString())
+                        binding.valSoilTemperature.text = messageSupportDevice?.monitoring?.soilTemperature.toString() + "°"
+                        binding.valSoilMoisture.text = messageSupportDevice?.monitoring?.soilHumidity.toString() + "%"
+                        binding.valSoilPh.text = messageSupportDevice?.monitoring?.soilPh.toString()
+                        binding.valSoilNitrogen.text = messageSupportDevice?.monitoring?.soilNitrogen.toString()
+                        binding.valSoilPhosphor.text = messageSupportDevice?.monitoring?.soilPhosphor.toString()
+                        binding.valSoilKalium.text = messageSupportDevice?.monitoring?.soilKalium.toString()
                     }
                 }
                 showMainField()
@@ -336,6 +355,7 @@ class HomeFragment: Fragment(), ChangeFieldListener {
     }
 
     override fun onResume() {
+
         mqttClient.mqttAndroidClient.registerResources()
         super.onResume()
     }
