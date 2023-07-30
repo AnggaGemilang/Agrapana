@@ -34,11 +34,13 @@
                             <div class="row" style="height: 258px;">
                                 <div class="col-7" style="padding-right: 0px !important;">
                                     <div class="row">
-                                        <p class="mb-0 text-capitalize font-weight-bold" style="font-size: 13pt;">Weather <br>
+                                        <p class="mb-0 text-capitalize font-weight-bold" style="font-size: 13pt;">Weather
+                                            <br>
                                             Condition</p>
                                     </div>
                                     <div class="row" style="align-items: center; height: 78%;">
-                                        <img class="weatherForecast" src="{{ asset('assets') }}/img/sun.png" alt="" style="width: 175px;">
+                                        <img class="weatherForecast" src="{{ asset('assets') }}/img/sun-cloud.png"
+                                            alt="" style="width: 230px; margin-left: -12px;">
                                     </div>
                                 </div>
                                 <div class="col-5 text-end" style="padding-left: 0px !important;">
@@ -49,8 +51,7 @@
                                     <p class="mb-0 text-capitalize" style="margin-top: 48px; font-size: 11pt;">
                                         Wind Speed
                                     </p>
-                                    <h4 id="txtWindSpeed" class="mb-0 font-weight-bolder"
-                                        style="font-size: 14pt;">
+                                    <h4 id="txtWindSpeed" class="mb-0 font-weight-bolder" style="font-size: 14pt;">
                                         7 mph
                                     </h4>
                                     <p class="mb-0 text-capitalize" style="font-size: 11pt; margin-top: 15px;">
@@ -116,7 +117,7 @@
                     </div>
                     <div class="row mt-4">
                         <div class="col-xl-6 col-sm-6">
-                            <div class="card">
+                            <div class="card pests-wrapper">
                                 <div class="card-body p-3">
                                     <div class="row">
                                         <div class="col-8">
@@ -172,15 +173,7 @@
                 <div class="col-xl-12 col-sm-12">
                     <nav>
                         <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active " role="tab" aria-selected="true" href="#1"
-                                data-toggle="tab">
-                                <span class="text-success text-bold size" data-column="wind_temperature">Weather</span>
-                            </a>
-                            <a class="nav-item nav-link " href="#1" role="tab" aria-selected="false"
-                                data-toggle="tab">
-                                <span class="text-success text-bold size" data-column="wind_temperature">Pests</span>
-                            </a>
-                            <a class="nav-item nav-link " href="#1" role="tab" aria-selected="false"
+                            <a class="nav-item nav-link active" href="#1" role="tab" aria-selected="false"
                                 data-toggle="tab">
                                 <span class="text-success text-bold size" data-column="wind_temperature">Warmth</span>
                             </a>
@@ -198,7 +191,8 @@
                             </a>
                             <a class="nav-item nav-link " href="#1" role="tab" aria-selected="false"
                                 data-toggle="tab">
-                                <span class="text-success text-bold size" data-column="light_intensity">Light Intensity</span>
+                                <span class="text-success text-bold size" data-column="light_intensity">Light
+                                    Intensity</span>
                             </a>
                         </div>
                     </nav>
@@ -206,7 +200,7 @@
                         <div class="tab-pane active bg-white" id="1">
                             <div class="row">
                                 <div class="col">
-                                    <h4 id="valDataType">Weather</h4>
+                                    <h4 id="valDataType">Warmth</h4>
                                 </div>
                                 <div class="col d-flex justify-content-end" style="margin-right: 15px;">
                                     <select class="form-select" id="filter-history" style="width: 150px;">
@@ -224,6 +218,83 @@
         </div>
     </div>
 
+    <div class="modal fade" id="seekPestsPrediction" tabindex="-1" role="dialog" aria-labelledby="modalSayaLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Detail Pests Prediction</h5>
+                    <span type="button" class="btnClose" style="font-size: 20px;">&times;</span>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row item-pest-wrapper">
+                        <div class="col-2 d-flex justify-content-center align-items-center">
+                            <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
+                                <i class="ni ni-map-big text-lg opacity-10" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="col-10 d-flex align-items-center">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="row">
+                                        <h6 style="font-size: 14pt;" class="mb-0">Ulat Daun</h6>
+                                    </div>
+                                    <div class="row">
+                                        <p id="txtUlatDaun" style="font-size: 12pt;" class="mb-0">Tinggi</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row item-pest-wrapper mt-3">
+                        <div class="col-2 d-flex justify-content-center align-items-center">
+                            <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
+                                <i class="ni ni-map-big text-lg opacity-10" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="col-10 d-flex align-items-center">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="row">
+                                        <h6 style="font-size: 14pt;" class="mb-0">Ulat Krop</h6>
+                                    </div>
+                                    <div class="row">
+                                        <p id="txtUlatKrop" style="font-size: 12pt;" class="mb-0">Tinggi</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row item-pest-wrapper mt-3">
+                        <div class="col-2 d-flex justify-content-center align-items-center">
+                            <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
+                                <i class="ni ni-map-big text-lg opacity-10" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="col-10 d-flex align-items-center">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="row">
+                                        <h6 style="font-size: 14pt;" class="mb-0">Busuk Hitam</h6>
+                                    </div>
+                                    <div class="row">
+                                        <p id="txtBusukHitam" style="font-size: 12pt;" class="mb-0">Tinggi</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btnClose btn btn-secondary" data-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('style')
@@ -240,6 +311,20 @@
             padding-top: 50px;
             padding-bottom: 50px;
         }
+
+        .pests-wrapper:hover {
+            cursor: pointer;
+            background: rgb(250, 250, 250);
+            transition: .5s;
+        }
+
+        .item-pest-wrapper {
+            background: rgb(250, 250, 250);
+            border-radius: 10px;
+            margin-left: 5px;
+            margin-right: 5px;
+            padding: 10px 0px;
+        }
     </style>
 @endpush
 
@@ -248,49 +333,79 @@
     <script src="{{ asset('assets/js/mqtt.js') }}"></script>
 
     <script>
-
         var myChart
         var ctx = document.getElementById("chart")
-        var clientId =  "<?php echo $field->client_id; ?>"
-        var fieldId =  "<?php echo $field->id; ?>"
-        var title = "Weather"
+        var clientId = "<?php echo $field->client_id; ?>"
+        var fieldId = "<?php echo $field->id; ?>"
+        var title = "Warmth"
         var column = "wind_temperature"
         var type = "latest"
+        var pestsPrediction = [];
 
         $(document).ready(function() {
             getDataChart(fieldId, column, type, title)
             MQTTconnect()
         })
 
-        function onMessageArrived(r_message){
-            closeLoader()
-
-            out_msg = "Message received "+ r_message.payloadString + "<br>"
-            out_msg=out_msg+"Message received Topic "+r_message.destinationName
+        function onMessageArrived(r_message) {
+            out_msg = "Message received " + r_message.payloadString + "<br>"
+            out_msg = out_msg + "Message received Topic " + r_message.destinationName
 
             var topic = r_message.destinationName
 
-            if(topic==`arnesys/${fieldId}/utama`){
+            if (topic == `arnesys/${fieldId}/utama`) {
                 var data = JSON.parse(r_message.payloadString)
-                // console.log(data)
                 $("#txtWindSpeed").text(data.monitoring.wind_speed + " mph")
                 $("#txtWindPressure").text(data.monitoring.wind_pressure)
                 $("#txtWindTemperature").text(data.monitoring.wind_temperature + "°")
                 $("#txtWindHumidity").text(data.monitoring.wind_humidity + "%")
                 $("#txtWindPest").text("safe")
                 $("#txtWindLightIntensity").text("sabihis")
+            } else if (topic == `arnesys/${fieldId}/utama/ai`) {
+                var data = JSON.parse(r_message.payloadString)
+                var weatherForecast = data.ai_processing.weather_forecast
+
+                pestsPrediction = data.ai_processing.pests_prediction.split(",")
+
+                var status = "Safe"
+                for (var i = 0; i < pestsPrediction.length; i++) {
+                    var item = pestsPrediction[i].split("=")
+                    if (item[1] == "tinggi") {
+                        status = "Risky"
+                    }
+                }
+                $("#txtPest").text(status)
+
+                if (weatherForecast == "Cerah-Berawan") {
+                    $(".weatherForecast").attr("src", "{{ asset('assets/img/sun-cloud.png') }}")
+                } else if (weatherForecast == "Hujan Ringan") {
+                    $(".weatherForecast").attr("src", "{{ asset('assets/img/rain.png') }}")
+                } else {
+                    $(".weatherForecast").attr("src", "{{ asset('assets/img/rain2.png') }}")
+                }
+                closeLoader()
             }
         }
 
-        function getDataChart(fieldId, column, filterType, title){
+        function getDataChart(fieldId, column, filterType, title) {
             $.ajax({
-                url:"/api/monitoring-main-devices/get-chart/" + fieldId + "/" + column + "/" + filterType,
-                type:"GET",
+                url: "/api/monitoring-main-devices/get-chart/" + fieldId + "/" + column + "/" + filterType,
+                type: "GET",
                 success: function(datas) {
                     showChart(title, datas)
                 }
             });
         }
+
+        $('.pests-wrapper').click(function() {
+            var ulatDaunVal = pestsPrediction[0].split("=")[1]
+            $("#txtUlatDaun").text(ulatDaunVal.charAt(0).toUpperCase() + ulatDaunVal.slice(1))
+            var ulatKropVal = pestsPrediction[1].split("=")[1]
+            $("#txtUlatKrop").text(ulatKropVal.charAt(0).toUpperCase() + ulatKropVal.slice(1))
+            var busukHitamVal = pestsPrediction[2].split("=")[1]
+            $("#txtBusukHitam").text(busukHitamVal.charAt(0).toUpperCase() + busukHitamVal.slice(1))
+            $("#seekPestsPrediction").modal("show")
+        })
 
         $(".nav-link").click(function() {
             openLoader()
@@ -308,18 +423,18 @@
             getDataChart(fieldId, column, type, title)
         })
 
-        function showChart(title, datas){
+        function showChart(title, datas) {
             myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: datas.data.map(function(a){
+                    labels: datas.data.map(function(a) {
                         const dateFormat = new Date(a.created_at)
-                        return dateFormat.getDate()+
-                            "/"+(dateFormat.getMonth()+1)+
-                            "/"+dateFormat.getFullYear()+
-                            " "+dateFormat.getHours()+
-                            ":"+dateFormat.getMinutes()+
-                            ":"+dateFormat.getSeconds();
+                        return dateFormat.getDate() +
+                            "/" + (dateFormat.getMonth() + 1) +
+                            "/" + dateFormat.getFullYear() +
+                            " " + dateFormat.getHours() +
+                            ":" + dateFormat.getMinutes() +
+                            ":" + dateFormat.getSeconds();
                     }),
                     datasets: [{
                         label: "Histories of " + title,
@@ -346,8 +461,5 @@
                 }
             })
         }
-
     </script>
-
-</script>
 @endpush
