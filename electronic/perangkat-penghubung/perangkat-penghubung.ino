@@ -11,6 +11,9 @@
 #define MQTT_PORT 1883
 #define WIFI_SSID "Student_Polban"
 #define WIFI_PASSWORD "20polban21"
+#define ss 5
+#define rst 14
+#define dio0 2
 
 //#define WIFI_SSID "Galaxy M33 5G"
 //#define WIFI_PASSWORD "anggaganteng"
@@ -19,6 +22,7 @@
 //#define WIFI_SSID "kostankuning@wifi.id"
 //#define WIFI_PASSWORD "kostankuning14"
 
+StaticJsonDocument<70> in;
 HTTPClient httpMainDevice, httpSupportDevice;
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -53,10 +57,11 @@ FuzzySet *hujanRingan = new FuzzySet(2.5, 11.25, 11.25, 20);
 FuzzySet *hujanSedang = new FuzzySet(15, 32.5, 32.5, 50);
 FuzzySet *hujanLebat = new FuzzySet(45, 72.5, 72.5, 100);  
 
-char output[200], output2[150];
+char jenis[50], output[200], output2[150];
 unsigned int windTemperature, windHumidity, windPressure, windSpeed, lightIntensity, rainfall;
 unsigned int soilTemperature, soilHumidity, soilPh, soilNitrogen, soilPhosphor, soilKalium;
 char weatherForecast[50], pestsPrediction[100];
+String LoRaData;
 
 double u0[] = {0.40427292089515005, -0.6348080638911874, -0.5826808357272043};
 double u1[] = {-0.48512750507418756, 0.761769676669425, 0.6992170028726451};
@@ -66,39 +71,62 @@ double p1[] = {0.7003134205554864, 2.0890725392537743, 0.7789572738382433};
 
 double c = 6.194008413911195;
 
-void setup() {
+void setup() 
+{
   Serial.begin(9600);
   while (!Serial);
-  if (!LoRa.begin(915E6)) {
-    Serial.println("Starting LoRa failed!");
-    while (1);
-  }
+  setup_lora();
   setup_wifi();
   inisialisasiFuzzyInputOutput();
   inisialisasiFuzzyRule();
   client.setServer(MQTT_SERVER, MQTT_PORT);
 }
 
-void loop() {
-  if (!client.connected()) {
+void loop() 
+{
+  if (!client.connected()) 
+  {
     reconnect();
   }
   client.loop();
-  unsigned long now = millis();
-  if (now - lastMsg > 4000) {
-    lastMsg = now;
+
+  int packetSize = LoRa.parsePacket();
+  if (packetSize) 
+  {
+    Serial.print("Received packet ");
+
+    while (LoRa.available()) 
+    {
+      LoRaData = LoRa.readString();
+      rcvCommand();
+    }
+
+    Serial.println();
+  }  
+}
+
+void rcvCommand()
+{
+    Serial.println(LoRaData);
+    deserializeJson(in, LoRaData);
+//    command_rcvd_id = in["id"];
+//    command_rcvd_temp = in["suhu"];
+//    command_rcvd_hum = in["hum"];
+
+  if (jenis == "faster") 
+  {
     Serial.println("");
+
+    windTemperature = random(25, 28);
+    windHumidity = random(40, 43);
+    windPressure = random(13, 15);
+    windSpeed = random(6, 9);
+    rainfall = random(0, 100);
+    lightIntensity = random(2800, 3200);
 
 //    Kirim data perangkat utama
 
     StaticJsonDocument<96> doc;
-
-    windTemperature = random(25, 28);
-    windHumidity = random(40, 43);
-    windPressure = random(13, 15); 
-    windSpeed = random(6, 9);       
-    rainfall = random(0, 100);
-    lightIntensity = random(2800, 3200);
 
     doc["monitoring"]["wind_temperature"] = windTemperature;
     doc["monitoring"]["wind_humidity"] = windHumidity;
@@ -124,13 +152,6 @@ void loop() {
 
     StaticJsonDocument<200> doc2;
 
-    soilTemperature = random(25, 28);
-    soilHumidity = random(40, 43);
-    soilPh = random(5, 7);
-    soilNitrogen = random(8, 9);
-    soilPhosphor = random(2, 3);
-    soilKalium = random(5, 6);
-
     doc2["monitoring"]["soil_temperature"] = soilTemperature;
     doc2["monitoring"]["soil_humidity"] = soilHumidity;
     doc2["monitoring"]["soil_ph"] = soilPh;
@@ -151,11 +172,17 @@ void loop() {
 
     Serial.println("");
     Serial.println("=====================================");    
-  }
 
-  if (now - lastMsg2 > 10000) {
-    lastMsg2 = now;
+  } else if (jenis == "slower") 
+  {
     Serial.println("");
+
+    soilTemperature = random(25, 28);
+    soilHumidity = random(40, 43);
+    soilPh = random(5, 7);
+    soilNitrogen = random(8, 9);
+    soilPhosphor = random(2, 3);
+    soilKalium = random(5, 6);
 
 //    Fuzzy Logic
 
@@ -252,12 +279,21 @@ void loop() {
 
     Serial.println("");
     Serial.println("=====================================");
-    
-  }
-  
+  } 
 }
 
-void setup_wifi() {
+void setup_lora() 
+{
+  LoRa.setPins(ss, rst, dio0);
+  if (!LoRa.begin(915E6)) {
+    Serial.println("Starting LoRa failed!");
+    while (1);
+  }
+  Serial.println("LoRa Initializing OK!");
+}
+
+void setup_wifi() 
+{
   Serial.print("Connecting to ");
   Serial.print(WIFI_SSID);
   Serial.println();
@@ -579,12 +615,15 @@ void inisialisasiFuzzyRule()
   fuzzy->addFuzzyRule(fuzzyRule27);  
 }
 
-void reconnect() {
-  while (!client.connected()) {
+void reconnect() 
+{
+  while (!client.connected()) 
+  {
     Serial.print("Attempting MQTT connection...");
     String clientId = "ESP32Client-";
     clientId += String(random(0xffff), HEX);
-    if (client.connect(clientId.c_str())) {
+    if (client.connect(clientId.c_str())) 
+    {
       Serial.println("connected");
     } else {
       Serial.print("failed, rc=");
