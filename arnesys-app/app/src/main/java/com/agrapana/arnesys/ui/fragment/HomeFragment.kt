@@ -211,9 +211,9 @@ class HomeFragment: Fragment(), ChangeFieldListener {
                         Log.d("/utama", message.toString())
                         binding.valWindTemperature.text = message.monitoring.windTemperature.toString() + "°"
                         binding.valWindHumidity.text = message.monitoring.windHumidity.toString() + "%"
-                        binding.valWindSpeed.text = message.monitoring.windSpeed.toString() + "mph"
-                        binding.valPressure.text = message.monitoring.windPressure.toString()
-                        binding.valLight.text = message.monitoring.windPressure.toString()
+                        binding.valWindSpeed.text = message.monitoring.windSpeed.toString() + " knot"
+                        binding.valPressure.text = message.monitoring.windPressure.toString() + " hPa"
+                        binding.valLight.text = message.monitoring.windPressure.toString() + " lux"
                     }
                     "arnesys/$fieldId/utama/ai" -> {
                         val message = Gson().fromJson(mqttMessage.toString(), MonitoringAIProcessing::class.java)
@@ -250,9 +250,9 @@ class HomeFragment: Fragment(), ChangeFieldListener {
                         binding.valSoilTemperature.text = messageSupportDevice?.monitoring?.soilTemperature.toString() + "°"
                         binding.valSoilMoisture.text = messageSupportDevice?.monitoring?.soilHumidity.toString() + "%"
                         binding.valSoilPh.text = messageSupportDevice?.monitoring?.soilPh.toString()
-                        binding.valSoilNitrogen.text = messageSupportDevice?.monitoring?.soilNitrogen.toString()
-                        binding.valSoilPhosphor.text = messageSupportDevice?.monitoring?.soilPhosphor.toString()
-                        binding.valSoilKalium.text = messageSupportDevice?.monitoring?.soilKalium.toString()
+                        binding.valSoilNitrogen.text = messageSupportDevice?.monitoring?.soilNitrogen.toString() + " mg/kg"
+                        binding.valSoilPhosphor.text = messageSupportDevice?.monitoring?.soilPhosphor.toString() + " mg/kg"
+                        binding.valSoilKalium.text = messageSupportDevice?.monitoring?.soilKalium.toString() + " mg/kg"
                     }
                 }
                 showMainField()

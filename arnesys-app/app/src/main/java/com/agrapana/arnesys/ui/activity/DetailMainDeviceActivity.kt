@@ -134,9 +134,9 @@ class DetailMainDeviceActivity : AppCompatActivity() {
                     Log.d("/utama", message.toString())
                     binding.valWindTemperature.text = message.monitoring.windTemperature.toString() + "°"
                     binding.valWindHumidity.text = message.monitoring.windHumidity.toString() + "%"
-                    binding.valWindSpeed.text = message.monitoring.windSpeed.toString() + "mph"
-                    binding.valWindPressure.text = message.monitoring.windPressure.toString()
-                    binding.valLightIntensity.text = message.monitoring.windPressure.toString()
+                    binding.valWindSpeed.text = message.monitoring.windSpeed.toString() + " knot"
+                    binding.valWindPressure.text = message.monitoring.windPressure.toString() + " hPa"
+                    binding.valLightIntensity.text = message.monitoring.windPressure.toString() + " lux"
 
                     binding.valWindWarmthPlaceholder.visibility = View.GONE
                     binding.valWindHumidityPlaceholder.visibility = View.GONE

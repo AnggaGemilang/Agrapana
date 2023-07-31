@@ -128,9 +128,9 @@ class DetailSupportDeviceActivity : AppCompatActivity() {
                     binding.valSoilTemperature.text = message.monitoring.soilTemperature.toString() + "°"
                     binding.valSoilMoisture.text = message.monitoring.soilHumidity.toString() + "%"
                     binding.valSoilPh.text = message.monitoring.soilPh.toString()
-                    binding.valSoilNitrogen.text = message.monitoring.soilNitrogen.toString()
-                    binding.valSoilPhosphor.text = message.monitoring.soilPhosphor.toString()
-                    binding.valSoilKalium.text = message.monitoring.soilKalium.toString()
+                    binding.valSoilNitrogen.text = message.monitoring.soilNitrogen.toString() + " mg/kg"
+                    binding.valSoilPhosphor.text = message.monitoring.soilPhosphor.toString() + " mg/kg"
+                    binding.valSoilKalium.text = message.monitoring.soilKalium.toString() + " mg/kg"
                 }
 
                 binding.valSoilTemperaturePlaceholder.visibility = View.GONE
