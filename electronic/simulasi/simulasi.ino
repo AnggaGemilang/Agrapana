@@ -90,8 +90,8 @@ void loop() {
     windHumidity = random(40, 43);
     windPressure = random(13, 15); 
     windSpeed = random(6, 9);       
-    rainfall = random(0, 100);
-    lightIntensity = random(2800, 3200);
+    rainfall = random(0, 1);
+    lightIntensity = random(22, 24);
 
     doc["monitoring"]["wind_temperature"] = windTemperature;
     doc["monitoring"]["wind_humidity"] = windHumidity;

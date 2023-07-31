@@ -213,7 +213,7 @@ class HomeFragment: Fragment(), ChangeFieldListener {
                         binding.valWindHumidity.text = message.monitoring.windHumidity.toString() + "%"
                         binding.valWindSpeed.text = message.monitoring.windSpeed.toString() + " knot"
                         binding.valPressure.text = message.monitoring.windPressure.toString() + " hPa"
-                        binding.valLight.text = message.monitoring.windPressure.toString() + " lux"
+                        binding.valLight.text = message.monitoring.lightIntensity.toString() + " lux"
                     }
                     "arnesys/$fieldId/utama/ai" -> {
                         val message = Gson().fromJson(mqttMessage.toString(), MonitoringAIProcessing::class.java)

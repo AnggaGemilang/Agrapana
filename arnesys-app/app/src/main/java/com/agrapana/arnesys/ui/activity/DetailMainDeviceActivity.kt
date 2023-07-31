@@ -136,7 +136,7 @@ class DetailMainDeviceActivity : AppCompatActivity() {
                     binding.valWindHumidity.text = message.monitoring.windHumidity.toString() + "%"
                     binding.valWindSpeed.text = message.monitoring.windSpeed.toString() + " knot"
                     binding.valWindPressure.text = message.monitoring.windPressure.toString() + " hPa"
-                    binding.valLightIntensity.text = message.monitoring.windPressure.toString() + " lux"
+                    binding.valLightIntensity.text = message.monitoring.lightIntensity.toString() + " lux"
 
                     binding.valWindWarmthPlaceholder.visibility = View.GONE
                     binding.valWindHumidityPlaceholder.visibility = View.GONE
