@@ -9,14 +9,14 @@
 #define MSG_BUFFER_SIZE (50)
 #define MQTT_SERVER "test.mosquitto.org"
 #define MQTT_PORT 1883
-#define WIFI_SSID "Student_Polban"
-#define WIFI_PASSWORD "20polban21"
+#define WIFI_SSID "Galaxy M33 5G"
+#define WIFI_PASSWORD "anggaganteng"
 #define ss 5
 #define rst 14
-#define dio0 2
+#define dio0 16
 
-//#define WIFI_SSID "Galaxy M33 5G"
-//#define WIFI_PASSWORD "anggaganteng"
+//#define WIFI_SSID "Student_Polban"
+//#define WIFI_PASSWORD "20polban21"
 //#define WIFI_SSID "SPEEDY"
 //#define WIFI_PASSWORD "suherman"
 //#define WIFI_SSID "kostankuning@wifi.id"
@@ -285,7 +285,7 @@ void rcvCommand()
 void setup_lora() 
 {
   LoRa.setPins(ss, rst, dio0);
-  if (!LoRa.begin(915E6)) {
+  if (!LoRa.begin(433E6)) {
     Serial.println("Starting LoRa failed!");
     while (1);
   }

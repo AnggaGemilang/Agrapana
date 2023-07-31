@@ -7,11 +7,11 @@
 #define MSG_BUFFER_SIZE (50)
 #define MQTT_SERVER "test.mosquitto.org"
 #define MQTT_PORT 1883
-#define WIFI_SSID "Student_Polban"
-#define WIFI_PASSWORD "20polban21"
+#define WIFI_SSID "Galaxy M33 5G"
+#define WIFI_PASSWORD "anggaganteng"
 
-//#define WIFI_SSID "Galaxy M33 5G"
-//#define WIFI_PASSWORD "anggaganteng"
+//#define WIFI_SSID "Student_Polban"
+//#define WIFI_PASSWORD "20polban21"
 //#define WIFI_SSID "SPEEDY"
 //#define WIFI_PASSWORD "suherman"
 //#define WIFI_SSID "kostankuning@wifi.id"

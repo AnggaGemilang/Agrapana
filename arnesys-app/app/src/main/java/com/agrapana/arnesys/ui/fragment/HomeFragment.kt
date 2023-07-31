@@ -355,7 +355,6 @@ class HomeFragment: Fragment(), ChangeFieldListener {
     }
 
     override fun onResume() {
-
         mqttClient.mqttAndroidClient.registerResources()
         super.onResume()
     }
