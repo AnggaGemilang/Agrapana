@@ -28,6 +28,16 @@
     <div class="row content-wrapper mt-3" style="padding-bottom: 70px;">
         <div class="col-xl-12 col-sm-12">
             <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-success" style="color: white; border: none;" role="alert">
+                        <b>Congrats</b>, Field Safe
+                    </div>
+                    <div class="alert alert-danger" style="color: white; border: none;" role="alert">
+                        <ul class="alert-list"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-4">
                     <div class="card">
                         <div class="card-body p-3">
@@ -36,7 +46,8 @@
                                     <div class="row">
                                         <p class="mb-0 text-capitalize font-weight-bold" style="font-size: 13pt;">Weather
                                             <br>
-                                            Condition</p>
+                                            Condition
+                                        </p>
                                     </div>
                                     <div class="row" style="align-items: center; height: 78%;">
                                         <img class="weatherForecast" src="{{ asset('assets') }}/img/sun-cloud.png"
@@ -325,6 +336,15 @@
             margin-right: 5px;
             padding: 10px 0px;
         }
+
+        .alert-success, .alert-danger {
+            display: none;
+        }
+
+        .alert-list {
+            margin-bottom: 0px;
+        }
+
     </style>
 @endpush
 
@@ -361,6 +381,43 @@
                 $("#txtWindHumidity").text(data.monitoring.wind_humidity + "%")
                 $("#txtWindPest").text("safe")
                 $("#txtWindLightIntensity").text("sabihis")
+            } else if (topic == `arnesys/${fieldId}/pendukung/1`) {
+                var data = JSON.parse(r_message.payloadString)
+
+                console.log(data)
+
+                $(".alert-list").empty()
+
+                if(data != null){
+                    if(data.monitoring.soil_nitrogen < 4){
+                        $(".alert-danger").show()
+                        $(".alert-list").append("<li><b>Kekurangan Nitrogen</b>, Memberikan pupuk organic, seperti kotoran sapi, kotoran hewan, serbuk gergaji, atau menambahkan bakteri salah satunya azotobacter, Anabaena, dll.</li>")
+                    }
+
+                    if(data.monitoring.soil_phosphor < 4){
+                        $(".alert-danger").show()
+                        $(".alert-list").append("<li><b>Kekurangan Phosphor</b>, Memberikan abu sekam padi 30%</li>")
+                    }
+
+                    if(data.monitoring.soil_kalium < 5){
+                        $(".alert-danger").show()
+                        $(".alert-list").append("<li><b>Kekurangan Kalium</b>, Memberikan abu kayu, cangkang telur (disemprotkan pada daun), atau tepung tulang</li>")
+                    }
+
+                    if(data.monitoring.soil_ph < 5){
+                        $(".alert-danger").show()
+                        $(".alert-list").append("<li><b>Kekurangan pH</b>, Memberikan abu kayu, atau dengan mikroorganisme seperti EM4</li>")
+                    }
+
+                    if(data.monitoring.soil_ph > 8){
+                        $(".alert-danger").show()
+                        $(".alert-list").append("<li><b>Kelebihan pH</b>, Memberikan belerang, sulfur atau serbuk kayu</li>")
+                    }
+
+                    if($(".alert-list").children().length == 0){
+                        $(".alert-success").show()
+                    }
+                }
             } else if (topic == `arnesys/${fieldId}/utama/ai`) {
                 var data = JSON.parse(r_message.payloadString)
                 var weatherForecast = data.ai_processing.weather_forecast
