@@ -84,7 +84,7 @@ void loop() {
 
 //    Kirim data perangkat utama
 
-    StaticJsonDocument<96> doc;
+    StaticJsonDocument<150> doc;
 
     windTemperature = random(25, 28);
     windHumidity = random(40, 43);

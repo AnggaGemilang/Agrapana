@@ -284,13 +284,12 @@
 
             if(topic==`arnesys/${fieldId}/pendukung/1`){
                 var data = JSON.parse(r_message.payloadString)
-                // console.log(data)
                 $("#txtSoilTemperature").text(data.monitoring.soil_temperature + "°")
                 $("#txtSoilMoisture").text(data.monitoring.soil_humidity + "%")
                 $("#txtSoilPh").text(data.monitoring.soil_ph)
-                $("#txtSoilNitrogen").text(data.monitoring.soil_nitrogen)
-                $("#txtSoilPhosphor").text(data.monitoring.soil_phosphor)
-                $("#txtSoilKalium").text(data.monitoring.soil_kalium)
+                $("#txtSoilNitrogen").text(data.monitoring.soil_nitrogen + " mg/kg")
+                $("#txtSoilPhosphor").text(data.monitoring.soil_phosphor + " mg/kg")
+                $("#txtSoilKalium").text(data.monitoring.soil_kalium + " mg/kg")
             }
         }
 

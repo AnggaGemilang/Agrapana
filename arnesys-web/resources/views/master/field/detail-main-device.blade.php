@@ -375,16 +375,14 @@
 
             if (topic == `arnesys/${fieldId}/utama`) {
                 var data = JSON.parse(r_message.payloadString)
-                $("#txtWindSpeed").text(data.monitoring.wind_speed + " mph")
-                $("#txtWindPressure").text(data.monitoring.wind_pressure)
+                console.log(data)
+                $("#txtWindSpeed").text(data.monitoring.wind_speed + " knot")
+                $("#txtWindPressure").text(data.monitoring.wind_pressure + " hPa")
                 $("#txtWindTemperature").text(data.monitoring.wind_temperature + "°")
                 $("#txtWindHumidity").text(data.monitoring.wind_humidity + "%")
-                $("#txtWindPest").text("safe")
-                $("#txtWindLightIntensity").text("sabihis")
+                $("#txtWindLightIntensity").text(data.monitoring.light_intensity + " lux")
             } else if (topic == `arnesys/${fieldId}/pendukung/1`) {
                 var data = JSON.parse(r_message.payloadString)
-
-                console.log(data)
 
                 $(".alert-list").empty()
 
