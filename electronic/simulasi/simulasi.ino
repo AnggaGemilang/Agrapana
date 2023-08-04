@@ -89,7 +89,7 @@ void loop() {
     windTemperature = random(25, 28);
     windHumidity = random(40, 43);
     windPressure = random(13, 15); 
-    windSpeed = random(6, 9);       
+    windSpeed = 0;       
     rainfall = random(0, 1);
     lightIntensity = random(22, 24);
 
