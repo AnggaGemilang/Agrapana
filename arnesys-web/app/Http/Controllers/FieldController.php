@@ -16,6 +16,10 @@ class FieldController extends Controller
         return view('master.field.index', compact('fields'));
     }
 
+    function monitoring(){
+        return view('master.field.monitoring');
+    }
+
     function getByClient($id){
         $fields = Field::where('client_id', $id)->get();
         return view('master.field.index', compact('fields'));

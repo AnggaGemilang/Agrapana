@@ -54,6 +54,15 @@ if(\Request::is('master/dashboard')) {
                         <span class="nav-link-text ms-1">Field</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ @$field }}" href="{{ route('field.monitoring') }}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-credit-card text-warning text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Field Monitoring</span>
+                    </a>
+                </li>
             @endrole
 
             <li class="nav-item mt-3">

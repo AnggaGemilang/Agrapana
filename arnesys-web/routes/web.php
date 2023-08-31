@@ -47,10 +47,11 @@ Route::group(['prefix' => 'master', 'middleware' => ['auth:web,webstudent,webcli
         Route::delete('/fields/delete/{id}', [FieldController::class, 'delete'])->name('field.delete');
         Route::post('/field/store', [FieldController::class, 'store'])->name('field.store');
     });
-
+    
     // Role Client
     Route::group(['middleware' => ['role:Client']], function () {
         Route::get('/fields', [FieldController::class, 'index'])->name('field');
+        Route::get('/fields/client/monitoring', [FieldController::class, 'monitoring'])->name('field.monitoring');
     });
 
 });

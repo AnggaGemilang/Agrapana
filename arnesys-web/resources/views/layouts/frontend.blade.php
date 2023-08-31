@@ -486,16 +486,16 @@
             </div>
             <div class="row d-flex justify-content-center pt-2">
                 <p class="text-center">They are the people behind the scenes who work hard, <br> hopefully always
-                    healthy and long life</p>
+                    healthy and live a long life</p>
             </div>
             <div class="row mt-3">
                 <div class="col-md-4" style="display: flex; flex-direction: column; justify-content: space-between;">
                     <div class="member-item" data-id="1">
-                        <h4>Maisevli Harika</h4>
-                        <p style="margin-top: -5px;">Supervisor</p>
+                        <h4>Fikhi Akmal</h4>
+                        <p style="margin-top: -5px;">Electrical Designer and Controls</p>
                     </div>
                     <div class="member-item" data-id="2">
-                        <h4>Angga Gemilang</h4>
+                        <h4>Panji Judha Fadhilla</h4>
                         <p style="margin-top: -5px;">Application and Network Developer</p>
                     </div>
                     <div class="member-item" data-id="3">
@@ -503,8 +503,12 @@
                         <p style="margin-top: -5px;">Electrical Designer and Controls</p>
                     </div>
                     <div class="member-item" data-id="4">
+                        <h4>Muhammad Faiz Fauzan Adzima</h4>
+                        <p style="margin-top: -5px;">Mechanical and CAD Engineer</p>
+                    </div>
+                    <div class="member-item" data-id="5">
                         <h4>Ghaitsa Inayatur Rahma</h4>
-                        <p style="margin-top: -5px;">Agricultural Experts and Analyzers</p>
+                        <p style="margin-top: -5px;">Agricultural Experts and Research</p>
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -512,11 +516,11 @@
                         <div class="col-md-12">
                             <div class="gallery">
                                 <figure id="figure-item" class="gallery__item" data-id="1">
-                                    <img src="{{ asset('assets') }}/landing-page/images/maisevli.png"
-                                        class="gallery__img" alt="Image 1">
+                                    <img src="{{ asset('assets') }}/landing-page/images/fikhi.jpg"
+                                        class="gallery__img" alt="Image 6">
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="2">
-                                    <img src="{{ asset('assets') }}/landing-page/images/angga.png"
+                                    <img src="{{ asset('assets') }}/landing-page/images/panji.png"
                                         class="gallery__img" alt="Image 2">
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="3">
@@ -524,8 +528,12 @@
                                         class="gallery__img" alt="Image 3">
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="4">
-                                    <img src="{{ asset('assets') }}/landing-page/images/ghaitsa2.png"
+                                    <img src="{{ asset('assets') }}/landing-page/images/faiz.png"
                                         class="gallery__img" alt="Image 4">
+                                </figure>
+                                <figure id="figure-item" class="gallery__item" data-id="5">
+                                    <img src="{{ asset('assets') }}/landing-page/images/ghaitsa2.png"
+                                        class="gallery__img" alt="Image 5">
                                 </figure>
                             </div>
                         </div>

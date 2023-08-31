@@ -81,10 +81,10 @@
                                 </a>
                             </li>
                             <li class="nav-item dropdown pe-2 d-flex align-items-center">
-                                <a href="javascript:;" class="nav-link text-white p-0" id="dropdownMenuButton"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn btn-link text-white p-0 notif-btn" aria-expanded="false">
                                     <i class="fa fa-bell cursor-pointer"></i>
-                                </a>
+                                    <span class='badge badge-warning' id='lblCartCount'> 2 </span>
+                                </button>
                             </li>
                         </ul>
                     </div>
@@ -98,11 +98,41 @@
             </div>
 
             @include('components.master.footer')
-
+            <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="modalSayaLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalLabel">Notification</h5>
+                            <span type="button" class="btnClose" style="font-size: 20px;">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <div class="box shadow-sm rounded bg-white mb-3">
+                                <div class="box-body p-0">
+                                    <div class="p-3 d-flex align-items-center osahan-post-header">
+                                        <div class="font-weight-bold mr-3">
+                                            <div class="mb-2">Curah hujan menurun !</div>
+                                            <button type="button" class="btn btn-outline-success btn-sm">Cek Fields</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box shadow-sm rounded bg-white mb-3">
+                                <div class="box-body p-0">
+                                    <div class="p-3 d-flex align-items-center osahan-post-header">
+                                        <div class="font-weight-bold mr-3">
+                                            <div class="mb-2">Angin berhembus kencang !</div>
+                                            <button type="button" class="btn btn-outline-success btn-sm">Cek Fields</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
 
     </div>
-
     <script src="{{ asset('assets') }}/landing-page/js/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script src="{{ asset('assets') }}/js/core/popper.min.js"></script>
@@ -115,7 +145,38 @@
     @stack('js')
 
     <script src="{{ asset('assets') }}/js/script.js"></script>
+    <script>
+        $('.notif-btn').click(function (){
+            $("#notificationModal").modal("show")
+        });
+
+        $(".btnClose").click(function () {
+            $("#notificationModal").modal("hide")
+        })
+    </script>
 
 </body>
 
 </html>
+<style>
+    .badge {
+      padding-left: 9px;
+      padding-right: 9px;
+      -webkit-border-radius: 9px;
+      -moz-border-radius: 9px;
+      border-radius: 9px;
+    }
+    
+    .label-warning[href],
+    .badge-warning[href] {
+      background-color: #c67605;
+    }
+    #lblCartCount {
+        font-size: 12px;
+        background: #ff0000;
+        color: #fff;
+        padding: 0 5px;
+        vertical-align: top;
+        margin-left: -10px; 
+    }
+</style>
