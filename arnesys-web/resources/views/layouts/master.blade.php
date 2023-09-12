@@ -80,7 +80,7 @@
                                     <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
                                 </a>
                             </li>
-                            <li class="nav-item dropdown pe-2 d-flex align-items-center">
+                            <li class="nav-item dropdown pe-2 d-flex align-items-center" style="margin-top: 18px !important;">
                                 <button class="btn btn-link text-white p-0 notif-btn" aria-expanded="false">
                                     <i class="fa fa-bell cursor-pointer"></i>
                                     <span class='badge badge-warning' id='lblCartCount'> 2 </span>
