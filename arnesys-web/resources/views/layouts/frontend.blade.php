@@ -22,7 +22,7 @@
             <div class="container">
                 <nav class="navbar navbar-expand-lg custom_nav-container">
                     <a class="navbar-brand" href="#">
-                        {{-- <img src="{{ asset("assets") }}/landing-page/images/logo.png" style="width: 150px;" alt=""> --}}
+                        <!-- <img src="{{ asset('assets') }}/landing-page/images/logo.png" style="width: 150px;" alt=""> -->
                         <p style="color: black; font-weight: 700; font-size: 20pt; margin-top: 17px;">Arnesys</p>
                     </a>
                     <a class="navbar-toggler btn btn-outline-success mt-2" href="{{ route('dashboard') }}"
@@ -62,7 +62,7 @@
             <div class="container">
                 <nav class="navbar navbar-expand-lg custom_nav-container pt-5">
                     <a class="navbar-brand" href="#">
-                        {{-- <img src="{{ asset("assets") }}/landing-page/images/logo.png" style="width: 150px;" alt=""> --}}
+                        <!-- <img src="{{ asset('assets') }}/landing-page/images/logo.png" style="width: 150px;" alt=""> -->
                         <p style="color: black; font-weight: 700; font-size: 20pt; margin-top: 37px;">Arnesys</p>
                     </a>
                     <a class="navbar-toggler btn btn-outline-light mt-2" href="{{ route('dashboard') }}"
@@ -97,6 +97,7 @@
                 </nav>
             </div>
         </header>
+
         <section class="slider_section mt-3">
             <div class="container">
                 <div class="row">
@@ -127,7 +128,7 @@
             </div>
         </section>
     </div>
-    <section class="about_section layout_padding reveal" id="technologies-section">
+    <section class="about_section reveal" id="technologies-section">
         <div class="img-box" style="position: relative;">
             <img src="{{ asset('assets') }}/landing-page/images/daun.png" alt=""
                 style="width: 150px; position: absolute; left: 0; top: -250px; z-index: -1;" />
@@ -257,6 +258,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+    <section >
+        <div class="container">
             <div class="row mt-4">
                 <div class="col-md-8">
                     <div class="row">
@@ -371,7 +376,11 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-5">
+        </div>
+    </section>
+    <section class="about_section layout_padding reveal" >
+        <div class="container">
+        <div class="row mt-5">
                 <div class="col-md-8">
                     <div class="row">
                         <div class="col-md-6">
@@ -510,10 +519,14 @@
                         <h4>Ghaitsa Inayatur Rahma</h4>
                         <p style="margin-top: -5px;">Agricultural Experts and Research</p>
                     </div>
+                    <div class="member-item" data-id="5">
+                        <h4>Ghaitsa Inayatur Rahma</h4>
+                        <p style="margin-top: -5px;">Agricultural Experts and Research</p>
+                    </div>
                 </div>
                 <div class="col-md-8">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12" style="display: flex; flex-direction: column; justify-content: space-between;">
                             <div class="gallery">
                                 <figure id="figure-item" class="gallery__item" data-id="1">
                                     <img src="{{ asset('assets') }}/landing-page/images/fikhi.jpg"
@@ -535,6 +548,10 @@
                                     <img src="{{ asset('assets') }}/landing-page/images/ghaitsa2.png"
                                         class="gallery__img" alt="Image 5">
                                 </figure>
+                                <figure id="figure-item" class="gallery__item" data-id="6">
+                                    <img src="{{ asset('assets') }}/landing-page/images/ghaitsa2.png"
+                                        class="gallery__img" alt="Image 5">
+                                </figure>
                             </div>
                         </div>
                     </div>
@@ -542,7 +559,7 @@
             </div>
         </div>
     </section>
-    <section class="contact_section pt-5 pb-5 reveal" id="contact-section">
+    <section class="contact_section layout_padding reveal" id="contact-section" style="margin-bottom: 200px;">
         <div class="container">
             <div class="row">
                 <div class="col-md-5">

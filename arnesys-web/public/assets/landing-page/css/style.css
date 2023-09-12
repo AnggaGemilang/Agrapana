@@ -64,8 +64,7 @@ p {
 }
 
 .layout_padding {
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 300px;
 }
 
 .layout_padding2 {
@@ -930,7 +929,7 @@ a:focus {
 
 .gallery {
     display: grid;
-    grid-template-columns: repeat(2, 260px);
+    grid-template-columns: repeat(3, 260px);
     grid-template-rows: repeat(2, 260px);
     row-gap: 0;
 }
