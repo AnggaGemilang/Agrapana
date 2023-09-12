@@ -500,28 +500,28 @@
             <div class="row mt-3">
                 <div class="col-md-4" style="display: flex; flex-direction: column; justify-content: space-between;">
                     <div class="member-item" data-id="1">
-                        <h4>Fikhi Akmal</h4>
-                        <p style="margin-top: -5px;">Electrical Designer and Controls</p>
+                        <h4>Maisevli Harika, S.ST., M.T., M.Eng.</h4>
+                        <p style="margin-top: -5px;">Supervisor</p>
                     </div>
                     <div class="member-item" data-id="2">
-                        <h4>Panji Judha Fadhilla</h4>
-                        <p style="margin-top: -5px;">Application and Network Developer</p>
-                    </div>
-                    <div class="member-item" data-id="3">
                         <h4>Indra Aolia Nugraha</h4>
                         <p style="margin-top: -5px;">Electrical Designer and Controls</p>
                     </div>
+                    <div class="member-item" data-id="3">
+                        <h4>Angga Gemilang</h4>
+                        <p style="margin-top: -5px;">Application and Network Developer</p>
+                    </div>
                     <div class="member-item" data-id="4">
-                        <h4>Muhammad Faiz Fauzan Adzima</h4>
+                        <h4>Ghaitsa Inayatur Rahma</h4>
+                        <p style="margin-top: -5px;">Agricultural Experts and Research</p>
+                    </div>
+                    <div class="member-item" data-id="5">
+                        <h4>Muhammad Faiz Fauzan A.</h4>
                         <p style="margin-top: -5px;">Mechanical and CAD Engineer</p>
                     </div>
-                    <div class="member-item" data-id="5">
-                        <h4>Ghaitsa Inayatur Rahma</h4>
-                        <p style="margin-top: -5px;">Agricultural Experts and Research</p>
-                    </div>
-                    <div class="member-item" data-id="5">
-                        <h4>Ghaitsa Inayatur Rahma</h4>
-                        <p style="margin-top: -5px;">Agricultural Experts and Research</p>
+                    <div class="member-item" data-id="6">
+                        <h4>Raden Allysha Rizkyta A.</h4>
+                        <p style="margin-top: -5px;">Finance and Business Strategy</p>
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -529,28 +529,28 @@
                         <div class="col-md-12" style="display: flex; flex-direction: column; justify-content: space-between;">
                             <div class="gallery">
                                 <figure id="figure-item" class="gallery__item" data-id="1">
-                                    <img src="{{ asset('assets') }}/landing-page/images/fikhi.jpg"
+                                    <img src="{{ asset('assets') }}/landing-page/images/maisevli.png"
                                         class="gallery__img" alt="Image 6">
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="2">
-                                    <img src="{{ asset('assets') }}/landing-page/images/panji.png"
+                                    <img src="{{ asset('assets') }}/landing-page/images/indra2.png"
                                         class="gallery__img" alt="Image 2">
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="3">
-                                    <img src="{{ asset('assets') }}/landing-page/images/indra2.png"
+                                    <img src="{{ asset('assets') }}/landing-page/images/angga.png"
                                         class="gallery__img" alt="Image 3">
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="4">
-                                    <img src="{{ asset('assets') }}/landing-page/images/faiz.png"
+                                    <img src="{{ asset('assets') }}/landing-page/images/ghaitsa2.png"
                                         class="gallery__img" alt="Image 4">
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="5">
-                                    <img src="{{ asset('assets') }}/landing-page/images/ghaitsa2.png"
-                                        class="gallery__img" alt="Image 5">
+                                    <img src="{{ asset('assets') }}/landing-page/images/faiz.png"
+                                        style="object-position: 0% 100%;" class="gallery__img" alt="Image 5">
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="6">
-                                    <img src="{{ asset('assets') }}/landing-page/images/ghaitsa2.png"
-                                        class="gallery__img" alt="Image 5">
+                                    <img src="{{ asset('assets') }}/landing-page/images/alisha.png"
+                                        style="object-position: 50% 100%;" class="gallery__img" alt="Image 6">
                                 </figure>
                             </div>
                         </div>
