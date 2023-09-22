@@ -534,7 +534,7 @@
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="2">
                                     <img src="{{ asset('assets') }}/landing-page/images/indra2.png"
-                                        class="gallery__img" alt="Image 2">
+                                        style="object-position: 0% 100%;" class="gallery__img" alt="Image 5">
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="3">
                                     <img src="{{ asset('assets') }}/landing-page/images/angga.png"
@@ -542,11 +542,11 @@
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="4">
                                     <img src="{{ asset('assets') }}/landing-page/images/ghaitsa2.png"
-                                        class="gallery__img" alt="Image 4">
+                                        class="gallery__img" alt="Image 2">
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="5">
                                     <img src="{{ asset('assets') }}/landing-page/images/faiz.png"
-                                        style="object-position: 0% 100%;" class="gallery__img" alt="Image 5">
+                                        style="object-position: 50% 100%;" class="gallery__img" alt="Image 6">
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="6">
                                     <img src="{{ asset('assets') }}/landing-page/images/alisha.png"
