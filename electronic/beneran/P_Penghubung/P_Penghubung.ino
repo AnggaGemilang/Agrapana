@@ -30,11 +30,10 @@ PubSubClient client(espClient);
 Fuzzy *fuzzy = new Fuzzy();
 
 char FIELD_CODE[50] = "cd3eb1ad-f3ee-4fa4-bf19-0e4f7da89746";
-char SERVER1[58] = "https://arnesys.agrapana.tech/api/monitoring-main-devices";
-char SERVER2[61] = "https://arnesys.agrapana.tech/api/monitoring-support-devices";
+char SERVER1[58] = "https://agracentrys.agrapana.tech/api/monitoring-main-devices";
+char SERVER2[61] = "https://agracentrys.agrapana.tech/api/monitoring-support-devices";
 char topic[100] = "";
-long lastMsg = 0;
-long lastMsg2 = 0;
+long lastMsg = 0, lastMsg2 = 0;
 
 // FuzzySet Input Suhu
 FuzzySet *suhuDingin = new FuzzySet(0, 13.5, 13.5, 27);
@@ -57,19 +56,10 @@ FuzzySet *hujanRingan = new FuzzySet(2.5, 11.25, 11.25, 20);
 FuzzySet *hujanSedang = new FuzzySet(15, 32.5, 32.5, 50);
 FuzzySet *hujanLebat = new FuzzySet(45, 72.5, 72.5, 100);  
 
-char jenis[50], output[200], output2[150];
+char jenis[50], output[200], output2[150], weatherForecast[50];
 unsigned int windTemperature, windHumidity, windPressure, windSpeed, lightIntensity, rainfall;
 unsigned int soilTemperature, soilHumidity, soilPh, soilNitrogen, soilPhosphor, soilKalium;
-char weatherForecast[50], pestsPrediction[100];
 String LoRaData;
-
-double u0[] = {0.40427292089515005, -0.6348080638911874, -0.5826808357272043};
-double u1[] = {-0.48512750507418756, 0.761769676669425, 0.6992170028726451};
-
-double p0[] = {3.5232428618986744, 1.8252391089351945, 60.277945706722875};
-double p1[] = {0.7003134205554864, 2.0890725392537743, 0.7789572738382433};
-
-double c = 6.194008413911195;
 
 void setup() 
 {
@@ -90,31 +80,50 @@ void loop()
   }
   client.loop();
 
-  int packetSize = LoRa.parsePacket();
-  if (packetSize) 
-  {
-    Serial.print("Received packet ");
-
-    while (LoRa.available()) 
+  unsigned long now = millis();
+  if (now - lastMsg > 4000) {
+    int packetSize = LoRa.parsePacket();
+    if (packetSize) 
     {
-      LoRaData = LoRa.readString();
-      rcvCommand();
-    }
+      lastMsg = now;
+      Serial.println("");
+      Serial.print("Received packet ");
+  
+      while (LoRa.available()) 
+      {
+        LoRaData = LoRa.readString();
+        rcvCommand4s();
+      }
+  
+      Serial.println();
+    }  
+  }
 
-    Serial.println();
-  }  
+  if (now - lastMsg2 > 10000) {
+    int packetSize = LoRa.parsePacket();
+    if (packetSize) 
+    {
+      lastMsg2 = now;
+      Serial.println("");
+      Serial.print("Received packet ");
+  
+      while (LoRa.available()) 
+      {
+        LoRaData = LoRa.readString();
+        rcvCommand10s();
+      }
+  
+      Serial.println();
+    }  
+  }
+
 }
 
-void rcvCommand()
+void rcvCommand4s()
 {
     Serial.println(LoRaData);
     deserializeJson(in, LoRaData);
-//    command_rcvd_id = in["id"];
-//    command_rcvd_temp = in["suhu"];
-//    command_rcvd_hum = in["hum"];
 
-  if (jenis == "faster") 
-  {
     Serial.println("");
 
     windTemperature = random(25, 28);
@@ -124,57 +133,74 @@ void rcvCommand()
     rainfall = random(0, 100);
     lightIntensity = random(2800, 3200);
 
-//    Kirim data perangkat utama
+    if(in["source"] == "utama")
+    {
+      // in["monitoring"]["wind_speed"];
+      // in["monitoring"]["light_intensity"];
+      // in["monitoring"]["rainfall"];
+      // in["monitoring"]["wind_temperature"];
+      // in["monitoring"]["wind_humidity"];
+      
+      // Kirim data perangkat utama
 
-    StaticJsonDocument<96> doc;
-
-    doc["monitoring"]["wind_temperature"] = windTemperature;
-    doc["monitoring"]["wind_humidity"] = windHumidity;
-    doc["monitoring"]["wind_pressure"] = windPressure;
-    doc["monitoring"]["wind_speed"] = windSpeed;
-    doc["monitoring"]["rainfall"] = rainfall;
-    doc["monitoring"]["light_intensity"] = lightIntensity;
-    serializeJson(doc, output); 
-
-    strcpy(topic, "arnesys/");
-    strcat(topic, FIELD_CODE);
-    strcat(topic, "/utama");
-    Serial.print("Topic: ");
-    Serial.println(topic);
+      StaticJsonDocument<96> doc;
+  
+      doc["monitoring"]["wind_temperature"] = windTemperature;
+      doc["monitoring"]["wind_humidity"] = windHumidity;
+      doc["monitoring"]["wind_pressure"] = windPressure;
+      doc["monitoring"]["wind_speed"] = windSpeed;
+      doc["monitoring"]["rainfall"] = rainfall;
+      doc["monitoring"]["light_intensity"] = lightIntensity;
+      serializeJson(doc, output); 
+  
+      strcpy(topic, "arnesys/");
+      strcat(topic, FIELD_CODE);
+      strcat(topic, "/utama");
+      Serial.print("Topic: ");
+      Serial.println(topic);
+      
+      client.publish(topic, output);
+      Serial.print("Publish message: ");
+      Serial.println(output);
+    }
     
-    client.publish(topic, output);
-    Serial.print("Publish message: ");
-    Serial.println(output);
+    if(in["source"] == "pendukung")
+    {   
+      // in["monitoring"]["soil_ph"];
+      // in["monitoring"]["soil_humidity"];
+      // in["monitoring"]["soil_temperature"];
 
-//    Kirim data perangkat pendukung
-
-    Serial.println("");
-
-    StaticJsonDocument<200> doc2;
-
-    doc2["monitoring"]["soil_temperature"] = soilTemperature;
-    doc2["monitoring"]["soil_humidity"] = soilHumidity;
-    doc2["monitoring"]["soil_ph"] = soilPh;
-    doc2["monitoring"]["soil_nitrogen"] = soilNitrogen;
-    doc2["monitoring"]["soil_phosphor"] = soilPhosphor;
-    doc2["monitoring"]["soil_kalium"] = soilKalium;
-    serializeJson(doc2, output); 
-
-    strcpy(topic, "arnesys/");
-    strcat(topic, FIELD_CODE);
-    strcat(topic, "/pendukung/1");
-    Serial.print("Topic: ");
-    Serial.println(topic);
-
-    client.publish(topic, output);
-    Serial.print("Publish message: ");
-    Serial.println(output);
-
+      // Kirim data perangkat pendukung
+  
+      StaticJsonDocument<200> doc2;
+  
+      doc2["monitoring"]["soil_temperature"] = soilTemperature;
+      doc2["monitoring"]["soil_humidity"] = soilHumidity;
+      doc2["monitoring"]["soil_ph"] = soilPh;
+      doc2["monitoring"]["soil_nitrogen"] = soilNitrogen;
+      doc2["monitoring"]["soil_phosphor"] = soilPhosphor;
+      doc2["monitoring"]["soil_kalium"] = soilKalium;
+      serializeJson(doc2, output); 
+  
+      strcpy(topic, "arnesys/");
+      strcat(topic, FIELD_CODE);
+      strcat(topic, "/pendukung/1");
+      Serial.print("Topic: ");
+      Serial.println(topic);
+  
+      client.publish(topic, output);
+      Serial.print("Publish message: ");
+      Serial.println(output);      
+    }
     Serial.println("");
     Serial.println("=====================================");    
+}
 
-  } else if (jenis == "slower") 
-  {
+void rcvCommand10s()
+{
+    Serial.println(LoRaData);
+    deserializeJson(in, LoRaData);
+
     Serial.println("");
 
     soilTemperature = random(25, 28);
@@ -184,102 +210,93 @@ void rcvCommand()
     soilPhosphor = random(2, 3);
     soilKalium = random(5, 6);
 
-//    Fuzzy Logic
-
-    fuzzy->setInput(1, windTemperature);
-    fuzzy->setInput(2, windSpeed);
-    fuzzy->setInput(3, windHumidity);
-    fuzzy->fuzzify();
-    float output = fuzzy->defuzzify(1);
-
-    if(output <= 5)
+    if(in["source"] == "utama")
     {
-      strcpy(weatherForecast,"Cerah-Berawan");
-    } else if(output > 5 && output <= 20)
-    {
-      strcpy(weatherForecast,"Hujan Ringan");
-    } else if(output > 20 && output <= 50)
-    {
-      strcpy(weatherForecast,"Hujan Sedang");
-    } else
-    {
-      strcpy(weatherForecast,"Hujan Lebat");
+      // in["monitoring"]["wind_speed"];
+      // in["monitoring"]["light_intensity"];
+      // in["monitoring"]["rainfall"];
+      // in["monitoring"]["wind_temperature"];
+      // in["monitoring"]["wind_humidity"];
+      
+      // Fuzzy Logic
+  
+      fuzzy->setInput(1, windTemperature);
+      fuzzy->setInput(2, windSpeed);
+      fuzzy->setInput(3, windHumidity);
+      fuzzy->fuzzify();
+      float output = fuzzy->defuzzify(1);
+  
+      if(output <= 5)
+      {
+        strcpy(weatherForecast,"Cerah-Berawan");
+      } else if(output > 5 && output <= 20)
+      {
+        strcpy(weatherForecast,"Hujan Ringan");
+      } else if(output > 20 && output <= 50)
+      {
+        strcpy(weatherForecast,"Hujan Sedang");
+      } else
+      {
+        strcpy(weatherForecast,"Hujan Lebat");
+      } 
+  
+      // Kirim data AI
+  
+      StaticJsonDocument<200> doc3;
+  
+      doc3["ai_processing"]["weather_forecast"] = weatherForecast;
+      serializeJson(doc3, output2);
+  
+      strcpy(topic, "arnesys/");
+      strcat(topic, FIELD_CODE);
+      strcat(topic, "/utama/ai");
+      Serial.print("Topic: ");
+      Serial.println(topic);
+      
+      client.publish(topic, output2);
+      Serial.print("Publish message: ");
+      Serial.println(output2);
+  
+      Serial.println("");
+      Serial.println("=====================================");
+  
+      // Kirim data perangkat utama
+  
+      httpMainDevice.begin(SERVER1);
+  
+      httpMainDevice.addHeader("Content-Type", "application/x-www-form-urlencoded");
+      String httpRequestData = "&wind_temperature=" + String(windTemperature) + "&wind_humidity=" + String(windHumidity) + "&wind_pressure=" + String(windPressure) + "&wind_speed=" + String(windSpeed) + "&rainfall=" + String(rainfall) + "&light_intensity=" + String(lightIntensity) + "&field_id=" + String(FIELD_CODE);
+      int httpResponseCode = httpMainDevice.POST(httpRequestData);
+             
+      Serial.print("HTTP Response code is: ");
+      Serial.println(httpResponseCode);
+      httpMainDevice.end();
+      
     } 
-
-//    Naive Bayes 
-
-    float data[3]= {soilTemperature, soilHumidity, rainfall};
-
-    double term1 = 0.0;
-    double term2 = 0.0;
-
-    for(int i=0; i<3; i++)
-    {
-        term1 += p0[i] * (data[i] - u0[i]) * (data[i] - u0[i]);
-        term2 += p1[i] * (data[i] - u1[i]) * (data[i] - u1[i]);
-    }
-
-    double temp = term1 - term2;
-
-    if(temp >= c)
-    {
-      strcpy(pestsPrediction,"ulat_daun=tinggi,ulat_krop=tinggi,busuk_hitam=tinggi"); 
-    }
-    else
-    {
-      strcpy(pestsPrediction,"ulat_daun=rendah,ulat_krop=rendah,busuk_hitam=rendah");
-    }
-
-//    Kirim data AI
-
-    StaticJsonDocument<200> doc3;
-
-    doc3["ai_processing"]["weather_forecast"] = weatherForecast;
-    doc3["ai_processing"]["pests_prediction"] = pestsPrediction;
-    serializeJson(doc3, output2);
-
-    strcpy(topic, "arnesys/");
-    strcat(topic, FIELD_CODE);
-    strcat(topic, "/utama/ai");
-    Serial.print("Topic: ");
-    Serial.println(topic);
     
-    client.publish(topic, output2);
-    Serial.print("Publish message: ");
-    Serial.println(output2);
+    if(in["source"] == "pendukung")
+    {
+      // in["monitoring"]["soil_ph"];
+      // in["monitoring"]["soil_humidity"];
+      // in["monitoring"]["soil_temperature"];
+      
+      // Kirim data perangkat pendukung
+
+      Serial.println("");
+  
+      httpSupportDevice.begin(SERVER2);
+  
+      httpSupportDevice.addHeader("Content-Type", "application/x-www-form-urlencoded");
+      String httpRequestData2 = "&number_of=1&soil_temperature=" + String(soilTemperature) + "&soil_humidity=" + String(soilHumidity) + "&soil_ph=" + String(soilPh) + "&soil_nitrogen=" + String(soilNitrogen) + "&soil_phosphor=" + String(soilPhosphor) + "&soil_kalium=" + String(soilKalium) + "&field_id=" + String(FIELD_CODE);
+      int httpResponseCode2 = httpSupportDevice.POST(httpRequestData2);
+      
+      Serial.print("HTTP Response code is: ");
+      Serial.println(httpResponseCode2);
+      httpSupportDevice.end();    
+    }
 
     Serial.println("");
     Serial.println("=====================================");
-
-//    Kirim data perangkat utama
-
-    httpMainDevice.begin(SERVER1);
-
-    httpMainDevice.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    String httpRequestData = "&wind_temperature=" + String(windTemperature) + "&wind_humidity=" + String(windHumidity) + "&wind_pressure=" + String(windPressure) + "&wind_speed=" + String(windSpeed) + "&rainfall=" + String(rainfall) + "&light_intensity=" + String(lightIntensity) + "&field_id=" + String(FIELD_CODE);
-    int httpResponseCode = httpMainDevice.POST(httpRequestData);
-           
-    Serial.print("HTTP Response code is: ");
-    Serial.println(httpResponseCode);
-    httpMainDevice.end();
-
-//    Kirim data perangkat pendukung
-
-    Serial.println("");
-
-    httpSupportDevice.begin(SERVER2);
-
-    httpSupportDevice.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    String httpRequestData2 = "&number_of=1&soil_temperature=" + String(soilTemperature) + "&soil_humidity=" + String(soilHumidity) + "&soil_ph=" + String(soilPh) + "&soil_nitrogen=" + String(soilNitrogen) + "&soil_phosphor=" + String(soilPhosphor) + "&soil_kalium=" + String(soilKalium) + "&field_id=" + String(FIELD_CODE);
-    int httpResponseCode2 = httpSupportDevice.POST(httpRequestData2);
-    
-    Serial.print("HTTP Response code is: ");
-    Serial.println(httpResponseCode2);
-    httpSupportDevice.end();
-
-    Serial.println("");
-    Serial.println("=====================================");
-  } 
 }
 
 void setup_lora() 
