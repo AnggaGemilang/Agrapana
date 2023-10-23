@@ -9,7 +9,7 @@ class RetroInstance {
 
     companion object {
 
-        val baseUrl = "https://arnesys.agrapana.tech/api/"
+        val baseUrl = "https://agracentrys.agrapana.tech/api/"
 
         fun getRetroInstance(): Retrofit {
 

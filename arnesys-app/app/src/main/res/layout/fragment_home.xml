@@ -83,7 +83,7 @@
                             android:id="@+id/hello"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Arnesys App"
+                            android:text="Agracentrys App"
                             android:textStyle="bold"
                             android:textColor="@color/white"
                             android:layout_marginStart="25dp"

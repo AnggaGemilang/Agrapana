@@ -30,8 +30,8 @@ PubSubClient client(espClient);
 Fuzzy *fuzzy = new Fuzzy();
 
 char FIELD_CODE[50] = "cd3eb1ad-f3ee-4fa4-bf19-0e4f7da89746";
-char SERVER1[58] = "https://agracentrys.agrapana.tech/api/monitoring-main-devices";
-char SERVER2[61] = "https://agracentrys.agrapana.tech/api/monitoring-support-devices";
+char SERVER1[65] = "https://agracentrys.agrapana.tech/api/monitoring-main-devices";
+char SERVER2[65] = "https://agracentrys.agrapana.tech/api/monitoring-support-devices";
 char topic[100] = "";
 long lastMsg = 0, lastMsg2 = 0;
 
