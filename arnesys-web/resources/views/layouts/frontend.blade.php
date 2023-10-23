@@ -7,7 +7,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     <meta name="description" content="" />
-    <title>Arnesys - Overview</title>
+    <title>Agracentrys - Overview</title>
     <link rel="icon" type="image/png" href="{{ asset('assets') }}/img/favicon.png">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/landing-page/css/responsive.css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/landing-page/css/bootstrap.css" />
@@ -23,7 +23,7 @@
                 <nav class="navbar navbar-expand-lg custom_nav-container">
                     <a class="navbar-brand" href="#">
                         <!-- <img src="{{ asset('assets') }}/landing-page/images/logo.png" style="width: 150px;" alt=""> -->
-                        <p style="color: black; font-weight: 700; font-size: 20pt; margin-top: 17px;">Arnesys</p>
+                        <p style="color: black; font-weight: 700; font-size: 20pt; margin-top: 17px;">Agracentrys</p>
                     </a>
                     <a class="navbar-toggler btn btn-outline-success mt-2" href="{{ route('dashboard') }}"
                         style="border-radius: 5px; border: 1px solid #3BAF56; padding-bottom: 13px; padding-top: 10px;">
@@ -63,7 +63,7 @@
                 <nav class="navbar navbar-expand-lg custom_nav-container pt-5">
                     <a class="navbar-brand" href="#">
                         <!-- <img src="{{ asset('assets') }}/landing-page/images/logo.png" style="width: 150px;" alt=""> -->
-                        <p style="color: black; font-weight: 700; font-size: 20pt; margin-top: 37px;">Arnesys</p>
+                        <p style="color: black; font-weight: 700; font-size: 20pt; margin-top: 37px;">Agracentrys</p>
                     </a>
                     <a class="navbar-toggler btn btn-outline-light mt-2" href="{{ route('dashboard') }}"
                         style="border-radius: 5px; border: 1px solid white; padding-bottom: 13px; padding-top: 10px;">
@@ -106,12 +106,12 @@
                             <h1>
                                 <b>
                                     Proudly Present <br>
-                                    Arnesys
+                                    Agracentrys
                                 </b>
                             </h1>
                             <p>
                                 An innovation in the field of agriculture that can monitor various parameters in the air
-                                and soil, predict rainfall, and foresee diseases and pests that will appear
+                                and soil, predict rainfall, crop recommendation, and foresee diseases and pests that will appear. Also equipped with a drip irrigation feature
                             </p>
                             <div class="btn-box">
                                 <a href="#technologies-section" class="btn-1">
@@ -128,7 +128,7 @@
             </div>
         </section>
     </div>
-    <section class="about_section reveal" id="technologies-section">
+    <section class="about_section reveal" id="technologies-section" style="margin-top: 230px;">
         <div class="img-box" style="position: relative;">
             <img src="{{ asset('assets') }}/landing-page/images/daun.png" alt=""
                 style="width: 150px; position: absolute; left: 0; top: -250px; z-index: -1;" />
@@ -154,7 +154,7 @@
                                 </div>
                                 <div class="row">
                                     <p>
-                                        Using this technology allows users to remotely monitor and control through
+                                        Using this technology allows users to remotely monitor and control anywhere and anytime through
                                         internet intermediaries using the official website and mobile applications that
                                         we have provided.
                                     </p>
@@ -173,8 +173,8 @@
                                 </div>
                                 <div class="row">
                                     <p>
-                                        Implement Artificial Intelligence technology, especially Fuzzy Logic and Naive
-                                        Baiyes algorithm that allow user to know weather also pests and diseases
+                                        Implement Artificial Intelligence technology, especially Fuzzy Logic and XGBoost
+                                        algorithm that allow user to know weather, crop recommendation, also pests and diseases
                                         prediction .
                                     </p>
                                 </div>
@@ -188,11 +188,11 @@
                                     <i style="font-size: 50pt;" class="bi bi-brightness-high text-success"></i>
                                 </div>
                                 <div class="row mt-3">
-                                    <h5><b>Solar Panel</b></h5>
+                                    <h5><b>Solar Panel & Tracker</b></h5>
                                 </div>
                                 <div class="row">
                                     <p>
-                                        Solar panels power Arnesys by converting sunlight into electricity. By utilizing
+                                        Solar panels power is converting sunlight into electricity. By utilizing
                                         solar energy, make it can operate independently in remote or off-grid locations
                                         expanding the range scope.
                                     </p>
@@ -211,7 +211,7 @@
                                 </div>
                                 <div class="row">
                                     <p>
-                                        LoRa enables efficient connectivity for Arnesys, allowing them to transmit data
+                                        LoRa enables efficient connectivity for Agracentrys, allowing them to transmit data
                                         over long distances while consuming minimal energy with some sources of node
                                         component.
                                     </p>
@@ -230,11 +230,11 @@
                     <div class="detail-box">
                         <div class="heading_container">
                             <h1>
-                                <b>What Is Arnesys?</b>
+                                <b>What Is Agracentrys?</b>
                             </h1>
                         </div>
                         <p>
-                            Arnesys is an IoT-based monitoring system for horticultural farming that incorporates LoRa
+                            Agracentrys is an IoT-based monitoring system for horticultural farming that incorporates LoRa
                             technology and Artificial Intelligence (AI) to provide efficient and intelligent monitoring
                             capabilities.
                             Equipped with various sensors, the device continuously collects and transmits data such as
@@ -253,7 +253,7 @@
                 </div>
                 <div class="col-md-6 d-flex justify-content-center" style="position: relative;">
                     <div class="img-box">
-                        <img src="{{ asset('assets') }}/landing-page/images/arnesys.png" alt=""
+                        <img src="{{ asset('assets') }}/landing-page/images/Agracentrys.png" alt=""
                             style="width: 580px; z-index: -1;" />
                     </div>
                 </div>
@@ -271,7 +271,7 @@
                                 <div style="margin-left: 20px;">
                                     <h4>Convenience</h4>
                                     <p>
-                                        Arnesys is designed to make it easier for users, so it is supported by the
+                                        Agracentrys is designed to make it easier for users, so it is supported by the
                                         latest technologies
                                     </p>
                                 </div>
@@ -282,7 +282,7 @@
                                 <i class="icon-features bi bi-shuffle" aria-hidden="true"></i>
                                 <div style="margin-left: 20px;">
                                     <h4>Flexibility</h4>
-                                    <p>Arnesys is very flexible because it can be accessed by users through website
+                                    <p>Agracentrys is very flexible because it can be accessed by users through website
                                         and mobile applications</p>
                                 </div>
                             </div>
@@ -295,7 +295,7 @@
                                 <div style="margin-left: 20px;">
                                     <h4>Reliability</h4>
                                     <p>
-                                        Arnesys has many parameters so that it can produce maximum output for the
+                                        Agracentrys has many parameters so that it can produce maximum output for the
                                         needs of a plant
                                     </p>
                                 </div>
@@ -307,7 +307,7 @@
                                 <div style="margin-left: 20px;">
                                     <h4>Portable</h4>
                                     <p>
-                                        Arnesys is designed to have a high level of portability, so that this tool can
+                                        Agracentrys is designed to have a high level of portability, so that this tool can
                                         be assembled and carried anywhere easily
                                     </p>
                                 </div>
@@ -326,7 +326,7 @@
                         <div class="btn-play-store"
                             style="display: flex; justify-content: center; align-items: center;">
                             <a style="background: #f6f6f6; color: rgba(0, 0, 0, 0.8); width: 220px; border-radius: 10px; display: flex; justify-content: center; align-items: center;"
-                                href="https://play.google.com/store/apps/details?id=com.agrapana.Arnesys&hl=en_US"
+                                href="https://play.google.com/store/apps/details?id=com.agrapana.Agracentrys&hl=en_US"
                                 target="_blank">
                                 <i class="bi bi-google-play" style="font-size: 20pt;"></i><br>
                                 <p style="margin-top: 15px; padding-left: 10px;">Google Play Store</p>
@@ -346,7 +346,7 @@
             <div class="row" style="background: url('{{ asset('assets') }}/')">
                 <div class="col-md-6 d-flex justify-content-center" style="position: relative;">
                     <div class="img-box">
-                        <img src="{{ asset('assets') }}/landing-page/images/arnesys.png" alt=""
+                        <img src="{{ asset('assets') }}/landing-page/images/Agracentrys.png" alt=""
                             style="width: 580px; z-index: -1; margin-left: -50px;" />
                     </div>
                 </div>
@@ -354,11 +354,11 @@
                     <div class="detail-box">
                         <div class="heading_container">
                             <h1>
-                                <b>What Does Arnesys Do?</b>
+                                <b>What Does Agracentrys Do?</b>
                             </h1>
                         </div>
                         <p>
-                            Arnesys is an IoT-based monitoring system for horticultural farming that incorporates LoRa
+                            Agracentrys is an IoT-based monitoring system for horticultural farming that incorporates LoRa
                             technology and Artificial Intelligence (AI) to provide efficient and intelligent monitoring
                             capabilities.
                             Equipped with various sensors, the device continuously collects and transmits data such as
@@ -398,7 +398,7 @@
                                 <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
                                 <div style="margin-left: 20px;">
                                     <p>
-                                        Arnesys has the ability to monitor soil and air conditions.
+                                        Agracentrys has the ability to monitor soil and air conditions.
                                     </p>
                                 </div>
                             </div>
@@ -410,7 +410,7 @@
                                 <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
                                 <div style="margin-left: 20px;">
                                     <p>
-                                        Arnesys allows users to get weather, and pest prediction results on field conditions.
+                                        Agracentrys allows users to get weather, and pest prediction results on field conditions.
                                     </p>
                                 </div>
                             </div>
@@ -420,7 +420,7 @@
                                 <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
                                 <div style="margin-left: 20px;">
                                     <p>
-                                        Arnesys is equipped with technology in the form of solar panels to help supply electricity.
+                                        Agracentrys is equipped with technology in the form of solar panels to help supply electricity.
                                     </p>
                                 </div>
                             </div>
@@ -432,7 +432,7 @@
                                 <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
                                 <div style="margin-left: 20px;">
                                     <p>
-                                        Arnesys is equipped with technology in the form of Lora to monitor whatever area of land a farmer has.
+                                        Agracentrys is equipped with technology in the form of Lora to monitor whatever area of land a farmer has.
                                     </p>
                                 </div>
                             </div>
@@ -442,7 +442,7 @@
                                 <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
                                 <div style="margin-left: 20px;">
                                     <p>
-                                        Arnesys is equipped with technology in the form of AI with the Fuzzy and Naive Bayes methods to make predictions.
+                                        Agracentrys is equipped with technology in the form of AI with the Fuzzy and XGBoost methods to make predictions.
                                     </p>
                                 </div>
                             </div>
@@ -464,7 +464,7 @@
                                 <i class="icon-features bi bi-check2-circle" aria-hidden="true"></i>
                                 <div style="margin-left: 20px;">
                                     <p>
-                                        Arnesys is designed to be portable so that it is easy to carry and move.
+                                        Agracentrys is designed to be portable so that it is easy to carry and move.
                                     </p>
                                 </div>
                             </div>
@@ -476,7 +476,7 @@
                     <div class="ml-5" style="padding: 10px 30px; background: #f6f6f6; border-radius: 10px;">
                         <hr style="width: 120px; height: 0; border: 0; border-bottom: 4px solid #66BB6A;">
                         <p>
-                            Arnesys is expected to become a tool that is able to provide solutions to various problems
+                            Agracentrys is expected to become a tool that is able to provide solutions to various problems
                             related to agriculture that occur in general in the world, and specifically in Indonesia.
                         </p>
                     </div>
@@ -500,28 +500,24 @@
             <div class="row mt-3">
                 <div class="col-md-4" style="display: flex; flex-direction: column; justify-content: space-between;">
                     <div class="member-item" data-id="1">
-                        <h4>Maisevli Harika, S.ST., M.T., M.Eng.</h4>
+                        <h4>M. Yusuf Fadhlan SST., M.Sc.</h4>
                         <p style="margin-top: -5px;">Supervisor</p>
                     </div>
                     <div class="member-item" data-id="2">
-                        <h4>Indra Aolia Nugraha</h4>
-                        <p style="margin-top: -5px;">Electrical Designer and Controls</p>
+                        <h4>Muhammad Faiz Fauzan A.</h4>
+                        <p style="margin-top: -5px;">Mechanical and CAD Engineer</p>
                     </div>
                     <div class="member-item" data-id="3">
                         <h4>Angga Gemilang</h4>
                         <p style="margin-top: -5px;">Application and Network Developer</p>
                     </div>
                     <div class="member-item" data-id="4">
-                        <h4>Ghaitsa Inayatur Rahma</h4>
-                        <p style="margin-top: -5px;">Agricultural Experts and Research</p>
+                        <h4>Indra Aolia Nugraha</h4>
+                        <p style="margin-top: -5px;">Electrical Designer and Controls</p>
                     </div>
                     <div class="member-item" data-id="5">
-                        <h4>Muhammad Faiz Fauzan A.</h4>
-                        <p style="margin-top: -5px;">Mechanical and CAD Engineer</p>
-                    </div>
-                    <div class="member-item" data-id="6">
-                        <h4>Raden Allysha Rizkyta A.</h4>
-                        <p style="margin-top: -5px;">Finance and Business Strategy</p>
+                        <h4>Panji Judha Fadhilla</h4>
+                        <p style="margin-top: -5px;">Artificial Intelligence Engineer</p>
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -529,28 +525,24 @@
                         <div class="col-md-12" style="display: flex; flex-direction: column; justify-content: space-between;">
                             <div class="gallery">
                                 <figure id="figure-item" class="gallery__item" data-id="1">
-                                    <img src="{{ asset('assets') }}/landing-page/images/maisevli.png"
-                                        class="gallery__img" alt="Image 6">
+                                    <img src="{{ asset('assets') }}/landing-page/images/fadhlan.png"
+                                        class="gallery__img" alt="Image 1">
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="2">
-                                    <img src="{{ asset('assets') }}/landing-page/images/indra2.png"
-                                        style="object-position: 0% 100%;" class="gallery__img" alt="Image 5">
+                                    <img src="{{ asset('assets') }}/landing-page/images/faiz.png"
+                                        style="object-position: 0% 100%;" class="gallery__img" alt="Image 2">
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="3">
                                     <img src="{{ asset('assets') }}/landing-page/images/angga.png"
                                         class="gallery__img" alt="Image 3">
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="4">
-                                    <img src="{{ asset('assets') }}/landing-page/images/ghaitsa2.png"
-                                        class="gallery__img" alt="Image 2">
+                                    <img src="{{ asset('assets') }}/landing-page/images/indra2.png"
+                                        class="gallery__img" alt="Image 4">
                                 </figure>
                                 <figure id="figure-item" class="gallery__item" data-id="5">
-                                    <img src="{{ asset('assets') }}/landing-page/images/faiz.png"
-                                        style="object-position: 50% 100%;" class="gallery__img" alt="Image 6">
-                                </figure>
-                                <figure id="figure-item" class="gallery__item" data-id="6">
-                                    <img src="{{ asset('assets') }}/landing-page/images/alisha.png"
-                                        style="object-position: 50% 100%;" class="gallery__img" alt="Image 6">
+                                    <img src="{{ asset('assets') }}/landing-page/images/panji.png"
+                                        style="object-position: 0% 100%;" class="gallery__img" alt="Image 5">
                                 </figure>
                             </div>
                         </div>
@@ -609,7 +601,7 @@
                 <div class="col d-flex justify-content-center align-items-center">
                     <div style="margin-top: -40px;">
                         <p style="font-size: 25pt; font-weight: 700;">The Future of <span class="text-success">Farm
-                                Technology</span> is Arnesys</p>
+                                Technology</span> is Agracentrys</p>
                         <div style="display: flex; justify-content: center;">
                             <a href="{{ route('dashboard') }}" class="btn btn-success mt-1" style="width: 250px;">
                                 {{ Auth::user() ? 'Dashboard' : 'Login' }}
@@ -669,7 +661,7 @@
                         </div>
                         <div class="detail-box pl-2">
                             <p>
-                                greengrowth.polban@gmail.com
+                                doa.ortu.aitec5@gmail.com
                             </p>
                         </div>
                     </div>
@@ -684,7 +676,7 @@
                             About
                         </h6>
                         <p>
-                            We are from the Greengrowth team, Greengrowth is a team that dreams of becoming a startup, has a
+                            We are from the Do'a Ortu Sampai Akhir team, that dreams of becoming a startup, has a
                             main concern in the agricultural sector and is actively looking for solutions to reduce the
                             potential for crop failure as a solution to food security in the world, especially in
                             Indonesia.
@@ -729,8 +721,8 @@
                             Products
                         </h6>
                         <p>
-                            It is an innovative work from a Bandung State Polytechnic student named Arnesys to advance
-                            the world of agriculture in Indonesia, especially for the hydroponic method of urban
+                            It is an innovative work from a Bandung State Polytechnic student named Agracentrys to advance
+                            the world of agriculture in Indonesia, especially for the horticulture method of urban
                             farming.
                         </p>
                     </div>
@@ -749,7 +741,7 @@
                     </div>
                 </div>
                 <div class="row mt-3 pl-3">
-                    <p class="copyright">© Copyright 2023. greengrowth.co.</p>
+                    <p class="copyright">© Copyright 2023. Do'a Ortu Sampai Akhir</p>
                 </div>
             </div>
         </div>

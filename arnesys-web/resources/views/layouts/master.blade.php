@@ -166,7 +166,7 @@
       -moz-border-radius: 9px;
       border-radius: 9px;
     }
-    
+
     .label-warning[href],
     .badge-warning[href] {
       background-color: #c67605;
@@ -177,6 +177,6 @@
         color: #fff;
         padding: 0 5px;
         vertical-align: top;
-        margin-left: -10px; 
+        margin-left: -10px;
     }
 </style>
