@@ -247,7 +247,9 @@
     $('tr').on('click', '.check-btn', function() {
         clientId = $(this).attr('client-id')
         fieldId = $(this).attr('field-id')
-        MQTTconnect()
+        if(nValue == null && pValue == null && kValue == null && temperatureValue == null && moistureValue == null && phValue == null && rainfallValue == null){
+            MQTTconnect()
+        }
         $("#seekCropRecommendation").modal("show")
     });
 
