@@ -59,17 +59,19 @@
                     android:orientation="vertical" >
 
                     <TextView
+                        android:id="@+id/txt_crop"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="18sp"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
                         android:text="Thripidae" />
 
                     <TextView
-                        android:id="@+id/txt_thripidae"
+                        android:id="@+id/txt_crop_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="19sp"
-                        android:textStyle="bold"
+                        android:layout_marginTop="3dp"
+                        android:textSize="18sp"
                         android:text="N/A" />
 
                 </LinearLayout>

@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.agrapana.arnesys.R
@@ -21,6 +22,7 @@ import com.agrapana.arnesys.helper.MqttClientHelper
 import com.agrapana.arnesys.model.Field
 import com.agrapana.arnesys.model.MonitoringAIProcessing
 import com.agrapana.arnesys.model.MonitoringMainDevice
+import com.agrapana.arnesys.ui.fragment.CropRecommendationFragment
 import com.agrapana.arnesys.ui.fragment.MainDeviceChartFragment
 import com.agrapana.arnesys.ui.fragment.SeekPestsFragment
 import com.bumptech.glide.Glide
@@ -53,6 +55,8 @@ class DetailMainDeviceActivity : AppCompatActivity() {
         binding = ActivityDetailMainDeviceBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
         val w = window
         w.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
@@ -78,10 +82,11 @@ class DetailMainDeviceActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         binding.pestWrapper.setOnClickListener {
-            if(binding.valPest.text != "N/A"){
-                val dialog = SeekPestsFragment(pestListRisk)
-                dialog.show(supportFragmentManager, "BottomSheetDialog")
-            }
+//            if(binding.valPest.text != "N/A"){
+//
+//            }
+            val dialog = SeekPestsFragment("Tidak Ada")
+            dialog.show(supportFragmentManager, "BottomSheetDialog")
         }
 
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Warmth"))
@@ -152,17 +157,6 @@ class DetailMainDeviceActivity : AppCompatActivity() {
                     val message = Gson().fromJson(mqttMessage.toString(), MonitoringAIProcessing::class.java)
                     Log.d("/utama/ai", message.toString())
 
-                    pestListRisk = message.aiProcessing.pestsPrediction!!.split(",")
-
-                    var status = "Safe"
-                    for (item in pestListRisk!!){
-                        val data = item.split("=")
-                        if(data[1] == "tinggi"){
-                            status = "Risky"
-                        }
-                    }
-                    binding.valPest.text = status
-
                     when (message.aiProcessing.weatherForecast) {
                         "Cerah-Berawan" -> {
                             binding.valWeather.text = "Cerah Berawan"
@@ -210,6 +204,10 @@ class DetailMainDeviceActivity : AppCompatActivity() {
                     .setPositiveButton("OK", null)
                     .create()
                     .show()
+            }
+            R.id.crop_recommend -> {
+                val dialog = CropRecommendationFragment("Rice", "Spinach")
+                dialog.show(this.supportFragmentManager, "BottomSheetDialog")
             }
         }
         return super.onOptionsItemSelected(item)

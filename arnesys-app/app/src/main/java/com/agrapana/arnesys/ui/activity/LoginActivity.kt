@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import com.agrapana.arnesys.databinding.ActivityLoginBinding
@@ -22,6 +23,8 @@ class LoginActivity : AppCompatActivity(), AuthListener {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
         viewModel.authListener = this

@@ -285,13 +285,13 @@
 
             const datas = {
                 sensor_data: [
-                    80.7, // N
-                    43.4, // P
-                    39.4, // K
-                    24.710539, // Suhu
-                    82.280899, // Kelembaban
-                    6.135331, // ph
-                    184.731080, // curah hujan
+                    nValue, // N
+                    pValue, // P
+                    kValue, // K
+                    temperatureValue, // Suhu
+                    moistureValue, // Kelembaban
+                    phValue, // ph
+                    rainfallValue, // curah hujan
                 ]
             }
 

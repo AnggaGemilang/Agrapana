@@ -11,6 +11,7 @@ import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.agrapana.arnesys.R
@@ -48,6 +49,8 @@ class DetailSupportDeviceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailSupportDeviceBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         val w = window
         w.setFlags(

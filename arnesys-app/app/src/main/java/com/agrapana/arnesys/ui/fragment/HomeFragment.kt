@@ -49,7 +49,6 @@ class HomeFragment: Fragment(), ChangeFieldListener {
     private lateinit var window: Window
 
     private var messageSupportDevice: MonitoringSupportDevice? = null
-    private var pestListRisk: List<String>? = null
     private var clientId: String? = null
     private var fieldId: String? = null
 
@@ -80,10 +79,12 @@ class HomeFragment: Fragment(), ChangeFieldListener {
         binding.greeting.text = "Hello there, ${nameParts[0]}"
 
         binding.btnPest.setOnClickListener {
-            if(binding.valPest.text != "N/A"){
-                val dialog = SeekPestsFragment(pestListRisk)
-                activity?.let { it1 -> dialog.show(it1.supportFragmentManager, "BottomSheetDialog") }
-            }
+            val dialog = SeekPestsFragment("Tidak Ada")
+            activity?.let { it1 -> dialog.show(it1.supportFragmentManager, "BottomSheetDialog") }
+
+//            if(binding.valPest.text != "N/A"){
+//
+//            }
         }
 
         binding.toolbar.inflateMenu(R.menu.action_nav1)
@@ -218,17 +219,6 @@ class HomeFragment: Fragment(), ChangeFieldListener {
                     "arnesys/$fieldId/utama/ai" -> {
                         val message = Gson().fromJson(mqttMessage.toString(), MonitoringAIProcessing::class.java)
                         Log.d("/utama/ai", message.toString())
-
-                        pestListRisk = message.aiProcessing.pestsPrediction!!.split(",")
-
-                        var status = "Safe"
-                        for (item in pestListRisk!!){
-                            val data = item.split("=")
-                            if(data[1] == "tinggi"){
-                                status = "Risky"
-                            }
-                        }
-                        binding.valPest.text = status
 
                         when (message.aiProcessing.weatherForecast) {
                             "Cerah-Berawan" -> {

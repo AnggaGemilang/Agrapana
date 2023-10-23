@@ -10,7 +10,7 @@ import com.agrapana.arnesys.databinding.FragmentHomeBinding
 import com.agrapana.arnesys.databinding.FragmentSeekPestsBinding
 import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialogFragment
 
-class SeekPestsFragment(private var pestListRisk: List<String>?) : RoundedBottomSheetDialogFragment() {
+class SeekPestsFragment(private var pestPrediction: String?) : RoundedBottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentSeekPestsBinding
 
@@ -23,19 +23,27 @@ class SeekPestsFragment(private var pestListRisk: List<String>?) : RoundedBottom
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        for(item in pestListRisk!!){
-            val data = item.split("=")
-            if(data[0] == "ulat_daun"){
-                binding.txtUlatDaun.text = data[1].capitalize()
-            } else if(data[0] == "ulat_krop"){
-                binding.txtUlatKrop.text = data[1].capitalize()
-            } else {
-                binding.txtBusukHitam.text = data[1].capitalize()
+        var value: String = when (pestPrediction) {
+            "Tidak Ada" -> {
+                "None"
+            }
+
+            "Rendah" -> {
+                "Low"
+            }
+
+            "Sedang" -> {
+                "Medium"
+            }
+
+            else -> {
+                "Risky"
             }
         }
 
-        super.onViewCreated(view, savedInstanceState)
+        binding.txtThripidae.text = value
     }
 
 }
