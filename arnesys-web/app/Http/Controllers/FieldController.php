@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Http;
 
 class FieldController extends Controller
 {
@@ -76,18 +75,6 @@ class FieldController extends Controller
 
         Alert::success('Success', 'Field has been deleted');
         return redirect()->route('client.field', $fieldId);
-    }
-
-    function getCropRecommendation()
-    {
-        $param['Vehicles'] = "LEA-2255";
-        $response = Http::withBody(json_encode($param),'application/json')
-            ->post('http://127.0.0.1:5000/crop/predict/recommend');
-    }
-
-    function getPestPrediction()
-    {
-
     }
 
 }

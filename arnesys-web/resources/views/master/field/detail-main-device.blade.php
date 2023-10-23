@@ -249,56 +249,15 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="row">
-                                        <h6 style="font-size: 14pt;" class="mb-0">Ulat Daun</h6>
+                                        <h6 style="font-size: 14pt;" class="mb-0">Thripidae</h6>
                                     </div>
                                     <div class="row">
-                                        <p id="txtUlatDaun" style="font-size: 12pt;" class="mb-0">Tinggi</p>
+                                        <p id="txtPestDetail" style="font-size: 12pt;" class="mb-0"></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="row item-pest-wrapper mt-3">
-                        <div class="col-2 d-flex justify-content-center align-items-center">
-                            <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-                                <i class="ni ni-map-big text-lg opacity-10" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                        <div class="col-10 d-flex align-items-center">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="row">
-                                        <h6 style="font-size: 14pt;" class="mb-0">Ulat Krop</h6>
-                                    </div>
-                                    <div class="row">
-                                        <p id="txtUlatKrop" style="font-size: 12pt;" class="mb-0">Tinggi</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row item-pest-wrapper mt-3">
-                        <div class="col-2 d-flex justify-content-center align-items-center">
-                            <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-                                <i class="ni ni-map-big text-lg opacity-10" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                        <div class="col-10 d-flex align-items-center">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="row">
-                                        <h6 style="font-size: 14pt;" class="mb-0">Busuk Hitam</h6>
-                                    </div>
-                                    <div class="row">
-                                        <p id="txtBusukHitam" style="font-size: 12pt;" class="mb-0">Tinggi</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btnClose btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -363,6 +322,7 @@
         var pestsPrediction = [];
 
         $(document).ready(function() {
+            getPestPrediction()
             getDataChart(fieldId, column, type, title)
             MQTTconnect()
         })
@@ -418,18 +378,6 @@
             } else if (topic == `arnesys/${fieldId}/utama/ai`) {
                 var data = JSON.parse(r_message.payloadString)
                 var weatherForecast = data.ai_processing.weather_forecast
-
-                pestsPrediction = data.ai_processing.pests_prediction.split(",")
-
-                var status = "Safe"
-                for (var i = 0; i < pestsPrediction.length; i++) {
-                    var item = pestsPrediction[i].split("=")
-                    if (item[1] == "tinggi") {
-                        status = "Risky"
-                    }
-                }
-                $("#txtPest").text(status)
-
                 if (weatherForecast == "Cerah-Berawan") {
                     $(".weatherForecast").attr("src", "{{ asset('assets/img/sun-cloud.png') }}")
                 } else if (weatherForecast == "Hujan Ringan") {
@@ -452,12 +400,6 @@
         }
 
         $('.pests-wrapper').click(function() {
-            var ulatDaunVal = pestsPrediction[0].split("=")[1]
-            $("#txtUlatDaun").text(ulatDaunVal.charAt(0).toUpperCase() + ulatDaunVal.slice(1))
-            var ulatKropVal = pestsPrediction[1].split("=")[1]
-            $("#txtUlatKrop").text(ulatKropVal.charAt(0).toUpperCase() + ulatKropVal.slice(1))
-            var busukHitamVal = pestsPrediction[2].split("=")[1]
-            $("#txtBusukHitam").text(busukHitamVal.charAt(0).toUpperCase() + busukHitamVal.slice(1))
             $("#seekPestsPrediction").modal("show")
         })
 
@@ -476,6 +418,48 @@
             myChart.destroy()
             getDataChart(fieldId, column, type, title)
         })
+
+        function getPestPrediction() {
+
+            $.ajax({
+                url: "/api/monitoring-main-devices/get-pest-prediction/" + fieldId,
+                type: "get",
+                success: function (datas){
+                    $.ajax({
+                        url: "http://127.0.0.1:5000/crop/predict/pest",
+                        data: JSON.stringify(datas),
+                        type: "post",
+                        headers: {
+                            'Content-Type': 'application/json; charset=utf-8'
+                        },
+                        success: function (data){
+                            let value = ""
+
+                            if(data.Thripidae == "Tidak Ada") {
+                                value = "None"
+                            } else if (data.Thripidae == "Rendah") {
+                                value = "Low"
+                            } else if (data.Thripidae == "Sedang") {
+                                value = "Medium"
+                            } else {
+                                value = "Risky"
+                            }
+
+                            $("#txtPest").text(value)
+                            $("#txtPestDetail").text(value)
+                        },
+                        error: function(data){
+                            console.log(data)
+                        }
+                    });
+
+                },
+                error: function(data){
+                    console.log(data)
+                }
+            });
+
+        }
 
         function showChart(title, datas) {
             myChart = new Chart(ctx, {

@@ -29,6 +29,7 @@ Route::group([
     Route::apiResource('monitoring-support-devices', 'MonitoringSupportDeviceController');
 
     Route::get('/monitoring-main-devices/get-chart/{id}/{column}/{type}', [MonitoringMainDeviceController::class, 'getChartData']);
+    Route::get('/monitoring-main-devices/get-pest-prediction/{id}', [MonitoringMainDeviceController::class, 'getPestPrediction']);
     Route::get('/monitoring-support-devices/get-chart/{id}/{number}/{column}/{type}', [MonitoringSupportDeviceController::class, 'getChartData']);
 
     Route::get('/login/post', [AuthController::class, 'login']);
