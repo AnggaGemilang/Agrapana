@@ -5,7 +5,7 @@ from . import SingeltonMeta
 class PestDetect(SingeltonMeta.SingletonMeta):
   
   def __init__(self):
-    self._thripidae_model = pickle.load(open('src\service\pickle_model\thripidae_detect.sav','rb'))
+    self._thripidae_model = pickle.load(open('src/service/pickle_model/thripidae_detect.sav','rb'))
     
   def predict(self,data):
     pred = self._thripidae_model.predict([data])

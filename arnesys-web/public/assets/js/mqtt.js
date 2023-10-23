@@ -71,3 +71,8 @@ function send_message(msg,topic){
     mqtt.send(message)
     return false
 }
+
+function MQTTdisconnect() {
+    console.log("client is disconnecting..");
+    mqtt.disconnect();
+}

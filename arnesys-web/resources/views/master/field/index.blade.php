@@ -115,7 +115,7 @@
                                                             <i class="fas fa-arrow-down me-2"></i>
                                                         </button>
 
-                                                       <button class="btn btn-link check-btn text-warning text-gradient px-3 mb-0">
+                                                        <button plant-type="{{ $row->plant_type }}" field-id="{{ $row->id }}" client-id="{{ $id }}" class="btn btn-link check-btn text-warning text-gradient px-3 mb-0">
                                                             <i class="fas fa-question me-2"></i>
                                                         </button>
                                                     </div>
@@ -172,7 +172,11 @@
                     <span type="button" class="btnClose" style="font-size: 20px;">&times;</span>
                 </div>
                 <div class="modal-body">
-
+                    <div class="row loader-wrapper mt-5 mb-5">
+                        <div class="col d-flex justify-content-center align-items-center">
+                            <img src="{{ asset('assets/img/loader/loader3.gif') }}" width="80" alt="">
+                        </div>
+                    </div>
                     <div class="row item-pest-wrapper">
                         <div class="col-2 d-flex justify-content-center align-items-center">
                             <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
@@ -183,56 +187,15 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="row">
-                                        <h6 style="font-size: 14pt;" class="mb-0">Ulat Daun</h6>
+                                        <h6 style="font-size: 14pt;" id="txt-crop" class="mb-0"></h6>
                                     </div>
                                     <div class="row">
-                                        <p id="txtUlatDaun" style="font-size: 12pt;" class="mb-0">Tinggi</p>
+                                        <p style="font-size: 12pt;" id="txt-desc-crop" class="mb-0"></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="row item-pest-wrapper mt-3">
-                        <div class="col-2 d-flex justify-content-center align-items-center">
-                            <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-                                <i class="ni ni-map-big text-lg opacity-10" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                        <div class="col-10 d-flex align-items-center">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="row">
-                                        <h6 style="font-size: 14pt;" class="mb-0">Ulat Krop</h6>
-                                    </div>
-                                    <div class="row">
-                                        <p id="txtUlatKrop" style="font-size: 12pt;" class="mb-0">Tinggi</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row item-pest-wrapper mt-3">
-                        <div class="col-2 d-flex justify-content-center align-items-center">
-                            <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-                                <i class="ni ni-map-big text-lg opacity-10" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                        <div class="col-10 d-flex align-items-center">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="row">
-                                        <h6 style="font-size: 14pt;" class="mb-0">Busuk Hitam</h6>
-                                    </div>
-                                    <div class="row">
-                                        <p id="txtBusukHitam" style="font-size: 12pt;" class="mb-0">Tinggi</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btnClose btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -246,16 +209,22 @@
 @push('style')
 
 <style>
-    .detail-elements {
+    .detail-elements, .item-pest-wrapper {
         display: none;
     }
+
 </style>
 
 @endpush
 
 @push('js')
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+<script src="{{ asset('assets/js/mqtt.js') }}"></script>
 <script>
+
+    var clientId, fieldId
+    let nValue, pValue, kValue, temperatureValue, moistureValue, phValue, rainfallValue;
 
     $('tr').on('click', '.delete-btn', function (e){
         e.preventDefault();
@@ -276,8 +245,78 @@
     });
 
     $('tr').on('click', '.check-btn', function() {
+        clientId = $(this).attr('client-id')
+        fieldId = $(this).attr('field-id')
+        MQTTconnect()
         $("#seekCropRecommendation").modal("show")
     });
+
+    function onMessageArrived(r_message) {
+        out_msg = "Message received " + r_message.payloadString + "<br>"
+        out_msg = out_msg + "Message received Topic " + r_message.destinationName
+
+        var topic = r_message.destinationName
+
+        if (topic == `arnesys/${fieldId}/pendukung/1`) {
+            var data = JSON.parse(r_message.payloadString)
+
+            nValue = data.monitoring.soil_nitrogen
+            pValue = data.monitoring.soil_phosphor
+            kValue = data.monitoring.soil_kalium
+            temperatureValue = data.monitoring.soil_temperature
+            moistureValue = data.monitoring.soil_humidity
+            phValue = data.monitoring.soil_ph
+
+        } else if (topic == `arnesys/${fieldId}/utama`) {
+            var data = JSON.parse(r_message.payloadString)
+
+            console.log(data)
+
+            rainfallValue = data.monitoring.rainfall
+        }
+
+        if(nValue != null && pValue != null && kValue != null && temperatureValue != null && moistureValue != null && phValue != null && rainfallValue != null){
+            $(".loader-wrapper").hide()
+            $(".item-pest-wrapper").css("display","flex")
+
+            MQTTdisconnect()
+
+            const datas = {
+                sensor_data: [
+                    80.7, // N
+                    43.4, // P
+                    39.4, // K
+                    24.710539, // Suhu
+                    82.280899, // Kelembaban
+                    6.135331, // ph
+                    184.731080, // curah hujan
+                ]
+            }
+
+            const plantType = $(this).attr("plant-type")
+
+            $.ajax({
+                url: "http://127.0.0.1:5000/crop/predict/recommend",
+                data: JSON.stringify(datas),
+                type: "post",
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8'
+                },
+                success: function (data){
+                    $("#txt-crop").text(data.recommend_crop[0].toUpperCase() + data.recommend_crop.slice(1))
+
+                    if(plantType == data.recommend_crop) {
+                        $("#txt-desc-crop").text("Based on the dataset used, the results of AI processing indicate that this land is already suitable for " + data.recommend_crop)
+                    } else {
+                        $("#txt-desc-crop").text("Based on the dataset used, the results of AI processing indicate that this land is suitable for" + data.recommend_crop + " With the current land being used for " + plantType + ", further studies are needed regarding the suitability of this land for the type of crops to be planted")
+                    }
+                },
+                error: function(data){
+                    console.log(data)
+                }
+            });
+        }
+    }
 
     $('tr').on('click', '.detail-btn', function() {
         $(this).closest('tr').next().find('.detail-elements').slideToggle(200, 'linear')
