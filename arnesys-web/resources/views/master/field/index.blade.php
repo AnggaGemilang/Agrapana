@@ -106,14 +106,17 @@
                                                             <form action="{{ route('field.delete', $row->id) }}" method="POST">
                                                                 @csrf
                                                                 @method('delete')
-                                                                <button type="button" class="btn btn-link text-danger text-gradient px-3 mb-0 delete-btn"><i class="far fa-trash-alt me-2"></i>Delete</button>
+                                                                <button type="button" class="btn btn-link text-danger text-gradient px-3 mb-0 delete-btn"><i class="far fa-trash-alt me-2"></i></button>
                                                             </form>
 
                                                         @endrole
 
                                                         <button class="btn btn-link detail-btn text-dark text-gradient px-3 mb-0">
                                                             <i class="fas fa-arrow-down me-2"></i>
-                                                            <span>Detail</span>
+                                                        </button>
+
+                                                       <button class="btn btn-link check-btn text-warning text-gradient px-3 mb-0">
+                                                            <i class="fas fa-question me-2"></i>
                                                         </button>
                                                     </div>
                                                 </td>
@@ -159,6 +162,85 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="seekCropRecommendation" tabindex="-1" role="dialog" aria-labelledby="modalSayaLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Detail Crop Recommendation</h5>
+                    <span type="button" class="btnClose" style="font-size: 20px;">&times;</span>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row item-pest-wrapper">
+                        <div class="col-2 d-flex justify-content-center align-items-center">
+                            <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
+                                <i class="ni ni-map-big text-lg opacity-10" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="col-10 d-flex align-items-center">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="row">
+                                        <h6 style="font-size: 14pt;" class="mb-0">Ulat Daun</h6>
+                                    </div>
+                                    <div class="row">
+                                        <p id="txtUlatDaun" style="font-size: 12pt;" class="mb-0">Tinggi</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row item-pest-wrapper mt-3">
+                        <div class="col-2 d-flex justify-content-center align-items-center">
+                            <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
+                                <i class="ni ni-map-big text-lg opacity-10" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="col-10 d-flex align-items-center">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="row">
+                                        <h6 style="font-size: 14pt;" class="mb-0">Ulat Krop</h6>
+                                    </div>
+                                    <div class="row">
+                                        <p id="txtUlatKrop" style="font-size: 12pt;" class="mb-0">Tinggi</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row item-pest-wrapper mt-3">
+                        <div class="col-2 d-flex justify-content-center align-items-center">
+                            <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
+                                <i class="ni ni-map-big text-lg opacity-10" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="col-10 d-flex align-items-center">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="row">
+                                        <h6 style="font-size: 14pt;" class="mb-0">Busuk Hitam</h6>
+                                    </div>
+                                    <div class="row">
+                                        <p id="txtBusukHitam" style="font-size: 12pt;" class="mb-0">Tinggi</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btnClose btn btn-secondary" data-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @push('style')
@@ -191,6 +273,10 @@
                 $(this).parent('form').trigger('submit')
             }
         });
+    });
+
+    $('tr').on('click', '.check-btn', function() {
+        $("#seekCropRecommendation").modal("show")
     });
 
     $('tr').on('click', '.detail-btn', function() {
