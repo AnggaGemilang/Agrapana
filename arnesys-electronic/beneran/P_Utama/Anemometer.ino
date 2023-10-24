@@ -2,15 +2,6 @@
 void anemometer()
 {
   float knot;
-  if (flag == true) // don't really need the == true but makes intent clear for new users
-  {
-    if (long(micros() - last_micros) >= 5000)
-    { // time to debounce measures
-      rpmcount++;
-      last_micros = micros();
-    }
-    flag = false; // reset flag
-  }
   //Measure RPM
   if ((millis() - timeold) >= timemeasure * 1000)
   {
@@ -22,7 +13,7 @@ void anemometer()
     velocity_ms = omega * radius * calibration_value;   // m/s
     velocity_kmh = velocity_ms * 3.6;                   // km/h
     knot = 1.8 * velocity_kmh;
-    doc["monitoring"]["wind_speed"] = windSpeed;
+    doc["monitoring"]["wind_speed"] = knot;
     // Serial.print("rps=");
     // Serial.print(rps);
     // Serial.print("   rpm=");
@@ -40,13 +31,20 @@ void anemometer()
     timeold = millis();
     rpmcount = 0;
     attachInterrupt(digitalPinToInterrupt(GPIO_pulse), rpm_anemometer, RISING); // enable interrupt
-
-      lcd.setCursor(0,2);
-      lcd.print("Kec Angin=");
-      lcd.setCursor(11,2);
-      lcd.print(knot);
-      lcd.setCursor(18,2);
-      lcd.print("knot");
   }
-
+  lcd.setCursor(0,2);
+  lcd.print("Kec Angin=");
+  lcd.setCursor(11,2);
+  lcd.print(knot);
+  lcd.setCursor(18,2);
+  lcd.print("knot");
 } // end of loop
+
+void rpm_anemometer()
+{
+  if (long(micros() - last_micros) >= 5000)
+  { // time to debounce measures
+    rpmcount++;
+    last_micros = micros();
+  }
+}

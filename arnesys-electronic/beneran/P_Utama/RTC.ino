@@ -27,7 +27,7 @@
 //   LoRa.print(now.minute(), DEC);  //tanggal
 //   LoRa.print(':');
 //   LoRa.print(now.second(), DEC);  //detik
-//   LoRa.println();
+//   LoRa.printlnF();
 
 //   //Instruksi untuk Menampilkan Data RTC pada LCD
 //   /*

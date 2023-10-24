@@ -1,46 +1,41 @@
 #include <SPI.h>
 #include <LoRa.h>
-#define ss 5
-#define rst 14
-#define dio0 16
+#define ss 53
+#define rst 4
+#define dio0 5
 #include <SoftwareSerial.h>
 #include <Wire.h>
-
-
 #include <LiquidCrystal_I2C.h>
-
-
 #include <OneWire.h>
-
 #include <DallasTemperature.h>
-
-#define ONE_WIRE_BUS 27
-
+#define ONE_WIRE_BUS 28
 OneWire oneWire(ONE_WIRE_BUS);
-
 DallasTemperature sensorSuhu(&oneWire);
 
-SoftwareSerial NPK(3, 1); // RX, TX
-LiquidCrystal_I2C lcd(0x27,20,4);
-int powerPin = 13;    // untuk pengganti VCC
-const int SoilSensor = 26;
+LiquidCrystal_I2C lcd(0x27,16,2);
 int counter = 0;
 
+//Kelembaban
+int powerPin = 32;    // untuk pengganti VCC
+const int SoilSensor = A0;
+
 //NPK
+// SoftwareSerial NPK(3, 1); // RX, TX
 
 //temperature
 
 // Ph tanah
-#define pinPH 25  //pin output Sensor PH ditempatkan di D3 //sambungkan kabel hitam (output) ke pin 25
+#define pinPH A3  //pin output Sensor PH ditempatkan di D3 //sambungkan kabel hitam (output) ke pin 25
 int bacaSensorPH = 0;   //membaca hasil dari sensor pH   
 float nilaiPH = 0.0; //nilai pH yang ditampilkan
+
+StaticJsonDocument<200> doc;
+char output[200];
 
 void kelembabantanah ();
 void Temperature();
 void phtanah() ;
-
-StaticJsonDocument<200> doc;
-char output[200];
+void RXTX();
 
 void setup() {
   Serial.begin(9600);
@@ -54,10 +49,9 @@ void setup() {
     while (1);
   }
 
-  NPK.begin(9600);
+  // NPK.begin(9600);
   
   // Kelembaban tanah
-  // jadikan pin power sebagai output
   pinMode(powerPin, OUTPUT);
   // default bernilai LOW
   digitalWrite(powerPin, LOW);
@@ -82,15 +76,18 @@ void loop() {
   LoRa.beginPacket();
   LoRa.println("Node2");
   LoRa.println(counter);
-  doc["source"] = "pendukung";
-  kelembabantanah();
+  doc["source"] = "pendukung";  
+  // kelembabantanah();
   Temperature();
   phtanah();
+  lcd.clear();
+  kelembabantanah();
+  lcd.clear();
+  //  RXTX();
   serializeJson(doc, output);
-  LoRa.print(output);
   LoRa.endPacket();
-  // lcd.clear();
   Serial.println("  ");
   delay(5000);
-  doc.clear();
+
+
 }
