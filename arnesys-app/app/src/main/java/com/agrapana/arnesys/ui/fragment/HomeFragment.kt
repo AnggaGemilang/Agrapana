@@ -198,8 +198,12 @@ class HomeFragment: Fragment(), ChangeFieldListener {
     private fun initViewModelInputDataAI(fieldId: String) {
         viewModelPestPredictionInput = ViewModelProvider(this)[PestPredictionInputViewModel::class.java]
         viewModelPestPredictionInput.getPestPredictionInput(fieldId)
+
         viewModelPestPredictionInput.getLoadPestPredictionInputObservable().observe(activity!!) {
-            initViewModelAI(it!!)
+            if(it != null){
+                Log.d("nilai input AI", it.toString())
+                initViewModelAI(it)
+            }
         }
     }
 
@@ -211,26 +215,28 @@ class HomeFragment: Fragment(), ChangeFieldListener {
         viewModelPestPrediction.getPestPrediction(inputPestPrediction)
         viewModelPestPrediction.getLoadPestPredictionObservable().observe(activity!!) {
 
-            var value: String = when (it!!.Thripidae) {
-                "Tidak Ada" -> {
-                    "None"
+            if(it != null){
+                var value: String = when (it.Thripidae) {
+                    "Tidak Ada" -> {
+                        "None"
+                    }
+
+                    "Rendah" -> {
+                        "Low"
+                    }
+
+                    "Sedang" -> {
+                        "Medium"
+                    }
+
+                    else -> {
+                        "Risky"
+                    }
                 }
 
-                "Rendah" -> {
-                    "Low"
-                }
-
-                "Sedang" -> {
-                    "Medium"
-                }
-
-                else -> {
-                    "Risky"
-                }
+                pestPredictionResult = value
+                binding.valPest.text = value
             }
-
-            pestPredictionResult = value
-            binding.valPest.text = value
         }
     }
 

@@ -228,7 +228,9 @@ class DetailMainDeviceActivity : AppCompatActivity() {
         viewModelPestPredictionInput = ViewModelProvider(this)[PestPredictionInputViewModel::class.java]
         viewModelPestPredictionInput.getPestPredictionInput(fieldId)
         viewModelPestPredictionInput.getLoadPestPredictionInputObservable().observe(this) {
-            initViewModelAI(it!!)
+            if(it != null){
+                initViewModelAI(it)
+            }
         }
     }
 
@@ -240,26 +242,28 @@ class DetailMainDeviceActivity : AppCompatActivity() {
         viewModelPestPrediction.getPestPrediction(inputPestPrediction)
         viewModelPestPrediction.getLoadPestPredictionObservable().observe(this) {
 
-            var value: String = when (it!!.Thripidae) {
-                "Tidak Ada" -> {
-                    "None"
+            if(it != null) {
+                var value: String = when (it.Thripidae) {
+                    "Tidak Ada" -> {
+                        "None"
+                    }
+
+                    "Rendah" -> {
+                        "Low"
+                    }
+
+                    "Sedang" -> {
+                        "Medium"
+                    }
+
+                    else -> {
+                        "Risky"
+                    }
                 }
 
-                "Rendah" -> {
-                    "Low"
-                }
-
-                "Sedang" -> {
-                    "Medium"
-                }
-
-                else -> {
-                    "Risky"
-                }
+                pestPredictionResult = value
+                binding.valPest.text = value
             }
-
-            pestPredictionResult = value
-            binding.valPest.text = value
         }
     }
 

@@ -13,7 +13,7 @@
 #define WIFI_PASSWORD "anggaganteng"
 #define ss 5
 #define rst 14
-#define dio0 16
+#define dio0 15
 
 //#define WIFI_SSID "Student_Polban"
 //#define WIFI_PASSWORD "20polban21"

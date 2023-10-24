@@ -36,7 +36,7 @@ class PestPredictionInputViewModel: ViewModel() {
                 }
 
                 override fun onFailure(call: Call<AIInput>, t: Throwable) {
-                    Log.d("hasil ham gagal", "warko")
+                    Log.d("hasil ham gagal", t.toString())
                     loadPestPredictionInputViewModel.postValue(null)
                 }
             })
