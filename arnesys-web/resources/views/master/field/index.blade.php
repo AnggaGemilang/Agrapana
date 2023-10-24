@@ -298,7 +298,7 @@
             const plantType = $(this).attr("plant-type")
 
             $.ajax({
-                url: "http://127.0.0.1:5000/crop/predict/recommend",
+                url: "147.139.143.173:5000/crop/predict/recommend",
                 data: JSON.stringify(datas),
                 type: "post",
                 headers: {
