@@ -22,7 +22,7 @@ data class Links(
 )
 
 data class CropRecommendResponse(
-    @SerializedName("recommmend_crop") var recommendCrop: String?
+    @SerializedName("recommend_crop") var recommendCrop: String? = null
 )
 
 data class PestPredictionResponse(

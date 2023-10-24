@@ -98,19 +98,7 @@ class MqttClientHelper(context: Context?) {
     }
 
     fun disconnect() {
-        try {
-            mqttAndroidClient.disconnect(null, object : IMqttActionListener {
-                override fun onSuccess(asyncActionToken: IMqttToken?) {
-                    Log.d(TAG, "Disconnected")
-                }
-
-                override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
-                    Log.d(TAG, "Failed to disconnect")
-                }
-            })
-        } catch (e: MqttException) {
-            e.printStackTrace()
-        }
+        mqttAndroidClient.disconnect()
     }
 
 }

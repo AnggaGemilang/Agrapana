@@ -46,10 +46,10 @@ class DetailMainDeviceActivity : AppCompatActivity() {
     private lateinit var viewModelPestPredictionInput: PestPredictionInputViewModel
     private lateinit var viewModelPestPrediction: PestPredictionViewModel
     private var noInternetDialog: NoInternetDialog? = null
+    private var passedData: Field? = null
 
     private var pestPredictionResult: String? = null
     private var clientId: String? = null
-    private var fieldId: String? = null
 
     private val mqttClient by lazy {
         MqttClientHelper(this)
@@ -72,13 +72,12 @@ class DetailMainDeviceActivity : AppCompatActivity() {
         prefs = this.getSharedPreferences("prefs", MODE_PRIVATE)!!
         clientId = prefs.getString("client_id", "")
 
-        val passedData: Field = Gson().fromJson(intent.getStringExtra("passData"), Field::class.java)
-        fieldId = passedData.id
+        passedData = Gson().fromJson(intent.getStringExtra("passData"), Field::class.java)
 
-        initViewModelInputDataAI(fieldId!!)
+        initViewModelInputDataAI(passedData!!.id!!)
 
-        val imageParts = passedData.thumbnail.toString().trim().split("public/".toRegex())
-        if(passedData.thumbnail != null){
+        val imageParts = passedData!!.thumbnail.toString().trim().split("public/".toRegex())
+        if(passedData!!.thumbnail != null){
             Glide.with(this).load("https://arnesys.agrapana.tech/storage/" + imageParts[1]).into(binding.imgThumbnail);
         } else {
             Glide.with(this).load(R.drawable.farmland).into(binding.imgThumbnail);
@@ -100,16 +99,16 @@ class DetailMainDeviceActivity : AppCompatActivity() {
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Wind Pressure"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Light Intensity"))
         binding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
-        replaceFragment(MainDeviceChartFragment(passedData.id!!, "Warmth"))
+        replaceFragment(MainDeviceChartFragment(passedData!!.id!!, "Warmth"))
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
-                    0 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Warmth"))
-                    1 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Humidity"))
-                    2 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Wind Speed"))
-                    3 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Wind Pressure"))
-                    4 -> replaceFragment(MainDeviceChartFragment(passedData.id, "Light Intensity"))
+                    0 -> replaceFragment(MainDeviceChartFragment(passedData!!.id!!, "Warmth"))
+                    1 -> replaceFragment(MainDeviceChartFragment(passedData!!.id!!, "Humidity"))
+                    2 -> replaceFragment(MainDeviceChartFragment(passedData!!.id!!, "Wind Speed"))
+                    3 -> replaceFragment(MainDeviceChartFragment(passedData!!.id!!, "Wind Pressure"))
+                    4 -> replaceFragment(MainDeviceChartFragment(passedData!!.id!!, "Light Intensity"))
                 }
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {}
@@ -130,8 +129,8 @@ class DetailMainDeviceActivity : AppCompatActivity() {
         mqttClient.setCallback(object : MqttCallbackExtended {
             override fun connectComplete(b: Boolean, s: String) {
                 Log.w("Debug", "Connection to host connected:\n'$MQTT_HOST'")
-                mqttClient.subscribe("arnesys/$fieldId/utama")
-                mqttClient.subscribe("arnesys/$fieldId/utama/ai")
+                mqttClient.subscribe("arnesys/${passedData!!.id!!}/utama")
+                mqttClient.subscribe("arnesys/${passedData!!.id!!}/utama/ai")
             }
             override fun connectionLost(throwable: Throwable) {
                 Log.w("Debug", "Connection to host lost:\n'$MQTT_HOST'")
@@ -139,7 +138,7 @@ class DetailMainDeviceActivity : AppCompatActivity() {
             @Throws(Exception::class)
             override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
                 Log.w("mqttMessage", "Message received from host '$MQTT_HOST': $mqttMessage")
-                if(topic == "arnesys/$fieldId/utama"){
+                if(topic == "arnesys/${passedData!!.id!!}/utama"){
                     val message = Gson().fromJson(mqttMessage.toString(), MonitoringMainDevice::class.java)
                     Log.d("/utama", message.toString())
                     binding.valWindTemperature.text = message.monitoring.windTemperature.toString() + "°"
@@ -158,7 +157,7 @@ class DetailMainDeviceActivity : AppCompatActivity() {
                     binding.valWindSpeed.visibility = View.VISIBLE
                     binding.valWindPressure.visibility = View.VISIBLE
                     binding.valLightIntensity.visibility = View.VISIBLE
-                } else if(topic == "arnesys/$fieldId/utama/ai"){
+                } else if(topic == "arnesys/${passedData!!.id!!}/utama/ai"){
                     val message = Gson().fromJson(mqttMessage.toString(), MonitoringAIProcessing::class.java)
                     Log.d("/utama/ai", message.toString())
 
@@ -211,7 +210,7 @@ class DetailMainDeviceActivity : AppCompatActivity() {
                     .show()
             }
             R.id.crop_recommend -> {
-                val dialog = CropRecommendationFragment(fieldId!!)
+                val dialog = CropRecommendationFragment(passedData!!.id!!, passedData!!.plant_type!!)
                 dialog.show(this.supportFragmentManager, "BottomSheetDialog")
             }
         }
