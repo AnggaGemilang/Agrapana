@@ -162,7 +162,7 @@ class DetailSupportDeviceActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.action_nav3, menu)
+        menuInflater.inflate(R.menu.action_nav4, menu)
         return true
     }
 
