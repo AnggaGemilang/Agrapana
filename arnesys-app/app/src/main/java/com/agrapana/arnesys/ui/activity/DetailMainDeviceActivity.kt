@@ -15,16 +15,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProvider
 import com.agrapana.arnesys.R
 import com.agrapana.arnesys.config.MQTT_HOST
 import com.agrapana.arnesys.databinding.ActivityDetailMainDeviceBinding
 import com.agrapana.arnesys.helper.MqttClientHelper
+import com.agrapana.arnesys.model.AIInput
 import com.agrapana.arnesys.model.Field
 import com.agrapana.arnesys.model.MonitoringAIProcessing
 import com.agrapana.arnesys.model.MonitoringMainDevice
 import com.agrapana.arnesys.ui.fragment.CropRecommendationFragment
 import com.agrapana.arnesys.ui.fragment.MainDeviceChartFragment
 import com.agrapana.arnesys.ui.fragment.SeekPestsFragment
+import com.agrapana.arnesys.viewmodel.PestPredictionInputViewModel
+import com.agrapana.arnesys.viewmodel.PestPredictionViewModel
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
@@ -39,9 +43,11 @@ class DetailMainDeviceActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailMainDeviceBinding
     private lateinit var prefs: SharedPreferences
+    private lateinit var viewModelPestPredictionInput: PestPredictionInputViewModel
+    private lateinit var viewModelPestPrediction: PestPredictionViewModel
     private var noInternetDialog: NoInternetDialog? = null
 
-    private var pestListRisk: List<String>? = null
+    private var pestPredictionResult: String? = null
     private var clientId: String? = null
     private var fieldId: String? = null
 
@@ -69,6 +75,8 @@ class DetailMainDeviceActivity : AppCompatActivity() {
         val passedData: Field = Gson().fromJson(intent.getStringExtra("passData"), Field::class.java)
         fieldId = passedData.id
 
+        initViewModelInputDataAI(fieldId!!)
+
         val imageParts = passedData.thumbnail.toString().trim().split("public/".toRegex())
         if(passedData.thumbnail != null){
             Glide.with(this).load("https://arnesys.agrapana.tech/storage/" + imageParts[1]).into(binding.imgThumbnail);
@@ -82,10 +90,7 @@ class DetailMainDeviceActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         binding.pestWrapper.setOnClickListener {
-//            if(binding.valPest.text != "N/A"){
-//
-//            }
-            val dialog = SeekPestsFragment("Tidak Ada")
+            val dialog = SeekPestsFragment(pestPredictionResult)
             dialog.show(supportFragmentManager, "BottomSheetDialog")
         }
 
@@ -206,7 +211,7 @@ class DetailMainDeviceActivity : AppCompatActivity() {
                     .show()
             }
             R.id.crop_recommend -> {
-                val dialog = CropRecommendationFragment("Rice", "Spinach")
+                val dialog = CropRecommendationFragment(fieldId!!)
                 dialog.show(this.supportFragmentManager, "BottomSheetDialog")
             }
         }
@@ -217,6 +222,45 @@ class DetailMainDeviceActivity : AppCompatActivity() {
         super.onPause()
         if (noInternetDialog != null) {
             noInternetDialog!!.destroy();
+        }
+    }
+
+    private fun initViewModelInputDataAI(fieldId: String) {
+        viewModelPestPredictionInput = ViewModelProvider(this)[PestPredictionInputViewModel::class.java]
+        viewModelPestPredictionInput.getPestPredictionInput(fieldId)
+        viewModelPestPredictionInput.getLoadPestPredictionInputObservable().observe(this) {
+            initViewModelAI(it!!)
+        }
+    }
+
+    private fun initViewModelAI(inputPestPrediction: AIInput) {
+
+        Log.d("hasil input", inputPestPrediction.toString())
+
+        viewModelPestPrediction = ViewModelProvider(this)[PestPredictionViewModel::class.java]
+        viewModelPestPrediction.getPestPrediction(inputPestPrediction)
+        viewModelPestPrediction.getLoadPestPredictionObservable().observe(this) {
+
+            var value: String = when (it!!.Thripidae) {
+                "Tidak Ada" -> {
+                    "None"
+                }
+
+                "Rendah" -> {
+                    "Low"
+                }
+
+                "Sedang" -> {
+                    "Medium"
+                }
+
+                else -> {
+                    "Risky"
+                }
+            }
+
+            pestPredictionResult = value
+            binding.valPest.text = value
         }
     }
 

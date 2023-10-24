@@ -3,11 +3,8 @@ package com.agrapana.arnesys.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.agrapana.arnesys.api.FieldAIService
-import com.agrapana.arnesys.api.FieldService
-import com.agrapana.arnesys.api.RetroInstance
 import com.agrapana.arnesys.api.RetroInstance2
-import com.agrapana.arnesys.model.FieldResponse
-import com.agrapana.arnesys.model.InputPestPrediction
+import com.agrapana.arnesys.model.AIInput
 import com.agrapana.arnesys.model.PestPredictionResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,7 +18,7 @@ class PestPredictionViewModel: ViewModel() {
         return loadPestPrediction
     }
 
-    fun getPestPrediction(datas: InputPestPrediction) {
+    fun getPestPrediction(datas: AIInput) {
         val retroInstance = RetroInstance2.getRetroInstance().create(FieldAIService::class.java)
         retroInstance.getPestPrediction(datas)
             .enqueue(object : Callback<PestPredictionResponse> {

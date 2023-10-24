@@ -22,7 +22,7 @@ import com.agrapana.arnesys.config.MQTT_HOST
 import com.agrapana.arnesys.databinding.FragmentHomeBinding
 import com.agrapana.arnesys.helper.ChangeFieldListener
 import com.agrapana.arnesys.helper.MqttClientHelper
-import com.agrapana.arnesys.model.InputPestPrediction
+import com.agrapana.arnesys.model.AIInput
 import com.agrapana.arnesys.model.MonitoringAIProcessing
 import com.agrapana.arnesys.model.MonitoringMainDevice
 import com.agrapana.arnesys.model.MonitoringSupportDevice
@@ -34,7 +34,6 @@ import com.agrapana.arnesys.viewmodel.PestPredictionInputViewModel
 import com.agrapana.arnesys.viewmodel.PestPredictionViewModel
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
-import kotlinx.serialization.json.Json
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
 import org.eclipse.paho.client.mqttv3.MqttMessage
@@ -204,7 +203,7 @@ class HomeFragment: Fragment(), ChangeFieldListener {
         }
     }
 
-    private fun initViewModelAI(inputPestPrediction: InputPestPrediction) {
+    private fun initViewModelAI(inputPestPrediction: AIInput) {
 
         Log.d("hasil input", inputPestPrediction.toString())
 

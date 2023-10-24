@@ -30,7 +30,7 @@ data class RecommendSensorData(
     val rainfallValue: String?
 )
 
-data class InputPestPrediction(
+data class AIInput(
     @SerializedName("sensor_data" ) var sensorData : ArrayList<Int> = arrayListOf()
 )
 

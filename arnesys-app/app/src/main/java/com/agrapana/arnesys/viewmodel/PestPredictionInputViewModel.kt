@@ -5,26 +5,26 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.agrapana.arnesys.api.MonitoringMainDeviceService
 import com.agrapana.arnesys.api.RetroInstance
-import com.agrapana.arnesys.model.InputPestPrediction
+import com.agrapana.arnesys.model.AIInput
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class PestPredictionInputViewModel: ViewModel() {
 
-    var loadPestPredictionInputViewModel =  MutableLiveData<InputPestPrediction?>()
+    var loadPestPredictionInputViewModel =  MutableLiveData<AIInput?>()
 
-    fun getLoadPestPredictionInputObservable(): MutableLiveData<InputPestPrediction?> {
+    fun getLoadPestPredictionInputObservable(): MutableLiveData<AIInput?> {
         return loadPestPredictionInputViewModel
     }
 
     fun getPestPredictionInput(id: String) {
         val retroInstance = RetroInstance.getRetroInstance().create(MonitoringMainDeviceService::class.java)
         retroInstance.getPestDataInput(id)
-            .enqueue(object : Callback<InputPestPrediction> {
+            .enqueue(object : Callback<AIInput> {
                 override fun onResponse(
-                    call: Call<InputPestPrediction>,
-                    response: Response<InputPestPrediction>
+                    call: Call<AIInput>,
+                    response: Response<AIInput>
                 ) {
                     if(response.isSuccessful){
                         Log.d("hasil ham berhasil", response.body().toString())
@@ -35,7 +35,7 @@ class PestPredictionInputViewModel: ViewModel() {
                     }
                 }
 
-                override fun onFailure(call: Call<InputPestPrediction>, t: Throwable) {
+                override fun onFailure(call: Call<AIInput>, t: Throwable) {
                     Log.d("hasil ham gagal", "warko")
                     loadPestPredictionInputViewModel.postValue(null)
                 }
