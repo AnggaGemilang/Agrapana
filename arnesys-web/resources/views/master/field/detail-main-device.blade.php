@@ -426,7 +426,7 @@
                 type: "get",
                 success: function (datas){
                     $.ajax({
-                        url: "147.139.143.173:5000/crop/predict/pest",
+                        url: "http://147.139.143.173:5000/crop/predict/pest",
                         data: JSON.stringify(datas),
                         type: "post",
                         headers: {
