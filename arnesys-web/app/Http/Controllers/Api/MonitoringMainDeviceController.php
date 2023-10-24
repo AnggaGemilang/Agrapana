@@ -92,16 +92,16 @@ class MonitoringMainDeviceController extends Controller
 
         return response()->json([
             "sensor_data" => [
-                    $meanDailyMaxAirTemp,
-                    $maxAirTempMeasured,
-                    $meanDailyMinAirTemp,
-                    $minAirTempMeasured,
-                    $meanDailyMaxGroundTemp,
-                    $maxGroundTempMeasured,
-                    $meanDailyMinGroundTemp,
-                    $minGroundTempMeasured,
-                    $meanDailyMaxHumidity,
-                    $maxHumidityMeasured
+                doubleval($meanDailyMaxAirTemp),
+                doubleval($maxAirTempMeasured),
+                doubleval($meanDailyMinAirTemp),
+                doubleval($minAirTempMeasured),
+                doubleval($meanDailyMaxGroundTemp),
+                doubleval($maxGroundTempMeasured),
+                doubleval($meanDailyMinGroundTemp),
+                doubleval($minGroundTempMeasured),
+                doubleval($meanDailyMaxHumidity),
+                doubleval($meanDailyMaxHumidity)
             ]
         ], 200);
 

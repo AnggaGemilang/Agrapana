@@ -16,6 +16,24 @@ data class MonitoringMainDevice(
     var monitoring: ValueMonitoringMainDevice
 )
 
+data class InputCropRecommend(
+    val sensor_data: RecommendSensorData
+)
+
+data class RecommendSensorData(
+    val nValue: String?,
+    val pValue: String?,
+    val kValue:	String?,
+    val temperatureValue: String?,
+    val humidityValue: String?,
+    val phValue: String?,
+    val rainfallValue: String?
+)
+
+data class InputPestPrediction(
+    @SerializedName("sensor_data" ) var sensorData : ArrayList<Int> = arrayListOf()
+)
+
 data class ChartMainDevice(
     val value: String?,
     val created_at: Timestamp?,

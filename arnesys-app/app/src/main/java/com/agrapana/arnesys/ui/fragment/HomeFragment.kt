@@ -22,6 +22,7 @@ import com.agrapana.arnesys.config.MQTT_HOST
 import com.agrapana.arnesys.databinding.FragmentHomeBinding
 import com.agrapana.arnesys.helper.ChangeFieldListener
 import com.agrapana.arnesys.helper.MqttClientHelper
+import com.agrapana.arnesys.model.InputPestPrediction
 import com.agrapana.arnesys.model.MonitoringAIProcessing
 import com.agrapana.arnesys.model.MonitoringMainDevice
 import com.agrapana.arnesys.model.MonitoringSupportDevice
@@ -29,8 +30,11 @@ import com.agrapana.arnesys.model.Suggestion
 import com.agrapana.arnesys.ui.activity.LoginActivity
 import com.agrapana.arnesys.ui.activity.SettingActivity
 import com.agrapana.arnesys.viewmodel.FieldViewModel
+import com.agrapana.arnesys.viewmodel.PestPredictionInputViewModel
+import com.agrapana.arnesys.viewmodel.PestPredictionViewModel
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
+import kotlinx.serialization.json.Json
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
 import org.eclipse.paho.client.mqttv3.MqttMessage
@@ -46,11 +50,14 @@ class HomeFragment: Fragment(), ChangeFieldListener {
     private lateinit var prefs: SharedPreferences
     private lateinit var recyclerViewAdapter: FieldFilterAdapter
     private lateinit var viewModel: FieldViewModel
+    private lateinit var viewModelPestPredictionInput: PestPredictionInputViewModel
+    private lateinit var viewModelPestPrediction: PestPredictionViewModel
     private lateinit var window: Window
 
     private var messageSupportDevice: MonitoringSupportDevice? = null
     private var clientId: String? = null
     private var fieldId: String? = null
+    private var pestPredictionResult: String? = null
 
     private val mqttClient by lazy {
         MqttClientHelper(requireContext())
@@ -79,12 +86,8 @@ class HomeFragment: Fragment(), ChangeFieldListener {
         binding.greeting.text = "Hello there, ${nameParts[0]}"
 
         binding.btnPest.setOnClickListener {
-            val dialog = SeekPestsFragment("Tidak Ada")
+            val dialog = SeekPestsFragment(pestPredictionResult)
             activity?.let { it1 -> dialog.show(it1.supportFragmentManager, "BottomSheetDialog") }
-
-//            if(binding.valPest.text != "N/A"){
-//
-//            }
         }
 
         binding.toolbar.inflateMenu(R.menu.action_nav1)
@@ -188,7 +191,47 @@ class HomeFragment: Fragment(), ChangeFieldListener {
                 binding.valFilterFieldPlaceholder.visibility = View.GONE
                 binding.recyclerView.visibility = View.VISIBLE
                 recyclerViewAdapter.setFieldList(it.data)
+                initViewModelInputDataAI(it.data[0].id.toString())
             }
+        }
+    }
+
+    private fun initViewModelInputDataAI(fieldId: String) {
+        viewModelPestPredictionInput = ViewModelProvider(this)[PestPredictionInputViewModel::class.java]
+        viewModelPestPredictionInput.getPestPredictionInput(fieldId)
+        viewModelPestPredictionInput.getLoadPestPredictionInputObservable().observe(activity!!) {
+            initViewModelAI(it!!)
+        }
+    }
+
+    private fun initViewModelAI(inputPestPrediction: InputPestPrediction) {
+
+        Log.d("hasil input", inputPestPrediction.toString())
+
+        viewModelPestPrediction = ViewModelProvider(this)[PestPredictionViewModel::class.java]
+        viewModelPestPrediction.getPestPrediction(inputPestPrediction)
+        viewModelPestPrediction.getLoadPestPredictionObservable().observe(activity!!) {
+
+            var value: String = when (it!!.Thripidae) {
+                "Tidak Ada" -> {
+                    "None"
+                }
+
+                "Rendah" -> {
+                    "Low"
+                }
+
+                "Sedang" -> {
+                    "Medium"
+                }
+
+                else -> {
+                    "Risky"
+                }
+            }
+
+            pestPredictionResult = value
+            binding.valPest.text = value
         }
     }
 

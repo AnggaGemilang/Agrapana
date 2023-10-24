@@ -1,5 +1,6 @@
 package com.agrapana.arnesys.model
 
+import com.google.gson.annotations.SerializedName
 import java.sql.Timestamp
 
 data class Field(
@@ -19,6 +20,15 @@ data class Links(
     val label: String?,
     val active: Boolean?
 )
+
+data class CropRecommendResponse(
+    @SerializedName("recommmend_crop") var recommendCrop: String?
+)
+
+data class PestPredictionResponse(
+    @SerializedName("Thripidae") var Thripidae : String? = null
+)
+
 data class FieldResponse(
     val current_page: Int?,
     val data: List<Field>?,

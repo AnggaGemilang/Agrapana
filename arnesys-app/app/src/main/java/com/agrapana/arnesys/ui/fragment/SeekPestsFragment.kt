@@ -24,26 +24,7 @@ class SeekPestsFragment(private var pestPrediction: String?) : RoundedBottomShee
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        var value: String = when (pestPrediction) {
-            "Tidak Ada" -> {
-                "None"
-            }
-
-            "Rendah" -> {
-                "Low"
-            }
-
-            "Sedang" -> {
-                "Medium"
-            }
-
-            else -> {
-                "Risky"
-            }
-        }
-
-        binding.txtThripidae.text = value
+        binding.txtThripidae.text = pestPrediction
     }
 
 }
