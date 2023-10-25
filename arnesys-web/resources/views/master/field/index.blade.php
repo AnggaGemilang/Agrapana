@@ -85,12 +85,12 @@
                                                 </td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <p class="text-xs font-weight-bold mb-0">{{ $row->address }}</p>
+                                                        <p class="text-xs font-weight-bold mb-0">{{ $row->land_area }}</p>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <p class="text-xs font-weight-bold mb-0">{{ $row->land_area }}</p>
+                                                        <p class="text-xs font-weight-bold mb-0">{{ $row->address }}</p>
                                                     </div>
                                                 </td>
                                                 <td>

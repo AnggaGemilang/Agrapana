@@ -335,7 +335,7 @@
                 </tr>
                 <tr>
                   <td class="content-block powered-by">
-                    Powered by <a href="#">@JPAC Polban</a>.
+                    Powered by <a href="#">@Do'a Ortu Sampai Akhir</a>.
                   </td>
                 </tr>
               </table>
