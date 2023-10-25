@@ -78,7 +78,7 @@ void loop() {
   }
   client.loop();
   unsigned long now = millis();
-  if (now - lastMsg > 4000) {
+  if (now - lastMsg > 2000) {
     lastMsg = now;
     Serial.println("");
 
@@ -147,7 +147,7 @@ void loop() {
     
   }
 
-  if (now - lastMsg2 > 10000) {
+  if (now - lastMsg2 > 4000) {
     lastMsg2 = now;
     Serial.println("");
 
