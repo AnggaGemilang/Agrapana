@@ -28,7 +28,7 @@ class OnboardingActivity : AppCompatActivity() {
 
         val onboardingData: MutableList<OnboardingData> = ArrayList()
         onboardingData.add(OnboardingData("Easy Life", "Make it easier for farmers to monitor soil conditions, weather, and pests on their agricultural land using arnesys",
-            R.drawable.onboarding_1, 420, 420,  -50, 200, 0, 50))
+            R.drawable.onboarding_1, 420, 420, -30, 200, 0, 50))
         onboardingData.add(OnboardingData("Advance Tech", "Supported by technologies such as LoRA to support a centralized system, solar panels to meet electricity supply, and IoT for data communication",
             R.drawable.onboarding_2, 580, 580, -20, -20, 0, -200))
         onboardingData.add(OnboardingData("Best Quality", "Indirectly produce high quality plants by providing complete information about the current condition of the plants",
