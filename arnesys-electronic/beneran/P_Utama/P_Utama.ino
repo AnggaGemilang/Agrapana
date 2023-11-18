@@ -132,7 +132,7 @@ void loop() {
   counter++;
   LoRa.println("Node1");
   LoRa.println(counter);
-  doc["source"] = "utama";  
+  doc["source"] = "utama";
   // Sensorwaktu ();
   bh1750();
   sensorhujan ();
